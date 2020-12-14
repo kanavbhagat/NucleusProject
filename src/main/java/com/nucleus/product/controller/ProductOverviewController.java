@@ -9,6 +9,6 @@ public class ProductOverviewController {
 
     @GetMapping(value = {"/product" })
     public ModelAndView productOverview() {
-        return new ModelAndView("views/productOverview");
+        return new ModelAndView("views/product/productOverview");
     }
 }
