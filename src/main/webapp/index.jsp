@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>NSBT Project Home</title>
@@ -24,7 +23,7 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Product <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/product">Product <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
