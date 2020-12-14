@@ -31,7 +31,7 @@
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
                         Policy Setup
                     </a>
                     <div class="dropdown-menu sm-menu">
@@ -42,7 +42,7 @@
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
@@ -61,7 +61,7 @@
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
@@ -76,7 +76,7 @@
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown">
                         Report
                     </a>
                     <div class="dropdown-menu sm-menu">
@@ -87,11 +87,6 @@
                 </li>
 
             </ul>
-            <div class="social-part">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-            </div>
         </div>
     </nav>
     <!-- NavBar Ends -->
@@ -104,11 +99,11 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" class="btn btn-primary" id="newProduct">Create Receipt</button>
+            <button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>
         </div>
     </div>
 
-    <hr width="" color="#b3b3b3">
+    <hr>
 
 </div>
 
@@ -119,14 +114,14 @@
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <label for="ReceiptType" class="font-weight-bold required-field">Receipt Type</label>
-                    <select class="form-control" id="ReceiptType">
+                    <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
+                    <select class="form-control" id="receiptType">
                         <option value="" selected disabled hidden>Select One Option</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="Receiptbasis" class="font-weight-bold">Receipt basis</label>
-                    <select class="form-control" id="Receiptbasis">
+                    <label for="receiptBasis" class="font-weight-bold">Receipt basis</label>
+                    <select class="form-control" id="receiptBasis">
                         <option value="" selected disabled hidden>Select One Option</option>
                     </select>
                 </div>
@@ -135,24 +130,24 @@
             <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
-                    <label for="LoanAccount" class="font-weight-bold required-field">Loan Account#</label>
-                    <input type="text" class="form-control" id="LoanAccount">
+                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
+                    <input type="text" class="form-control" id="loanAccount">
                 </div>
 
                 <div class="form-group">
-                    <label for="ReceiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
-                    <input type="text" class="form-control" id="ReceiptRef">
+                    <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
+                    <input type="text" class="form-control" id="receiptRef">
                 </div>
 
             </div>
         </div>
 
-        <hr width="" color="#b3b3b3">
+        <hr>
 
         <div class="row" style="margin-bottom:20px">
-            <div class="col-sm-8 offset-sm-9">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-primary">Clear</button>
+            <div class="col-sm-3 offset-sm-10">
+                <button type="button"  id="save" class="btn btn-primary">Save</button>
+                <button type="button" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
     </form>
