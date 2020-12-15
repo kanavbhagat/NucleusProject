@@ -1,7 +1,6 @@
 package com.nucleus.charge.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 
