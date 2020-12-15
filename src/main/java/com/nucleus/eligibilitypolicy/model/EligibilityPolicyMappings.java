@@ -1,11 +1,9 @@
 package com.nucleus.eligibilitypolicy.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
+@IdClass(EligibilityPolicyMappingsPK.class)
 @Table(name = "eligibility_policy_mappings")
 public class EligibilityPolicyMappings {
 
