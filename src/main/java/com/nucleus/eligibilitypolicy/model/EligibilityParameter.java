@@ -45,6 +45,9 @@ public class EligibilityParameter {
     @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
 
+    @Column(name = "status", length = 20)
+    private String status;
+
     // Getters - Setters
     public String getParameterCode() {
         return parameterCode;
@@ -134,6 +137,14 @@ public class EligibilityParameter {
         this.authorizedBy = authorizedBy;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "EligibilityParameter{" +
@@ -148,6 +159,7 @@ public class EligibilityParameter {
                 ", modifiedBy='" + modifiedBy + '\'' +
                 ", authorizedDate=" + authorizedDate +
                 ", authorizedBy='" + authorizedBy + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
@@ -166,11 +178,12 @@ public class EligibilityParameter {
                 Objects.equals(modifiedDate, that.modifiedDate) &&
                 Objects.equals(modifiedBy, that.modifiedBy) &&
                 Objects.equals(authorizedDate, that.authorizedDate) &&
-                Objects.equals(authorizedBy, that.authorizedBy);
+                Objects.equals(authorizedBy, that.authorizedBy) &&
+                Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(parameterCode, parameterName, minValue, maxValue, parameterDescription, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy);
+        return Objects.hash(parameterCode, parameterName, minValue, maxValue, parameterDescription, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
     }
 }
