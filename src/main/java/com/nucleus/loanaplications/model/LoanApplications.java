@@ -1,4 +1,4 @@
-package com.nucleus.loanaaplications.model;
+package com.nucleus.loanaplications.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "loanapplication")
+@Table(name = "loan_application")
 public class LoanApplications {
 
     @Id
