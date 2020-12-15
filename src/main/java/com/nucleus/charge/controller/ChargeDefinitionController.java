@@ -1,4 +1,4 @@
-package com.nucleus.charge.controllers;
+package com.nucleus.charge.controller;
 
 
 import com.nucleus.charge.model.NewCharge;
@@ -22,30 +22,31 @@ public class ChargeDefinitionController {
     public String showForm(ModelMap model) {
         NewCharge charge = new NewCharge();
         model.put("newChargeData", charge);
-        System.out.println("Welcome");
-        List<String> eventList = new ArrayList<>();
-        eventList.add("ProcessingFees");
-        eventList.add("InstallmentPrincipalComponent");
-        model.put("eventList",eventList);
-        return ("chargeUI/chargeDefinition");
+        return ("views/charge/chargeDefinition");
     }
 
     @PostMapping
     public String onSubmit(@Valid @ModelAttribute("newChargeData") NewCharge charge, BindingResult result) {
         if(result.hasErrors()) {
-            return "chargeUI/chargeDefinition";
+            return "views/charge/chargeDefinition";
         }
         else {
-            return "LoginSuccess";
+            return "views/charge/LoginSuccess";
         }
     }
 
 
-    /*@ModelAttribute("eventList")
+    @ModelAttribute("eventList")
     public List<String> populateEventList() {
         List<String> eventList = new ArrayList<>();
-        eventList.add("ProcessingFees");
-        eventList.add("InstallmentPrincipalComponent");
+        eventList.add("Processing Fees");
         return eventList;
-    }*/
+    }
+
+    @ModelAttribute("chargeTypeList")
+    public List<String> populateChargeType() {
+        List<String> chargeList = new ArrayList<>();
+        chargeList.add("Amount Based");
+        return chargeList;
+    }
 }
