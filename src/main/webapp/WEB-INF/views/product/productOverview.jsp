@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <title>Product Overview</title>
-    <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -115,7 +115,7 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" class="btn btn-primary" id="newProduct">New Product</button>
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
         </div>
     </div>
 </div>
@@ -139,17 +139,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-<!--                sample data format-->
-                <td>LM101</td>
-                <td>Home Loan</td>
-                <td>Desc goes here</td>
-                <td>Housing Loan</td>
-                <td>APPROVED</td>
-                <td>Donald Trump</td>
-                <td>Joe Biden </td>
-                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-            </tr>
+            <c:if test="${!empty products}">
+            <c:forEach var="product" items="${products}">
+                 <tr>
+                  <td>${product.productCode}</td>
+                  <td>${product.productName}</td>
+                  <td>${product.productDescription}</td>
+                  <td>${product.productType}</td>
+                  <td>${product.status}</td>
+                  <td>${product.createdBy}</td>
+                  <td>${product.authorizedBy}</td>
+                  <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                 </tr>
+                </c:forEach>
+            </c:if>
             </tbody>
         </table>
     </div>
