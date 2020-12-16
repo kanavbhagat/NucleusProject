@@ -42,13 +42,11 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             insertStatus = false;
         }
 
-        System.out.println("In dao with " + chargePolicy.getChargePolicyName() + " " + insertStatus);
         //SessionFactory factory = configuration.buildSessionFactory();
 
     }
 
     public List<ChargePolicy> getPolicyList(){
-        System.out.println("in dao");
         List<ChargePolicy> chargePolicyList;
         try {
             Session session = getSession();
@@ -64,14 +62,12 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         return chargePolicyList;
     }
     public ChargePolicy getChargePolicy(String chargePolicyCode){
-        System.out.println("In dao getCharge with code " + chargePolicyCode);
         ChargePolicy chargePolicy;
         try {
             Session session = getSession();
             session.beginTransaction();
             Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");
             chargePolicy= (ChargePolicy)query.getSingleResult();
-            System.out.println("Charge Policy "  + chargePolicy);
             session.getTransaction().commit();
             session.close();
         } catch(Exception exception) {
