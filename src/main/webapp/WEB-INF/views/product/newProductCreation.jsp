@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -23,89 +26,8 @@
 <body>
 
 <div class="container-fluid">
-    <!-- NavBar Starts -->
-    <nav class="navbar navbar-expand-sm navbar-light bg-light" >
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03 ">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Product <span class="sr-only">(current)</span></a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
-                        Policy Setup
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                        Parameters
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Application</a>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Receipt</a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
-                        Accounting
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Customer Service</a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown">
-                        Report
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop5" data-toggle="dropdown">
-                        BOD
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-    <!-- NavBar Ends -->
+    <jsp:include page="/navbar.jsp" />
 
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
@@ -119,31 +41,33 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form>
+    <form:form modelAttribute="product" method="post">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <label for="productCode" class="font-weight-bold required-field">Product Code</label>
-                    <input type="text" class="form-control" id="productCode">
+                    <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
+                    <form:input cssClass="form-control" path="productCode"/>
+                    <form:errors path="productCode"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="productDescription" class="font-weight-bold required-field">Product Description</label>
-                    <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                    <form:label path="productDescription" cssClass="font-weight-bold">Product Description:</form:label>
+                    <form:textarea rows="3" cssClass="form-control" path="productDescription"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="maxExposureAmount" class="font-weight-bold">Maximum Exposure Amount</label>
-                    <input type="number" class="form-control" id="maxExposureAmount">
+                    <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
+                    <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
                 </div>
 
             </div>
             <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
-                    <label for="productName" class="font-weight-bold required-field">Product Name</label>
-                    <input type="text" class="form-control" id="productName">
+                    <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
+                    <form:input cssClass="form-control" path="productName"/>
+                    <form:errors path="productCode"/>
                 </div>
 
                 <div class="form-group">
@@ -206,7 +130,7 @@
 
             </table>
         </div>
-    </form>
+    </form:form>
     <hr width="" color="#b3b3b3">
     <div class="row" style="margin-bottom:20px">
         <div class="col-sm-3 offset-sm-9">

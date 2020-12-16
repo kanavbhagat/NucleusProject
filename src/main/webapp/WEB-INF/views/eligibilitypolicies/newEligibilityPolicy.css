@@ -1,0 +1,7 @@
+.table {
+        width:80%;
+    }
+.required:after {
+    content:" *";
+    color: red;
+}
