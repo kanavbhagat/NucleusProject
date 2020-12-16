@@ -1,9 +1,9 @@
 package com.nucleus.product.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -26,11 +26,13 @@ public class Product {
     @Column(name = "max_exposure_amount")
     private Integer maxExposureAmount;
 
-    @Column(name = "repayment_policy_code", length = 10, nullable = false)
-    private String repaymentPolicyCode;
+    @ManyToOne
+    @JoinColumn(name = "repayment_policy_code", referencedColumnName = "policy_code", nullable = false)
+    private RepaymentPolicy repaymentPolicyCode;
 
-    @Column(name = "eligibility_policy_code", length = 10, nullable = false)
-    private String eligibilityPolicyCode;
+    @ManyToOne
+    @JoinColumn(name = "eligibility_policy_code", referencedColumnName = "policy_code", nullable = false)
+    private EligibilityPolicy eligibilityPolicyCode;
 
     @Column(name = "charge_code_policy", length = 10)
     private String chargeCodePolicy;
@@ -99,19 +101,19 @@ public class Product {
         this.maxExposureAmount = maxExposureAmount;
     }
 
-    public String getRepaymentPolicyCode() {
+    public RepaymentPolicy getRepaymentPolicyCode() {
         return repaymentPolicyCode;
     }
 
-    public void setRepaymentPolicyCode(String repaymentPolicyCode) {
+    public void setRepaymentPolicyCode(RepaymentPolicy repaymentPolicyCode) {
         this.repaymentPolicyCode = repaymentPolicyCode;
     }
 
-    public String getEligibilityPolicyCode() {
+    public EligibilityPolicy getEligibilityPolicyCode() {
         return eligibilityPolicyCode;
     }
 
-    public void setEligibilityPolicyCode(String eligibilityPolicyCode) {
+    public void setEligibilityPolicyCode(EligibilityPolicy eligibilityPolicyCode) {
         this.eligibilityPolicyCode = eligibilityPolicyCode;
     }
 
