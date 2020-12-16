@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProductDAOInterface {
 
     List<Product> getProductList();
+
+    Boolean createNewProduct(Product product);
 }
