@@ -24,22 +24,22 @@ public class NewProductController {
     @GetMapping(value = {"/newProduct" })
     public ModelAndView newProduct() {
         ModelAndView modelAndView = new ModelAndView("views/product/newProductCreation");
-        List<String> productTypes = new ArrayList<>();
-        productTypes.add("Hello");
-        List<RepaymentPolicy> repaymentPolicies = new ArrayList<>();
-        RepaymentPolicy policy1 = new RepaymentPolicy();
-        policy1.setPolicyCode("101");
-        policy1.setPolicyDescription("it do thing");
-        repaymentPolicies.add(policy1);
-
-        policy1 = new RepaymentPolicy();
-        policy1.setPolicyCode("102");
-        policy1.setPolicyDescription("it do other thing");
-        repaymentPolicies.add(policy1);
+//        List<String> productTypes = new ArrayList<>();
+//        productTypes.add("Hello");
+//        List<RepaymentPolicy> repaymentPolicies = new ArrayList<>();
+//        RepaymentPolicy policy1 = new RepaymentPolicy();
+//        policy1.setPolicyCode("101");
+//        policy1.setPolicyDescription("it do thing");
+//        repaymentPolicies.add(policy1);
+//
+//        policy1 = new RepaymentPolicy();
+//        policy1.setPolicyCode("102");
+//        policy1.setPolicyDescription("it do other thing");
+//        repaymentPolicies.add(policy1);
 
         modelAndView.addObject("product", new Product());
-        modelAndView.addObject("productTypes", productTypes);
-        modelAndView.addObject("repaymentPolicies", repaymentPolicies);
+//        modelAndView.addObject("productTypes", productTypes);
+//        modelAndView.addObject("repaymentPolicies", repaymentPolicies);
         return modelAndView;
     }
 
