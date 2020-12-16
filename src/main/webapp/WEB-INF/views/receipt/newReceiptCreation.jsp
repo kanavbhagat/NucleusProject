@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="ISO-8859-1"%>
+
+   <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -119,85 +124,91 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form>
+    <form:form method="Post" modelAttribute="receipt">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
                     <label for="receiptNumber" class="font-weight-bold required-field">Receipt No</label>
-                    <input type="text" class="form-control" id="receiptNumber">
+                    <form:input type="text" class="form-control" path="receiptNo"/>
                 </div>
 
-                <div class="form-group">
+                <%--<div class="form-group">
                     <label for="paymentMode" class="font-weight-bold required-field">Payment Mode</label>
-                    <select class="form-control" id="paymentMode">
-                        <option value="" disabled >Select One Option</option>
-                    </select>
-                </div>
+                    <form:select class="form-control" path="paymentMode">
+                        <form:option value="Cash" label="Cash" />
+                        <form:option value="Checque" label="Checque" />
+                    </form:select>
+                </div>--%>
 
                 <div class="form-group">
                     <label for="loanAccount" class="font-weight-bold required-field">Loan Account #</label>
-                    <input type="text" class="form-control" id="loanAccount">
+                    <form:input type="text" class="form-control" path="loanApplicationNumber"/>
                 </div>
 
                 <div class="form-group">
                     <label for="receiptAmount" class="font-weight-bold required-field">Receipt Amount</label>
-                    <input type="number" class="form-control" id="receiptAmount">
+                    <form:input type="number" class="form-control" path="receiptAmount"/>
                 </div>
 
-                <div class="form-group">
+                <%--<div class="form-group">
                     <label for="remark" class="font-weight-bold ">Remark</label>
-                    <textarea class="form-control" id="remark" rows="3"></textarea>
-                </div>
+                    <form:textarea class="form-control" id="remark" rows="3" path="remark"></form:textarea>
+                </div>--%>
             </div>
 
             <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
                     <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
-                    <select class="form-control" id="receiptType">
-                        <option value="" disabled >Select One Option</option>
-                    </select>
+                    <form:select class="form-control" path="receiptType">
+                        <form:option value="Payment" label="Payment" />
+                        <form:option value="Receipt" label="Receipt" />
+                    </form:select>
                 </div>
 
                 <div class="form-group">
                     <label for="receiptBasis" class="font-weight-bold required-field">Receipt Basis</label>
-                    <select class="form-control" id="receiptBasis">
-                        <option value="" disabled >Select One Option</option>
-                    </select>
+                    <form:select class="form-control" path="receiptBasis">
+                       <form:option value="ASL" label="Against Single Loan"/>
+                       <form:option value="AML" label="Against Multiple Loan"/>
+                    </form:select>
                 </div>
 
                 <div class="form-group">
                     <label for="dateOfReceipt" class="font-weight-bold required-field">Date of Receipt</label>
-                    <input type="date" class="form-control" id="dateOfReceipt" placeholder="dd/mm/yy">
+                    <input type="date" class="form-control" path="dateOfReceipt" placeholder="dd/mm/yy">
                 </div>
 
                 <div class="form-group">
                     <label for="receiptPurpose" class="font-weight-bold required-field">Receipt Purpose</label>
-                    <select class="form-control" id="receiptPurpose">
-                        <option value="" disabled>Select One Option</option>
-                    </select>
+                    <form:select class="form-control" path="receiptPurpose">
+                       <%-- <form:option value="" disabled>Select One Option</form:option>--%>
+                       <form:option value="AnyDue" label="AnyDue"/>
+                       <form:option value="Charges" label="Charges"/>
+                    </form:select>
 
                 </div>
 
                 <label class="font-weight-bold required-field">Auto Allocation</label>
                 <br>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <%--<div class="form-check form-check-inline">
+                    <form:radiobutton class="form-check-input" name="inlineRadioOptions" path="inlineRadio1" value="option1"/>
                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" checked>
-                    <label class="form-check-label" for="inlineRadio2" >No</label>
-                </div>
+                    <form:radiobutton class="form-check-input" name="inlineRadioOptions" path="inlineRadio1" value="option2" checked/>
+                    <label class="form-check-label" for="inlineRadio1" >No</label>
+                </div>--%>
+
             </div>
         </div>
 
 
 
-    </form>
+    </form:form>
     <hr width="" color="#b3b3b3">
     <div class="row" style="margin-bottom:20px">
         <div class="col-sm-3 offset-sm-9">
