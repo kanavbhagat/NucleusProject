@@ -5,11 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.EnumType;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -51,6 +55,9 @@ public class Customer implements Serializable {
 
     @Column(name = "organization_name", length = 30)
     private String organizationName;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private Set<LoanApplication> loanApplications;
 
     // Getter and setter
     public String getCustomerCode() {
@@ -117,9 +124,17 @@ public class Customer implements Serializable {
         this.organizationName = organizationName;
     }
 
+    public Set<LoanApplication> getLoanApplications() {
+        return loanApplications;
+    }
+
+    public void setLoanApplications(Set<LoanApplication> loanApplications) {
+        this.loanApplications = loanApplications;
+    }
+
     @Override
     public String toString() {
-        return "Customers{" +
+        return "Customer{" +
                 "customerCode='" + customerCode + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -128,6 +143,7 @@ public class Customer implements Serializable {
                 ", occupationType=" + occupationType +
                 ", totalWorkExperience=" + totalWorkExperience +
                 ", organizationName='" + organizationName + '\'' +
+                ", loanApplications=" + loanApplications +
                 '}';
     }
 
