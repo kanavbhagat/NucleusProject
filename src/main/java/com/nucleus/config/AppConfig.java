@@ -62,7 +62,7 @@ public class AppConfig {
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
         ds.setUsername("sys as sysdba");
-        ds.setPassword("pwd");
+        ds.setPassword("gkul0289");
         return ds;
 
     }

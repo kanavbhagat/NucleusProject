@@ -50,7 +50,62 @@ public class Receipt {
     @Column(name = "authorized_by",length = 30)
     private String authorizedBy;
 
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "payment_mode",length = 30)
+    private String paymentMode;
+
+    @Column(name = "auto_allocation",length = 20)
+    private String autoAllocation;
+
+    @Override
+    public String toString() {
+        return "Receipt{" +
+                "receiptNo=" + receiptNo +
+                ", receiptBasis='" + receiptBasis + '\'' +
+                ", receiptType='" + receiptType + '\'' +
+                ", dateOfReceipt=" + dateOfReceipt +
+                ", receiptAmount=" + receiptAmount +
+                ", receiptPurpose='" + receiptPurpose + '\'' +
+                ", loanApplicationNumber='" + loanApplicationNumber + '\'' +
+                ", createDate=" + createDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedDate=" + modifiedDate +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                ", authorizedDate=" + authorizedDate +
+                ", authorizedBy='" + authorizedBy + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", paymentMode='" + paymentMode + '\'' +
+                ", autoAllocation='" + autoAllocation + '\'' +
+                '}';
+    }
+
     public Receipt() {
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getAutoAllocation() {
+        return autoAllocation;
+    }
+
+    public void setAutoAllocation(String autoAllocation) {
+        this.autoAllocation = autoAllocation;
     }
 
     public Integer getReceiptNo() {
