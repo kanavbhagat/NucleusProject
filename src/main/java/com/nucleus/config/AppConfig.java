@@ -33,7 +33,7 @@ public class AppConfig {
         InternalResourceViewResolver viewResolver
                 = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/");
+        viewResolver.setPrefix("/WEB-INF/views/eligibilityparameters/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
@@ -60,9 +60,9 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("sys as sysdba");
-        ds.setPassword("pwd");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORDB12C");
+        ds.setUsername("c##kirtika");
+        ds.setPassword("admin");
         return ds;
 
     }
