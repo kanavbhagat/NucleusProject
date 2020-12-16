@@ -6,6 +6,7 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,32 +28,23 @@ public class EligibilityPolicyController {
     }
 
     @GetMapping(value = {"/new"})
-    public String newEligibilityPolicy(Model model) {
+    public String newEligibilityPolicy(ModelMap model) {
         EligibilityPolicy eligibilityPolicy = new EligibilityPolicy();
-        //List<EligibilityParameter> eligibilityParameterList = eligibilityPolicyService.getParameters();
 
-        List<EligibilityParameter> eligibilityParameterList = new ArrayList<>();
-        EligibilityParameter eligibilityParameter = new EligibilityParameter();
-        eligibilityParameter.setParameterCode("101");
-        eligibilityParameter.setParameterDescription("AAA");
-        eligibilityParameter.setParameterName("test 1");
-        eligibilityParameterList.add(eligibilityParameter);
-        eligibilityParameter = new EligibilityParameter();
-        eligibilityParameter.setParameterCode("102");
-        eligibilityParameter.setParameterDescription("BBB");
-        eligibilityParameter.setParameterName("test 2");
-        eligibilityParameterList.add(eligibilityParameter);
-
+        //eligibilityPolicyService.addParameters();
+        List<EligibilityParameter> eligibilityParameterList = eligibilityPolicyService.getParameters();
+        System.out.println(eligibilityParameterList);
         model.addAttribute("eligibilityPolicy", eligibilityPolicy);
-        model.addAttribute("eligibilityParameterList", eligibilityParameterList);
+        model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
         return "views/eligibilitypolicies/newEligibilityPolicy";
     }
 
     @PostMapping(value = {"/added"})
-    public String showEligibilityPolicy(@ModelAttribute("eligibilityPolicy") EligibilityPolicy eligibilityPolicy, Model model) {
-        eligibilityPolicy.setParameterCode("11");
+    public String showEligibilityPolicy(@RequestParam("parameter1")String parameterName1, @ModelAttribute("eligibilityPolicy") EligibilityPolicy eligibilityPolicy, Model model) {
+        System.out.println(parameterName1);
         boolean insertStatus = eligibilityPolicyService.insertEligibilityPolicy(eligibilityPolicy);
         model.addAttribute("insertStatus", insertStatus);
         return "views/eligibilitypolicies/success";
     }
+
 }

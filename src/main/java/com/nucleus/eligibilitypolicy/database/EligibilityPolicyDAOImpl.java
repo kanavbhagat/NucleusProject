@@ -26,13 +26,20 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return session;
     }
 
-    private void closeSessionFactory() {
-        sessionFactory.close();
-    }
-
     @Override
     public List<EligibilityPolicy> getAllEligibilityPolicies() {
-        return null;
+        List<EligibilityPolicy> eligibilityPolicyList;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy", EligibilityPolicy.class);
+            eligibilityPolicyList = query.getResultList();
+            session.getTransaction().commit();
+        } catch(Exception exception) {
+            eligibilityPolicyList = null;
+        }
+        return eligibilityPolicyList;
+
     }
 
     @Override
@@ -47,7 +54,6 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         } catch (Exception exception) {
             insertStatus = false;
         }
-        closeSessionFactory();
         return insertStatus;
     }
 
@@ -67,14 +73,31 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query<EligibilityParameter> query = session.createQuery("from ELIGIBILITY_PARAMETERS e", EligibilityParameter.class);
+            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter", EligibilityParameter.class);
             eligibilityParameterList = query.getResultList();
             session.getTransaction().commit();
-            session.close();
         } catch(Exception exception) {
             eligibilityParameterList = null;
         }
-        closeSessionFactory();
         return eligibilityParameterList;
+    }
+
+    @Override
+    public void addParameters() {
+        Session session = getSession();
+        session.beginTransaction();
+
+        EligibilityParameter eligibilityParameter1 = new EligibilityParameter();
+        eligibilityParameter1.setParameterName("Test 1");
+        eligibilityParameter1.setParameterDescription("Testing 1");
+        eligibilityParameter1.setParameterCode("101");
+        session.save(eligibilityParameter1);
+
+        EligibilityParameter eligibilityParameter2 = new EligibilityParameter();
+        eligibilityParameter2.setParameterName("Test 2");
+        eligibilityParameter2.setParameterDescription("Testing 2");
+        eligibilityParameter2.setParameterCode("102");
+        session.save(eligibilityParameter2);
+        session.getTransaction().commit();
     }
 }
