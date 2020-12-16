@@ -12,6 +12,9 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -70,7 +73,6 @@ public class AppConfig {
             ds.setPassword("qwerty");
         * */
         return ds;
-
     }
 
     @Bean
@@ -85,6 +87,11 @@ public class AppConfig {
 //    public DataSource dataSource() {
 //        JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
 //        return jndiDataSourceLookup.getDataSource("java:/OracleDS");
+//    }
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 //    }
 
 }
