@@ -32,9 +32,10 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy", EligibilityPolicy.class);
+            Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e", EligibilityPolicy.class);
             eligibilityPolicyList = query.getResultList();
             session.getTransaction().commit();
+            session.close();
         } catch(Exception exception) {
             eligibilityPolicyList = null;
         }
@@ -51,6 +52,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.save(eligibilityPolicy);
             session.getTransaction().commit();
             insertStatus = true;
+            session.close();
         } catch (Exception exception) {
             insertStatus = false;
         }
@@ -58,13 +60,54 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     }
 
     @Override
+    public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
+        EligibilityPolicy eligibilityPolicy;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e where e.policyCode=?1", EligibilityPolicy.class);
+            query.setParameter(1, policyCode);
+            eligibilityPolicy = query.getSingleResult();
+            session.getTransaction().commit();
+            session.close();
+        } catch(Exception exception) {
+            eligibilityPolicy = null;
+        }
+        return eligibilityPolicy;
+    }
+
+
+    @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
-        return false;
+        boolean updateStatus;
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(eligibilityPolicy);
+            session.getTransaction().commit();
+            updateStatus = true;
+        } catch (Exception exception) {
+            updateStatus = false;
+        }
+        return updateStatus;
     }
 
     @Override
-    public boolean deleteEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
-        return false;
+    public boolean deleteEligibilityPolicy(String policyCode) {
+        boolean deleteStatus;
+        EligibilityPolicy eligibilityPolicy = getOneEligibilityPolicy(policyCode);
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            session.delete(eligibilityPolicy);
+            session.getTransaction().commit();
+            deleteStatus = true;
+            session.close();
+        } catch (Exception exception) {
+            deleteStatus = false;
+            exception.printStackTrace();
+        }
+        return deleteStatus;
     }
 
     @Override
@@ -73,9 +116,10 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter", EligibilityParameter.class);
+            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter e", EligibilityParameter.class);
             eligibilityParameterList = query.getResultList();
             session.getTransaction().commit();
+            session.close();
         } catch(Exception exception) {
             eligibilityParameterList = null;
         }
@@ -99,5 +143,6 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         eligibilityParameter2.setParameterCode("102");
         session.save(eligibilityParameter2);
         session.getTransaction().commit();
+        session.close();
     }
 }

@@ -33,13 +33,25 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     }
 
     @Override
+    public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
+        return eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
+    }
+
+    @Override
+    public boolean updateStatus(String policyCode, String newStatus) {
+        EligibilityPolicy eligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
+        eligibilityPolicy.setStatus(newStatus);
+        return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
+    }
+
+    @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
     }
 
     @Override
-    public boolean deleteEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
-        return eligibilityPolicyDAO.deleteEligibilityPolicy(eligibilityPolicy);
+    public boolean deleteEligibilityPolicy(String policyCode) {
+        return eligibilityPolicyDAO.deleteEligibilityPolicy(policyCode);
     }
 
     @Override

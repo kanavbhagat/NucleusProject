@@ -1,3 +1,5 @@
 NucleusProject.iml
 .idea
 target
+src/main/resources/hibernate.cfg.xml
+
