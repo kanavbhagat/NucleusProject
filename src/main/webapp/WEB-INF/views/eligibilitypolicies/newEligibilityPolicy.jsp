@@ -1,11 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file = "/index.jsp"%>
+   <%@ include file = "/navbar.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Create Eligibility Policy</title>
 <style>
     .table {
@@ -57,7 +64,7 @@
     			<!-- Section 2 -->
                 <hr width="" color="#b3b3b3">
                 <div class="row pt-3 px-3 d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary">Add Eligibility Parameter</button>
+                    <button type="button" id="addButton" class="btn btn-primary">Add Eligibility Parameter</button>
    				</div>
     			<div class="row pt-3 pl-3">
     				<p class="display-2" style="font-size: 22px;">
@@ -76,13 +83,13 @@
     				    <tbody>
     				      <tr class="d-flex">
     				        <td class="col-7" style="text-align:center;">
-    				            <form:select path="" class="custom-select">
-    				            <c:forEach items="${eligibilityParameterList}" var="eligibilityParameter">
+    				            <form:select path="" id="parameter1" name="parameter1" class="custom-select">
+    				            <c:forEach items="${allEligibilityParameterList}" var="eligibilityParameter">
                                     <form:option value="${eligibilityParameter.parameterName}"/>
                                 </c:forEach>
                                 </form:select></td>
     				        <td class="col-5" style="text-align:center;">
-    				            <form:input path="" type="text" class="form-control" disabled="true"/> </td>
+    				            <textarea class="form-control" disabled>${allEligibilityParameterList[0].parameterDescription}</textarea> </td>
     				      </tr>
 
     				    </tbody>

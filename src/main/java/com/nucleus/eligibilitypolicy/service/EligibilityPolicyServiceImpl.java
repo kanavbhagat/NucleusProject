@@ -46,4 +46,9 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     public List<EligibilityParameter> getParameters() {
         return eligibilityPolicyDAO.getParameters();
     }
+
+    @Override
+    public void addParameters() {
+        eligibilityPolicyDAO.addParameters();
+    }
 }

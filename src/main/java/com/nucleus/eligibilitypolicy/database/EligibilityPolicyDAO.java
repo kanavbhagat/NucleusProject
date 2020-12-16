@@ -13,4 +13,6 @@ public interface EligibilityPolicyDAO {
     public boolean deleteEligibilityPolicy(EligibilityPolicy eligibilityPolicy);
 
     List<EligibilityParameter> getParameters();
+
+    void addParameters();
 }
