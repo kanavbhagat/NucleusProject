@@ -31,7 +31,7 @@
                         Policy Setup
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/showRepaymentPolicy">Repayment Policy</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
