@@ -13,4 +13,6 @@ public interface EligibilityPolicyService {
     public boolean deleteEligibilityPolicy(EligibilityPolicy eligibilityPolicy);
 
     List<EligibilityParameter> getParameters();
+
+    void addParameters();
 }
