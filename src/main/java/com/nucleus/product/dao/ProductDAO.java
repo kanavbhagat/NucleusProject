@@ -36,4 +36,20 @@ public class ProductDAO implements ProductDAOInterface {
             return productList;
         }
     }
+
+    @Override
+    public Boolean createNewProduct(Product product) {
+        try(Session session = getSession()){
+            session.beginTransaction();
+            try {
+                session.save(product);
+                session.getTransaction().commit();
+                return true;
+            } catch (HibernateException e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
+        }
+    }
 }
