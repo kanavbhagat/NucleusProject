@@ -43,7 +43,7 @@ public class AppConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
-        bean.setPackagesToScan(new String[]{"com.nucleus.product.model", "com.nucleus.receipt.model"});
+        bean.setPackagesToScan(new String[]{"com.nucleus"});
         return bean;
     }
 
@@ -60,9 +60,9 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-        ds.setUsername("nsbt");
-        ds.setPassword("qwerty");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("c##asaf");
+        ds.setPassword("asaf");
         // Jigme's Oracle db credentials
         /*
             ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
