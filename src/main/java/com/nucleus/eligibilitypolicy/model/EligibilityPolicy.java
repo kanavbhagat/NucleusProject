@@ -19,7 +19,7 @@ public class EligibilityPolicy {
     @Column(name = "policy_description", length = 200)
     private String policyDescription;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "eligibility_policy_mappings",
             joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
             inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
