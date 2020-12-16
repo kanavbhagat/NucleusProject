@@ -99,7 +99,8 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+            <%--<button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>--%>
         </div>
     </div>
 
