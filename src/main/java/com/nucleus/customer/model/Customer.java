@@ -31,7 +31,7 @@ public class Customer {
     private Integer totalWorkExperience;
 
     @Column(name="organization_name",length = 30)
-    private Integer organizationName;
+    private String organizationName;
 
 
     public String getCustomerCode() {
@@ -90,11 +90,11 @@ public class Customer {
         this.totalWorkExperience = totalWorkExperience;
     }
 
-    public Integer getOrganizationName() {
+    public String getOrganizationName() {
         return organizationName;
     }
 
-    public void setOrganizationName(Integer organizationName) {
+    public void setOrganizationName(String organizationName) {
         this.organizationName = organizationName;
     }
 }
