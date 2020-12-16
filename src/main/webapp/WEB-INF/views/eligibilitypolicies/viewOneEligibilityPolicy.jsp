@@ -35,12 +35,12 @@
 
     <!-- Placeholders  -->
     	<div class="container-fluid">
-    		<form:form method = "post" action="add" modelAttribute = "eligibilityPolicy">
+    		<form:form method = "post" action="updateStatus/${eligibilityPolicy.policyCode}" modelAttribute = "eligibilityPolicy">
     			<!-- Section 1 -->
     		    <div class="form-group row pt-2 pl-3">
     			      <div class="col-md-3">
     			        <label class="required" for="policyName" >Eligibility Policy Code</label><br>
-    					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required"/>
+    					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required" disabled="true"/>
     			      </div>
 
     			      <div class="col-md-3">
@@ -48,23 +48,25 @@
 
     			      <div class="col-md-3">
     			        <label class="required" for="policyName">Eligibility Policy Name</label><br>
-    					<form:input path="policyName" type="text" id="policyName" name="policyName" class="form-control" required="required"/>
+    					<form:input path="policyName" type="text" id="policyName" name="policyName" class="form-control" required="required" disabled="true"/>
     			      </div>
     		    </div>
 
     		    <div class="row pt-2 pl-3">
     				<div class="col-md-3">
     					<label for="policyDescription">Eligibility Policy Description</label><br>
-    					<form:textarea path="policyDescription" class="form-control"  id="policyDescription" name="policyDescription"/>
+    					<form:textarea path="policyDescription" class="form-control"  id="policyDescription" name="policyDescription" disabled="true"/>
     				</div>
     			</div>
     			<br><br>
 
     			<!-- Section 2 -->
                 <hr width="" color="#b3b3b3">
+                <%--
                 <div class="row pt-3 px-3 d-flex justify-content-end">
                     <button type="button" id="addButton" class="btn btn-primary">Add Eligibility Parameter</button>
    				</div>
+   				--%>
     			<div class="row pt-3 pl-3">
     				<p class="display-2" style="font-size: 22px;">
     					<b> Eligibility Parameters </b>
@@ -83,14 +85,12 @@
     				    <c:forEach items="${eligibilityPolicy.eligibilityParameterList}" var="eligibilityParameter">
     				      <tr class="d-flex">
     				        <td class="col-7" style="text-align:center;">
-    				            <form:select path="eligibilityParameter" class="custom-select">
-    				            <c:forEach items="${allEligibilityParameterList}" var="eligibilityParameterMaster">
-                                    <form:option value="${eligibilityParameterMaster.parameterName}"/>
-                                </c:forEach>
+    				            <form:select path="" class="custom-select" disabled="true">
+                                    <form:option value="${eligibilityParameter.parameterName}"/>
                                 </form:select>
                             </td>
     				        <td class="col-5" style="text-align:center;">
-    				            <textarea class="form-control" disabled>${allEligibilityParameterList[0].parameterDescription}</textarea> </td>
+    				            <textarea class="form-control" disabled>${eligibilityParameter.parameterDescription}</textarea> </td>
     				      </tr>
     				    </c:forEach>
     				    </tbody>
@@ -101,10 +101,10 @@
                 <hr width="" color="#b3b3b3">
     			<div class="row pt-3 px-3 d-flex justify-content-end">
                 	<div class="px-2">
-          				<input type="submit" class="btn btn-primary" name ="action" value="Save">
+          				<input type="submit" class="btn btn-primary" name ="action" value="Approve">
        				</div>
                 	<div>
-           				<input type="submit" class="btn btn-primary" name ="action" value="Save & Request Approval"/>
+           				<input type="submit" class="btn btn-primary" name ="action" value="Reject"/>
        				</div>
                 </div>
 
