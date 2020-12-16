@@ -1,3 +1,4 @@
 NucleusProject.iml
 .idea
 target
+/src/main/resources/

@@ -24,7 +24,6 @@ public class ChargePolicy {
     @Column
     String chargeCodeName;
 
-
     public String getChargePolicyCode() {
         return chargePolicyCode;
     }
