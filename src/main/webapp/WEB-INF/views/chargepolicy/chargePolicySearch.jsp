@@ -46,9 +46,9 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 		        <thead>
 		            <tr>
-		                <th>fdgd</th>
-		                <th>dfgd</th>
-		                <th>gdfg</th>
+		                <th>Charge Policy Code</th>
+		                <th>Charge Policy Name</th>
+		                <th>Charge Policy Description</th>
 		                <th>Product Type</th>
 		                <th>Status</th>
 		                <th>Created By</th>
