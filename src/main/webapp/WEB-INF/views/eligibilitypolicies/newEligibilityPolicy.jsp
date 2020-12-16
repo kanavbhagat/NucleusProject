@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+   <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+   <%@ include file = "/index.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ include file = "/index.jsp"%>
 <head>
 <title>Create Eligibility Policy</title>
 <style>
     .table {
-        width:80%;
-    }
+            width:80%;
+        }
     .required:after {
         content:" *";
         color: red;
@@ -27,12 +29,12 @@
 
     <!-- Placeholders  -->
     	<div class="container-fluid">
-    		<form>
+    		<form:form method = "post" action="added" modelAttribute = "eligibilityPolicy">
     			<!-- Section 1 -->
     		    <div class="form-group row pt-2 pl-3">
     			      <div class="col-md-3">
     			        <label class="required" for="policyName" >Eligibility Policy Code</label><br>
-    					<input type="text" class="form-control"  id="policyCode" name="policyCode">
+    					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required"/>
     			      </div>
 
     			      <div class="col-md-3">
@@ -40,14 +42,14 @@
 
     			      <div class="col-md-3">
     			        <label class="required" for="policyName">Eligibility Policy Name</label><br>
-    					<input type="text" id="policyName" name="policyName" class="form-control">
+    					<form:input path="policyName" type="text" id="policyName" name="policyName" class="form-control" required="required"/>
     			      </div>
     		    </div>
 
     		    <div class="row pt-2 pl-3">
     				<div class="col-md-3">
     					<label for="policyDescription">Eligibility Policy Description</label><br>
-    					<textarea class="form-control"  id="policyDescription" name="policyDescription"></textarea>
+    					<form:textarea path="policyDescription" class="form-control"  id="policyDescription" name="policyDescription"/>
     				</div>
     			</div>
     			<br><br>
@@ -73,8 +75,14 @@
     				    </thead>
     				    <tbody>
     				      <tr class="d-flex">
-    				        <td class="col-7" style="text-align:center;"><select class="custom-select"></select></td>
-    				        <td class="col-5" style="text-align:center;"> <input type="text" id="pname" name="fname"> </td>
+    				        <td class="col-7" style="text-align:center;">
+    				            <form:select path="" class="custom-select">
+    				            <c:forEach items="${eligibilityParameterList}" var="eligibilityParameter">
+                                    <form:option value="${eligibilityParameter.parameterName}"/>
+                                </c:forEach>
+                                </form:select></td>
+    				        <td class="col-5" style="text-align:center;">
+    				            <form:input path="" type="text" class="form-control" disabled="true"/> </td>
     				      </tr>
 
     				    </tbody>
@@ -83,13 +91,14 @@
                 <hr width="" color="#b3b3b3">
     			<div class="row pt-3 px-3 d-flex justify-content-end">
                 	<div class="px-2">
-          				<button type="button" class="btn btn-primary">Save</button>
+          				<button type="submit" class="btn btn-primary">Save</button>
        				</div>
                 	<div>
-           				<button type="button" class="btn btn-primary">Save & Request Approval</button>
+           				<button type="submit" class="btn btn-primary">Save & Request Approval</button>
        				</div>
-
                 </div>
-        </form>
+
+        </form:form>
+    </div>
 </body>
 </html>
