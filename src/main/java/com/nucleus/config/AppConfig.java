@@ -33,7 +33,7 @@ public class AppConfig {
         InternalResourceViewResolver viewResolver
                 = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/eligibilityparameters/");
+        viewResolver.setPrefix("/WEB-INF/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
