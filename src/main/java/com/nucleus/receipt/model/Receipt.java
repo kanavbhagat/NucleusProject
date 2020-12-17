@@ -1,9 +1,9 @@
 package com.nucleus.receipt.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.nucleus.loanaplications.model.LoanApplications;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -29,8 +29,9 @@ public class Receipt {
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
 
-    @Column(name="loan_application_number",nullable = false)
-    private String loanApplicationNumber;
+    @ManyToOne
+    @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number" ,nullable = false)
+    private LoanApplications loanApplicationNumber;
 
     @Column(name="create_date")
     private LocalDate createDate;
@@ -50,7 +51,41 @@ public class Receipt {
     @Column(name = "authorized_by",length = 30)
     private String authorizedBy;
 
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "payment_mode",length = 30)
+    private String paymentMode;
+
+    @Column(name = "auto_allocation",length = 20)
+    private String autoAllocation;
+
+
     public Receipt() {
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getAutoAllocation() {
+        return autoAllocation;
+    }
+
+    public void setAutoAllocation(String autoAllocation) {
+        this.autoAllocation = autoAllocation;
     }
 
     public Integer getReceiptNo() {
@@ -101,11 +136,11 @@ public class Receipt {
         this.receiptPurpose = receiptPurpose;
     }
 
-    public String getLoanApplicationNumber() {
+    public LoanApplications getLoanApplicationNumber() {
         return loanApplicationNumber;
     }
 
-    public void setLoanApplicationNumber(String loanApplicationNumber) {
+    public void setLoanApplicationNumber(LoanApplications loanApplicationNumber) {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 
@@ -156,7 +191,6 @@ public class Receipt {
     public void setAuthorizedBy(String authorizedBy) {
         this.authorizedBy = authorizedBy;
     }
-
 
 
 }
