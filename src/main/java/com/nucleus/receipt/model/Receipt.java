@@ -1,9 +1,9 @@
 package com.nucleus.receipt.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.nucleus.loanaplications.model.LoanApplications;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -29,8 +29,9 @@ public class Receipt {
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
 
-    @Column(name="loan_application_number",nullable = false)
-    private String loanApplicationNumber;
+    @ManyToOne
+    @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number" ,nullable = false)
+    private LoanApplications loanApplicationNumber;
 
     @Column(name="create_date")
     private LocalDate createDate;
@@ -59,27 +60,6 @@ public class Receipt {
     @Column(name = "auto_allocation",length = 20)
     private String autoAllocation;
 
-    @Override
-    public String toString() {
-        return "Receipt{" +
-                "receiptNo=" + receiptNo +
-                ", receiptBasis='" + receiptBasis + '\'' +
-                ", receiptType='" + receiptType + '\'' +
-                ", dateOfReceipt=" + dateOfReceipt +
-                ", receiptAmount=" + receiptAmount +
-                ", receiptPurpose='" + receiptPurpose + '\'' +
-                ", loanApplicationNumber='" + loanApplicationNumber + '\'' +
-                ", createDate=" + createDate +
-                ", createdBy='" + createdBy + '\'' +
-                ", modifiedDate=" + modifiedDate +
-                ", modifiedBy='" + modifiedBy + '\'' +
-                ", authorizedDate=" + authorizedDate +
-                ", authorizedBy='" + authorizedBy + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", paymentMode='" + paymentMode + '\'' +
-                ", autoAllocation='" + autoAllocation + '\'' +
-                '}';
-    }
 
     public Receipt() {
     }
@@ -156,11 +136,11 @@ public class Receipt {
         this.receiptPurpose = receiptPurpose;
     }
 
-    public String getLoanApplicationNumber() {
+    public LoanApplications getLoanApplicationNumber() {
         return loanApplicationNumber;
     }
 
-    public void setLoanApplicationNumber(String loanApplicationNumber) {
+    public void setLoanApplicationNumber(LoanApplications loanApplicationNumber) {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 
@@ -211,7 +191,6 @@ public class Receipt {
     public void setAuthorizedBy(String authorizedBy) {
         this.authorizedBy = authorizedBy;
     }
-
 
 
 }
