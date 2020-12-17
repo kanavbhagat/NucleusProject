@@ -27,7 +27,7 @@ public class LoanApplications {
     private Integer rate;
 
     @Column(name = "agreement_date",nullable = false)
-    private LocalDate agreement_date;
+    private LocalDate agreementDate;
 
     @Column(name = "installment_due_date",nullable = false)
     private LocalDate installmentDueDate;
@@ -78,12 +78,12 @@ public class LoanApplications {
         this.rate = rate;
     }
 
-    public LocalDate getAgreement_date() {
-        return agreement_date;
+    public LocalDate getAgreementDate() {
+        return agreementDate;
     }
 
-    public void setAgreement_date(LocalDate agreement_date) {
-        this.agreement_date = agreement_date;
+    public void setAgreementDate(LocalDate agreement_date) {
+        this.agreementDate = agreement_date;
     }
 
     public LocalDate getInstallmentDueDate() {
