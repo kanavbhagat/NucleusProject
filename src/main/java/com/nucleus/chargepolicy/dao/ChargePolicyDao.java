@@ -2,9 +2,8 @@ package com.nucleus.chargepolicy.dao;
 
 import com.nucleus.chargepolicy.model.ChargePolicy;
 
-<<<<<<< HEAD
 import java.util.List;
-=======
+
 @Repository
 public class ChargePolicyDao {
     @Autowired
@@ -20,7 +19,6 @@ public class ChargePolicyDao {
         sessionFactory.close();
     }
 
->>>>>>> upstream/main
 
 public interface ChargePolicyDao {
     public void insert(ChargePolicy chargePolicy);
