@@ -15,6 +15,31 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+         function getRepaymentDesc(){
+         var text = '#repaymentData #'+ $( "#repaymentPolicyCode option:selected" ).text();
+            $('#repaymentDesc').val($(text).text())
+         }
+
+         function getEligibilityDesc(){
+         var text = '#eligibilityData #'+ $( "#eligibilityPolicyCode option:selected" ).text();
+            $('#eligibilityDesc').val($(text).text())
+         }
+
+		$(document).ready(function() {
+		    console.log("elo");
+            $( "#repaymentPolicyCodeString" ).change(function() {
+                getRepaymentDesc();
+            });
+
+            $( "#eligibilityPolicyCodeString" ).change(function() {
+                getEligibilityDesc();
+             });
+		});
+	</script>
+
     <style>
         .required-field::after{
              content: "*";
@@ -41,13 +66,13 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form:form modelAttribute="product" method="post">
+    <form:form modelAttribute="product" method="post" action="newProduct">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
                     <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
-                    <form:input cssClass="form-control" path="productCode"/>
+                    <form:input required="required" cssClass="form-control" path="productCode"/>
                     <form:errors path="productCode"/>
                 </div>
 
@@ -66,15 +91,16 @@
 
                 <div class="form-group">
                     <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
-                    <form:input cssClass="form-control" path="productName"/>
+                    <form:input required="required" cssClass="form-control" path="productName"/>
                     <form:errors path="productCode"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="productType" class="font-weight-bold required-field">Product Type</label>
-                    <select class="form-control" id="productType">
-                        <option value="" selected disabled hidden>Select One Option</option>
-                    </select>
+                    <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
+                    <form:select required="required" path="productType" cssClass="form-control">
+                        <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+                        <form:options items="${productTypes}" />
+                    </form:select>
                 </div>
 
             </div>
@@ -98,46 +124,84 @@
 
                 <tr>
                     <td>
-                        <label for="repaymentPolicy" class="required-field">Repayment Policy</label>
+                        <form:label path="repaymentPolicyCode" cssClass="required-field">Repayment Policy</form:label>
                     </td>
                     <td>
-                        <select class="form-control" id="repaymentPolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
+                        <form:select required="required" path="repaymentPolicyCodeString" cssClass="form-control">
+                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                            <form:options items="${repaymentPolicies}" itemLabel="policyName" itemValue="policyCode" />
+                        </form:select>
                     </td>
-                    <td><input class="form-control" type="text" disabled></td>
+                    <td><input class="form-control" id="repaymentDesc" type="text" disabled></td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="eligibilityPolicy" class="required-field">Eligibility Policy</label>
+                        <form:label path="eligibilityPolicyCode" cssClass="required-field">Eligibility Policy</form:label>
                     </td>
                     <td>
-                        <select class="form-control" id="eligibilityPolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
+                        <form:select required="required" path="eligibilityPolicyCodeString" cssClass="form-control">
+                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                            <form:options items="${eligibilityPolicies}" itemLabel="policyName" itemValue="policyCode"/>
+                        </form:select>
                     </td>
-                    <td><input class="form-control" type="text" disabled></td>
+                    <td><input class="form-control" id="eligibilityDesc" type="text" disabled></td>
                 </tr>
                 <tr>
                     <td>Charge Policy</td>
                     <td>
-                        <select class="form-control" id="chargePolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
+                        <form:select  path="chargeCodePolicy" cssClass="form-control">
+                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                            <form:options items="${chargePolicies}" />
+                        </form:select>
                     </td>
-                    <td><input class="form-control" type="text" disabled></td>
+                    <td><form:input cssClass="form-control" disabled="${'true'}" path="chargeCodePolicy"/></td>
                 </tr>
 
             </table>
         </div>
-    </form:form>
-    <hr width="" color="#b3b3b3">
-    <div class="row" style="margin-bottom:20px">
-        <div class="col-sm-3 offset-sm-9">
-            <button type="button" class="btn btn-primary" id="save">Save</button>
-            <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
+        <hr width="" color="#b3b3b3">
+        <div class="row" style="margin-bottom:20px">
+            <div class="col-sm-3 offset-sm-9">
+                <button type="submit" class="btn btn-primary" id="save">Save</button>
+                <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
+            </div>
         </div>
-    </div>
+    </form:form>
+
+<table id="repaymentData" hidden>
+    <thead>
+    <th> policy code <th>
+    <th> policy description <th>
+    </thead>
+    <tbody>
+            <c:if test="${!empty repaymentPolicies}">
+            <c:forEach var="policy" items="${repaymentPolicies}">
+                 <tr>
+                  <td>${policy.policyCode}</td>
+                  <td id=${policy.policyName}>${policy.policyDescription}</td>
+                 </tr>
+                </c:forEach>
+            </c:if>
+    </tbody>
+</table>
+
+
+<table id="eligibilityData" hidden>
+    <thead>
+    <th> policy code <th>
+    <th> policy description <th>
+    </thead>
+    <tbody>
+            <c:if test="${!empty eligibilityPolicies}">
+            <c:forEach var="policy" items="${eligibilityPolicies}">
+                 <tr>
+                  <td>${policy.policyCode}</td>
+                  <td id=${policy.policyName}>${policy.policyDescription}</td>
+                 </tr>
+                </c:forEach>
+            </c:if>
+    </tbody>
+</table>
 </div>
 </body>
 </html>
