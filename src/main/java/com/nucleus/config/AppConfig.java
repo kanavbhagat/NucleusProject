@@ -46,7 +46,10 @@ public class AppConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
+        //bean.setPackagesToScan(new String[]{"com.nucleus.product.model", "com.nucleus.repaymentpolicy.model"});
+
         bean.setPackagesToScan(new String[]{"com.nucleus"});
+
         return bean;
     }
 
@@ -63,6 +66,10 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+        //ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCL");
+        //ds.setUsername("sys as sysdba");
+        //ds.setPassword("gyanesh10");
+
  
 
         //ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
@@ -79,6 +86,7 @@ public class AppConfig {
 
         ds.setUsername("c##username");
         ds.setPassword("pwd");
+
         return ds;
     }
 
