@@ -60,7 +60,7 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Customer Service</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch">Customer Service</a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
