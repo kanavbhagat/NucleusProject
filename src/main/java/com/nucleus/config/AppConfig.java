@@ -43,9 +43,7 @@ public class AppConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
-        //bean.setPackagesToScan(new String[]{"com.nucleus.product.model", "com.nucleus.repaymentpolicy.model"});
-
-        bean.setPackagesToScan(new String[]{"com.nucleus"});
+        bean.setPackagesToScan("com.nucleus");
 
         return bean;
     }
@@ -54,7 +52,7 @@ public class AppConfig {
     private Properties hibernateProperties() {
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         properties.put("hibernate.show_sql","true");
-        properties.put("hibernate.hbm2ddl.auto","create");
+        properties.put("hibernate.hbm2ddl.auto","update");
         properties.put("current_session_context_class","thread");
         return properties;
     }
