@@ -1,10 +1,8 @@
 package com.nucleus.eligibilitypolicy.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,8 +19,12 @@ public class EligibilityPolicy {
     @Column(name = "policy_description", length = 200)
     private String policyDescription;
 
-    @Column(name = "parameter_code" , length = 10, nullable = false)
-    private String parameterCode;
+    @ManyToMany
+    @JoinTable(name = "eligibility_policy_mappings",
+            joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
+            inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
+    })
+    private List<EligibilityParameter> eligibilityParameterList;
 
     @Column(name = "create_date")
     private LocalDate createDate;
@@ -68,14 +70,6 @@ public class EligibilityPolicy {
 
     public void setPolicyDescription(String policyDescription) {
         this.policyDescription = policyDescription;
-    }
-
-    public String getParameterCode() {
-        return parameterCode;
-    }
-
-    public void setParameterCode(String parameterCode) {
-        this.parameterCode = parameterCode;
     }
 
     public LocalDate getCreateDate() {
@@ -134,13 +128,21 @@ public class EligibilityPolicy {
         this.status = status;
     }
 
+    public List<EligibilityParameter> getEligibilityParameterList() {
+        return eligibilityParameterList;
+    }
+
+    public void setEligibilityParameterList(List<EligibilityParameter> eligibilityParameterList) {
+        this.eligibilityParameterList = eligibilityParameterList;
+    }
+
     @Override
     public String toString() {
         return "EligibilityPolicy{" +
                 "policyCode='" + policyCode + '\'' +
                 ", policyName='" + policyName + '\'' +
                 ", policyDescription='" + policyDescription + '\'' +
-                ", parameterCode='" + parameterCode + '\'' +
+                ", eligibilityParameterList=" + eligibilityParameterList +
                 ", createDate=" + createDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", modifiedDate=" + modifiedDate +
@@ -159,7 +161,7 @@ public class EligibilityPolicy {
         return policyCode.equals(that.policyCode) &&
                 policyName.equals(that.policyName) &&
                 Objects.equals(policyDescription, that.policyDescription) &&
-                parameterCode.equals(that.parameterCode) &&
+                Objects.equals(eligibilityParameterList, that.eligibilityParameterList) &&
                 Objects.equals(createDate, that.createDate) &&
                 Objects.equals(createdBy, that.createdBy) &&
                 Objects.equals(modifiedDate, that.modifiedDate) &&
@@ -171,6 +173,7 @@ public class EligibilityPolicy {
 
     @Override
     public int hashCode() {
-        return Objects.hash(policyCode, policyName, policyDescription, parameterCode, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
+        return Objects.hash(policyCode, policyName, policyDescription, eligibilityParameterList, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
     }
+
 }
