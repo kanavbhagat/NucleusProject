@@ -54,7 +54,7 @@ public class AppConfig {
     private Properties hibernateProperties() {
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         properties.put("hibernate.show_sql","true");
-        properties.put("hibernate.hbm2ddl.auto","create");
+        properties.put("hibernate.hbm2ddl.auto","update");
         properties.put("current_session_context_class","thread");
         return properties;
     }
