@@ -10,17 +10,9 @@ import com.nucleus.chargepolicy.model.ChargePolicy;
 
 @Repository
 public class ChargePolicyDao {
-
-    Configuration configuration;
+    @Autowired
     SessionFactory sessionFactory;
 
-    public ChargePolicyDao(){
-        configuration = new Configuration();
-        configuration.addAnnotatedClass(ChargePolicy.class);
-        configuration.configure();
-        sessionFactory = configuration.buildSessionFactory();
-        System.out.println(" Configuration Done !");
-    }
     public void insert(ChargePolicy chargePolicy){
         System.out.println("In dao with " + chargePolicy.getChargePolicyName());
         //SessionFactory factory = configuration.buildSessionFactory();
