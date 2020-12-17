@@ -18,6 +18,14 @@ public class LoanApplications {
     @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
     private Customer customerCode;
 
+    public Customer getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(Customer customerCode) {
+        this.customerCode = customerCode;
+    }
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
     private Product productCode;
