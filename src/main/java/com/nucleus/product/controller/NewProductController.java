@@ -1,5 +1,7 @@
 package com.nucleus.product.controller;
 
+import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.NewProductService;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
@@ -21,22 +23,14 @@ public class NewProductController {
     @Autowired
     NewProductService newProductService;
 
+    @Autowired
+    EligibilityPolicyService eligibilityPolicyService;
+
     @GetMapping(value = {"/newProduct" })
     public ModelAndView newProduct() {
         ModelAndView modelAndView = new ModelAndView("views/product/newProductCreation");
-//        List<String> productTypes = new ArrayList<>();
-//        productTypes.add("Hello");
-//        List<RepaymentPolicy> repaymentPolicies = new ArrayList<>();
-//        RepaymentPolicy policy1 = new RepaymentPolicy();
-//        policy1.setPolicyCode("101");
-//        policy1.setPolicyDescription("it do thing");
-//        repaymentPolicies.add(policy1);
-//
-//        policy1 = new RepaymentPolicy();
-//        policy1.setPolicyCode("102");
-//        policy1.setPolicyDescription("it do other thing");
-//        repaymentPolicies.add(policy1);
-
+        List<EligibilityPolicy> eligibilityPolicies = eligibilityPolicyService.getAllEligibilityPolicies();
+        modelAndView.addObject("eligibilityPolicies", eligibilityPolicies);
         modelAndView.addObject("product", new Product());
 //        modelAndView.addObject("productTypes", productTypes);
 //        modelAndView.addObject("repaymentPolicies", repaymentPolicies);
@@ -44,8 +38,9 @@ public class NewProductController {
     }
 
     @PostMapping(value = "/newProduct")
-    public ModelAndView addProdut(@Valid Product product, BindingResult result){
+    public ModelAndView addProduct(@Valid Product product, BindingResult result){
         ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
+        System.out.println(product.getEligibilityPolicyCode());
         return modelAndView;
     }
 }
