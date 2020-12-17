@@ -1,6 +1,6 @@
-package com.nucleus.receipt.dao;
+package com.nucleus.customer.dao;
 
-import com.nucleus.receipt.model.Receipt;
+import com.nucleus.customer.model.Customer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReceiptDAO implements ReceiptDAOInterface{
+public class CustomerDAO implements CustomerDaoInterface{
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -23,12 +23,11 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         return session;
     }
     @Override
-    public Boolean createNewReceipt(Receipt receipt) {
-
-        try(Session session = getSession()){
+    public boolean addCustomer(Customer c) {
+        try(Session session=getSession()){
             session.beginTransaction();
             try {
-                session.save(receipt);
+                session.save(c);
                 session.getTransaction().commit();
                 return true;
             } catch (HibernateException e){
@@ -36,7 +35,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.getTransaction().rollback();
                 return false;
             }
+
         }
-        //return null;
     }
 }

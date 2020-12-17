@@ -45,7 +45,8 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Receipt</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
+                    <%--<a class="nav-link" href="#">Receipt</a>--%>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
@@ -60,7 +61,7 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Customer Service</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch">Customer Service</a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
