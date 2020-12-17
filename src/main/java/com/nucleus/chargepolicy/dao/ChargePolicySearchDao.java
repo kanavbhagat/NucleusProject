@@ -4,6 +4,7 @@ package com.nucleus.chargepolicy.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.nucleus.chargepolicy.model.ChargePolicy;
 
@@ -12,19 +13,13 @@ import java.util.List;
 
 @Repository
 public class ChargePolicySearchDao {
-    Configuration configuration;
-    public ChargePolicySearchDao(){
-        configuration = new Configuration();
-        configuration.addAnnotatedClass(ChargePolicy.class);
-        configuration.configure();
-        System.out.println(" Configuration Done !");
-    }
+    @Autowired
+    SessionFactory sessionFactory;
 
     public List<ChargePolicy> getChargePolicyList(){
-        SessionFactory factory = configuration.buildSessionFactory();
-        Session session = factory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
-        Query query =  session.createQuery("from ChargePolicy");
+        Query<ChargePolicy> query =  session.createQuery("from ChargePolicy");
         List<ChargePolicy> chargePolicyList = query.getResultList();
         System.out.println("in dao ");
 
