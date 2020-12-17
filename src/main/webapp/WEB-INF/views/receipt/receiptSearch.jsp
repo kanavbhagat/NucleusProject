@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>New Receipt/Payment</title>
+    <title>Payment Search Screen</title>
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -12,12 +12,6 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .required-field::after{
-             content: "*";
-             color: red;
-        }
-    </style>
 </head>
 
 <body>
@@ -91,29 +85,26 @@
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop5" data-toggle="dropdown">
-                        BOD
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
 
             </ul>
         </div>
     </nav>
     <!-- NavBar Ends -->
 
-    <div class="row pt-3 pl-3 flex-column">
-        <h2 class="  display-3" style="font-size: 30px">
-            <b> Receipt/Payment(Create) </b>
-        </h2>
+    <br>
+    <div class="row">
+        <div class="col-sm-10 col-12">
+            <h2 class="display-3" style="font-size: 30px">
+                <strong>Receipt/Payment(Search)</strong>
+            </h2>
+        </div>
+        <div class="col-sm-2 col-12">
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+            <%--<button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>--%>
+        </div>
     </div>
 
-    <hr width="" color="#b3b3b3">
+    <hr>
 
 </div>
 
@@ -124,87 +115,43 @@
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <label for="receiptNumber" class="font-weight-bold required-field">Receipt No</label>
-                    <input type="text" class="form-control" id="receiptNumber">
+                    <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
+                    <select class="form-control" id="receiptType">
+                        <option value="" selected disabled hidden>Select One Option</option>
+                    </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="paymentMode" class="font-weight-bold required-field">Payment Mode</label>
-                    <select class="form-control" id="paymentMode">
-                        <option value="" disabled >Select One Option</option>
+                    <label for="receiptBasis" class="font-weight-bold">Receipt basis</label>
+                    <select class="form-control" id="receiptBasis">
+                        <option value="" selected disabled hidden>Select One Option</option>
                     </select>
                 </div>
 
+            </div>
+            <div class="col-sm-3 offset-sm-4">
+
                 <div class="form-group">
-                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account #</label>
+                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
                     <input type="text" class="form-control" id="loanAccount">
                 </div>
 
                 <div class="form-group">
-                    <label for="receiptAmount" class="font-weight-bold required-field">Receipt Amount</label>
-                    <input type="number" class="form-control" id="receiptAmount">
+                    <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
+                    <input type="text" class="form-control" id="receiptRef">
                 </div>
 
-                <div class="form-group">
-                    <label for="remark" class="font-weight-bold ">Remark</label>
-                    <textarea class="form-control" id="remark" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="col-sm-3 offset-sm-4">
-
-                <div class="form-group">
-                    <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
-                    <select class="form-control" id="receiptType">
-                        <option value="" disabled >Select One Option</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="receiptBasis" class="font-weight-bold required-field">Receipt Basis</label>
-                    <select class="form-control" id="receiptBasis">
-                        <option value="" disabled >Select One Option</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="dateOfReceipt" class="font-weight-bold required-field">Date of Receipt</label>
-                    <input type="date" class="form-control" id="dateOfReceipt" placeholder="dd/mm/yy">
-                </div>
-
-                <div class="form-group">
-                    <label for="receiptPurpose" class="font-weight-bold required-field">Receipt Purpose</label>
-                    <select class="form-control" id="receiptPurpose">
-                        <option value="" disabled>Select One Option</option>
-                    </select>
-
-                </div>
-
-                <label class="font-weight-bold required-field">Auto Allocation</label>
-                <br>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" checked>
-                    <label class="form-check-label" for="inlineRadio2" >No</label>
-                </div>
             </div>
         </div>
 
+        <hr>
 
-
+        <div class="row" style="margin-bottom:20px">
+            <div class="col-sm-3 offset-sm-10">
+                <button type="button"  id="save" class="btn btn-primary">Save</button>
+                <button type="button" id="clear" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
     </form>
-    <hr width="" color="#b3b3b3">
-    <div class="row" style="margin-bottom:20px">
-        <div class="col-sm-3 offset-sm-9">
-            <button type="button" class="btn btn-primary" id="save">Save</button>
-            <button type="button" class="btn btn-primary" id="clear">Clear</button>
-        </div>
-    </div>
 </div>
 </body>
 </html>
