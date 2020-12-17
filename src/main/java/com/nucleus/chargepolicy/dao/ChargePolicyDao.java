@@ -1,12 +1,8 @@
 package com.nucleus.chargepolicy.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 import com.nucleus.chargepolicy.model.ChargePolicy;
+
+import java.util.List;
 
 @Repository
 public class ChargePolicyDao {
@@ -24,4 +20,8 @@ public class ChargePolicyDao {
     }
 
 
+public interface ChargePolicyDao {
+    public void insert(ChargePolicy chargePolicy);
+    public List<ChargePolicy> getPolicyList();
+    public ChargePolicy getChargePolicy(String chargePolicyCode);
 }
