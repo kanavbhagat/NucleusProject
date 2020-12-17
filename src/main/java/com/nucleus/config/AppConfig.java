@@ -75,10 +75,10 @@ public class AppConfig {
             ds.setPassword("qwerty");
         * */
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
 
-        ds.setUsername("MYUSERNAME");
-        ds.setPassword("MYPASSWORD");
+        ds.setUsername("c##username");
+        ds.setPassword("pwd");
         return ds;
     }
 
