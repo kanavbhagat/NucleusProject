@@ -14,6 +14,10 @@ public class LoanApplications {
     @Column(name = "loan_application_number")
     private Integer loanApplicationNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
+    private Customer customerCode;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
     private Product productCode;
