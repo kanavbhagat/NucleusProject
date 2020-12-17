@@ -12,6 +12,9 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -43,7 +46,7 @@ public class AppConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
-        bean.setPackagesToScan(new String[]{"com.nucleus.product.model", "com.nucleus.receipt.model"});
+        bean.setPackagesToScan(new String[]{"com.nucleus"});
         return bean;
     }
 
@@ -60,11 +63,23 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-        ds.setUsername("c##username");
+ 
+
+        //ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        //ds.setUsername("nsbt");
+        //ds.setPassword("qwerty");
+        // Jigme's Oracle db credentials
+        /*
+            ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+            ds.setUsername("nsbt");
+            ds.setPassword("qwerty");
+        * */
+
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+
+        ds.setUsername("sys as sysdba");
         ds.setPassword("pwd");
         return ds;
-
     }
 
     @Bean
@@ -79,6 +94,11 @@ public class AppConfig {
 //    public DataSource dataSource() {
 //        JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
 //        return jndiDataSourceLookup.getDataSource("java:/OracleDS");
+//    }
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 //    }
 
 }

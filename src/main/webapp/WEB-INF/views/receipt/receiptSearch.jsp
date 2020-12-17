@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>New Product</title>
+    <title>Payment Search Screen</title>
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -12,12 +12,6 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .required-field::after{
-             content: "*";
-             color: red;
-        }
-    </style>
 </head>
 
 <body>
@@ -91,29 +85,26 @@
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop5" data-toggle="dropdown">
-                        BOD
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
 
             </ul>
         </div>
     </nav>
     <!-- NavBar Ends -->
 
-    <div class="row pt-3 pl-3 flex-column">
-        <h2 class="  display-3" style="font-size: 30px">
-            <b> Create Products </b>
-        </h2>
+    <br>
+    <div class="row">
+        <div class="col-sm-10 col-12">
+            <h2 class="display-3" style="font-size: 30px">
+                <strong>Receipt/Payment(Search)</strong>
+            </h2>
+        </div>
+        <div class="col-sm-2 col-12">
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+            <%--<button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>--%>
+        </div>
     </div>
 
-    <hr width="" color="#b3b3b3">
+    <hr>
 
 </div>
 
@@ -124,96 +115,43 @@
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <label for="productCode" class="font-weight-bold required-field">Product Code</label>
-                    <input type="text" class="form-control" id="productCode">
+                    <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
+                    <select class="form-control" id="receiptType">
+                        <option value="" selected disabled hidden>Select One Option</option>
+                    </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="productDescription" class="font-weight-bold required-field">Product Description</label>
-                    <textarea class="form-control" id="productDescription" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="maxExposureAmount" class="font-weight-bold">Maximum Exposure Amount</label>
-                    <input type="number" class="form-control" id="maxExposureAmount">
+                    <label for="receiptBasis" class="font-weight-bold">Receipt basis</label>
+                    <select class="form-control" id="receiptBasis">
+                        <option value="" selected disabled hidden>Select One Option</option>
+                    </select>
                 </div>
 
             </div>
             <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
-                    <label for="productName" class="font-weight-bold required-field">Product Name</label>
-                    <input type="text" class="form-control" id="productName">
+                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
+                    <input type="text" class="form-control" id="loanAccount">
                 </div>
 
                 <div class="form-group">
-                    <label for="productType" class="font-weight-bold required-field">Product Type</label>
-                    <select class="form-control" id="productType">
-                        <option value="" selected disabled hidden>Select One Option</option>
-                    </select>
+                    <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
+                    <input type="text" class="form-control" id="receiptRef">
                 </div>
 
             </div>
         </div>
 
-        <hr width="" color="#b3b3b3">
-        <div class="row pt-3 pl-3 flex-column">
-            <h2 class="  display-3" style="font-size: 30px">
-                <b> Policies </b>
-            </h2>
-        </div>
-        <div class="row col-sm-8">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">Policy</th>
-                    <th scope="col">Policy Name</th>
-                    <th scope="col">Policy Description</th>
-                </tr>
-                </thead>
+        <hr>
 
-                <tr>
-                    <td>
-                        <label for="repaymentPolicy" class="required-field">Repayment Policy</label>
-                    </td>
-                    <td>
-                        <select class="form-control" id="repaymentPolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
-                    </td>
-                    <td><input class="form-control" type="text" disabled></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="eligibilityPolicy" class="required-field">Eligibility Policy</label>
-                    </td>
-                    <td>
-                        <select class="form-control" id="eligibilityPolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
-                    </td>
-                    <td><input class="form-control" type="text" disabled></td>
-                </tr>
-                <tr>
-                    <td>Charge Policy</td>
-                    <td>
-                        <select class="form-control" id="chargePolicy">
-                            <option value="" selected disabled hidden>Choose a Policy</option>
-                        </select>
-                    </td>
-                    <td><input class="form-control" type="text" disabled></td>
-                </tr>
-
-            </table>
+        <div class="row" style="margin-bottom:20px">
+            <div class="col-sm-3 offset-sm-10">
+                <button type="button"  id="save" class="btn btn-primary">Save</button>
+                <button type="button" id="clear" class="btn btn-primary">Clear</button>
+            </div>
         </div>
     </form>
-    <hr width="" color="#b3b3b3">
-    <div class="row" style="margin-bottom:20px">
-        <div class="col-sm-3 offset-sm-9">
-            <button type="button" class="btn btn-primary" id="save">Save</button>
-            <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
-        </div>
-    </div>
 </div>
 </body>
 </html>
