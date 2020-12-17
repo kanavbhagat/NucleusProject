@@ -1,30 +1,32 @@
-package com.nucleus.eligibilitypolicy.model;
+package com.nucleus.eligibiltyparameter.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "eligibility_policies")
-public class EligibilityPolicy {
+@Table(name = "eligibility_parameters")
+public class EligibilityParameter implements Serializable {
 
     @Id
-    @Column(name = "policy_code", length = 10)
-    private String policyCode;
+    @Column(name = "parameter_code", length = 10)
+    private String parameterCode;
 
-    @Column(name = "policy_name", length = 20, nullable = false, unique = true)
-    private String policyName;
+    @Column(name = "parameter_name", length = 10, nullable = false, unique = true)
+    private String parameterName;
 
-    @Column(name = "policy_description", length = 200)
-    private String policyDescription;
+    @Column(name = "min_value", nullable = false)
+    private double minValue;
 
-    @ManyToMany
-    @JoinTable(name = "eligibility_policy_mappings",
-            joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
-            inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
-    })
-    private List<EligibilityParameter> eligibilityParameterList;
+    @Column(name = "max_value")
+    private double maxValue;
+
+    @Column(name = "parameter_description", length = 200)
+    private String parameterDescription;
 
     @Column(name = "create_date")
     private LocalDate createDate;
@@ -47,29 +49,45 @@ public class EligibilityPolicy {
     @Column(name = "status", length = 20)
     private String status;
 
-    //Getters - Setters
-    public String getPolicyCode() {
-        return policyCode;
+    // Getters - Setters
+    public String getParameterCode() {
+        return parameterCode;
     }
 
-    public void setPolicyCode(String policyCode) {
-        this.policyCode = policyCode;
+    public void setParameterCode(String parameterCode) {
+        this.parameterCode = parameterCode;
     }
 
-    public String getPolicyName() {
-        return policyName;
+    public String getParameterName() {
+        return parameterName;
     }
 
-    public void setPolicyName(String policyName) {
-        this.policyName = policyName;
+    public void setParameterName(String parameterName) {
+        this.parameterName = parameterName;
     }
 
-    public String getPolicyDescription() {
-        return policyDescription;
+    public double getMinValue() {
+        return minValue;
     }
 
-    public void setPolicyDescription(String policyDescription) {
-        this.policyDescription = policyDescription;
+    public void setMinValue(double minValue) {
+        this.minValue = minValue;
+    }
+
+    public double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public String getParameterDescription() {
+        return parameterDescription;
+    }
+
+    public void setParameterDescription(String parameterDescription) {
+        this.parameterDescription = parameterDescription;
     }
 
     public LocalDate getCreateDate() {
@@ -128,21 +146,14 @@ public class EligibilityPolicy {
         this.status = status;
     }
 
-    public List<EligibilityParameter> getEligibilityParameterList() {
-        return eligibilityParameterList;
-    }
-
-    public void setEligibilityParameterList(List<EligibilityParameter> eligibilityParameterList) {
-        this.eligibilityParameterList = eligibilityParameterList;
-    }
-
     @Override
     public String toString() {
-        return "EligibilityPolicy{" +
-                "policyCode='" + policyCode + '\'' +
-                ", policyName='" + policyName + '\'' +
-                ", policyDescription='" + policyDescription + '\'' +
-                ", eligibilityParameterList=" + eligibilityParameterList +
+        return "EligibilityParameter{" +
+                "parameterCode='" + parameterCode + '\'' +
+                ", parameterName='" + parameterName + '\'' +
+                ", minValue=" + minValue +
+                ", maxValue=" + maxValue +
+                ", parameterDescription='" + parameterDescription + '\'' +
                 ", createDate=" + createDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", modifiedDate=" + modifiedDate +
@@ -157,11 +168,12 @@ public class EligibilityPolicy {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EligibilityPolicy that = (EligibilityPolicy) o;
-        return policyCode.equals(that.policyCode) &&
-                policyName.equals(that.policyName) &&
-                Objects.equals(policyDescription, that.policyDescription) &&
-                Objects.equals(eligibilityParameterList, that.eligibilityParameterList) &&
+        EligibilityParameter that = (EligibilityParameter) o;
+        return Double.compare(that.minValue, minValue) == 0 &&
+                Double.compare(that.maxValue, maxValue) == 0 &&
+                parameterCode.equals(that.parameterCode) &&
+                parameterName.equals(that.parameterName) &&
+                Objects.equals(parameterDescription, that.parameterDescription) &&
                 Objects.equals(createDate, that.createDate) &&
                 Objects.equals(createdBy, that.createdBy) &&
                 Objects.equals(modifiedDate, that.modifiedDate) &&
@@ -173,7 +185,6 @@ public class EligibilityPolicy {
 
     @Override
     public int hashCode() {
-        return Objects.hash(policyCode, policyName, policyDescription, eligibilityParameterList, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
+        return Objects.hash(parameterCode, parameterName, minValue, maxValue, parameterDescription, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
     }
-
 }
