@@ -71,7 +71,9 @@ public class AppConfig {
 
         ds.setUsername("c##username");
         ds.setPassword("pwd");
-
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+//        ds.setUsername("richa");
+//        ds.setPassword("password");
 
         return ds;
 

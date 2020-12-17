@@ -23,5 +23,11 @@ public class LoanClosureController {
     @RequestMapping("/loanClosureBod")
     public void updateStatus(){
         loanClosureService.addDummyData();
+
     }
+//
+//    @RequestMapping("/loanClosureBod")
+//    public void loanClosureBod(){
+//        loanClosureService.loanClosureBod();
+//    }
 }
