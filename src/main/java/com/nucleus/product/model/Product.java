@@ -58,6 +58,8 @@ public class Product {
     @Column(name = "status", length = 30)
     private String status;
 
+    private String eligibilityPolicyCodeString;
+
     public Product(){
     }
 
@@ -109,12 +111,25 @@ public class Product {
         this.repaymentPolicyCode = repaymentPolicyCode;
     }
 
+    public String getEligibilityPolicyCodeString() {
+        if(eligibilityPolicyCode==null){
+            return null;
+        }
+        return eligibilityPolicyCode.getPolicyCode();
+    }
+
     public EligibilityPolicy getEligibilityPolicyCode() {
-        return eligibilityPolicyCode;
+        return this.eligibilityPolicyCode;
     }
 
     public void setEligibilityPolicyCode(EligibilityPolicy eligibilityPolicyCode) {
         this.eligibilityPolicyCode = eligibilityPolicyCode;
+    }
+
+    public void setEligibilityPolicyCodeString(String eligibilityPolicyCode) {
+        EligibilityPolicy policy = new EligibilityPolicy();
+        policy.setPolicyCode(eligibilityPolicyCode);
+        this.eligibilityPolicyCode = policy;
     }
 
     public String getChargeCodePolicy() {
