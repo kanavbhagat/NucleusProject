@@ -18,7 +18,7 @@ public class LoanDisbursalController {
     @Autowired
     private LoanDisbursalService loanDisbursalService;
 
-    @GetMapping(path = "/loandisbursalDetails/{loanApplicationNumber}")
+    @GetMapping(path = "/loandisbursalDetail/{loanApplicationNumber}")
     public LoanApplication getLoanDisbursal(@PathVariable("loanApplicationNumber") int loanApplicationId){
         LoanApplication loanApplication= loanDisbursalService.getLoanDetails(loanApplicationId);
         if(loanApplication==null){
@@ -27,7 +27,7 @@ public class LoanDisbursalController {
         return loanApplication;
     }
 
-    @GetMapping(path = "/customerloandisbursal/{customerId}")
+    @GetMapping(path = "/customerloandisbursals/{customerId}")
     public Set<LoanApplication> getLoanDisbursalByCustomerId(@PathVariable("customerId") String customerId){
         Set<LoanApplication> loanApplications=loanDisbursalService.getCustomerLoanDetails(customerId);
         if(loanApplications.isEmpty()){
