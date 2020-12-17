@@ -1,7 +1,7 @@
 package com.nucleus.customerservice.customerloansearch.controller;
 
 import com.nucleus.customer.model.Customer;
-import com.nucleus.customerservice.customerloansearch.service.CustomerLoanSearchService;
+import com.nucleus.customer.service.NewCustomerService;
 import com.nucleus.loanaplications.model.LoanApplications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -18,8 +18,9 @@ import java.util.List;
 @RestController
 public class CustomerLoanSearchController {
 
+    // TODO: 17/12/20 change this later to map with customer dao services.
     @Autowired
-    CustomerLoanSearchService customerLoanSearchService;
+    NewCustomerService customerLoanSearchService;
 
     @GetMapping("/customerLoanSearch")
     public ModelAndView customerLoanSearch(){
