@@ -136,7 +136,7 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <tr>
+		            <%-- <tr>
 		                <td style="text-align: center;">RM101</td>
 		                <td>Home Loan</td>
 		                <td>Desc goes here</td>
@@ -151,7 +151,40 @@
 		                <td>Donald Trump</td>
 		                <td>Joe Biden </td>
 		                <td><button type="button" class="btn btn-link">Edit</button> | <button type="button" class="btn btn-link">Delete</button></td>
-		            </tr>
+		            </tr> --%>
+
+		            <c:forEach items="${policyList}" var="policy">
+                         <tr>
+                             <%-- <td>
+                                 <form action='showLoanDetail.do' method="post">
+                                 <input type="submit" class="btn btn-link" name="lid" value="${policy.loan_application_id}"/>
+                                 </form>
+                             </td> --%>
+                             <td style="text-align: center;"><c:out value="${policy.policyCode}" /></td>
+                             <td><c:out value="${policy.policyName}" /></td>
+                             <td><c:out value="${policy.policyDescription}" /></td>
+                             <td><c:out value="${policy.createdBy}" /></td>
+                             <td><c:out value="${policy.authorizedBy}" /></td>
+                             <td>
+                                <%--<c:url var="editURL" value="editRepaymentPolicy"/>
+                                <c:param name="policyCode" value="${policy.policyCode}"/>
+                                </c:url>
+                                <a href="<%=request.getContextPath()%>/editRepaymentPolicy/${policy.policyCode} " >Click Here</a>
+                                --%>
+
+
+                                <button type="button" class="btn btn-link">
+                                    <a href="<%=request.getContextPath()%>/editRepaymentPolicy/${policy.policyCode} " />
+                                    Edit
+                                </button>
+                                |
+                                <button type="button" class="btn btn-link">
+                                    <a href="<%=request.getContextPath()%>/deleteRepaymentPolicy/${policy.policyCode} " />
+                                    Delete
+                                </button>
+                             </td>
+                       </tr>
+                    </c:forEach>
 		        </tbody>
 
 		    </table>
