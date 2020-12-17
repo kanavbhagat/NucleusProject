@@ -1,9 +1,9 @@
 package com.nucleus.loanaplications.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nucleus.customer.model.Customer;
+import com.nucleus.product.model.Product;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -14,8 +14,9 @@ public class LoanApplications {
     @Column(name = "loan_application_number")
     private Integer loanApplicationNumber;
 
-    @Column(name = "product_code",nullable = false)
-    private String productCode;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
+    private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
     private Integer loanAmountRequested;
