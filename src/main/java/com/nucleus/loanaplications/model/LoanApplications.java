@@ -59,7 +59,7 @@ public class LoanApplications {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 
-    public String getProductCode() {
+    public Product getProductCode() {
         return productCode;
     }
 
@@ -143,7 +143,7 @@ public class LoanApplications {
         this.authorizedBy = authorizedBy;
     }
 
-    public void setProductCode(String productCode) {
+    public void setProductCode(Product productCode) {
         this.productCode = productCode;
     }
 
