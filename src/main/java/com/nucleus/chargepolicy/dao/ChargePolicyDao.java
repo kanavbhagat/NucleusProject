@@ -4,20 +4,7 @@ import com.nucleus.chargepolicy.model.ChargePolicy;
 
 import java.util.List;
 
-@Repository
-public class ChargePolicyDao {
-    @Autowired
-    SessionFactory sessionFactory;
 
-    public void insert(ChargePolicy chargePolicy){
-        System.out.println("In dao with " + chargePolicy.getChargePolicyName());
-        //SessionFactory factory = configuration.buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        session.save(chargePolicy);
-        session.getTransaction().commit();
-        sessionFactory.close();
-    }
 
 
 public interface ChargePolicyDao {
