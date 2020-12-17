@@ -65,13 +65,13 @@ public class AppConfig {
         //ds.setUsername("nsbt");
         //ds.setPassword("qwerty");
         // Jigme's Oracle db credentials
-//            ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-//            ds.setUsername("nsbt");
-//            ds.setPassword("qwerty");
+            ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+            ds.setUsername("nsbt");
+            ds.setPassword("qwerty");
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("sys as sysdba");
-        ds.setPassword("pwd");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("pwd");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //
