@@ -2,16 +2,37 @@ package com.nucleus.payment.model;
 
 import com.nucleus.customer.model.Customer;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+//@Entity
+@Table(name = "payment")
 public class Payment {
+    @Id
+    @Column(name = "loan_application_number")
     private int loanApplicationNumber;
+
+    @Column(name = "payment_code")
     private int paymentCode;
+
+    @Id
+    @Column(name = "payment_amount")
     private int paymentAmount;
+
+    @Column(name = "date")
     private LocalDate date;
+
+    @Column(name = "payout_bank_account")
     private String payoutBankAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_code")
     private Customer customerCode;
+
+    @Column(name = "remarks")
     private String remarks;
+
+    @Column(name = "payment_channel")
     private String paymentChannel;
 
     public int getLoanApplicationNumber() {
