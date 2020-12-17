@@ -1,4 +1,10 @@
 NucleusProject.iml
 .idea
 target
+<<<<<<< HEAD
 /src/main/java/com/nucleus/config/
+=======
+src/main/resources/hibernate.cfg.xml
+src/main/java/com/nucleus/config/AppConfig.java
+
+>>>>>>> upstream/main

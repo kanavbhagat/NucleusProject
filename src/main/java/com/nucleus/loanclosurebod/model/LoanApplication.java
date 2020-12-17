@@ -1,34 +1,34 @@
-package com.nucleus.customerservice.loandisbursal.model;
+package com.nucleus.loanclosurebod.model;
 
-
-import com.nucleus.product.model.Product;
+import com.nucleus.customerservice.loandisbursal.model.Customer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-@Table( name= "loan_application")
+@Table( name= "loan_application_new")
 public class LoanApplication implements Serializable {
+
     @Id
     @Column(name = "loan_application_number",length = 10,nullable = false)
     private int loanApplicationNumber;
 
     //FK
-    @ManyToOne
-    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
-    private Customer customerCode;
+//    @OneToOne
+//    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
+//    private Customer customerCode;
 
-    //FK
-    @ManyToOne
-    @JoinColumn(name = "product_code",referencedColumnName = "product_code",nullable = false)
-    private Product productCode;
+    //FK (Products class required)
+//    @ManyToOne
+//    @JoinColumn(name = "product_code",referencedColumnName = "product_code",nullable = false)
+//    private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
     private int loanAmountRequested;
@@ -63,6 +63,8 @@ public class LoanApplication implements Serializable {
     @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
 
+    @Column(name = "loan_status", length = 30)
+    private String loanStatus;
     // Getter and setter
 
     public int getLoanApplicationNumber() {
@@ -73,13 +75,21 @@ public class LoanApplication implements Serializable {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 
-    public Customer getCustomerCode() {
-        return customerCode;
-    }
+//    public Customer getCustomerCode() {
+//        return customerCode;
+//    }
+//
+//    public void setCustomerCode(Customer customerCode) {
+//        this.customerCode = customerCode;
+//    }
 
-    public void setCustomerCode(Customer customerCode) {
-        this.customerCode = customerCode;
-    }
+//    public String getProductCode() {
+//        return productCode;
+//    }
+//
+//    public void setProductCode(String productCode) {
+//        this.productCode = productCode;
+//    }
 
     public int getLoanAmountRequested() {
         return loanAmountRequested;
@@ -169,20 +179,20 @@ public class LoanApplication implements Serializable {
         this.authorizedBy = authorizedBy;
     }
 
-    public Product getProductCode() {
-        return productCode;
+    public String getLoanStatus() {
+        return loanStatus;
     }
 
-    public void setProductCode(Product productCode) {
-        this.productCode = productCode;
+    public void setLoanStatus(String loanStatus) {
+        this.loanStatus = loanStatus;
     }
 
     @Override
     public String toString() {
-        return "LoanApplication{" +
+        return "LoanApplications{" +
                 "loanApplicationNumber=" + loanApplicationNumber +
-                ", customerCode=" + customerCode +
-                ", productCode=" + productCode +
+//                ", customerCode=" + customerCode +
+                ", productCode='" + "" + '\'' +
                 ", loanAmountRequested=" + loanAmountRequested +
                 ", tenure=" + tenure +
                 ", rate=" + rate +
@@ -194,6 +204,35 @@ public class LoanApplication implements Serializable {
                 ", modifiedBy='" + modifiedBy + '\'' +
                 ", authorizedDate=" + authorizedDate +
                 ", authorizedBy='" + authorizedBy + '\'' +
+                ", loanStatus='" + loanStatus + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        com.nucleus.loanclosurebod.model.LoanApplication that = (com.nucleus.loanclosurebod.model.LoanApplication) o;
+        return loanApplicationNumber == that.loanApplicationNumber
+                && loanAmountRequested == that.loanAmountRequested &&
+                tenure == that.tenure && rate == that.rate &&
+    //            customerCode.equals(that.customerCode) &&
+                agreementDate.equals(that.agreementDate) &&
+                installmentDueDate.equals(that.installmentDueDate) &&
+                Objects.equals(createDate, that.createDate) &&
+                Objects.equals(createdBy, that.createdBy) &&
+                Objects.equals(modifiedDate, that.modifiedDate) &&
+                Objects.equals(modifiedBy, that.modifiedBy) &&
+                Objects.equals(authorizedDate, that.authorizedDate) &&
+                Objects.equals(authorizedBy, that.authorizedBy) &&
+                Objects.equals(loanStatus, that.loanStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(loanApplicationNumber,
+                loanAmountRequested, tenure, rate, agreementDate,
+                installmentDueDate, createDate, createdBy, modifiedDate,
+                modifiedBy, authorizedDate, authorizedBy);
     }
 }
