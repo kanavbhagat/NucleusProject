@@ -1,6 +1,7 @@
-package com.nucleus.receipt.dao;
+package com.nucleus.customerservice.customerloansearch.dao;
 
-import com.nucleus.receipt.model.Receipt;
+
+import com.nucleus.customer.model.Customer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReceiptDAO implements ReceiptDAOInterface{
+public class CustomerDAO implements CustomerDAOInterface{
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -22,21 +23,26 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         }
         return session;
     }
-    @Override
-    public Boolean createNewReceipt(Receipt receipt) {
 
-        try(Session session = getSession()){
+    @Override
+    public Customer getCustomerDetails(String customerCode) {
+        try(Session session=getSession()){
             session.beginTransaction();
             try {
-                session.save(receipt);
+                Customer customer= session.get(Customer.class,customerCode);
                 session.getTransaction().commit();
-                return true;
-            } catch (HibernateException e){
+                return customer;
+            }catch(HibernateException e){
                 e.printStackTrace();
                 session.getTransaction().rollback();
-                return false;
             }
+
+            return null;
         }
-        //return null;
+
     }
 }
+
+
+
+
