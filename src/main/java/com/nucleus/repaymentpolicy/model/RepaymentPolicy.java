@@ -4,12 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "repayment_policy")
-public class RepaymentPolicy implements Serializable {
+public class RepaymentPolicy {
 
     @Id
     @Column(name="policy_code",length = 10,nullable = false)
@@ -80,30 +79,6 @@ public class RepaymentPolicy implements Serializable {
         this.policyDescription = policyDescription;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public String getAuthorizedBy() {
-        return authorizedBy;
-    }
-
-    public void setAuthorizedBy(String authorizedBy) {
-        this.authorizedBy = authorizedBy;
-    }
-
     public LocalDate getInstallmentDueDate() {
         return installmentDueDate;
     }
@@ -152,12 +127,28 @@ public class RepaymentPolicy implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
     public void setModifiedDate(LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
     public LocalDate getAuthorizedDate() {
@@ -168,14 +159,30 @@ public class RepaymentPolicy implements Serializable {
         this.authorizedDate = authorizedDate;
     }
 
+    public String getAuthorizedBy() {
+        return authorizedBy;
+    }
+
+    public void setAuthorizedBy(String authorizedBy) {
+        this.authorizedBy = authorizedBy;
+    }
+
     @Override
     public String toString() {
         return "RepaymentPolicy{" +
                 "policyCode='" + policyCode + '\'' +
                 ", policyName='" + policyName + '\'' +
                 ", policyDescription='" + policyDescription + '\'' +
+                ", installmentDueDate=" + installmentDueDate +
+                ", repaymentFrequency='" + repaymentFrequency + '\'' +
+                ", minTenure=" + minTenure +
+                ", maxTenure=" + maxTenure +
+                ", defaultTenure=" + defaultTenure +
+                ", createdDate=" + createdDate +
                 ", createdBy='" + createdBy + '\'' +
+                ", modifiedDate=" + modifiedDate +
                 ", modifiedBy='" + modifiedBy + '\'' +
+                ", authorizedDate=" + authorizedDate +
                 ", authorizedBy='" + authorizedBy + '\'' +
                 '}';
     }

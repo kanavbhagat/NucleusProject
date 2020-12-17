@@ -10,13 +10,32 @@ import javax.persistence.Table;
 public class ChargePolicy {
 
     @Id
+    @Column(name = "policy_code")
     String chargePolicyCode;
 
-    @Column
+    @Column(name = "policy_name")
     String chargePolicyName;
 
-    @Column
+    @Column(name = "policy_description")
     String chargePolicyDesc;
+
+    @Column(name = "created_date")
+    String createdDate;
+
+    @Column(name = "created_by")
+    String createdBy;
+
+    @Column(name = "modified_date")
+    String modifiedDate;
+
+    @Column(name = "modified_by")
+    String modifiedBy;
+
+    @Column(name = "authorized_date")
+    String authorizedDate;
+
+    @Column(name = "authorized_by")
+    String authorizedBy;
 
     @Column
     String chargeCode;
@@ -30,6 +49,54 @@ public class ChargePolicy {
 
     public void setChargePolicyCode(String chargePolicyCode) {
         this.chargePolicyCode = chargePolicyCode;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public String getAuthorizedDate() {
+        return authorizedDate;
+    }
+
+    public void setAuthorizedDate(String authorizedDate) {
+        this.authorizedDate = authorizedDate;
+    }
+
+    public String getAuthorizedBy() {
+        return authorizedBy;
+    }
+
+    public void setAuthorizedBy(String authorizedBy) {
+        this.authorizedBy = authorizedBy;
     }
 
     public String getChargePolicyName() {
