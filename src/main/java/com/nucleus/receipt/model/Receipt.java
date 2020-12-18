@@ -2,8 +2,17 @@ package com.nucleus.receipt.model;
 
 
 import com.nucleus.loanaplications.model.LoanApplications;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Entity
@@ -11,27 +20,39 @@ import java.time.LocalDate;
 public class Receipt {
 
     @Id
+    @NotNull(message = "Receipt No. can not be null")
+    //@Digits(message = "Receipt No. must be numeric", integer = 10, fraction = 0)
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     @Column(name = "receipt_no",length = 10,nullable = false)
     private Integer receiptNo;
 
+    @NotEmpty(message = "Fill this field")
     @Column(name="receipt_basis",length = 40,nullable = false)
     private String receiptBasis;
 
+    @NotEmpty(message = "Fill this field")
     @Column(name="receipt_type",length = 20,nullable = false)
     private String receiptType;
 
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name="date_of_receipt")
     private LocalDate dateOfReceipt;
 
+    @NotNull(message = "Receipt Amount can not be null")
     @Column(name = "receipt_amount",nullable = false)
-    private double receiptAmount;
+    private Integer receiptAmount;
 
+    @NotEmpty(message = "Fill this field")
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
+
 
     @ManyToOne
     @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number" ,nullable = false)
     private LoanApplications loanApplicationNumber;
+
+    /*@Column(name ="loan_application_number" ,nullable = false )
+    private Integer loanApplicationNumber;*/
 
     @Column(name="create_date")
     private LocalDate createDate;
@@ -54,11 +75,24 @@ public class Receipt {
     @Column(name = "remarks")
     private String remarks;
 
+    @NotEmpty(message = "Fill this field")
     @Column(name = "payment_mode",length = 30)
     private String paymentMode;
 
+    @NotEmpty(message = "Select one field")
     @Column(name = "auto_allocation",length = 20)
     private String autoAllocation;
+
+    private String loanApplicationValue;
+
+    public String getLoanApplicationValue() {
+        return loanApplicationValue;
+    }
+
+    public void setLoanApplicationValue(String loanApplicationValue) {
+        this.loanApplicationValue = loanApplicationValue;
+    }
+
 
 
     public Receipt() {
@@ -120,11 +154,11 @@ public class Receipt {
         this.dateOfReceipt = dateOfReceipt;
     }
 
-    public double getReceiptAmount() {
+    public Integer getReceiptAmount() {
         return receiptAmount;
     }
 
-    public void setReceiptAmount(double receiptAmount) {
+    public void setReceiptAmount(Integer receiptAmount) {
         this.receiptAmount = receiptAmount;
     }
 
