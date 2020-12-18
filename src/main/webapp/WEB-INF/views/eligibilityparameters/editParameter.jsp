@@ -43,7 +43,7 @@
 
 
 <div class="container-fluid">
-    <form:form action="insertparameter" method="Post" modelAttribute="eligibilityParameter">
+    <form:form action="../../../../../editparameter" method="Post" modelAttribute="eligibilityParameter1">
 
 
         <div class="form-group row pt-2 pl-3">
