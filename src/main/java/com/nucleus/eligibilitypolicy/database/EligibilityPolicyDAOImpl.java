@@ -1,7 +1,7 @@
 package com.nucleus.eligibilitypolicy.database;
 
-import com.nucleus.eligibilitypolicy.model.EligibilityParameter;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,6 +38,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch(Exception exception) {
             eligibilityPolicyList = null;
+            exception.printStackTrace();
         }
         return eligibilityPolicyList;
 
@@ -55,6 +56,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch (Exception exception) {
             insertStatus = false;
+            exception.printStackTrace();
         }
         return insertStatus;
     }
@@ -72,6 +74,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch(Exception exception) {
             eligibilityPolicy = null;
+            exception.printStackTrace();
         }
         return eligibilityPolicy;
     }
@@ -88,6 +91,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             updateStatus = true;
         } catch (Exception exception) {
             updateStatus = false;
+            exception.printStackTrace();
         }
         return updateStatus;
     }
@@ -111,38 +115,21 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     }
 
     @Override
-    public List<EligibilityParameter> getParameters() {
-        List<EligibilityParameter> eligibilityParameterList;
+    public EligibilityParameter getOneParameterFromName(String parameterName) {
+        EligibilityParameter eligibilityParameter;
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter e", EligibilityParameter.class);
-            eligibilityParameterList = query.getResultList();
+            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter e where e.parameterName=?1", EligibilityParameter.class);
+            query.setParameter(1, parameterName);
+            eligibilityParameter = query.getSingleResult();
             session.getTransaction().commit();
             session.close();
         } catch(Exception exception) {
-            eligibilityParameterList = null;
+            eligibilityParameter = null;
+            exception.printStackTrace();
         }
-        return eligibilityParameterList;
+        return eligibilityParameter;
     }
 
-    @Override
-    public void addParameters() {
-        Session session = getSession();
-        session.beginTransaction();
-
-        EligibilityParameter eligibilityParameter1 = new EligibilityParameter();
-        eligibilityParameter1.setParameterName("Test 1");
-        eligibilityParameter1.setParameterDescription("Testing 1");
-        eligibilityParameter1.setParameterCode("101");
-        session.save(eligibilityParameter1);
-
-        EligibilityParameter eligibilityParameter2 = new EligibilityParameter();
-        eligibilityParameter2.setParameterName("Test 2");
-        eligibilityParameter2.setParameterDescription("Testing 2");
-        eligibilityParameter2.setParameterCode("102");
-        session.save(eligibilityParameter2);
-        session.getTransaction().commit();
-        session.close();
-    }
 }

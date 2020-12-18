@@ -27,7 +27,7 @@
     <div class="container-fluid">
 	<div class="row pt-3 pl-3">
 		<h2 class="display-3" style="font-size: 30px">
-			<b>Create Eligibility Policies</b>
+			<b>Check Eligibility Policy</b>
 		</h2>
 	</div>
 	<hr width="" color="#b3b3b3">
