@@ -16,20 +16,6 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         return chargePolicyDao;
     }
 
-    public void setChargePolicyDao(ChargePolicyDao chargePolicyDao) {
-        this.chargePolicyDao = chargePolicyDao;
-    }
-
-   /* public void getChargePolicyList(ChargePolicy chargePolicy) {
-        System.out.println("In Service");
-        this.chargePolicyDao.getChargePolicyList();
-    }*/
-
-
-
-    public void setEligibilityPolicyDAO(ChargePolicyDao chargePolicyDao) {
-        this.chargePolicyDao = chargePolicyDao;
-    }
     public void insert(ChargePolicy chargePolicy) {
         System.out.println("In Service");
         this.chargePolicyDao.insert(chargePolicy);
