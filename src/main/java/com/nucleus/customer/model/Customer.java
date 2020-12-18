@@ -1,9 +1,10 @@
 package com.nucleus.customer.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.nucleus.loanapplications.model.LoanApplications;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
+
 @Entity
 @Table( name= "customer")
 public class Customer {
@@ -33,6 +34,16 @@ public class Customer {
     @Column(name="organization_name",length = 30)
     private String organizationName;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private Set<LoanApplications> loanApplications;
+
+    public Set<LoanApplications> getLoanApplications() {
+        return loanApplications;
+    }
+
+    public void setLoanApplications(Set<LoanApplications> loanApplications) {
+        this.loanApplications = loanApplications;
+    }
 
     public String getCustomerCode() {
         return customerCode;

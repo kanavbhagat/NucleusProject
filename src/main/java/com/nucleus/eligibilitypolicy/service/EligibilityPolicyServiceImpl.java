@@ -1,8 +1,8 @@
 package com.nucleus.eligibilitypolicy.service;
 
 import com.nucleus.eligibilitypolicy.database.EligibilityPolicyDAO;
-import com.nucleus.eligibilitypolicy.model.EligibilityParameter;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,14 +38,26 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     }
 
     @Override
-    public boolean updateStatus(String policyCode, String newStatus) {
+    public boolean updateStatus(String policyCode, String action) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
+        String newStatus;
+        if(action.equalsIgnoreCase("approve")) {
+            newStatus = "APPROVED";
+        } else if (action.equalsIgnoreCase("reject")) {
+            newStatus = "REJECTED";
+        } else
+            newStatus = "PENDING";
         eligibilityPolicy.setStatus(newStatus);
         return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
     }
 
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
+        EligibilityPolicy oldEligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(eligibilityPolicy.getPolicyCode());
+        oldEligibilityPolicy.setPolicyName(eligibilityPolicy.getPolicyName());
+        oldEligibilityPolicy.setPolicyDescription(eligibilityPolicy.getPolicyDescription());
+        oldEligibilityPolicy.setEligibilityParameterList(eligibilityPolicy.getEligibilityParameterList());
+        oldEligibilityPolicy.setStatus(eligibilityPolicy.getStatus());
         return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
     }
 
@@ -55,12 +67,8 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     }
 
     @Override
-    public List<EligibilityParameter> getParameters() {
-        return eligibilityPolicyDAO.getParameters();
+    public EligibilityParameter getOneParameterFromName(String parameterName) {
+        return eligibilityPolicyDAO.getOneParameterFromName(parameterName);
     }
 
-    @Override
-    public void addParameters() {
-        eligibilityPolicyDAO.addParameters();
-    }
 }

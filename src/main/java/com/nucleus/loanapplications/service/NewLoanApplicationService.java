@@ -1,7 +1,7 @@
-package com.nucleus.loanaplications.service;
+package com.nucleus.loanapplications.service;
 
-import com.nucleus.customerservice.loandisbursal.model.LoanApplication;
-import com.nucleus.loanaplications.dao.LoanApplicationDAO;
+import com.nucleus.loanapplications.dao.LoanApplicationDAO;
+import com.nucleus.loanapplications.model.LoanApplications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -26,11 +26,11 @@ public class NewLoanApplicationService {
         transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
-    public boolean addLoanApplication(LoanApplication loanApplication){
-        return loanApplicationDAO.addApplication(loanApplication);
+    public boolean addLoanApplication(LoanApplications loanApplications){
+        return loanApplicationDAO.addApplication(loanApplications);
 
     }
-    public List<LoanApplication> getLoanApplicationList(){
+    public List<LoanApplications> getLoanApplicationList(){
         return loanApplicationDAO.getLoanApplicationList();
     }
 }

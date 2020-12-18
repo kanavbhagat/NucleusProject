@@ -1,11 +1,14 @@
 package com.nucleus.customer.dao;
 
 import com.nucleus.customer.model.Customer;
+import com.nucleus.loanapplications.model.LoanApplications;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Set;
 
 @Repository
 public class CustomerDAO implements CustomerDaoInterface{
@@ -37,5 +40,12 @@ public class CustomerDAO implements CustomerDaoInterface{
             }
 
         }
+    }
+
+
+    public Set<LoanApplications> getCustomerLoanDetails(String customerCode){
+        Session session = sessionFactory.openSession();
+        Customer customer = session.get(Customer.class, customerCode);
+        return customer.getLoanApplications();
     }
 }
