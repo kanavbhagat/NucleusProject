@@ -1,9 +1,7 @@
 package com.nucleus.charge.model;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;

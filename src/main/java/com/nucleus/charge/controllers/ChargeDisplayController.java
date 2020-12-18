@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@Controller
+@Controller("/charges")
 public class ChargeDisplayController {
 
     @Autowired
     ChargeService chargeService;
 
-    @GetMapping("/charges")
+    @GetMapping
     public String chargeDisplay(ModelMap model) {
         List<NewCharge> chargeList = chargeService.getChargeList();
         model.put("chargeList",chargeList);

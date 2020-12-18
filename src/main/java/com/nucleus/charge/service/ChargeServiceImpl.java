@@ -4,7 +4,6 @@ import com.nucleus.charge.dao.ChargeDao;
 import com.nucleus.charge.model.NewCharge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
