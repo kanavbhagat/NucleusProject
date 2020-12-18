@@ -12,7 +12,7 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<title>Create Eligibility Policy</title>
+<title>Edit Eligibility Policy</title>
 <style>
     .table {
             width:80%;
@@ -36,12 +36,12 @@
 
     <!-- Placeholders  -->
     	<div class="container-fluid">
-    		<form:form method = "post" action="add" modelAttribute = "eligibilityPolicy">
+    		<form:form method = "post" action="addEdited" modelAttribute = "eligibilityPolicy">
     			<!-- Section 1 -->
     		    <div class="form-group row pt-2 pl-3">
     			      <div class="col-md-3">
     			        <label class="required" for="policyName" >Eligibility Policy Code</label><br>
-    					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required"/>
+    					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required" readonly="true"/>
     			      </div>
 
     			      <div class="col-md-3">
@@ -82,7 +82,20 @@
     				      </tr>
     				    </thead>
     				    <tbody id = "tableBody">
-    				    <c:forEach items="${allEligibilityParameterList}" varStatus="tagStatus">
+                        <c:forEach items="${existingParameterList}" var="existingParameter" varStatus="tagStatus">
+    				      <tr class="d-flex" id = "tableRow${tagStatus.index}">
+    				        <td class="col-7"  style="text-align:center;">
+    				            <form:select path="eligibilityParameterNames[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
+    				            <form:option value="${existingParameter}"/>
+    				            <form:options items="${allEligibilityParameterList}"/>
+                                </form:select>
+                            </td>
+    				        <td class="col-5" style="text-align:center;">
+    				            <textarea id = "textarea${tagStatus.index}" class="form-control" disabled>${existingParameter.parameterDescription}</textarea>
+    				        </td>
+    				      </tr>
+    				    </c:forEach>
+    				    <c:forEach items="${allEligibilityParameterList}" begin="${existingParameterList.size()}" varStatus="tagStatus">
     				      <tr class="d-none" id = "tableRow${tagStatus.index}" style="display:none;">
     				        <td class="col-7"  style="text-align:center;">
     				            <form:select path="eligibilityParameterNames[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
@@ -101,8 +114,8 @@
                 <input type="hidden" id="eligibilityParametersCountInput" name="count"/>
 
                 <c:forEach items="${allEligibilityParameterList}" var="eligibilityParam" varStatus="tagStatus">
-                <input type="hidden" class="allParameterNames" value="${eligibilityParam.parameterName}"/>
-                <input type="hidden" class="allParameterDescriptions" value="${eligibilityParam.parameterDescription}"/>
+                                <input type="hidden" class="allParameterNames" value="${eligibilityParam.parameterName}"/>
+                                <input type="hidden" class="allParameterDescriptions" value="${eligibilityParam.parameterDescription}"/>
                 </c:forEach>
                 <hr width="" color="#b3b3b3">
     			<div class="row pt-3 px-3 d-flex justify-content-end">
@@ -127,17 +140,18 @@ $(document).ready(function() {
             return $(this).val();
     });
 
-    $('#tableRow0').css('display', 'block');
-    $('#tableRow0').addClass("d-flex").removeClass("d-none");
-    var eligibilityParametersCount = 1;
 
+    var eligibilityParametersCount = ${existingParameterList.size()};
+    if(eligibilityParametersCount == ${allEligibilityParameterList.size()}) {
+        $('#addButton').css('display', 'none');
+    }
     $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
     $('#addButton').click(function() {
         $('#tableRow'+eligibilityParametersCount).css('display', 'block');
         $('#tableRow'+eligibilityParametersCount).addClass("d-flex").removeClass("d-none");
         eligibilityParametersCount = eligibilityParametersCount + 1;
         if(eligibilityParametersCount == ${allEligibilityParameterList.size()}) {
-            $('#addButton').css('display', 'none');
+             $('#addButton').css('display', 'none');
         }
         $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
     });
