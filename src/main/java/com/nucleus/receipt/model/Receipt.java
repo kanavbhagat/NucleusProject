@@ -20,8 +20,6 @@ import java.time.LocalDate;
 public class Receipt {
 
     @Id
-    @NotNull(message = "Receipt No. can not be null")
-    //@Digits(message = "Receipt No. must be numeric", integer = 10, fraction = 0)
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     @Column(name = "receipt_no",length = 10,nullable = false)
     private Integer receiptNo;
@@ -38,7 +36,7 @@ public class Receipt {
     @Column(name="date_of_receipt")
     private LocalDate dateOfReceipt;
 
-    @NotNull(message = "Receipt Amount can not be null")
+
     @Column(name = "receipt_amount",nullable = false)
     private Integer receiptAmount;
 

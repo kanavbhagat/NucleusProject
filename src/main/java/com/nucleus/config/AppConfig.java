@@ -59,38 +59,16 @@ public class AppConfig {
         return properties;
     }
 
-   /* @Bean
+    @Bean
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
- 
-
-        //ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-        //ds.setUsername("nsbt");
-        //ds.setPassword("qwerty");
-        // Jigme's Oracle db credentials
-        *//*
-            ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-            ds.setUsername("nsbt");
-            ds.setPassword("qwerty");
-        * *//*
-
         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-
         ds.setUsername("c##username");
         ds.setPassword("pwd");
         return ds;
-    }*/
-   @Bean
-   public BasicDataSource getDataSource(){
-       BasicDataSource ds = new BasicDataSource();
-       ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-       ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-       ds.setUsername("sys as sysdba");
-       ds.setPassword("gkul0289");
-       return ds;
+    }
 
-   }
     @Bean
     public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();

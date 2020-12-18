@@ -50,14 +50,14 @@
 
                 <div class="form-group">
                     <label for="receiptNumber" class="font-weight-bold required-field">Receipt No</label>
-                    <form:input type="number" required="required" class="form-control" path="receiptNo"/><font color="red"><form:errors path="receiptNo"/></font>
+                    <form:input type="number" required="required" class="form-control" path="receiptNo"/>
 
 
                 </div>
 
                 <div class="form-group">
                     <label for="paymentMode" class="font-weight-bold required-field">Payment Mode</label>
-                    <form:select required="required" class="form-control" path="paymentMode"><font color="red"><form:errors path="paymentMode"/></font>
+                    <form:select required="required" class="form-control" path="paymentMode">
                         <form:option value="Cash" label="Cash" />
                         <form:option value="Cheque" label="Cheque" />
                     </form:select>
