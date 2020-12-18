@@ -18,7 +18,7 @@ public class NewCustomerController {
 
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
-        ModelAndView modelAndView=new ModelAndView("views/customer/newCustomer");
+        ModelAndView modelAndView=new ModelAndView("views/customer/customerInfo");
         return modelAndView;
     }
 
