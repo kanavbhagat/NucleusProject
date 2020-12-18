@@ -22,10 +22,10 @@
 	</script>
 	<style>
     a {
-      color: white;
+      color: black;
     }
     a:hover {
-      color: white;
+      color: black;
     }
     </style>
 </head>
@@ -75,7 +75,7 @@
     		                <td><c:out value="${parameter.createdBy}" /></td>
     		                <td><c:out value="${parameter.status}" /></td>
     		                <td><c:out value="${parameter.authorizedBy}" /></td>
-    		                <td><button type="button" class="btn-xs btn-info">Edit</button> <button type="button" class="btn-xs btn-danger">Delete</button></td>
+    		                <td><a href="edit/${parameter.parameterCode}/${parameter.parameterName}/${parameter.parameterDescription}/${parameter.minValue}/${parameter.maxValue}">Edit</a>  |  <a href="delete/${parameter.parameterCode}">Delete</a></td>
     		            </tr>
 
                     </c:forEach>
