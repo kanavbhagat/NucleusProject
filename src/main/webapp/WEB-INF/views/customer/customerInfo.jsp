@@ -138,7 +138,7 @@ window.onload = function() {
             <section>
                 <div class="row">
                     <a class="col-lg-2 col-md-2 col-6">Customer Information</a>
-                    <a href="loanInformation.jsp" class="col-lg-2 col-md-2 col-6">Loan Information</a>
+                    <a href="../loanapplication/loanInformation.jsp" class="col-lg-2 col-md-2 col-6">Loan Information</a>
 
                 </div>
             </section>
@@ -160,7 +160,7 @@ window.onload = function() {
                         </div>
 
                         <div class="form-group col-lg-6 col-md-6 col-12 col-xl-4 ml-xl-5 pl-5">
-                            <label for="fNmae">First Name<a class="text-danger">*</a></label>
+                            <label for="fName">First Name<a class="text-danger">*</a></label>
                             <input type="text" class="form-control" id="fName" name="fName" minlength="3" required>
                         </div>
                     </div>
