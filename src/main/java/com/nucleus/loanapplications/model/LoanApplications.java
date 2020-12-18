@@ -1,4 +1,4 @@
-package com.nucleus.loanaplications.model;
+package com.nucleus.loanapplications.model;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.product.model.Product;

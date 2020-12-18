@@ -104,7 +104,7 @@
         <form class="font-weight-bold mb-5" action="/loan.do">
             <section>
                 <div class="row">
-                    <a href="customerInfo.jsp" class="col-lg-2 col-md-2 col-6">Customer Information</a>
+                    <a href="../customer/customerInfo.jsp" class="col-lg-2 col-md-2 col-6">Customer Information</a>
                     <a class="col-lg-2 col-md-2 col-6">Loan Information</a>
 
                 </div>
