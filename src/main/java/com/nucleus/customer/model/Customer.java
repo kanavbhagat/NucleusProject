@@ -34,6 +34,7 @@ public class Customer {
     private String organizationName;
 
 
+
     public String getCustomerCode() {
         return customerCode;
     }

@@ -55,4 +55,51 @@ public class RepaymentPolicy {
     @Column(name = "authorized_by",length = 30)
     private String authorizedBy;
 
+    public String getPolicyCode() {
+        return policyCode;
+    }
+
+    public void setPolicyCode(String policyCode) {
+        this.policyCode = policyCode;
+    }
+
+    public String getPolicyName() {
+        return policyName;
+    }
+
+    public void setPolicyName(String policyName) {
+        this.policyName = policyName;
+    }
+
+    public String getPolicyDescription() {
+        return policyDescription;
+    }
+
+    public void setPolicyDescription(String policyDescription) {
+        this.policyDescription = policyDescription;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public String getAuthorizedBy() {
+        return authorizedBy;
+    }
+
+    public void setAuthorizedBy(String authorizedBy) {
+        this.authorizedBy = authorizedBy;
+    }
 }
