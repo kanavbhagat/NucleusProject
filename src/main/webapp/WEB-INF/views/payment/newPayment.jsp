@@ -25,17 +25,17 @@
 <body>
 <div class="container-fluid">
     <jsp:include page="/navbar.jsp" />
+    <form:form method="post" action="add" modelAttribute="payment">
     <div class="row m-3">
         <h3>Payment Cash (Create)</h3>
         <div class="offset-9">
-            <button type="button" class="btn btn-primary" id="save">Save</button>
-            <button type="button" class="btn btn-warning" id="clear">Clear</button>
-            <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+            <input type="submit" class="btn btn-primary" name ="action" value="Save">
+            <input type="reset" class="btn btn-warning" value="Clear">
+            <a class="btn btn-danger" href="<%= request.getContextPath()%>/payment/" role="button">Cancel</a>
         </div>
     </div>
     <div class="card mb-3">
         <div class="card body p-3">
-            <form:form method="post" action="newPayment" modelAttribute="payment">
                 <div class="row">
                     <div class="form-group col-sm-3">
                         <label class="font-weight-bold required-field">Loan Application Number</label>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group col-sm-3 offset-4">
                         <label class="font-weight-bold required-field">Payment Date</label>
-                        <form:input path="date" type="date" cssClass="form-control"></form:input>
+                        <form:input path="paymentDate" type="date" cssClass="form-control"></form:input>
                     </div>
                 </div>
                 <div class="row">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group col-sm-3 offset-4">
                         <label class="font-weight-bold required-field">Customer Code</label>
-                        <form:input path="customerCode" cssClass="form-control"></form:input>
+<%--                        <form:input path="customerCode" cssClass="form-control"></form:input>--%>
                     </div>
                 </div>
                 <div class="row">
@@ -80,10 +80,10 @@
                         </form:select>
                     </div>
                 </div>
-            </form:form>
         </div>
     </div>
     </div>
+</form:form>
 </div>
 </body>
 </html>
