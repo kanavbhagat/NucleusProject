@@ -82,11 +82,11 @@ public class AppConfig {
             ds.setPassword("qwerty");
         * */
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCL");
+      /*  ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCL");
 
         ds.setUsername("system");
         ds.setPassword("hemant12345");
-
+*/
         return ds;
     }
 
