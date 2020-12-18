@@ -5,6 +5,8 @@ import com.nucleus.receipt.model.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReceiptService {
 
@@ -13,5 +15,8 @@ public class ReceiptService {
 
     public boolean registerReceipt(Receipt receipt){
         return receiptDAOInterface.createNewReceipt(receipt);
+    }
+    public List<Receipt> getReceipt(){
+        return receiptDAOInterface.getReceiptList();
     }
 }
