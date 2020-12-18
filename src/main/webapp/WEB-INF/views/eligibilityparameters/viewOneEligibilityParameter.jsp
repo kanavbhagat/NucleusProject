@@ -43,13 +43,13 @@
 
 
 <div class="container-fluid">
-    <form:form action="insertparameter" method="Post" modelAttribute="eligibilityParameter">
+    <form:form method="Post" action="../updateStatus/${eligibilityParameter2.parameterCode}" modelAttribute="eligibilityParameter2">
 
 
         <div class="form-group row pt-2 pl-3">
             <div class="col-md-3 required">
                 <label>Eligibility Parameter Code</label><br>
-                <form:input type="text" class="form-control"  id="parameterCode" name="parameterCode" path="parameterCode" required="required"/>
+                <form:input type="text" class="form-control"  id="parameterCode" name="parameterCode" path="parameterCode" required="required" disabled="true"/>
             </div>
 
             <div class="col-md-3">
@@ -57,14 +57,14 @@
 
             <div class="col-md-3 required">
                 <label>Eligibility Parameter Name</label><br>
-                <form:input type="text" class="form-control"  id="parameterName" name="parameterName" path="parameterName" required="required"/>
+                <form:input type="text" class="form-control"  id="parameterName" name="parameterName" path="parameterName" required="required" disabled="true"/>
             </div>
         </div>
 
         <div class="row pt-2 pl-3">
             <div class="col-md-3">
                 <label>Eligibility Parameter Description</label><br>
-                <form:input type="text" class="form-control"  id="parameterDescription" name="parameterDescription" path="parameterDescription"/>
+                <form:input type="text" class="form-control"  id="parameterDescription" name="parameterDescription" path="parameterDescription" disabled="true"/>
             </div>
 
             <div class="col-md-3">
@@ -72,7 +72,7 @@
 
             <div class="col-md-3 ">
                 <label >Parameter Min Value</label><br>
-                <form:input type="text" class="form-control"  id="minValue" name="minValue" path="minValue"/>
+                <form:input type="text" class="form-control"  id="minValue" name="minValue" path="minValue" disabled="true"/>
             </div>
 
         </div>
@@ -80,22 +80,21 @@
         <div class="form-group row pt-2 pl-3">
             <div class="col-md-3">
                 <label>Parameter Max Value</label><br>
-                <form:input type="text" class="form-control"  id="maxValue" name="maxValue" path="maxValue"/>
+                <form:input type="text" class="form-control"  id="maxValue" name="maxValue" path="maxValue" disabled="true"/>
             </div>
 
 
             </div>
 
-        <div class="row pt-3 px-3 d-flex justify-content-end">
-            <div class="px-2">
-                <button type="submit" class="btn btn-primary" name="action1">Save</button>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary" name="action2">Save & Request Approval</button>
-            </div>
-
-
-        </div>
+        <hr width="" color="#b3b3b3">
+            			<div class="row pt-3 px-3 d-flex justify-content-end">
+                        	<div class="px-2">
+                  				<input type="submit" class="btn btn-primary" name ="action" value="Approve">
+               				</div>
+                        	<div>
+                   				<input type="submit" class="btn btn-primary" name ="action" value="Reject"/>
+               				</div>
+                        </div>
 
     </form:form>
 </div>
