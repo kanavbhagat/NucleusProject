@@ -49,32 +49,35 @@
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <label for="receiptNumber" class="font-weight-bold required-field">Receipt No</label>
-                    <form:input type="number" required="required" class="form-control" path="receiptNo"/>
-
-
+                    <label for="receiptNo" class="font-weight-bold required-field">Receipt No</label>
+                    <form:input type="number" class="form-control" path="receiptNo"/>
+                    <font color="red"><form:errors path="receiptNo"/></font>
                 </div>
 
                 <div class="form-group">
                     <label for="paymentMode" class="font-weight-bold required-field">Payment Mode</label>
-                    <form:select required="required" class="form-control" path="paymentMode">
+                    <form:select class="form-control" path="paymentMode">
+                        <form:option value="" disabled="${'true'}" selected="true" label="Select One Option"/>
                         <form:option value="Cash" label="Cash" />
                         <form:option value="Cheque" label="Cheque" />
                     </form:select>
+                    <font color="red"><form:errors path="paymentMode"/></font>
                 </div>
 
                 <div class="form-group">
-                    <label for="loanAccount" required="required" class="font-weight-bold required-field">Loan Account #</label>
+                    <label path="loanApplicationValue"  class="font-weight-bold required-field">Loan Account #</label>
                     <form:input type="number" class="form-control" path="loanApplicationValue"/>
+                    <font color="red"><form:errors path="loanApplicationValue"/></font>
                 </div>
 
                 <div class="form-group">
-                    <label for="receiptAmount" class="font-weight-bold required-field">Receipt Amount</label>
-                    <form:input type="number" required="required" class="form-control" path="receiptAmount"/><font color="red"><form:errors path="receiptAmount"/></font>
+                    <label path="receiptAmount" class="font-weight-bold required-field">Receipt Amount</label>
+                    <form:input type="number"  class="form-control" path="receiptAmount"/>
+                    <font color="red"><form:errors path="receiptAmount"/></font>
                 </div>
 
                 <div class="form-group">
-                    <label for="remark" class="font-weight-bold ">Remark</label>
+                    <label path="remark" class="font-weight-bold ">Remark</label>
                     <form:textarea class="form-control"  rows="3" path="remarks"></form:textarea>
                 </div>
             </div>
@@ -83,35 +86,39 @@
 
                 <div class="form-group">
                     <label for="receiptType" class="font-weight-bold required-field">Receipt Type</label>
-                    <form:select required="required" class="form-control" path="receiptType">
-
+                    <form:select class="form-control" path="receiptType">
+                        <form:option value="" disabled="${'true'}" selected="true" label="Select One Option"/>
                         <form:option value="Payment" label="Payment" />
                         <form:option value="Receipt" label="Receipt" />
                     </form:select>
+                    <font color="red"><form:errors path="receiptType"/></font>
                 </div>
 
                 <div class="form-group">
                     <label for="receiptBasis" class="font-weight-bold required-field">Receipt Basis</label>
-                    <form:select required="required" class="form-control" path="receiptBasis">
-                       <form:option value="ASL" label="Against Single Loan"/>
-                       <%--<form:option value="AML" label="Against Multiple Loan"/>--%>
+                    <form:select class="form-control" path="receiptBasis">
+                        <form:option value="" disabled="${'true'}" selected="true" label="Select One Option"/>
+                       <form:option value="Against Single Loan" label="Against Single Loan"/>
                     </form:select>
+                    <font color="red"><form:errors path="receiptBasis"/></font>
                 </div>
 
                 <div class="form-group">
                     <label for="dateOfReceipt" class="font-weight-bold required-field">Date of Receipt</label>
-                    <input type="date" class="form-control" required="required" path="dateOfReceipt" placeholder="dd/mm/yy">
+                    <form:input type="date" class="form-control" path="dateOfReceipt" placeholder="DD/MM/YY"/>
+                    <font color="red"><form:errors path="dateOfReceipt"/></font>
                 </div>
 
                 <div class="form-group">
                     <label for="receiptPurpose" class="font-weight-bold required-field">Receipt Purpose</label>
-                    <form:select required="required" class="form-control" path="receiptPurpose"><font color="red"><form:errors path="receiptPurpose"/></font>
-                       <form:option value="-" selected="true" label="Select One Option"/>
+                    <form:select class="form-control" path="receiptPurpose">
+                       <form:option value="" disabled="${'true'}" selected="true" label="Select One Option"/>
                        <form:option value="Any Due" label="Any Due"/>
                        <form:option value="Charges" label="Charges"/>
                        <form:option value="installment" label="Installment"/>
                        <form:option value="disbursal" label="Disbursal"/>
                     </form:select>
+                    <font color="red"><form:errors path="receiptPurpose"/></font>
 
                 </div>
 
