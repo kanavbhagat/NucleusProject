@@ -43,7 +43,22 @@ public class CustomerDAO implements CustomerDaoInterface{
         }
     }
 
+    @Override
+    public boolean updateCustomer(Customer customer) {
+        try(Session session=getSession()){
+            session.beginTransaction();
+            try {
+                session.update(customer);
+                session.getTransaction().commit();
+                return true;
+            } catch (HibernateException e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
 
+        }
+    }
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){
         Session session = sessionFactory.openSession();
         Customer customer = session.get(Customer.class, customerCode);

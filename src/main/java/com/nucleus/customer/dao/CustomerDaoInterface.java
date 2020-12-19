@@ -8,5 +8,7 @@ import java.util.Set;
 
 public interface CustomerDaoInterface {
     boolean addCustomer(Customer c);
+
+    boolean updateCustomer(Customer customer);
     public List<LoanApplications> getCustomerLoanDetails(String customerCode);
 }
