@@ -1,7 +1,7 @@
 package com.nucleus.receipt.model;
 
 
-import com.nucleus.loanaplications.model.LoanApplications;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -9,6 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+
+import com.nucleus.loanapplications.model.LoanApplications;
 
 
 import javax.persistence.*;

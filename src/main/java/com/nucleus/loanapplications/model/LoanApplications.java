@@ -1,9 +1,9 @@
-package com.nucleus.loanaplications.model;
+package com.nucleus.loanapplications.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nucleus.customer.model.Customer;
+import com.nucleus.product.model.Product;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -14,8 +14,21 @@ public class LoanApplications {
     @Column(name = "loan_application_number")
     private Integer loanApplicationNumber;
 
-    @Column(name = "product_code",nullable = false)
-    private String productCode;
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
+    private Customer customerCode;
+
+    public Customer getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(Customer customerCode) {
+        this.customerCode = customerCode;
+    }
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
+    private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
     private Integer loanAmountRequested;
@@ -58,7 +71,7 @@ public class LoanApplications {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 
-    public String getProductCode() {
+    public Product getProductCode() {
         return productCode;
     }
 
@@ -142,7 +155,7 @@ public class LoanApplications {
         this.authorizedBy = authorizedBy;
     }
 
-    public void setProductCode(String productCode) {
+    public void setProductCode(Product productCode) {
         this.productCode = productCode;
     }
 
