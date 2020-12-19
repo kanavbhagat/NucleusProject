@@ -35,7 +35,7 @@ public class ChargePolicyController {
     public String showForm(ModelMap model){
         ChargePolicy chargePolicy = new ChargePolicy();
         model.put("chargePolicy",chargePolicy);
-        // model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
+         model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
         List<String> chargeCodeList = new ArrayList<String>();
         chargeCodeList.add("101");
         chargeCodeList.add("102");

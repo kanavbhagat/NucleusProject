@@ -7,6 +7,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.DateFormatterRegistrar;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+import org.springframework.format.number.NumberFormatAnnotationFormatterFactory;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -16,6 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.sql.DataSource;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 @Configuration
@@ -43,8 +50,7 @@ public class AppConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
-        bean.setPackagesToScan("com.nucleus");
-
+        bean.setPackagesToScan(new String[]{"com.nucleus"});
         return bean;
     }
 
@@ -63,22 +69,33 @@ public class AppConfig {
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 
         // Jigme's Oracle db credentials
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-//        ds.setUsername("nsbt");
-//        ds.setPassword("qwerty");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        ds.setUsername("nsbt");
+        ds.setPassword("qwerty");
+
+//        ds.setUsername("c##username");
+//        ds.setPassword("pwd");
+//
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("pwd");
 
          ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
          ds.setUsername("c##username");
          ds.setPassword("pwd");
 
+
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//        ds.setUsername("system");
-//        ds.setPassword("Montessori12#");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("pwd");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
+//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//         ds.setUsername("megha");
+//         ds.setPassword("megha");
         return ds;
 
     }

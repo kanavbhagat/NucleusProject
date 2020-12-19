@@ -34,14 +34,14 @@
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="main/getmaker">Maker</a>
-                        <a class="dropdown-item" href="main/getchecker">Checker</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getmaker">Eligibility Parameter Maker</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getchecker">Eligibility Parameter Checker</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%=request.getContextPath() %>/newCustomer">Application</a>
+                    <a class="nav-link" href="<%=request.getContextPath() %>/loanApplications">Application</a>
                 </li>
 
                 <li class="nav-item mx-2">
@@ -54,7 +54,7 @@
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">New Payment</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
@@ -80,7 +80,7 @@
                     </a>
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
-                        <a class="dropdown-item" href="main/loanClosureBod">Link 2</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
@@ -88,4 +88,3 @@
         </div>
     </nav>
     <!-- NavBar Ends -->
-

@@ -3,13 +3,14 @@ package com.nucleus.eligibilitypolicy.model;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "eligibility_policies")
-public class EligibilityPolicy {
+public class EligibilityPolicy implements Serializable {
 
     @Id
     @Column(name = "policy_code", length = 10)

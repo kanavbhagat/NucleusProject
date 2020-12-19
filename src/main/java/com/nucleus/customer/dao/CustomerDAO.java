@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -43,7 +44,7 @@ public class CustomerDAO implements CustomerDaoInterface{
     }
 
 
-    public Set<LoanApplications> getCustomerLoanDetails(String customerCode){
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode){
         Session session = sessionFactory.openSession();
         Customer customer = session.get(Customer.class, customerCode);
         return customer.getLoanApplications();
