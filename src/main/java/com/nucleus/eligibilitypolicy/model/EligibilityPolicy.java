@@ -1,15 +1,16 @@
 package com.nucleus.eligibilitypolicy.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "eligibility_policies")
-public class EligibilityPolicy {
+public class EligibilityPolicy implements Serializable {
 
     @Id
     @Column(name = "policy_code", length = 10)
@@ -21,8 +22,12 @@ public class EligibilityPolicy {
     @Column(name = "policy_description", length = 200)
     private String policyDescription;
 
-    @Column(name = "parameter_code" , length = 10, nullable = false)
-    private String parameterCode;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "eligibility_policy_mappings",
+            joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
+            inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
+    })
+    private List<EligibilityParameter> eligibilityParameterList;
 
     @Column(name = "create_date")
     private LocalDate createDate;
@@ -45,7 +50,11 @@ public class EligibilityPolicy {
     @Column(name = "status", length = 20)
     private String status;
 
+    @Transient
+    private String[] eligibilityParameterNames;
+
     //Getters - Setters
+
     public String getPolicyCode() {
         return policyCode;
     }
@@ -70,12 +79,12 @@ public class EligibilityPolicy {
         this.policyDescription = policyDescription;
     }
 
-    public String getParameterCode() {
-        return parameterCode;
+    public List<EligibilityParameter> getEligibilityParameterList() {
+        return eligibilityParameterList;
     }
 
-    public void setParameterCode(String parameterCode) {
-        this.parameterCode = parameterCode;
+    public void setEligibilityParameterList(List<EligibilityParameter> eligibilityParameterList) {
+        this.eligibilityParameterList = eligibilityParameterList;
     }
 
     public LocalDate getCreateDate() {
@@ -134,13 +143,21 @@ public class EligibilityPolicy {
         this.status = status;
     }
 
+    public String[] getEligibilityParameterNames() {
+        return eligibilityParameterNames;
+    }
+
+    public void setEligibilityParameterNames(String[] eligibilityParameterNames) {
+        this.eligibilityParameterNames = eligibilityParameterNames;
+    }
+
     @Override
     public String toString() {
         return "EligibilityPolicy{" +
                 "policyCode='" + policyCode + '\'' +
                 ", policyName='" + policyName + '\'' +
                 ", policyDescription='" + policyDescription + '\'' +
-                ", parameterCode='" + parameterCode + '\'' +
+                ", eligibilityParameterList=" + eligibilityParameterList +
                 ", createDate=" + createDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", modifiedDate=" + modifiedDate +
@@ -159,7 +176,7 @@ public class EligibilityPolicy {
         return policyCode.equals(that.policyCode) &&
                 policyName.equals(that.policyName) &&
                 Objects.equals(policyDescription, that.policyDescription) &&
-                parameterCode.equals(that.parameterCode) &&
+                Objects.equals(eligibilityParameterList, that.eligibilityParameterList) &&
                 Objects.equals(createDate, that.createDate) &&
                 Objects.equals(createdBy, that.createdBy) &&
                 Objects.equals(modifiedDate, that.modifiedDate) &&
@@ -171,6 +188,7 @@ public class EligibilityPolicy {
 
     @Override
     public int hashCode() {
-        return Objects.hash(policyCode, policyName, policyDescription, parameterCode, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
+        return Objects.hash(policyCode, policyName, policyDescription, eligibilityParameterList, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
     }
+
 }
