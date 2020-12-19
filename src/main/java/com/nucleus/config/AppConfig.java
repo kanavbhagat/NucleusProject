@@ -68,9 +68,9 @@ public class AppConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         // Jigme's Oracle db credentials
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("apk");
-        ds.setPassword("abcd1234");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        ds.setUsername("nsbt");
+        ds.setPassword("qwerty");
 
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
