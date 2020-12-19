@@ -20,7 +20,6 @@
         function checkEmpty(){
             var value = $("#receiptType").val();
             if ( value==null || value==="-" ){
-                console.log("hello");
                 $("#receiptTypeError").show();
                 return false;
             }
@@ -63,7 +62,7 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form method="Post" action="get">
+    <form method="Post" action="receiptSearchResults">
         <div class="row">
             <div class="col-sm-3">
 

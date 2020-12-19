@@ -27,7 +27,7 @@ public class ReceiptSearchController {
     }
 
 
-    @PostMapping(value = {"/get"})
+    @PostMapping(value = {"/receiptSearchResults"})
     public ModelAndView getReceipt(@RequestParam(name="receiptType", required = true) String receiptType,
                                    @RequestParam(name="receiptBasis", required = false) String receiptBasis,
                                    @RequestParam(name = "loanAccount", required = false) Integer loanAccountNo,
