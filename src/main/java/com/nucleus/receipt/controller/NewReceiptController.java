@@ -1,7 +1,7 @@
 package com.nucleus.receipt.controller;
 
 
-import com.nucleus.loanaplications.service.NewLoanApplicationService;
+import com.nucleus.loanapplications.service.NewLoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
