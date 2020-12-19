@@ -61,6 +61,7 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+
         // Jigme's Oracle db credentials
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
 //        ds.setUsername("nsbt");
