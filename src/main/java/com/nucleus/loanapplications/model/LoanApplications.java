@@ -63,6 +63,17 @@ public class LoanApplications {
     @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Column(name = "status",nullable = false, length = 10)
+    private String status;
+
     public Integer getLoanApplicationNumber() {
         return loanApplicationNumber;
     }
