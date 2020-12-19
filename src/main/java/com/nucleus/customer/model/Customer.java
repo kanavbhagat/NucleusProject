@@ -38,6 +38,9 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
+    @Column(name = "status",nullable = false, length = 10)
+    private String status;
+
     public List<LoanApplications> getLoanApplications() {
         return loanApplications;
     }
