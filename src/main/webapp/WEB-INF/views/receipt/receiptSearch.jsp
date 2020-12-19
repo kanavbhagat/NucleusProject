@@ -16,6 +16,22 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function checkEmpty(){
+            var value = $("#receiptType").val();
+            if ( value==null || value==="-" ){
+                console.log("hello");
+                $("#receiptTypeError").show();
+                return false;
+            }
+            return true;
+        }
+
+		$(document).ready(function() {
+            $( "#receiptTypeError" ).hide();
+		});
+
+    </script>
     <style>
         .required-field::after{
              content: "*";
@@ -42,37 +58,42 @@
         </div>
     </div>
 
-    <hr>=40070
+    <hr>
 </div>
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form:form method="Post" action="get">
+    <form method="Post" action="get">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <form:label cssClass="font-weight-bold required-field">Receipt Type</form:label>
-                    <form:select class="form-control" name="receiptType">
-                        <form:option value="Select One Option" label="select"/>
-                    </form:select>
+                    <label class="font-weight-bold required-field">Receipt Type</label>
+                    <select id="receiptType" class="form-control" name="receiptType" required>
+                        <option value="-" disabled label="Select One Option">
+                        <option value="payment" label="Payment">
+                        <option value="receipt" label="Receipt">
+                    </select>
+                    <span id="receiptTypeError" style="color:red;"> Receipt Type is Required </span>
                 </div>
                 <div class="form-group">
-                    <form:label cssClass="font-weight-bold">Receipt basis</form:label>
-                    <form:select cssClass="form-control" name="receiptBasis">
-                        <form:option value="Select One Option" label="select" />
-                    </form:select>
+                    <label for="receiptBasis" class="font-weight-bold">Receipt Basis</label>
+                    <select class="form-control" name="receiptBasis">
+                        <option value="-" selected disabled label="Select One Option">
+                        <option value="Against Single Loan" label="Against Single Loan">
+                    </select>
                 </div>
-                <div class="col-sm-3 offset-sm-4">
+            </div>
+            <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
-                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
-                    <form:input type="text" cssClass="form-control" name="loanAccount"/>
+                    <label for="loanAccount" class="font-weight-bold">Loan Account #</label>
+                    <input type="number" class="form-control" name="loanAccount">
                 </div>
 
                 <div class="form-group">
-                    <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
-                    <form:input type="text" cssClass="form-control" name="receiptRef"/>
+                    <label for="receiptNo" class="font-weight-bold">Receipt Ref #</label>
+                    <input type="number" class="form-control" name="receiptNo">
                 </div>
             </div>
         </div>
@@ -81,12 +102,12 @@
 
         <div class="row" style="margin-bottom:20px">
             <div class="col-sm-3 offset-sm-10">
-                <button type="button"  id="save" class="btn btn-primary">Search</button>
+                <button type="submit" onclick="return checkEmpty()" id="save" class="btn btn-primary">Search</button>
                 <button type="button" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
 
-    </form:form>
+    <form>
 </div>
 </body>
 </html>

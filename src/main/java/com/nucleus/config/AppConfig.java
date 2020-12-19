@@ -66,13 +66,13 @@ public class AppConfig {
 //        ds.setUsername("nsbt");
 //        ds.setPassword("qwerty");
 
-//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-//         ds.setUsername("c##username");
-//         ds.setPassword("pwd");
+         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+         ds.setPassword("pwd");
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("system");
-        ds.setPassword("Montessori12#");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("system");
+//        ds.setPassword("Montessori12#");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //        ds.setUsername("MYUSERNAME");

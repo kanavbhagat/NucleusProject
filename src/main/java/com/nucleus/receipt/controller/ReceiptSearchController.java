@@ -1,5 +1,7 @@
 package com.nucleus.receipt.controller;
 
+import com.nucleus.customerservice.loandisbursal.model.LoanApplication;
+import com.nucleus.loanaplications.model.LoanApplications;
 import com.nucleus.product.model.Product;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,16 +23,26 @@ public class ReceiptSearchController {
 
     @GetMapping(value = {"/receiptSearch" })
     public ModelAndView receiptSearch() {
-        ModelAndView modelAndView = new ModelAndView("views/receipt/receiptSearch");
-        return modelAndView;
+        return new ModelAndView("views/receipt/receiptSearch");
     }
 
 
     @PostMapping(value = {"/get"})
-    public ModelAndView getReceipt(@RequestParam("receiptType") String rType, @RequestParam("receiptBasis") String rBasis, @RequestParam("loanAccount") String accountNo, @RequestParam("receiptRef") String rRef) {
+    public ModelAndView getReceipt(@RequestParam(name="receiptType", required = true) String receiptType,
+                                   @RequestParam(name="receiptBasis", required = false) String receiptBasis,
+                                   @RequestParam(name = "loanAccount", required = false) Integer loanAccountNo,
+                                   @RequestParam(name = "receiptNo", required = false) Integer receiptNo) {
+
         ModelAndView modelAndView = new ModelAndView("views/receipt/receiptSearchResult");
-        List<Receipt> listReceipts = receiptService.getReceipt(rType, rBasis, accountNo, rRef);
-        modelAndView.addObject(listReceipts);
+
+        System.out.println(receiptType + " " + receiptBasis + " " + loanAccountNo + " " + receiptNo);
+
+        List<Object> listReceipts = receiptService.receiptSearch(receiptType, receiptBasis, loanAccountNo, receiptNo);
+        List<Receipt> receiptList = new ArrayList<>(listReceipts.size());
+        for(Object o : listReceipts){
+            receiptList.add((Receipt) o);
+        }
+        modelAndView.addObject("receiptList", receiptList);
         return modelAndView;
     }
 }

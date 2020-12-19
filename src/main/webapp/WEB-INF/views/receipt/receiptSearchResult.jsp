@@ -26,6 +26,7 @@
 <div class="container-fluid">
 
     <jsp:include page="/navbar.jsp" />
+    <br>
 
         <!-- Show n entries -->
         <!-- Source : https://stackoverflow.com/questions/41436805/how-to-display-a-table-with-10-rows-per-page -->
@@ -36,16 +37,19 @@
                 <th>Receipt basis</th>
                 <th>Loan Account#</th>
                 <th>Receipt Ref#</th>
+                <th>Receipt Amount</th>
             </tr>
             </thead>
             <tbody>
-                        <c:if test="${!empty listReceipts}">
-                        <c:forEach var="receipt" items="${listReceipts}">
+            <!-- todo - add all relevant receipt fields here -->
+                        <c:if test="${!empty receiptList}">
+                        <c:forEach var="receipt" items="${receiptList}">
                              <tr>
                               <td>${receipt.receiptType}</td>
                               <td>${receipt.receiptBasis}</td>
-                              <td>${receipt.loanApplicationNumber}</td>
+                              <td>${receipt.loanApplicationNumber.loanApplicationNumber}</td>
                               <td>${receipt.receiptNo}</td>
+                              <td>${receipt.receiptAmount}</td>
                              </tr>
                             </c:forEach>
                         </c:if>
