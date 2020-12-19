@@ -1,19 +1,12 @@
 package com.nucleus.customerservice.customerloansearch.controller;
 
-import com.nucleus.customer.model.Customer;
 import com.nucleus.customer.service.NewCustomerService;
-import com.nucleus.loanaplications.model.LoanApplications;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class CustomerLoanSearchController {
@@ -26,6 +19,14 @@ public class CustomerLoanSearchController {
     public ModelAndView customerLoanSearch(){
         ModelAndView mv=new ModelAndView();
         mv.setViewName("views/customerservice/customerServiceSearch");
+        return mv;
+
+    }
+
+    @GetMapping("/customerServiceHome")
+    public ModelAndView getCustomerServiceHome(){
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("views/customerservice/customerServiceHome");
         return mv;
 
     }

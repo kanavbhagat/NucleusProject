@@ -1,13 +1,16 @@
 package com.nucleus.eligibilitypolicy.model;
 
+import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "eligibility_policies")
-public class EligibilityPolicy {
+public class EligibilityPolicy implements Serializable {
 
     @Id
     @Column(name = "policy_code", length = 10)
@@ -19,7 +22,7 @@ public class EligibilityPolicy {
     @Column(name = "policy_description", length = 200)
     private String policyDescription;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "eligibility_policy_mappings",
             joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
             inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
@@ -47,7 +50,11 @@ public class EligibilityPolicy {
     @Column(name = "status", length = 20)
     private String status;
 
+    @Transient
+    private String[] eligibilityParameterNames;
+
     //Getters - Setters
+
     public String getPolicyCode() {
         return policyCode;
     }
@@ -70,6 +77,14 @@ public class EligibilityPolicy {
 
     public void setPolicyDescription(String policyDescription) {
         this.policyDescription = policyDescription;
+    }
+
+    public List<EligibilityParameter> getEligibilityParameterList() {
+        return eligibilityParameterList;
+    }
+
+    public void setEligibilityParameterList(List<EligibilityParameter> eligibilityParameterList) {
+        this.eligibilityParameterList = eligibilityParameterList;
     }
 
     public LocalDate getCreateDate() {
@@ -128,12 +143,12 @@ public class EligibilityPolicy {
         this.status = status;
     }
 
-    public List<EligibilityParameter> getEligibilityParameterList() {
-        return eligibilityParameterList;
+    public String[] getEligibilityParameterNames() {
+        return eligibilityParameterNames;
     }
 
-    public void setEligibilityParameterList(List<EligibilityParameter> eligibilityParameterList) {
-        this.eligibilityParameterList = eligibilityParameterList;
+    public void setEligibilityParameterNames(String[] eligibilityParameterNames) {
+        this.eligibilityParameterNames = eligibilityParameterNames;
     }
 
     @Override
