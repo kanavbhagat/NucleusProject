@@ -71,8 +71,8 @@ public class AppConfig {
 //         ds.setPassword("pwd");
 
         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("sys as sysdba");
-        ds.setPassword("pwd");
+        ds.setUsername("system");
+        ds.setPassword("Montessori12#");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //        ds.setUsername("MYUSERNAME");

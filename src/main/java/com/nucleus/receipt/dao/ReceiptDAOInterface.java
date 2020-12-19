@@ -7,5 +7,5 @@ import java.util.List;
 public interface ReceiptDAOInterface {
 
     Boolean createNewReceipt(Receipt receipt);
-    List<Receipt> getReceiptList();
+    List<Receipt> getReceiptList(String rtype, String rBasis, String accountNo, String rRef);
 }

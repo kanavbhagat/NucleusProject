@@ -16,7 +16,8 @@ public class ReceiptService {
     public boolean registerReceipt(Receipt receipt){
         return receiptDAOInterface.createNewReceipt(receipt);
     }
-    public List<Receipt> getReceipt(){
-        return receiptDAOInterface.getReceiptList();
+
+    public List<Receipt> getReceipt(String rtype, String rBasis, String accountNo, String rRef){
+        return receiptDAOInterface.getReceiptList(rtype, rBasis, accountNo, rRef);
     }
 }

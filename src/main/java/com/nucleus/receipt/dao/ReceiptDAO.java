@@ -43,11 +43,11 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         //return null;
     }
     @Override
-    public List<Receipt> getReceiptList() {
+    public List<Receipt> getReceiptList(String rtype, String rBasis, String accountNo, String rRef) {
         List<Receipt> receiptList;
         try(Session session = getSession()) {
             session.beginTransaction();
-            Query<Receipt> query = session.createQuery("from receipts r ");
+            Query<Receipt> query = session.createQuery("from receipts where loan_application_number = :accountNo");
             receiptList = query.list();
             session.getTransaction().commit();
             return receiptList;

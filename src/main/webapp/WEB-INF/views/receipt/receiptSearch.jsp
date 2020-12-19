@@ -7,8 +7,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Payment Search Screen</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Receipt Search Screen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -43,26 +42,24 @@
         </div>
     </div>
 
-    <hr>
-
+    <hr>=40070
 </div>
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form:form method="post">
+    <form:form method="Post" action="get">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <form:label path="receiptType" cssClass="font-weight-bold required-field">Receipt Type</form:label>
-                    <form:select class="form-control" path="receiptType">
+                    <form:label cssClass="font-weight-bold required-field">Receipt Type</form:label>
+                    <form:select class="form-control" name="receiptType">
                         <form:option value="Select One Option" label="select"/>
-                        <form:options items="${receiptTypes}"/>
                     </form:select>
                 </div>
                 <div class="form-group">
-                    <form:label path="receiptBasis" cssClass="font-weight-bold">Receipt basis</form:label>
-                    <form:select cssClass="form-control" path="receiptBasis">
+                    <form:label cssClass="font-weight-bold">Receipt basis</form:label>
+                    <form:select cssClass="form-control" name="receiptBasis">
                         <form:option value="Select One Option" label="select" />
                     </form:select>
                 </div>
@@ -70,12 +67,12 @@
 
                 <div class="form-group">
                     <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
-                    <form:input type="text" cssClass="form-control" path="loanAccount"/>
+                    <form:input type="text" cssClass="form-control" name="loanAccount"/>
                 </div>
 
                 <div class="form-group">
                     <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
-                    <form:input type="text" cssClass="form-control" path="receiptRef"/>
+                    <form:input type="text" cssClass="form-control" name="receiptRef"/>
                 </div>
             </div>
         </div>
@@ -84,10 +81,11 @@
 
         <div class="row" style="margin-bottom:20px">
             <div class="col-sm-3 offset-sm-10">
-                <button type="button"  id="save" class="btn btn-primary">Save</button>
+                <button type="button"  id="save" class="btn btn-primary">Search</button>
                 <button type="button" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
+
     </form:form>
 </div>
 </body>
