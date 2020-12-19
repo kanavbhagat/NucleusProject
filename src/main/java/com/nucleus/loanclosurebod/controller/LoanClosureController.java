@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/LoanClosureBod")
+@RequestMapping("/main")
 public class LoanClosureController {
 
     @Autowired
@@ -20,13 +20,13 @@ public class LoanClosureController {
         this.loanClosureService = loanClosureService;
     }
 
-//    @RequestMapping("/UpdateStatus")
+//    @RequestMapping("/loanClosureBod")
 //    public void updateStatus(){
 //        loanClosureService.addDummyData();
 //
 //    }
 
-    @RequestMapping("/UpdateStatus")
+    @RequestMapping("/loanClosureBod")
     public void loanClosureBod(){
         loanClosureService.loanClosureBod();
     }
