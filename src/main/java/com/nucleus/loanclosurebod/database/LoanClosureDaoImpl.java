@@ -1,6 +1,5 @@
 package com.nucleus.loanclosurebod.database;
 
-
 import com.nucleus.loanclosurebod.model.LoanApplication;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import org.hibernate.HibernateException;

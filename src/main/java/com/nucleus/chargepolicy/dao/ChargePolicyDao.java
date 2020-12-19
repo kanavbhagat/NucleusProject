@@ -1,9 +1,9 @@
 package com.nucleus.chargepolicy.dao;
 
 import com.nucleus.chargepolicy.model.ChargePolicy;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 
 
 

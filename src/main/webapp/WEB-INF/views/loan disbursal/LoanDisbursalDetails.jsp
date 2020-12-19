@@ -5,7 +5,7 @@
 <%@ include file = "/navbar.jsp"%>
 <html>
 <head>
-<title>Allocation Policy Creator</title>
+<title>Loan Disbursal Details</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -28,7 +28,7 @@
 	<!-- Section Heading -->
 	<div class="row pt-3 pl-3 flex-column">
 		<h2 class="  display-3" style="font-size: 30px">
-			<b> Eligibility Parameters
+			<b> Loan Disbursal Details
 			 </b>
 		</h2>
 	</div>
@@ -40,33 +40,26 @@
 
 	<div class="container-fluid">
 		<div class="row px-3 flex-column">
-			<!-- Show n entries -->
-			<!-- Source : https://stackoverflow.com/questions/41436805/how-to-display-a-table-with-10-rows-per-page -->
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 		        <thead>
 		            <tr>
-		                <th>Eligibility Parameter Code</th>
-		                <th>Eligibility Parameter Name</th>
-		                <th>Eligibility Parameter Description</th>
-		                <th>Created By</th>
-		                <th>Status</th>
-		                <th>Reviewed By</th>
-		                <th>Actions</th>
+		                <th>Loan Application Id</th>
+		                <th>Loan Amount</th>
+		                <th>Disbursal Date</th>
+		                <th>Tenure</th>
+		                <th>Rate</th>
+		                <th>Agreement Date</th>
 		            </tr>
 		        </thead>
 		        <tbody>
-		        <c:forEach items="${parameters}" var="parameter">
 		            <tr>
-		                <td><a href="get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
-		                <td><c:out value="${parameter.parameterName}" /></td>
-		                <td><c:out value="${parameter.parameterDescription}" /></td>
-		                <td><c:out value="${parameter.createdBy}" /></td>
-		                <td><c:out value="${parameter.status}" /></td>
-		                <td><c:out value="${parameter.authorizedBy}" /></td>
-		               <td><a>Edit</a>  |  <a>Delete</a></td>
+		                <td><c:out value="${loanApp.loanApplicationNumber}" /></td>
+		                <td><c:out value="${loanApp.loanAmountRequested}" /></td>
+		                <td><c:out value="${loanApp.authorizedDate}" /></td>
+		                <td><c:out value="${loanApp.tenure}" /></td>
+		                <td><c:out value="${loanApp.rate}" /></td>
+		                <td><c:out value="${loanApp.agreementDate}" /></td>
 		            </tr>
-
-                </c:forEach>
 		        </tbody>
 
 		    </table>

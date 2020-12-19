@@ -2,6 +2,7 @@ package com.nucleus.chargepolicy.service;
 
 import com.nucleus.chargepolicy.dao.ChargePolicyDao;
 import com.nucleus.chargepolicy.model.ChargePolicy;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

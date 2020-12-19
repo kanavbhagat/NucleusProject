@@ -1,9 +1,7 @@
 package com.nucleus.customer.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -28,8 +26,18 @@ public class Address {
     @Column(name = "pincode", nullable = false)
     private Integer pincode;
 
-    @Column(name = "customer_code", nullable = false,length = 20)
-    private Integer customerCode;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
+    private Customer customerCode;
+
+    public Customer getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(Customer customerCode) {
+        this.customerCode = customerCode;
+    }
 
     public Integer getAddressId() {
         return addressId;
@@ -79,11 +87,4 @@ public class Address {
         this.pincode = pincode;
     }
 
-    public Integer getCustomerCode() {
-        return customerCode;
-    }
-
-    public void setCustomerCode(Integer customerCode) {
-        this.customerCode = customerCode;
-    }
 }
