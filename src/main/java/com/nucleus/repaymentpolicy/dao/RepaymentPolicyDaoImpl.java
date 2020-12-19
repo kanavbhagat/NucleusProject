@@ -26,6 +26,7 @@ public class RepaymentPolicyDaoImpl implements RepaymentPolicyDao{
         Query<RepaymentPolicy> query = session.createQuery("FROM  RepaymentPolicy");
         List<RepaymentPolicy> list = query.getResultList();
         session.getTransaction().commit();
+        session.close();
         return list;
     }
 
@@ -37,6 +38,7 @@ public class RepaymentPolicyDaoImpl implements RepaymentPolicyDao{
     public RepaymentPolicy getRepaymentPolicyById(String policyCode) {
         Session session = sessionFactory.openSession();
         RepaymentPolicy repaymentPolicy = session.get(RepaymentPolicy.class, policyCode);
+        session.close();
         return repaymentPolicy;
     }
 
@@ -56,6 +58,7 @@ public class RepaymentPolicyDaoImpl implements RepaymentPolicyDao{
             session.beginTransaction();
             session.delete(repaymentPolicy);
             session.getTransaction().commit();
+            session.close();
             successful=true;
         } catch (HibernateException e) {
             e.printStackTrace();
