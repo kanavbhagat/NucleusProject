@@ -80,7 +80,7 @@
                     </a>
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
-                        <a class="dropdown-item" href="main/loanClosureBod">Link 2</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
@@ -88,4 +88,3 @@
         </div>
     </nav>
     <!-- NavBar Ends -->
-
