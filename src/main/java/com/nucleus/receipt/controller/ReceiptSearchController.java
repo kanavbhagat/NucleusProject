@@ -1,7 +1,5 @@
 package com.nucleus.receipt.controller;
 
-import com.nucleus.customerservice.loandisbursal.model.LoanApplication;
-import com.nucleus.loanaplications.model.LoanApplications;
 import com.nucleus.product.model.Product;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
