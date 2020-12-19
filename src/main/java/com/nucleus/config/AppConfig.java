@@ -67,6 +67,7 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+
         // Jigme's Oracle db credentials
         ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
         ds.setUsername("nsbt");
@@ -79,15 +80,14 @@ public class AppConfig {
 //        ds.setUsername("sys as sysdba");
 //        ds.setPassword("pwd");
 
-//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-//         ds.setUsername("c##username");
-//         ds.setPassword("pwd");
+         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+         ds.setPassword("pwd");
 
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("sys as sysdba");
 //        ds.setPassword("pwd");
-
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //        ds.setUsername("MYUSERNAME");

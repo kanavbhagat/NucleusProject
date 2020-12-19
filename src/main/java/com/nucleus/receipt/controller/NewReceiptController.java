@@ -1,20 +1,24 @@
 package com.nucleus.receipt.controller;
 
 
+import com.nucleus.loanaplications.service.NewLoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @RestController
 public class NewReceiptController {
 
     @Autowired
     ReceiptService receiptService;
+
+    @Autowired
+    NewLoanApplicationService newLoanApplicationService;
 
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
@@ -25,13 +29,26 @@ public class NewReceiptController {
         return modelAndView;
     }
 
-    @PostMapping(value = {"/add"})
-    public ModelAndView addReceipt(@ModelAttribute Receipt receipt){
+
+    @PostMapping(value = {"/registerReceipt"})
+    public ModelAndView addReceipt(@Valid @ModelAttribute Receipt receipt, BindingResult result){
+
         ModelAndView modelAndView=new ModelAndView();
-        System.out.println(receipt);
-        System.out.println(receiptService.registerReceipt(receipt));
+        //receipt.getReceiptNo()
+        System.out.println(receipt.getLoanApplicationValue());
+        if(result.hasErrors()){
+            //modelAndView.addObject("error", "Number Exception");
+            modelAndView.setViewName("views/receipt/newReceiptCreation");
+        }
+        //System.out.println(receipt.getLoanApplicationValue());
+        //receipt.setLoanApplicationNumber(newLoanApplicationService.);
+        else{
+            modelAndView.setViewName("views/receipt/receiptSearch");
+        }
+        //receiptService.registerReceipt(receipt);
         //modelAndView.se
         return modelAndView;
     }
+
 
 }
