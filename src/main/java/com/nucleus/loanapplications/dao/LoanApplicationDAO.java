@@ -34,7 +34,7 @@ public class LoanApplicationDAO implements LoanApplicationDaoInterface {
     public List<LoanApplications> getLoanApplicationList(){
         try(Session session = getSession()) {
             session.beginTransaction();
-            Query<LoanApplications> query = session.createQuery("from Loan_Applications lp");
+            Query<LoanApplications> query = session.createQuery("from LoanApplications");
             List<LoanApplications> loanApplicationsList = query.list();
             session.getTransaction().commit();
             return loanApplicationsList;

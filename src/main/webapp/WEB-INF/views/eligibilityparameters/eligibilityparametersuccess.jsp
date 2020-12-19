@@ -9,6 +9,6 @@
 </head>
 <body>
 <h1>Inserted Parameter Successfully</h1>
-<a href="../index.jsp">Back</a>
+<a href="getmaker">Back</a>
 </body>
 </html>

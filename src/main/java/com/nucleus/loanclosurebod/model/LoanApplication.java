@@ -216,7 +216,7 @@ public class LoanApplication implements Serializable {
         return loanApplicationNumber == that.loanApplicationNumber
                 && loanAmountRequested == that.loanAmountRequested &&
                 tenure == that.tenure && rate == that.rate &&
-    //            customerCode.equals(that.customerCode) &&
+                //            customerCode.equals(that.customerCode) &&
                 agreementDate.equals(that.agreementDate) &&
                 installmentDueDate.equals(that.installmentDueDate) &&
                 Objects.equals(createDate, that.createDate) &&
