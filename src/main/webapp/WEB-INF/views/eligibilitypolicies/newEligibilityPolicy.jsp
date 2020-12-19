@@ -22,6 +22,7 @@
         color: red;
     }
 </style>
+
 </head>
 <body>
     <div class="container-fluid">
@@ -74,30 +75,35 @@
     			<div class="row pt-3 px-3">
     				<table class="table table-bordered">
     				    <thead>
+
     				      <tr class="d-flex">
     				        <th class="col-7" style="text-align:left;">Eligibility Parameter Name</th>
     				        <th class="col-5" style="text-align:left;">Description</th>
     				      </tr>
     				    </thead>
-    				    <tbody>
-    				    <c:forEach items="${eligibilityPolicy.eligibilityParameterList}" var="eligibilityParameter">
-    				      <tr class="d-flex">
-    				        <td class="col-7" style="text-align:center;">
-    				            <form:select path="eligibilityParameter" class="custom-select">
-    				            <c:forEach items="${allEligibilityParameterList}" var="eligibilityParameterMaster">
-                                    <form:option value="${eligibilityParameterMaster.parameterName}"/>
-                                </c:forEach>
+    				    <tbody id = "tableBody">
+    				    <c:forEach items="${allEligibilityParameterList}" varStatus="tagStatus">
+    				      <tr class="d-none" id = "tableRow${tagStatus.index}" style="display:none;">
+    				        <td class="col-7"  style="text-align:center;">
+    				            <form:select path="eligibilityParameterNames[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
+    				            <form:options items="${allEligibilityParameterList}"/>
                                 </form:select>
                             </td>
     				        <td class="col-5" style="text-align:center;">
-    				            <textarea class="form-control" disabled>${allEligibilityParameterList[0].parameterDescription}</textarea> </td>
+    				            <textarea id = "textarea${tagStatus.index}" class="form-control" disabled>${allEligibilityParameterList[0].parameterDescription}</textarea>
+    				        </td>
     				      </tr>
     				    </c:forEach>
     				    </tbody>
     				  </table>
 
     			</div>
+                <input type="hidden" id="eligibilityParametersCountInput" name="count"/>
 
+                <c:forEach items="${allEligibilityParameterList}" var="eligibilityParam" varStatus="tagStatus">
+                <input type="hidden" class="allParameterNames" value="${eligibilityParam.parameterName}"/>
+                <input type="hidden" class="allParameterDescriptions" value="${eligibilityParam.parameterDescription}"/>
+                </c:forEach>
                 <hr width="" color="#b3b3b3">
     			<div class="row pt-3 px-3 d-flex justify-content-end">
                 	<div class="px-2">
@@ -111,4 +117,40 @@
         </form:form>
     </div>
 </body>
+<script>
+$(document).ready(function() {
+
+    var arrParamName = $(".allParameterNames").map(function() {
+        return $(this).val();
+    });
+    var arrParamDescriptions = $(".allParameterDescriptions").map(function() {
+            return $(this).val();
+    });
+
+    $('#tableRow0').css('display', 'block');
+    $('#tableRow0').addClass("d-flex").removeClass("d-none");
+    var eligibilityParametersCount = 1;
+
+    $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
+    $('#addButton').click(function() {
+        $('#tableRow'+eligibilityParametersCount).css('display', 'block');
+        $('#tableRow'+eligibilityParametersCount).addClass("d-flex").removeClass("d-none");
+        eligibilityParametersCount = eligibilityParametersCount + 1;
+        if(eligibilityParametersCount == ${allEligibilityParameterList.size()}) {
+            $('#addButton').css('display', 'none');
+        }
+        $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
+    });
+    $('.selectTags').change(function(){
+        var desc;
+        for(var i=0; i<arrParamName.length; i++) {
+            if(arrParamName[i] === $(this).val()) {
+                desc = arrParamDescriptions[i];
+                console.log(desc);
+            }
+        }
+        $(this).parent().siblings().children('textarea').val(desc);
+    });
+});
+</script>
 </html>

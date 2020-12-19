@@ -1,8 +1,11 @@
 package com.nucleus.product.controller;
 
+import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.NewProductService;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
+import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,31 +24,50 @@ public class NewProductController {
     @Autowired
     NewProductService newProductService;
 
+    @Autowired
+    EligibilityPolicyService eligibilityPolicyService;
+
+    @Autowired
+    RepaymentPolicyService repaymentPolicyService;
+
+    private List<String> productTypes;
+
+    public NewProductController(){
+        super();
+        productTypes = getProductTypes();
+    }
+
     @GetMapping(value = {"/newProduct" })
     public ModelAndView newProduct() {
-        ModelAndView modelAndView = new ModelAndView("views/product/newProductCreation");
-//        List<String> productTypes = new ArrayList<>();
-//        productTypes.add("Hello");
-//        List<RepaymentPolicy> repaymentPolicies = new ArrayList<>();
-//        RepaymentPolicy policy1 = new RepaymentPolicy();
-//        policy1.setPolicyCode("101");
-//        policy1.setPolicyDescription("it do thing");
-//        repaymentPolicies.add(policy1);
-//
-//        policy1 = new RepaymentPolicy();
-//        policy1.setPolicyCode("102");
-//        policy1.setPolicyDescription("it do other thing");
-//        repaymentPolicies.add(policy1);
-
+        ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/newProductCreation"));
         modelAndView.addObject("product", new Product());
-//        modelAndView.addObject("productTypes", productTypes);
-//        modelAndView.addObject("repaymentPolicies", repaymentPolicies);
         return modelAndView;
     }
 
     @PostMapping(value = "/newProduct")
-    public ModelAndView addProdut(@Valid Product product, BindingResult result){
-        ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
+    public ModelAndView addProduct(@Valid Product product, BindingResult result){
+        ModelAndView modelAndView;
+        if (result.hasErrors()) {
+            modelAndView = this.addAttributes( new ModelAndView("views/product/newProductCreation"));
+            return modelAndView;
+        }
+        modelAndView = new ModelAndView("views/product/productOverview");
+        // TODO: 17/12/20 get policies via policy code 
+        System.out.println(product.getEligibilityPolicyCodeString());
+        return modelAndView;
+    }
+
+    private List<String> getProductTypes(){
+        List<String> productTypes = new ArrayList<>(2);
+        productTypes.add("Home Loan");
+        productTypes.add("Consumer Vehicle Loan");
+        return productTypes;
+    }
+
+    private ModelAndView addAttributes(ModelAndView modelAndView){
+        modelAndView.addObject("eligibilityPolicies", eligibilityPolicyService.getAllEligibilityPolicies());
+        modelAndView.addObject("repaymentPolicies", repaymentPolicyService.getRepaymentPolicyList());
+        modelAndView.addObject("productTypes", getProductTypes());
         return modelAndView;
     }
 }

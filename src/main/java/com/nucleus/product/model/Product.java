@@ -1,25 +1,34 @@
 package com.nucleus.product.model;
 
+import com.nucleus.chargepolicy.model.ChargePolicy;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "products")
 public class Product {
-    // TODO: 15/12/20 declare foreign keys once all entities are made.
+
+    @NotBlank(message = "Product Code should not be empty")
+    @Pattern(regexp = "^([A-Za-z0-9\\_]+)$", message = "Product code cannot contain spaces")
     @Id
     @Column(name = "product_code", length = 10)
     private String productCode;
 
+    @NotBlank(message = "Product Name should not be empty")
+    @Size(min = 3, message = "Product name should be at least 3 characters")
     @Column(name = "product_name", length = 30, nullable = false, unique = true)
     private String productName;
 
     @Column(name = "product_description", length = 200)
     private String productDescription;
 
+    @NotBlank(message = "Product must have a type")
     @Column(name = "product_type", length = 30, nullable = false)
     private String productType;
 
@@ -34,8 +43,9 @@ public class Product {
     @JoinColumn(name = "eligibility_policy_code", referencedColumnName = "policy_code", nullable = false)
     private EligibilityPolicy eligibilityPolicyCode;
 
-    @Column(name = "charge_code_policy", length = 10)
-    private String chargeCodePolicy;
+    @ManyToOne
+    @JoinColumn(name = "charge_code_policy", referencedColumnName = "policy_code")
+    private ChargePolicy chargeCodePolicy;
 
     @Column(name = "create_date")
     private LocalDate createDate;
@@ -57,6 +67,12 @@ public class Product {
 
     @Column(name = "status", length = 30)
     private String status;
+
+    private String eligibilityPolicyCodeString;
+
+    private String repaymentPolicyCodeString;
+
+    private String chargeCodePolicyString;
 
     public Product(){
     }
@@ -109,19 +125,27 @@ public class Product {
         this.repaymentPolicyCode = repaymentPolicyCode;
     }
 
+    public String getEligibilityPolicyCodeString() {
+        return eligibilityPolicyCodeString;
+    }
+
     public EligibilityPolicy getEligibilityPolicyCode() {
-        return eligibilityPolicyCode;
+        return this.eligibilityPolicyCode;
     }
 
     public void setEligibilityPolicyCode(EligibilityPolicy eligibilityPolicyCode) {
         this.eligibilityPolicyCode = eligibilityPolicyCode;
     }
 
-    public String getChargeCodePolicy() {
+    public void setEligibilityPolicyCodeString(String eligibilityPolicyCode) {
+        this.eligibilityPolicyCodeString = eligibilityPolicyCode;
+    }
+
+    public ChargePolicy getChargeCodePolicy() {
         return chargeCodePolicy;
     }
 
-    public void setChargeCodePolicy(String chargeCodePolicy) {
+    public void setChargeCodePolicy(ChargePolicy chargeCodePolicy) {
         this.chargeCodePolicy = chargeCodePolicy;
     }
 
@@ -179,5 +203,21 @@ public class Product {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRepaymentPolicyCodeString() {
+        return repaymentPolicyCodeString;
+    }
+
+    public void setRepaymentPolicyCodeString(String repaymentPolicyCodeString) {
+        this.repaymentPolicyCodeString = repaymentPolicyCodeString;
+    }
+
+    public String getChargeCodePolicyString() {
+        return chargeCodePolicyString;
+    }
+
+    public void setChargeCodePolicyString(String chargeCodePolicyString) {
+        this.chargeCodePolicyString = chargeCodePolicyString;
     }
 }

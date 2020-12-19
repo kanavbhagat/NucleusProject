@@ -1,27 +1,19 @@
 package com.nucleus.chargepolicy.dao;
 
+import com.nucleus.chargepolicy.model.ChargePolicy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.nucleus.chargepolicy.model.ChargePolicy;
 
-@Repository
-public class ChargePolicyDao {
+import java.util.List;
 
-    Configuration configuration;
+//@Repository
+/*public class ChargePolicyDao {
+    @Autowired
     SessionFactory sessionFactory;
 
-    public ChargePolicyDao(){
-        configuration = new Configuration();
-        configuration.addAnnotatedClass(ChargePolicy.class);
-        configuration.configure();
-        sessionFactory = configuration.buildSessionFactory();
-        System.out.println(" Configuration Done !");
-    }
-    public void insert(ChargePolicy chargePolicy){
+    public void insert(ChargePolicy chargePolicy) {
         System.out.println("In dao with " + chargePolicy.getChargePolicyName());
         //SessionFactory factory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -30,6 +22,11 @@ public class ChargePolicyDao {
         session.getTransaction().commit();
         sessionFactory.close();
     }
+}*/
+    public interface ChargePolicyDao {
+        public void insert(ChargePolicy chargePolicy);
 
+        public List<ChargePolicy> getPolicyList();
 
-}
+        public ChargePolicy getChargePolicy(String chargePolicyCode);
+    }
