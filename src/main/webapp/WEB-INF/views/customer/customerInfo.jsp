@@ -138,7 +138,7 @@ window.onload = function() {
             <section>
                 <div class="row">
                     <a class="col-lg-2 col-md-2 col-6">Customer Information</a>
-                    <a href="../loanapplication/loanInformation.jsp" class="col-lg-2 col-md-2 col-6">Loan Information</a>
+                    <a href="#" class="col-lg-2 col-md-2 col-6">Loan Information</a>
 
                 </div>
             </section>
