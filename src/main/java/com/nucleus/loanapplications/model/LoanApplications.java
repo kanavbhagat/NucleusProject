@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "loan_application")
+@Table(name = "loan_applications")
 public class LoanApplications {
 
     @Id
@@ -45,22 +45,22 @@ public class LoanApplications {
     @Column(name = "installment_due_date",nullable = false)
     private LocalDate installmentDueDate;
 
-    @Column(name = "create_date",nullable = false)
+    @Column(name = "create_date")
     private LocalDate createDate;
 
-    @Column(name = "created_by", nullable = false, length = 30)
+    @Column(name = "created_by", length = 30)
     private String createdBy;
 
-    @Column(name = "modified_date",nullable = false)
+    @Column(name = "modified_date")
     private LocalDate modifiedDate;
 
-    @Column(name = "modified_by", nullable = false, length = 30)
+    @Column(name = "modified_by",  length = 30)
     private String modifiedBy;
 
-    @Column(name = "authorized_date",nullable = false)
+    @Column(name = "authorized_date")
     private LocalDate authorizedDate;
 
-    @Column(name = "authorized_by", nullable = false, length = 30)
+    @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
 
     public Integer getLoanApplicationNumber() {
