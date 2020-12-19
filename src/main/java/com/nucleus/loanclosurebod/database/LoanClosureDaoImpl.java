@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,22 +32,26 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
 
     @Override
     public List<LoanApplication> getLoanApplications(){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Query<com.nucleus.loanclosurebod.model.LoanApplication> query = session.createQuery("FROM  LoanApplication");
-        List<LoanApplication> list = query.getResultList();
-        session.getTransaction().commit();
+        List<LoanApplication> list = new ArrayList<>();
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            Query<LoanApplication> query = session.createQuery("FROM  LoanApplication", LoanApplication.class);
+            list = query.getResultList();
+            session.getTransaction().commit();
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return list;
     }
 
     @Override
     public List<RepaymentSchedule> getRepaymentSchedule(LoanApplication loanApplication){
-        List<RepaymentSchedule> list = null;
+        List<RepaymentSchedule> list = new ArrayList<>();
         try{
-            Session session = sessionFactory.openSession();
+            Session session = getSession();
             session.beginTransaction();
-            Query<com.nucleus.loanclosurebod.model.RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplication=?1", RepaymentSchedule.class);
-            //Query<RepaymentSchedule> query = createQuery("from RepaymentSchedule r where r.loanApplication=?1", RepaymentSchedule.class);
+            Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplication=?1", RepaymentSchedule.class);
             query.setParameter(1, loanApplication);
             list = query.getResultList();
             session.getTransaction().commit();
@@ -60,7 +65,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     public boolean updateStatus(LoanApplication loanApplication, String newStatus){
         boolean updateStatus;
         try{
-            Session session = sessionFactory.openSession();
+            Session session = getSession();
             session.beginTransaction();
             loanApplication.setLoanStatus(newStatus);
             session.update(loanApplication);
@@ -68,6 +73,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             updateStatus = true;
         }catch (Exception exception) {
             updateStatus = false;
+            exception.printStackTrace();
         }
         return updateStatus;
     }
