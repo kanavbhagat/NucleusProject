@@ -1,7 +1,6 @@
 package com.nucleus.payment.model;
 
 import com.nucleus.customer.model.Customer;
-import jdk.vm.ci.meta.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
