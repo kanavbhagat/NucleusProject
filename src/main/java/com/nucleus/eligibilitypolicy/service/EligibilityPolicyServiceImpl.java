@@ -2,7 +2,6 @@ package com.nucleus.eligibilitypolicy.service;
 
 import com.nucleus.eligibilitypolicy.database.EligibilityPolicyDAO;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
-import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,11 +63,6 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     @Override
     public boolean deleteEligibilityPolicy(String policyCode) {
         return eligibilityPolicyDAO.deleteEligibilityPolicy(policyCode);
-    }
-
-    @Override
-    public EligibilityParameter getOneParameterFromName(String parameterName) {
-        return eligibilityPolicyDAO.getOneParameterFromName(parameterName);
     }
 
 }

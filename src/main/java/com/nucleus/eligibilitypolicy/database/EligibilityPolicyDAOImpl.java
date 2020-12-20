@@ -1,7 +1,6 @@
 package com.nucleus.eligibilitypolicy.database;
 
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
-import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -112,24 +111,6 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             exception.printStackTrace();
         }
         return deleteStatus;
-    }
-
-    @Override
-    public EligibilityParameter getOneParameterFromName(String parameterName) {
-        EligibilityParameter eligibilityParameter;
-        try {
-            Session session = getSession();
-            session.beginTransaction();
-            Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter e where e.parameterName=?1", EligibilityParameter.class);
-            query.setParameter(1, parameterName);
-            eligibilityParameter = query.getSingleResult();
-            session.getTransaction().commit();
-            session.close();
-        } catch(Exception exception) {
-            eligibilityParameter = null;
-            exception.printStackTrace();
-        }
-        return eligibilityParameter;
     }
 
 }
