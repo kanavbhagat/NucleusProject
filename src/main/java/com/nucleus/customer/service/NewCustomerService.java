@@ -29,4 +29,7 @@ public class NewCustomerService {
     public Boolean createNewCustomer(Customer customer){
         return customerDAO.addCustomer(customer);
     }
+    public Customer getCustomer(String id){
+        return customerDAO.getCustomerById(id);
+    }
 }

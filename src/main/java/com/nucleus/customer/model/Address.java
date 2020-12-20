@@ -8,6 +8,7 @@ import java.util.Set;
 public class Address {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "address_id")
     private Integer addressId;
 
@@ -23,8 +24,8 @@ public class Address {
     @Column(name = "country",nullable = false, length = 20)
     private String country;
 
-    @Column(name = "pincode", nullable = false)
-    private Integer pincode;
+    @Column(name = "pinCode", nullable = false)
+    private Integer pinCode;
 
 
     @ManyToOne(optional = false)
@@ -79,12 +80,12 @@ public class Address {
         this.country = country;
     }
 
-    public Integer getPincode() {
-        return pincode;
+    public Integer getPinCode() {
+        return pinCode;
     }
 
-    public void setPincode(Integer pincode) {
-        this.pincode = pincode;
+    public void setPinCode(Integer pincode) {
+        this.pinCode = pincode;
     }
 
 }
