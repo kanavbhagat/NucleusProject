@@ -1,6 +1,7 @@
 package com.nucleus.customer.controller;
 
 
+import com.nucleus.customer.model.Address;
 import com.nucleus.customer.service.NewCustomerService;
 import com.nucleus.customer.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class NewCustomerController {
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
         ModelAndView modelAndView=new ModelAndView("views/customer/customerInfo");
+        modelAndView.addObject("customer",new Customer());
+        modelAndView.addObject("address",new Address());
         return modelAndView;
     }
 
