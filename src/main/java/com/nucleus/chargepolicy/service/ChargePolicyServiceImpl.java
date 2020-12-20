@@ -31,7 +31,7 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         this.chargePolicyDao = chargePolicyDao;
     }
     public void insert(ChargePolicy chargePolicy) {
-        System.out.println("In Service");
+        System.out.println("In Service insert query");
         this.chargePolicyDao.insert(chargePolicy);
     }
     public List<String> getChargeCodes(){
@@ -52,6 +52,20 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         System.out.println("In service getCharge with code " + code);
         this.chargePolicyDao.getChargePolicy(code);
     }
+    public ChargePolicy getChargePolicy(String chargePolicyCode){
+        ChargePolicy chargePolicy = this.chargePolicyDao.getChargePolicy(chargePolicyCode);
+        return chargePolicy;
+    }
+    public void updateStatus(String chargePolicyCode,String status){
+        this.chargePolicyDao.updateStatus(chargePolicyCode,status);
+    }
+    public void updateEntry(ChargePolicy chargePolicy, String chargePolicyCode){
+        this.chargePolicyDao.updateEntry(chargePolicy);
+    }
+    public void deleteChargePolicy(String chargePolicyCode){
+        this.chargePolicyDao.deleteChargePolicy(chargePolicyCode);
+    }
+
 
 
 }

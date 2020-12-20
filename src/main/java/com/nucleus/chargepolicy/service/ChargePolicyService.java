@@ -12,4 +12,12 @@ public interface ChargePolicyService {
     public void setEligibilityPolicyDAO(ChargePolicyDao chargePolicyDao);
     public void insert(ChargePolicy chargePolicy);
     public void getCharge(String code);
+
+    ChargePolicy getChargePolicy(String chargePolicyCode);
+
+    void updateStatus(String chargePolicyCode,String newStatus);
+
+    void updateEntry(ChargePolicy chargePolicy, String chargePolicyCode);
+
+    void deleteChargePolicy(String chargePolicyCode);
 }

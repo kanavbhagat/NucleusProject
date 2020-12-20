@@ -16,7 +16,7 @@
 <body>
 <script>
 $(document).ready(function(){
-
+        alert("Saved Succcessfully");
   $("#chargeCode").focusout(function(){
 
     var charge  = {};
@@ -94,7 +94,7 @@ $(document).ready(function(){
   </div>
   <div class="float-right">
     <button type="submit" class="btn btn-primary" name ="action" value="save">Save</button>
-    <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
+        <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
   </div>
 
   </div>
