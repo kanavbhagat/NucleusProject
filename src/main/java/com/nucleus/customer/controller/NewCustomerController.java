@@ -35,10 +35,11 @@ public class NewCustomerController {
     @PostMapping(value = "/newCustomer")
     public ModelAndView addCustomer(@Valid @ModelAttribute Customer customer){
 
-         newCustomerService.createNewCustomer(customer);
-        ModelAndView modelAndView=new ModelAndView("views/customerInfo/address");
+        newCustomerService.createNewCustomer(customer);
+       ModelAndView modelAndView=new ModelAndView("views/customerInfo/success");
+
        // modelAndView.addObject("customerCode" , customer);
-        modelAndView.addObject("address", new Address());
+        //modelAndView.addObject("address", new Address());
         return modelAndView;
     }
     @PostMapping(value = "/newAddress")
