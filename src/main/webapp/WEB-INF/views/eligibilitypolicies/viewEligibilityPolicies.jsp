@@ -18,7 +18,7 @@
     		    $('#example').DataTable();
     		} );
     	</script>
-<title>Create Eligibility Policy</title>
+<title>Eligibility Policies</title>
 <style>
 </style>
 </head>
@@ -54,7 +54,7 @@
         		        </tr>
         		    </thead>
         		    <tbody>
-        		        <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
+        		         <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
         		        <tr>
         		            <td>
         		            <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
@@ -66,7 +66,7 @@
         		            <td>${eligibilityPolicy.createdBy}</td>
         		            <td>${eligibilityPolicy.status}</td>
                             <td>${eligibilityPolicy.authorizedBy}</td>
-       		                <td><a href="">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
+       		                <td><a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
        		            </tr>
        		            </c:forEach>
        		        </tbody>

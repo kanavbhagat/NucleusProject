@@ -71,7 +71,9 @@ public class AppConfig {
 
 
 
-
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("sys as sysdba");
+        ds.setPassword("pwd");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //

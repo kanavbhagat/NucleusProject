@@ -7,8 +7,9 @@ import java.time.LocalDate;
 @Table( name= "repayment_schedule")
 public class RepaymentSchedule {
 
-    @OneToOne
-    private LoanApplication loanApplicationn;
+    @ManyToOne
+    @JoinColumn(name="loan_application_number", referencedColumnName="loan_application_number", foreignKey=@ForeignKey(name="loan_FK"))
+    private LoanApplication loanApplication;
 
     @Id
     @Column(name="installment_number", length = 10)
@@ -36,11 +37,11 @@ public class RepaymentSchedule {
     private String BillFlag;
 
     public LoanApplication getLoanApplicationn() {
-        return loanApplicationn;
+        return loanApplication;
     }
 
-    public void setLoanApplicationn(LoanApplication loanApplicationn) {
-        this.loanApplicationn = loanApplicationn;
+    public void setLoanApplicationn(LoanApplication loanApplication) {
+        this.loanApplication = loanApplication;
     }
 
     public int getInstallmentNumber() {
@@ -110,17 +111,14 @@ public class RepaymentSchedule {
     @Override
     public String toString() {
         return "RepaymentSchedule{" +
-                "loanApplicationn=" + loanApplicationn +
-                ", installmentNumber=" + installmentNumber +
+                "installmentNumber=" + installmentNumber +
                 ", OpeningBalance=" + OpeningBalance +
                 ", InterestComponent=" + InterestComponent +
                 ", PrincipalComponent=" + PrincipalComponent +
                 ", EMI=" + EMI +
                 ", ClosingBalance=" + ClosingBalance +
-                ", DueDate='" + DueDate + '\'' +
+                ", DueDate=" + DueDate +
                 ", BillFlag='" + BillFlag + '\'' +
                 '}';
     }
-
-
 }

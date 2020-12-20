@@ -20,8 +20,14 @@ public class LoanClosureController {
         this.loanClosureService = loanClosureService;
     }
 
+//    @RequestMapping("/loanClosureBod")
+//    public void updateStatus(){
+//        loanClosureService.addDummyData();
+//
+//    }
+
     @RequestMapping("/loanClosureBod")
-    public void updateStatus(){
-        loanClosureService.addDummyData();
+    public void loanClosureBod(){
+        loanClosureService.loanClosureBod();
     }
 }

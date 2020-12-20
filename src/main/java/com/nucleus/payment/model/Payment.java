@@ -1,38 +1,51 @@
 package com.nucleus.payment.model;
 
 import com.nucleus.customer.model.Customer;
+import jdk.vm.ci.meta.Local;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-//@Entity
+@Entity
 @Table(name = "payment")
 public class Payment {
     @Id
-    @Column(name = "loan_application_number")
+    @Column(name = "loan_application_number", length = 10)
     private int loanApplicationNumber;
 
-    @Column(name = "payment_code")
+    @Column(name = "payment_code", length = 10)
     private int paymentCode;
 
-    @Id
-    @Column(name = "payment_amount")
+    @Column(name = "payment_amount", length = 8)
     private int paymentAmount;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @DateTimeFormat(pattern="dd-MM-yyyy")
+    @NotNull(message = "Please Enter A Date")
+    @Column(name = "payment_date")
+    private LocalDate paymentDate;
 
-    @Column(name = "payout_bank_account")
+    @NotBlank(message = "Bank account cannot be empty")
+    @Column(name = "payout_bank_account", length = 12)
     private String payoutBankAccount;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_code")
-    private Customer customerCode;
+//    @ManyToMany
+//    @ManyToOne
+//    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code")
+
+    @NotBlank(message = "Customer code cannot be empty")
+    @Column(name = "customer_code")
+    private String customerCode;
 
     @Column(name = "remarks")
     private String remarks;
 
-    @Column(name = "payment_channel")
+    @Column(name = "payment_channel", length = 30)
     private String paymentChannel;
 
     public int getLoanApplicationNumber() {
@@ -59,12 +72,12 @@ public class Payment {
         this.paymentAmount = paymentAmount;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public String getPayoutBankAccount() {
@@ -75,11 +88,11 @@ public class Payment {
         this.payoutBankAccount = payoutBankAccount;
     }
 
-    public Customer getCustomerCode() {
+    public String getCustomerCode() {
         return customerCode;
     }
 
-    public void setCustomerCode(Customer customerCode) {
+    public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
     }
 

@@ -1,7 +1,7 @@
 package com.nucleus.eligibilitypolicy.database;
 
-import com.nucleus.eligibilitypolicy.model.EligibilityParameter;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
+import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 
 import java.util.List;
 
@@ -13,8 +13,5 @@ public interface EligibilityPolicyDAO {
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy);
     public boolean deleteEligibilityPolicy(String policyCode);
 
-    List<EligibilityParameter> getParameters();
-
-    void addParameters();
-
+    EligibilityParameter getOneParameterFromName(String parameterName);
 }

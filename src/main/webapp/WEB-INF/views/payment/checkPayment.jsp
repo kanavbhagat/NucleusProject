@@ -5,6 +5,10 @@
   Time: 03:59 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+           prefix="security"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,11 +23,67 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#paymentTable').DataTable();
+        } );
+    </script>
     <title>Check Payment</title>
 </head>
 <body>
 <div class="container-fluid">
     <jsp:include page="/navbar.jsp" />
+        <div class="row mt-3 ml-3">
+            <h3>Payments</h3>
+        </div>
+    <div class="d-flex justify-content-end">
+        <sec:authorize access="hasRole('MAKER')">
+            <a class="btn btn-primary" href="<%= request.getContextPath()%>/payment/newPayment">New Payment</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('CHECKER')">
+            <button class="btn btn-primary" disabled="disabled">New Payment</button>
+        </sec:authorize>
+    </div>
+    <hr width="" color="#b3b3b3">
+</div>
+<div class="container-fluid">
+    <div class="row px-3 flex-column">
+        <table id="paymentTable" class="table table-striped table-bordered display" style="width:100%">
+            <thead>
+            <tr>
+                <th>Loan Application Number</th>
+                <th>Customer Code</th>
+                <th>Payment Amount</th>
+                <th>Created By</th>
+                <th>Status</th>
+                <th>Reviewed By</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${paymentList}" var="singlePayment">
+                    <tr>
+                        <td>${singlePayment.loanApplicationNumber}</td>
+                        <td>${singlePayment.customerCode}</td>
+                        <td>${singlePayment.paymentAmount}</td>
+                        <td>Created By</td>
+                        <td>Status</td>
+                        <td>Reviewed By</td>
+                        <sec:authorize access="hasRole('MAKER')">
+                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('CHECKER')">
+                            <td>
+                                <a href="${editUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a>
+                                |
+                                <a href="${deleteUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Delete</a>
+                            </td>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
