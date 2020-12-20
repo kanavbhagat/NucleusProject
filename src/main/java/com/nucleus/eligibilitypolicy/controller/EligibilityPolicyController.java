@@ -67,6 +67,7 @@ public class EligibilityPolicyController {
         if (result.hasErrors()) {
             List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
+            eligibilityPolicy.setEligibilityParameterCodes(new String[]{});
             return "views/eligibilitypolicies/newEligibilityPolicy";
         }
 
@@ -141,7 +142,7 @@ public class EligibilityPolicyController {
             List<EligibilityParameter> existingParameterList = eligibilityPolicyOld.getEligibilityParameterList();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
             model.addAttribute("existingParameterList", existingParameterList);
-            System.out.println(existingParameterList);
+            eligibilityPolicy.setEligibilityParameterCodes(new String[]{});
             return "views/eligibilitypolicies/editOneEligibilityPolicy";
         }
 
