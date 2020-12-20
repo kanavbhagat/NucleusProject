@@ -49,13 +49,13 @@ $(document).ready(function(){
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
       <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
-      <form:errors path = "chargePolicyCode" cssClass = "error" ></form:errors>
+      <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
       <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px"/>
-      <form:errors path = "chargePolicyName" cssClass = "error" ></form:errors>
+      <form:errors path = "chargePolicyName" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
       <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
-      <form:errors path = "chargePolicyDesc" cssClass = "error" ></form:errors>
+      <form:errors path = "chargePolicyDesc" cssClass = "error" style = "color:red"></form:errors>
     </div>
   </div>
 
