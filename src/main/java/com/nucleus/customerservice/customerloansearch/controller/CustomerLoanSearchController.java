@@ -23,6 +23,14 @@ public class CustomerLoanSearchController {
 
     }
 
+    @GetMapping("/customerServiceHome")
+    public ModelAndView getCustomerServiceHome(){
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("views/customerservice/customerServiceHome");
+        return mv;
+
+    }
+
     @PostMapping("/customerLoanSearch")
     public ModelAndView customerLoanDetail(@RequestParam(value="customerCode") String customerId, @RequestParam(value="loanApplicationNumber") String loanApplicationNumber){
         ModelAndView mv=new ModelAndView();

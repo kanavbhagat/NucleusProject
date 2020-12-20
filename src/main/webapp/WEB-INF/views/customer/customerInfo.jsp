@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <html lang="en">
 
 <head>
@@ -6,133 +6,54 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
-var subjectObject = {
-  "India": {
-    "India state 1": ["india state 1 city 1", "india state 1 city 2", "india state 1 city 4"],
-    "India state 2": ["india state 2 city 1", "india state 2 city 2"],
-    "India state 3": ["india state 3 city 1", "india state 3 city 2"]
-  },
-  "Australia": {
-    "australia state 1": ["australia state 1 city 1", "australia state 1 city 2"],
-    "australia state 2": ["australia state 2 city 1", "australia state 2 city 2"]
-  }
-}
-window.onload = function() {
-  var subjectSel = document.getElementById("country1");
-  var topicSel = document.getElementById("state1");
-  var chapterSel = document.getElementById("city1");
-  for (var x in subjectObject) {
-    subjectSel.options[subjectSel.options.length] = new Option(x, x);
-  }
-  subjectSel.onchange = function() {
-    //display correct values
-    for (var y in subjectObject[this.value]) {
-      topicSel.options[topicSel.options.length] = new Option(y, y);
-    }
-  }
-  topicSel.onchange = function() {
-    //display correct values
-    var z = subjectObject[subjectSel.value][this.value];
-    for (var i = 0; i < z.length; i++) {
-      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
-    }
-  }
-}
-</script>
+        var subjectObject = {
+          "India": {
+            "India state 1": ["india state 1 city 1", "india state 1 city 2", "india state 1 city 4"],
+            "India state 2": ["india state 2 city 1", "india state 2 city 2"],
+            "India state 3": ["india state 3 city 1", "india state 3 city 2"]
+          },
+          "Australia": {
+            "australia state 1": ["australia state 1 city 1", "australia state 1 city 2"],
+            "australia state 2": ["australia state 2 city 1", "australia state 2 city 2"]
+          }
+        }
+        window.onload = function() {
+          var subjectSel = document.getElementById("country1");
+          var topicSel = document.getElementById("state1");
+          var chapterSel = document.getElementById("city1");
+          for (var x in subjectObject) {
+            subjectSel.options[subjectSel.options.length] = new Option(x, x);
+          }
+          subjectSel.onchange = function() {
+            //display correct values
+            for (var y in subjectObject[this.value]) {
+              topicSel.options[topicSel.options.length] = new Option(y, y);
+            }
+          }
+          topicSel.onchange = function() {
+            //display correct values
+            var z = subjectObject[subjectSel.value][this.value];
+            for (var i = 0; i < z.length; i++) {
+              chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+            }
+          }
+        }
+    </script>
    <title>Customer Information</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 </head>
 
 <body class="container-fluid">
-    <header>
-         <!-- NavBar Starts -->
-            <nav class="navbar navbar-expand-sm navbar-light bg-secondary mb-3" >
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo03 ">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="<%= request.getContextPath()%>/product">Product <span class="sr-only">(current)</span></a>
-                        </li>
-
-                        <li class="nav-item dropdown dmenu mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarPolicyDropdown" data-toggle="dropdown">
-                                Policy Setup
-                            </a>
-                            <div class="dropdown-menu sm-menu">
-                                <a class="dropdown-item" href="<%= request.getContextPath()%>/showRepaymentPolicy">Repayment Policy</a>
-                                <a class="dropdown-item" href="<%= request.getContextPath()%>/eligibilityPolicy/">Eligibility Policy</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown dmenu mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarParametersDropdown" data-toggle="dropdown">
-                                Parameters
-                            </a>
-                            <div class="dropdown-menu sm-menu">
-                                <a class="dropdown-item" href="#">Link 1</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Application</a>
-                        </li>
-
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Receipt</a>
-                        </li>
-
-                        <li class="nav-item dropdown dmenu mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarAccountingDropDown" data-toggle="dropdown">
-                                Accounting
-                            </a>
-                            <div class="dropdown-menu sm-menu">
-                                <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Customer Service</a>
-                        </li>
-
-                        <li class="nav-item dropdown dmenu mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarReportDropdown" data-toggle="dropdown">
-                                Report
-                            </a>
-                            <div class="dropdown-menu sm-menu">
-                                <a class="dropdown-item" href="#">Link 1</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown dmenu mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop5" data-toggle="dropdown">
-                                BOD
-                            </a>
-                            <div class="dropdown-menu sm-menu">
-                                <a class="dropdown-item" href="#">Link 1</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <!-- NavBar Ends -->
-    </header>
+     <jsp:include page="/navbar.jsp" />
     <article>
         <form class="font-weight-bold mb-5" action="customer.do">
             <section>

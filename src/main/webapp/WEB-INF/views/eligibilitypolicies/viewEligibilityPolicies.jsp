@@ -18,7 +18,7 @@
     		    $('#example').DataTable();
     		} );
     	</script>
-<title>Create Eligibility Policy</title>
+<title>Eligibility Policies</title>
 <style>
 </style>
 </head>
@@ -66,7 +66,7 @@
         		            <td>${eligibilityPolicy.createdBy}</td>
         		            <td>${eligibilityPolicy.status}</td>
                             <td>${eligibilityPolicy.authorizedBy}</td>
-       		                <td><a href="">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
+       		                <td><a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
        		            </tr>
        		            </c:forEach>
        		        </tbody>
@@ -74,4 +74,38 @@
         </div>
     </div>
 </body>
+<script>
+$(document).ready(function() {
+    var url = new URL(window.location.href);
+
+    var insertStatus = url.searchParams.get("insertStatus");
+    var deleteStatus = url.searchParams.get("deleteStatus");
+    var updateStatus = url.searchParams.get("updateStatus");
+    var editStatus = url.searchParams.get("editStatus");
+
+    if(insertStatus === "true") {
+        alert("Eligibility Policy Added Successfully!");
+    } else if(insertStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(deleteStatus === "true") {
+        alert("Eligibility Policy Deleted Successfully!");
+    } else if(deleteStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(updateStatus === "true") {
+        alert("Status Change Successful!");
+    } else if(updateStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(editStatus === "true") {
+        alert("Eligibility Policy Edited Successfully!");
+    } else if(editStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+});
+</script>
 </html>

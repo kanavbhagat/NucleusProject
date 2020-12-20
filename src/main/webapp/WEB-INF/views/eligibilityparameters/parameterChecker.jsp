@@ -57,13 +57,13 @@
 		        <tbody>
 		        <c:forEach items="${parameters}" var="parameter">
 		            <tr>
-		                <td><c:out value="${parameter.parameterCode}" /></td>
+		                <td><a href="get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
 		                <td><c:out value="${parameter.parameterName}" /></td>
 		                <td><c:out value="${parameter.parameterDescription}" /></td>
 		                <td><c:out value="${parameter.createdBy}" /></td>
 		                <td><c:out value="${parameter.status}" /></td>
 		                <td><c:out value="${parameter.authorizedBy}" /></td>
-		                <td><button type="button" class="btn-xs btn-info">Approve</button> <button type="button" class="btn-xs btn-danger">Reject</button></td>
+		               <td><a>Edit</a>  |  <a>Delete</a></td>
 		            </tr>
 
                 </c:forEach>
