@@ -96,6 +96,7 @@
                 <div class="form-group">
                     <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
                     <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
+                    <form:errors path="maxExposureAmount" cssClass="error"/>
                 </div>
 
             </div>
@@ -137,7 +138,9 @@
 
                 <tr>
                     <td>
-                        <form:label path="repaymentPolicyCode" cssClass="required-field">Repayment Policy</form:label>
+                        <form:label path="repaymentPolicyCodeString" cssClass="required-field">Repayment Policy</form:label>
+                        <br>
+                        <form:errors path="repaymentPolicyCodeString" cssClass="error"/>
                     </td>
                     <td>
                         <form:select required="required" path="repaymentPolicyCodeString" cssClass="form-control">
@@ -149,7 +152,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <form:label path="eligibilityPolicyCode" cssClass="required-field">Eligibility Policy</form:label>
+                        <form:label path="eligibilityPolicyCodeString" cssClass="required-field">Eligibility Policy</form:label>
+                        <br>
+                        <form:errors path="eligibilityPolicyCodeString" cssClass="error"/>
                     </td>
                     <td>
                         <form:select required="required" path="eligibilityPolicyCodeString" cssClass="form-control">
@@ -191,7 +196,7 @@
             <c:forEach var="policy" items="${repaymentPolicies}">
                  <tr>
                   <td>${policy.policyCode}</td>
-                  <td id=${policy.policyName}>${policy.policyDescription}</td>
+                  <td id=${policy.policyCode}>${policy.policyDescription}</td>
                  </tr>
                 </c:forEach>
             </c:if>
@@ -226,7 +231,7 @@
             <c:forEach var="policy" items="${chargePolicies}">
                  <tr>
                   <td>${policy.policyCode}</td>
-                  <td id=${policy.policyName}>${policy.policyDescription}</td>
+                  <td id=${policy.policyCode}>${policy.policyDescription}</td>
                  </tr>
                 </c:forEach>
             </c:if>

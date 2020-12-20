@@ -1,5 +1,6 @@
 package com.nucleus.product.controller;
 
+import com.nucleus.chargepolicy.service.ChargePolicyService;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.product.model.Product;
@@ -30,6 +31,9 @@ public class NewProductController {
     @Autowired
     RepaymentPolicyService repaymentPolicyService;
 
+    @Autowired
+    ChargePolicyService chargePolicyService;
+
     private List<String> productTypes;
 
     public NewProductController(){
@@ -54,6 +58,8 @@ public class NewProductController {
         modelAndView = new ModelAndView("views/product/productOverview");
         // TODO: 17/12/20 get policies via policy code 
         System.out.println(product.getEligibilityPolicyCodeString());
+        System.out.println(product.getRepaymentPolicyCodeString());
+        System.out.println(product.getChargeCodePolicyString());
         return modelAndView;
     }
 
@@ -67,6 +73,7 @@ public class NewProductController {
     private ModelAndView addAttributes(ModelAndView modelAndView){
         modelAndView.addObject("eligibilityPolicies", eligibilityPolicyService.getAllEligibilityPolicies());
         modelAndView.addObject("repaymentPolicies", repaymentPolicyService.getRepaymentPolicyList());
+        modelAndView.addObject("chargePolicies", chargePolicyService.getPolicyList());
         modelAndView.addObject("productTypes", getProductTypes());
         return modelAndView;
     }
