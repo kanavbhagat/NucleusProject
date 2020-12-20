@@ -57,7 +57,7 @@
 		        <tbody>
 		        <c:forEach items="${parameters}" var="parameter">
 		            <tr>
-		                <td><a href="get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
+		                <td><a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
 		                <td><c:out value="${parameter.parameterName}" /></td>
 		                <td><c:out value="${parameter.parameterDescription}" /></td>
 		                <td><c:out value="${parameter.createdBy}" /></td>

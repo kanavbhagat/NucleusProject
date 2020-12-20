@@ -183,7 +183,6 @@ public class EligibilityParameterController {
             newStatus = "Pending";
         System.out.println(newStatus);
         boolean updateStatus = eligibilityParameterService.updateStatus(parameterCode, newStatus);
-        model.addAttribute("updateStatus", updateStatus);
         return "redirect:/main/getchecker/";
     }
 
