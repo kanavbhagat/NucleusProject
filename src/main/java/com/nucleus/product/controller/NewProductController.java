@@ -59,7 +59,7 @@ public class NewProductController {
             return modelAndView;
         }
 
-        modelAndView = new ModelAndView("redirect:product");
+        modelAndView = new ModelAndView("views/product/newProductSave");
 
         product.setEligibilityPolicyCode(epolicy);
         product.setRepaymentPolicyCode(rpolicy);
@@ -69,7 +69,15 @@ public class NewProductController {
             product.setChargeCodePolicy(null);
         }
 
-        productService.createNewProduct(product);
+        Boolean success = productService.createNewProduct(product);
+
+        if(success){
+            modelAndView.addObject("message", "was Successful");
+        }
+        else{
+            modelAndView.addObject("message", "Failed");
+        }
+
         return modelAndView;
     }
 
