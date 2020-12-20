@@ -29,6 +29,7 @@ public class CustomerDAO implements CustomerDaoInterface{
     }
     @Override
     public boolean addCustomer(Customer c) {
+
         try(Session session=getSession()){
             session.beginTransaction();
             try {
