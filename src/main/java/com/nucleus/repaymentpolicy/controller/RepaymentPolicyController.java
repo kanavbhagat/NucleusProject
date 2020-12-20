@@ -3,6 +3,8 @@ package com.nucleus.repaymentpolicy.controller;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -55,7 +57,7 @@ public class RepaymentPolicyController {
         }
         String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Incomplete");
-        repaymentPolicyService.updateCreationParameters(policyCode,"Creator");
+        repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
         //map.addAttribute("policyCode",policyCode);
         //return "views/repaymentpolicy/addedpage";
         ModelAndView mv = new ModelAndView();
@@ -75,7 +77,7 @@ public class RepaymentPolicyController {
         }
         String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Pending");
-        repaymentPolicyService.updateCreationParameters(policyCode,"Creator");
+        repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
         //map.addAttribute("policyCode",policyCode);
         //return "views/repaymentpolicy/addedpage";
         ModelAndView mv = new ModelAndView();
@@ -115,7 +117,7 @@ public class RepaymentPolicyController {
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(policyCode,"Incomplete");
-        repaymentPolicyService.updateModificationParameters(policyCode,"Modifier");
+        repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         //model.addAttribute("policyCode", policyCode);
         //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
@@ -132,7 +134,7 @@ public class RepaymentPolicyController {
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(policyCode,"Pending");
-        repaymentPolicyService.updateModificationParameters(policyCode,"Modifier");
+        repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         //model.addAttribute("policyCode", policyCode);
         //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
@@ -158,8 +160,8 @@ public class RepaymentPolicyController {
                           @RequestParam(value="policyCode", required=true) String policyCode,
                           Model model) {
 
-        repaymentPolicyService.changeStatus(policyCode,"Approved");
-        repaymentPolicyService.updateAuthorizationParameters(policyCode,"Authorizer");
+        repaymentPolicyService.changeStatus(policyCode,getPrincipal());
+        repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         //model.addAttribute("policyCode", policyCode);
         //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
@@ -174,7 +176,7 @@ public class RepaymentPolicyController {
                          Model model) {
 
         repaymentPolicyService.changeStatus(policyCode,"Rejected");
-        repaymentPolicyService.updateAuthorizationParameters(policyCode,"Authorizer");
+        repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         //model.addAttribute("policyCode", policyCode);
         //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
@@ -183,7 +185,17 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
 
 
 //    @RequestMapping("/showRepaymentPolicy")

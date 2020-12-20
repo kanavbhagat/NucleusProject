@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+  prefix="security"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -24,85 +27,7 @@
 <body>
 
 	<div class="container-fluid">
-	<%--<!-- NavBar Starts -->
-		<nav class="navbar navbar-expand-sm navbar-light bg-light" >
-	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-	          <span class="navbar-toggler-icon"></span>
-	        </button>
 
-	        <div class="collapse navbar-collapse" id="navbarTogglerDemo03 ">
-	          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-	            <li class="nav-item mx-2">
-	              <a class="nav-link" href="#">Product <span class="sr-only">(current)</span></a>
-	            </li>
-
-	            <li class="nav-item dropdown dmenu mx-2">
-	            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-	              Policy Setup
-	            </a>
-	            <div class="dropdown-menu sm-menu">
-	              <a class="dropdown-item" href="#">Link 1</a>
-	              <a class="dropdown-item" href="#">Link 2</a>
-	              <a class="dropdown-item" href="#">Link 3</a>
-	            </div>
-	          </li>
-
-	          <li class="nav-item dropdown dmenu mx-2">
-	            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-	              Parameters
-	            </a>
-	            <div class="dropdown-menu sm-menu">
-	              <a class="dropdown-item" href="#">Link 1</a>
-	              <a class="dropdown-item" href="#">Link 2</a>
-	              <a class="dropdown-item" href="#">Link 3</a>
-	            </div>
-	          </li>
-
-	          <li class="nav-item mx-2">
-	              <a class="nav-link" href="#">Application</a>
-	            </li>
-
-	          <li class="nav-item mx-2">
-	            <a class="nav-link" href="#">Receipt</a>
-	          </li>
-
-	          <li class="nav-item dropdown dmenu mx-2">
-	            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-	              Accounting
-	            </a>
-	            <div class="dropdown-menu sm-menu">
-	              <a class="dropdown-item" href="#">Link 1</a>
-	              <a class="dropdown-item" href="#">Link 2</a>
-	              <a class="dropdown-item" href="#">Link 3</a>
-	            </div>
-	          </li>
-
-	          <li class="nav-item mx-2">
-	            <a class="nav-link" href="#">Customer Service</a>
-	          </li>
-
-	          <li class="nav-item dropdown dmenu mx-2">
-	            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-	              Report
-	            </a>
-	            <div class="dropdown-menu sm-menu">
-	              <a class="dropdown-item" href="#">Link 1</a>
-	              <a class="dropdown-item" href="#">Link 2</a>
-	              <a class="dropdown-item" href="#">Link 3</a>
-	            </div>
-	          </li>
-
-	          </ul>
-	          <div class="social-part">
-	            <i class="fa fa-facebook" aria-hidden="true"></i>
-	            <i class="fa fa-twitter" aria-hidden="true"></i>
-	            <i class="fa fa-instagram" aria-hidden="true"></i>
-	          </div>
-	        </div>
-	     </nav>
-
-	<!-- NavBar Ends --> --%>
 
 	<jsp:include page="/navbar.jsp" />
 
@@ -113,7 +38,13 @@
 			 </b>
 		</h2>
 		<div class=" px-4 mt-0 align-self-end ">
-			<button type="button" onclick="location.href = '<%= request.getContextPath()%>/showRepaymentPolicy/add';" class="btn btn-primary">New Repayment Policy</button>
+		    <sec:authorize access="hasRole('MAKER')">
+                    <button type="button" onclick="location.href = '<%= request.getContextPath()%>/showRepaymentPolicy/add';" class="btn btn-primary">New Repayment Policy</button>
+            </sec:authorize>
+            <sec:authorize access="hasRole('CHECKER')">
+                    <button type="button" disabled="disabled" onclick="location.href = '<%= request.getContextPath()%>/showRepaymentPolicy/add';" class="btn btn-primary">New Repayment Policy</button>
+            </sec:authorize>
+
 		</div>
 	</div>
 
@@ -144,18 +75,30 @@
                     <c:url var="deleteUrl" value="/showRepaymentPolicy/delete?policyCode=${newRepaymentPolicy.policyCode}" />
                     <c:url var="checkUrl" value="/showRepaymentPolicy/check?policyCode=${newRepaymentPolicy.policyCode}" />
                     <tr>
-                        <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
+                        <sec:authorize access="hasRole('MAKER')">
+                                <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('CHECKER')">
+                                <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
+                        </sec:authorize>
+
                         <td><c:out value="${newRepaymentPolicy.policyName}" /></td>
                         <td><c:out value="${newRepaymentPolicy.policyDescription}" /></td>
                         <td><c:out value="${newRepaymentPolicy.createdBy}" /></td>
                         <td><c:out value="${newRepaymentPolicy.authorizedBy}" /></td>
-                        <td><a href="${editUrl}">Edit</a> | <a href="${deleteUrl}">Delete</a></td>
+                        <sec:authorize access="hasRole('MAKER')">
+                                <td><a href="${editUrl}">Edit</a> | <a href="${deleteUrl}">Delete</a></td>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('CHECKER')">
+                                <td>
+                                 <a href="${editUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a>
+                                 |
+                                 <a href="${deleteUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Delete</a>
+                                 </td>
+                        </sec:authorize>
                     </tr>
                 </c:forEach>
             </tbody>
 		</table>
-    <c:if test="${empty showRepaymentPolicy}">
-        There are currently no Policies in the list. <a href="${addUrl}">Add New</a> a Policy.
-    </c:if>
 	</body>
 </html>

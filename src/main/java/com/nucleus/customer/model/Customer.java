@@ -3,6 +3,7 @@ package com.nucleus.customer.model;
 import com.nucleus.loanapplications.model.LoanApplications;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,13 +36,15 @@ public class Customer {
     private String organizationName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
-    private Set<LoanApplications> loanApplications;
+    private List<LoanApplications> loanApplications;
 
-    public Set<LoanApplications> getLoanApplications() {
+
+
+    public List<LoanApplications> getLoanApplications() {
         return loanApplications;
     }
 
-    public void setLoanApplications(Set<LoanApplications> loanApplications) {
+    public void setLoanApplications(List<LoanApplications> loanApplications) {
         this.loanApplications = loanApplications;
     }
 
