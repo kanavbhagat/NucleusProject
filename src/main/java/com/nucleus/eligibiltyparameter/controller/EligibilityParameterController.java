@@ -4,12 +4,15 @@ import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import com.nucleus.eligibiltyparameter.service.EligibilityParameterService;
+import com.nucleus.product.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,70 +41,97 @@ public class EligibilityParameterController {
     }
 
     @RequestMapping(value = "/insertparameter", params = "action1",method = RequestMethod.POST)
-    public String saveParameter(@ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter){
-        System.out.println("action1");
-        eligibilityParameter.setCreatedBy("Kirtika");
-        eligibilityParameter.setCreateDate(LocalDate.now());
-        eligibilityParameter.setStatus("Inactive");
-        eligibilityParameterService.insertParameter(eligibilityParameter);
-        return "views/eligibilityparameters/eligibilityparametersuccess";
+    public String saveParameter(@Valid @ModelAttribute("eligibilityParameter") EligibilityParameter eligibilityParameter, BindingResult br){
+        if(br.hasErrors())
+        {
+            return "views/eligibilityparameters/createParameter";
+        }
+        else
+        {
+            eligibilityParameter.setCreatedBy("Kirtika");
+            eligibilityParameter.setCreateDate(LocalDate.now());
+            eligibilityParameter.setStatus("Inactive");
+            eligibilityParameterService.insertParameter(eligibilityParameter);
+            return "views/eligibilityparameters/eligibilityparametersuccess";
+        }
 
     }
 
     @RequestMapping(value = "/insertparameter", params = "action2",method = RequestMethod.POST)
-    public String saveAndRequestApproval(@ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter){
-        System.out.println("action2");
-        eligibilityParameter.setCreatedBy("Kirtika");
-        eligibilityParameter.setCreateDate(LocalDate.now());
-        eligibilityParameter.setStatus("Pending");
-        eligibilityParameterService.insertParameterAndRequestApproval(eligibilityParameter);
-        return "views/eligibilityparameters/eligibilityparametersuccess";
-
-    }
-
-    @RequestMapping(value = "/editparameter", params = "action1",method = RequestMethod.POST)
-    public String editParameter1(@ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter){
-        System.out.println("inside editparameter");
-
-        eligibilityParameter.setModifiedBy("Kirtika");
-        eligibilityParameter.setStatus("Inactive");
-        boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
-
-        System.out.println("action1");
-        if(valid==true)
+    public String saveAndRequestApproval(@Valid @ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter,BindingResult br){
+        if(br.hasErrors())
         {
-            System.out.println("true");
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            return "views/eligibilityparameters/createParameter";
         }
-
         else
         {
-            System.out.println("false");
-            return "views/eligibilityparameters/eligibilityparameterfailure";
+            eligibilityParameter.setCreatedBy("Kirtika");
+            eligibilityParameter.setCreateDate(LocalDate.now());
+            eligibilityParameter.setStatus("Pending");
+            eligibilityParameterService.insertParameterAndRequestApproval(eligibilityParameter);
+            return "views/eligibilityparameters/eligibilityparametersuccess";
         }
 
     }
 
-    @RequestMapping(value = "/editparameter", params = "action2",method = RequestMethod.POST)
-    public String editParameter2(@ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter){
-        System.out.println("inside editparameter");
+    @RequestMapping(value = "/edit/editparameter", params = "action1",method = RequestMethod.POST)
+    public String editParameter1(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br){
 
-        eligibilityParameter.setModifiedBy("Kirtika");
-        eligibilityParameter.setStatus("Pending");
-        boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
-
-        System.out.println("action2");
-        if(valid==true)
+        /*String code=eligibilityParameter.getParameterCode();
+        System.out.println("kk");
+        System.out.println(code);*/
+        if(br.hasErrors())
         {
-            System.out.println("true");
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            return "views/eligibilityparameters/editParameter";
         }
-
         else
         {
-            System.out.println("false");
-            return "views/eligibilityparameters/eligibilityparameterfailure";
+            eligibilityParameter.setModifiedBy("Kirtika");
+            eligibilityParameter.setStatus("Inactive");
+            boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
+
+            System.out.println("action1");
+            if(valid==true)
+            {
+                System.out.println("true");
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+
+            else
+            {
+                System.out.println("false");
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
         }
+
+    }
+
+    @RequestMapping(value = "/edit/editparameter", params = "action2",method = RequestMethod.POST)
+    public String editParameter2(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br){
+        if(br.hasErrors())
+        {
+            return "views/eligibilityparameters/editParameter";
+        }
+        else
+        {
+            eligibilityParameter.setModifiedBy("Kirtika");
+            eligibilityParameter.setStatus("Pending");
+            boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
+
+            System.out.println("action1");
+            if(valid==true)
+            {
+                System.out.println("true");
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+
+            else
+            {
+                System.out.println("false");
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
+        }
+
     }
 
     @RequestMapping("/getchecker")
@@ -121,12 +151,16 @@ public class EligibilityParameterController {
 
     }
 
-    @RequestMapping("/edit/{parameterCode}/{parameterName}/{parameterDescription}/{minValue}/{maxValue}")
-    public String editParameter(@PathVariable("parameterCode") String parameterCode,@PathVariable("parameterName") String parameterName,
-                                @PathVariable("parameterDescription") String parameterDescription,@PathVariable("minValue") String minValue,
-                                @PathVariable("maxValue") String maxValue,@ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter) {
+    @RequestMapping("/edit/{parameterCode}")
+    public ModelAndView editParameter(@PathVariable("parameterCode") String parameterCode,Model model){
 
-        return "views/eligibilityparameters/editParameter";
+        ModelAndView modelAndView = new ModelAndView();
+        EligibilityParameter eligibilityParameter = eligibilityParameterService.getOneEligibilityParameter(parameterCode);
+        modelAndView.addObject("eligibilityParameter1", eligibilityParameter);
+        modelAndView.setViewName("views/eligibilityparameters/editParameter");
+        return modelAndView;
+
+
     }
 
     @GetMapping(value = {"/get/{parameterCode}"})
