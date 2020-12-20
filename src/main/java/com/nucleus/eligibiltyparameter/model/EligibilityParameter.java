@@ -148,7 +148,20 @@ public class EligibilityParameter implements Serializable {
 
     @Override
     public String toString() {
-        return parameterName;
+        return "EligibilityParameter{" +
+                "parameterCode='" + parameterCode + '\'' +
+                ", parameterName='" + parameterName + '\'' +
+                ", minValue=" + minValue +
+                ", maxValue=" + maxValue +
+                ", parameterDescription='" + parameterDescription + '\'' +
+                ", createDate=" + createDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedDate=" + modifiedDate +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                ", authorizedDate=" + authorizedDate +
+                ", authorizedBy='" + authorizedBy + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     @Override
