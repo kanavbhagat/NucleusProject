@@ -105,7 +105,7 @@
 
                 <div class="form-group">
                     <label for="dateOfReceipt" class="font-weight-bold required-field">Date of Receipt</label>
-                    <form:input type="date" class="form-control" path="dateOfReceipt" placeholder="dd/mm/yyyy"/>
+                    <form:input type="date" class="form-control" path="dateOfReceipt" placeholder="yyyy-mm-dd"/>
                     <font color="red"><form:errors path="dateOfReceipt"/></font>
                 </div>
 

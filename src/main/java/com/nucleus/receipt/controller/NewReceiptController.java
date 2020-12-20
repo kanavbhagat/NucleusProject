@@ -2,14 +2,18 @@ package com.nucleus.receipt.controller;
 
 
 import com.nucleus.loanapplications.service.NewLoanApplicationService;
+import com.nucleus.payment.service.DateEditor;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
+import com.nucleus.receipt.service.ReceiptValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RestController
 public class NewReceiptController {
@@ -19,6 +23,16 @@ public class NewReceiptController {
 
     @Autowired
     NewLoanApplicationService newLoanApplicationService;
+
+    @Autowired
+    ReceiptValidator receiptValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder){
+        dataBinder.setValidator(receiptValidator);
+        dataBinder.registerCustomEditor(LocalDate.class, new DateEditor());
+    }
+
 
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
