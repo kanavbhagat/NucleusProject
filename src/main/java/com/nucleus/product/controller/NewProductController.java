@@ -1,14 +1,14 @@
 package com.nucleus.product.controller;
 
+import com.nucleus.chargepolicy.model.ChargePolicy;
 import com.nucleus.chargepolicy.service.ChargePolicyService;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.product.model.Product;
-import com.nucleus.product.service.NewProductService;
+import com.nucleus.product.service.ProductService;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ import java.util.List;
 public class NewProductController {
 
     @Autowired
-    NewProductService newProductService;
+    ProductService productService;
 
     @Autowired
     EligibilityPolicyService eligibilityPolicyService;
@@ -51,15 +51,25 @@ public class NewProductController {
     @PostMapping(value = "/newProduct")
     public ModelAndView addProduct(@Valid Product product, BindingResult result){
         ModelAndView modelAndView;
-        if (result.hasErrors()) {
+        EligibilityPolicy epolicy = eligibilityPolicyService.getOneEligibilityPolicy(product.getEligibilityPolicyCodeString());
+        RepaymentPolicy rpolicy = repaymentPolicyService.getRepaymentPolicyById(product.getRepaymentPolicyCodeString());
+
+        if (result.hasErrors() || rpolicy==null || epolicy==null) {
             modelAndView = this.addAttributes( new ModelAndView("views/product/newProductCreation"));
             return modelAndView;
         }
-        modelAndView = new ModelAndView("views/product/productOverview");
-        // TODO: 17/12/20 get policies via policy code 
-        System.out.println(product.getEligibilityPolicyCodeString());
-        System.out.println(product.getRepaymentPolicyCodeString());
-        System.out.println(product.getChargeCodePolicyString());
+
+        modelAndView = new ModelAndView("redirect:product");
+
+        product.setEligibilityPolicyCode(epolicy);
+        product.setRepaymentPolicyCode(rpolicy);
+        if(product.getChargeCodePolicyString()!=null){
+            // TODO: 20/12/20 ask Jigme team to fix single charge policy retrieval
+//            ChargePolicy cpolicy = chargePolicyService
+            product.setChargeCodePolicy(null);
+        }
+
+        productService.createNewProduct(product);
         return modelAndView;
     }
 
