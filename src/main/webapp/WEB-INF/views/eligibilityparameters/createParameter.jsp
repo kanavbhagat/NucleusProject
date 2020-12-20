@@ -21,7 +21,6 @@
     		    content: ' *';
     		    display:inline;
     		}
-
     </style>
 </head>
 <body>

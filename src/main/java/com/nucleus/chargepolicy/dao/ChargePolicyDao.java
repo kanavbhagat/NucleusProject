@@ -23,7 +23,6 @@ import java.util.List;
         sessionFactory.close();
     }
 }*/
-
     public interface ChargePolicyDao {
         public void insert(ChargePolicy chargePolicy);
 

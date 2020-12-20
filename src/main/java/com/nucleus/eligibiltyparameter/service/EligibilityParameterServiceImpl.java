@@ -23,4 +23,25 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
     public void insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter){
         eligibilityParameterDao.insertParameterAndRequestApproval(eligibilityParameter);
     }
+
+    @Override
+    public EligibilityParameter getOneEligibilityParameter(String parameterCode){
+        return eligibilityParameterDao.getOneEligibilityParameter(parameterCode);
+    }
+
+    @Override
+    public boolean deleteEligibilityParameter(String parameterCode){
+        return eligibilityParameterDao.deleteEligibilityParameter(parameterCode);
+    }
+
+    @Override
+    public boolean editParameter(EligibilityParameter eligibilityParameter){
+        return eligibilityParameterDao.editParameter(eligibilityParameter);
+    }
+
+    @Override
+    public boolean updateStatus(String parameterCode,String newStatus)
+    {
+        return eligibilityParameterDao.updateStatus(parameterCode,newStatus);
+    }
 }
