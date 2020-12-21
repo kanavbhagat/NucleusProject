@@ -1,5 +1,6 @@
 package com.nucleus.receipt.dao;
 
+import com.nucleus.product.model.Product;
 import com.nucleus.receipt.model.Receipt;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -67,6 +68,17 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         } catch (Exception exception){
             exception.printStackTrace();
             receiptList = new ArrayList<>();
+            return receiptList;
+        }
+    }
+
+    @Override
+    public List<Receipt> getRecceiptDetail() {
+        try(Session session = getSession()) {
+            session.beginTransaction();
+            Query<Receipt> query = session.createQuery("from Receipts r");
+            List<Receipt> receiptList = query.list();
+            session.getTransaction().commit();
             return receiptList;
         }
     }

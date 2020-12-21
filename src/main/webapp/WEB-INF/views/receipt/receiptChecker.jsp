@@ -28,24 +28,13 @@
     <jsp:include page="/navbar.jsp" />
 
     <br>
+    <sec:authorize access="hasRole('CHECKER')">
     <div class="row">
         <div class="col-sm-10 col-12">
             <h2 class="display-3" style="font-size: 30px">
                 <strong>Receipt Table</strong>
             </h2>
         </div>
-
-        <div class="col-sm-2 col-12">
-            <sec:authorize access="hasRole('MAKER')">
-                 <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
-            </sec:authorize>
-            <sec:authorize access="hasRole('CHECKER')">
-                  <button type="button" disabled="disabled" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
-            </sec:authorize>
-        </div>
-        <%--<div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
-        </div>--%>
     </div>
 </div>
 
@@ -59,9 +48,11 @@
             <tr>
                 <th>Receipt Type</th>
                 <th>Receipt basis</th>
+                <th>Receipt Status</th>
+                <th>Receipt Amount</th>
                 <th>Loan Account#</th>
                 <th>Receipt Ref#</th>
-
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -70,15 +61,22 @@
                  <tr>
                   <td>${receipt.receiptType}</td>
                   <td>${receipt.receiptBasis}</td>
-                  <td>${receipt.loanAccount}</td>
-                  <td>${receipt.receiptRef}</td>
+                  <td>${receipt.receiptStatus}</td>
+                  <td>${receipt.receiptAmount}</td>
+                  <td>${receipt.loanApplicationNumber}</td>
+                  <td>${receipt.receiptNo}</td>
+                  <td>
+                    <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
+                    |
+                    <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                  </td>
                  </tr>
                 </c:forEach>
             </c:if>
             </tbody>
         </table>
     </div>
-
+</sec:authorize>
 </div>
 </body>
 </html>

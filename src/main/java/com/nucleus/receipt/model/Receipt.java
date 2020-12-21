@@ -55,6 +55,10 @@ public class Receipt {
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
 
+
+    @Column(name="receipt_status")
+    private String receiptStatus;
+
     @ManyToOne
     @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number", nullable = false)
     private LoanApplications loanApplicationNumber;
@@ -234,5 +238,12 @@ public class Receipt {
         this.authorizedBy = authorizedBy;
     }
 
+    public String getReceiptStatus() {
+        return receiptStatus;
+    }
+
+    public void setReceiptStatus(String receiptStatus) {
+        this.receiptStatus = receiptStatus;
+    }
 
 }
