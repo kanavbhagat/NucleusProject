@@ -8,4 +8,5 @@ public interface ReceiptDAOInterface {
 
     Boolean createNewReceipt(Receipt receipt);
     List<Object> receiptSearch(String receiptType, String receiptBasis, Integer accountNumber, Integer receiptNo);
+    List<Receipt>getRecceiptDetail();
 }

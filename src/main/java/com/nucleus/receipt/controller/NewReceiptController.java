@@ -33,9 +33,11 @@ public class NewReceiptController {
 
 
     @PostMapping(value = {"/registerReceipt"})
-    public ModelAndView addReceipt(@Valid @ModelAttribute Receipt receipt, BindingResult result){
+    public ModelAndView addReceipt(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult result){
 
         ModelAndView modelAndView=new ModelAndView();
+        receipt.setReceiptStatus("Pending");
+
         System.out.println(receipt.getLoanApplicationValue());
         new ReceiptValidator().validate(receipt, result);
         if(result.hasErrors()){
@@ -51,8 +53,7 @@ public class NewReceiptController {
             System.out.println("success");
         }
         modelAndView.setViewName("views/receipt/receiptSearch");
-        //receiptService.registerReceipt(receipt);
-        //modelAndView.se
+
         return modelAndView;
     }
 

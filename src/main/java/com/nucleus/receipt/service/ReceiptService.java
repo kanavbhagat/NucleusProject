@@ -20,4 +20,8 @@ public class ReceiptService {
     public List<Object> receiptSearch(String receiptType, String receiptBasis, Integer accountNumber, Integer receiptNo){
         return receiptDAOInterface.receiptSearch(receiptType, receiptBasis, accountNumber, receiptNo);
     }
+
+    public List<Receipt>getReceiptList(){
+        return receiptDAOInterface.getRecceiptDetail();
+    }
 }
