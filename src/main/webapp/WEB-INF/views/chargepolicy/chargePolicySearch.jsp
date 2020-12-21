@@ -25,19 +25,23 @@
 </head>
 <body>
 <jsp:include page="/navbar.jsp" />
+ <div class="container-fluid">
+        <div class="row pt-3 pl-3 flex-column">
+        	<h2 class="display-3" style="font-size: 30px">
+        		<b>Eligibility Policies</b>
+        	</h2>
+
+        	<div class=" px-4 mt-0 align-self-end ">
+       			<a class="btn btn-primary" href="<%= request.getContextPath()%>/chargePolicy/newChargePolicy">New Eligibility Policy</a>
+       		</div>
+        </div>
+
+        <hr width="" color="#b3b3b3">
+
+    </div>
+
+
 <form:form method = "Post" modelAttribute = "chargePolicy">
-<div class="row pt-3 pl-3 flex-column">
-		<h2 class="  display-3" style="font-size: 30px">
-			<b> Charge Policies
-			 </b>
-		</h2>
-
-
-	</div>
-
-	<hr width="" color="#b3b3b3">
-
-	</div>
 <div class="container-fluid">
 		<div class="row px-3 flex-column">
 			<!-- Show n entries -->

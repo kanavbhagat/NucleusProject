@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 //import spring.service.ChargePolicyService;
 
 import javax.validation.Valid;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ChargePolicyController {
     public String showForm(ModelMap model){
         ChargePolicy chargePolicy = new ChargePolicy();
         model.put("chargePolicy",chargePolicy);
-         model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
+        // model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
         List<String> chargeCodeList = new ArrayList<String>();
         chargeCodeList.add("101");
         chargeCodeList.add("102");
@@ -111,7 +112,6 @@ public class ChargePolicyController {
         List<ChargePolicy> chargePolicyList = new ArrayList<ChargePolicy>();
         chargePolicyList.addAll(this.chargePolicyService.getPolicyList());
         List<String> chargeCodeList = this.chargePolicyService.getChargeCodes();
-        System.out.println("In controller with " + chargeCodeList);
         ChargePolicy chargePolicy = new ChargePolicy();
         modelMap.put("chargePolicy",chargePolicy);
         modelMap.put("chargePolicyList",chargePolicyList);
@@ -124,10 +124,11 @@ public class ChargePolicyController {
        this.chargePolicyService.getCharge("1010");
     }
 
-    @RequestMapping(value = "newChargePolicy/postEmployee", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody NewCharge postEmployeeData(@RequestBody NewCharge charge) {
+    @PostMapping(value = "/newChargePolicy/getCharge", produces = "application/json")
+    public @ResponseBody NewCharge getCharge(@RequestBody NewCharge charge) {
         // getCharge from the Model.
         // Take the chargeCode go to the db get the chargeCodeName and fill it.
+        System.out.println("In getCharge Controllerrrr");
         if(charge.getChargeCode().equals("101"))charge.setChargeCodeName("Disbursal");
         if(charge.getChargeCode().equals("102"))charge.setChargeCodeName("CGST");
 
