@@ -1,6 +1,6 @@
 package com.nucleus.loanclosurebod.database;
 
-import com.nucleus.loanclosurebod.model.LoanApplication;
+import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -31,12 +31,12 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     }
 
     @Override
-    public List<LoanApplication> getLoanApplications(){
-        List<LoanApplication> list = new ArrayList<>();
+    public List<LoanApplications> getLoanApplications(){
+        List<LoanApplications> list = new ArrayList<>();
         try{
             Session session = getSession();
             session.beginTransaction();
-            Query<LoanApplication> query = session.createQuery("FROM  LoanApplication", LoanApplication.class);
+            Query<LoanApplications> query = session.createQuery("FROM  LoanApplication", LoanApplications.class);
             list = query.getResultList();
             session.getTransaction().commit();
         }catch (Exception exception) {
@@ -46,7 +46,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     }
 
     @Override
-    public List<RepaymentSchedule> getRepaymentSchedule(LoanApplication loanApplication){
+    public List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication){
         List<RepaymentSchedule> list = new ArrayList<>();
         try{
             Session session = getSession();
@@ -62,12 +62,12 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     }
 
     @Override
-    public boolean updateStatus(LoanApplication loanApplication, String newStatus){
+    public boolean updateStatus(LoanApplications loanApplication, String newStatus){
         boolean updateStatus;
         try{
             Session session = getSession();
             session.beginTransaction();
-            loanApplication.setLoanStatus(newStatus);
+            loanApplication.setStatus(newStatus);
             session.update(loanApplication);
             session.getTransaction().commit();
             updateStatus = true;
@@ -83,7 +83,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         Session session = getSession();
         session.beginTransaction();
 
-        LoanApplication loanApplication = new LoanApplication();
+        LoanApplications loanApplication = new LoanApplications();
         loanApplication.setLoanApplicationNumber(1);
         loanApplication.setAgreementDate(LocalDate.of(2020, 06, 10));
         loanApplication.setAuthorizedBy("Apurv");
@@ -92,7 +92,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         loanApplication.setCreatedBy("Richa");
         loanApplication.setInstallmentDueDate(LocalDate.of(2021, 06, 10));
         loanApplication.setLoanAmountRequested(100000);
-        loanApplication.setLoanStatus("Active");
+        loanApplication.setStatus("Active");
         loanApplication.setModifiedDate(LocalDate.of(2020, 9, 10));
         loanApplication.setModifiedBy("Kirtika");
         loanApplication.setRate(20);

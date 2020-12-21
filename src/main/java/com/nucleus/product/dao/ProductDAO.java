@@ -45,10 +45,26 @@ public class ProductDAO implements ProductDAOInterface {
                 session.save(product);
                 session.getTransaction().commit();
                 return true;
-            } catch (HibernateException e){
+            } catch (Exception e){
                 e.printStackTrace();
                 session.getTransaction().rollback();
                 return false;
+            }
+        }
+    }
+
+    public Product getProductById(String id){
+        try(Session session = getSession()){
+            Product product;
+            session.beginTransaction();
+            try {
+                product = session.get(Product.class, id);
+                session.getTransaction().commit();
+                return product;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return null;
             }
         }
     }
