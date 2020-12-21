@@ -54,7 +54,7 @@
         		        </tr>
         		    </thead>
         		    <tbody>
-        		        <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
+        		         <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
         		        <tr>
         		            <td>
         		            <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">

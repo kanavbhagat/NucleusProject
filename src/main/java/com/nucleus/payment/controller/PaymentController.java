@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "payment")
@@ -22,12 +23,12 @@ public class PaymentController {
     @Autowired
     PaymentServiceImpl paymentService;
 
-    @Autowired
-    PaymentValidator paymentValidator;
+//    @Autowired
+//    PaymentValidator paymentValidator;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder){
-        dataBinder.setValidator(paymentValidator);
+//        dataBinder.setValidator(paymentValidator);
         dataBinder.registerCustomEditor(LocalDate.class, new DateEditor());
     }
 
@@ -41,7 +42,9 @@ public class PaymentController {
 
     @GetMapping(value = {"/", ""})
     public ModelAndView viewPayments(){
+        List<Payment> paymentList = paymentService.getAllPayments();
         ModelAndView modelAndView = new ModelAndView("views/payment/checkPayment");
+        modelAndView.addObject("paymentList", paymentList);
         return modelAndView;
     }
 
@@ -53,14 +56,15 @@ public class PaymentController {
     }
 
     @PostMapping(value = "/add")
-    public String addPayment(@Valid @ModelAttribute("payment") Payment payment, Model model, BindingResult bindingResult){
+    public ModelAndView addPayment(@Valid @ModelAttribute("payment") Payment payment, BindingResult bindingResult){
         if(bindingResult.hasErrors())
         {
-            return "newPayment";
+            ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
+            return modelAndView;
         }
+        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
         boolean insertStatus = paymentService.insertPayment(payment);
-        model.addAttribute("insertStatus", insertStatus);
-        return "redirect:/payment";
+        return modelAndView;
     }
 
 }
