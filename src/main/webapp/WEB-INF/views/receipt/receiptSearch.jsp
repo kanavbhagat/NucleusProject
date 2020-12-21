@@ -105,7 +105,7 @@
                 <button type="button" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
-
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <form>
 </div>
 </body>
