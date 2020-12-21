@@ -2,10 +2,7 @@ package com.nucleus.customerservice.customerloansearch.controller;
 
 import com.nucleus.customer.service.NewCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
@@ -31,8 +28,9 @@ public class CustomerLoanSearchController {
 
     }
 
-    @PostMapping("/customerLoanSearch")
-    public ModelAndView customerLoanDetail(@RequestParam(value="customerCode") String customerId, @RequestParam(value="loanApplicationNumber") String loanApplicationNumber){
+    @PostMapping(value = "/customerLoanSearch")
+    public @ResponseBody ModelAndView customerLoanDetail(@RequestParam(value="customerCode", required = false) String customerId,
+                                           @RequestParam(value="loanApplicationNumber", required = false) String loanApplicationNumber){
         ModelAndView mv=new ModelAndView();
         mv.setViewName("views/customerservice/searchResult");
 //        Customer customer=customerLoanSearchService.getCustomerDetails(customerId);
