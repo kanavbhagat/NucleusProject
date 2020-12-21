@@ -160,7 +160,7 @@ public class RepaymentPolicyController {
                           @RequestParam(value="policyCode", required=true) String policyCode,
                           Model model) {
 
-        repaymentPolicyService.changeStatus(policyCode,getPrincipal());
+        repaymentPolicyService.changeStatus(policyCode,"Approved");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         //model.addAttribute("policyCode", policyCode);
         //return "views/repaymentpolicy/editedpage";

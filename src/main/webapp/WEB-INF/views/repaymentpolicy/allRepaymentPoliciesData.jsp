@@ -63,6 +63,7 @@
                         <th>repaymentPolicyCode</th>
                         <th>repaymentPolicyName</th>
                         <th>repaymentPolicyDescription</th>
+                        <th>Status</th>
                         <th>Created By</th>
                         <th>Reviewed By</th>
                         <th>Actions</th>
@@ -84,6 +85,7 @@
 
                         <td><c:out value="${newRepaymentPolicy.policyName}" /></td>
                         <td><c:out value="${newRepaymentPolicy.policyDescription}" /></td>
+                        <td><c:out value="${newRepaymentPolicy.status}" /></td>
                         <td><c:out value="${newRepaymentPolicy.createdBy}" /></td>
                         <td><c:out value="${newRepaymentPolicy.authorizedBy}" /></td>
                         <sec:authorize access="hasRole('MAKER')">
