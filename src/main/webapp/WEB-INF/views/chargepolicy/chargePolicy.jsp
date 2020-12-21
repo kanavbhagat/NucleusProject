@@ -21,27 +21,27 @@ $(document).ready(function(){
 
     var charge  = {};
     charge["chargeCode"] =$('#chargeCode').find(":selected").text();
-    charge["chargeCodeName"] =  $("chargeCodeName").val();
+    charge["chargeCodeName"] =  "default";
     $.ajax({
-    				type : "POST",
-    				contentType : "application/json",
-    				url : "newChargePolicy/postEmployee",
-    				data : JSON.stringify(charge),
-    				dataType : 'json',
-    				success : function(data) {
+        				type : "POST",
+        				contentType : "application/json",
+        				url : "newChargePolicy/getCharge",
+        				data : JSON.stringify(charge),
+        				dataType : 'json',
+        				success : function(data) {
 
-    					$('#chargeCodeName').val(data.chargeCodeName);
-                        $('#chargeCodeName').attr('readonly', true);
+        					$('#chargeCodeName').val(data.chargeCodeName);
+                            $('#chargeCodeName').attr('readonly', true);
 
-    				}
+        				}
 
-    			});
+        			});
   });
 });
 </script>
 
 <jsp:include page="/navbar.jsp" />
-    <form:form  method = "POST" modelAttribute= "chargePolicy">
+    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy">
 
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>

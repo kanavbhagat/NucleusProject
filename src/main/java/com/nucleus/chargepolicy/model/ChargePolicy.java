@@ -6,11 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "charge_policy")
-public class ChargePolicy implements Serializable {
+public class ChargePolicy {
 
     @Id
     @Column(name = "policy_code")
