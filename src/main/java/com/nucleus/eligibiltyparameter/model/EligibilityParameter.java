@@ -1,9 +1,15 @@
 package com.nucleus.eligibiltyparameter.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,19 +18,26 @@ import java.util.Objects;
 @Table(name = "eligibility_parameters")
 public class EligibilityParameter implements Serializable {
 
+    @NotBlank(message = "Eligibility Parameter Code should not be empty")
+    @Pattern(regexp = "^([A-Za-z0-9\\_]+)$", message = "Eligibility Parameter code cannot contain spaces")
     @Id
     @Column(name = "parameter_code", length = 10)
     private String parameterCode;
 
-    @Column(name = "parameter_name", length = 10, nullable = false, unique = true)
+    @NotBlank(message = "Eligibility Parameter Name should not be empty")
+    @Size(min = 3, max=20, message = "Eligibility Parameter name should be at least 3 characters and atmost 20 characters")
+    @Column(name = "parameter_name", length = 20, nullable = false, unique = true)
     private String parameterName;
 
+    @NotNull
     @Column(name = "min_value", nullable = false)
     private double minValue;
 
     @Column(name = "max_value")
     private double maxValue;
 
+    @NotBlank(message = "Eligibility Parameter Description should not be empty")
+    @Size(min = 3, message = "Eligibility Parameter Description should be at least 3 characters")
     @Column(name = "parameter_description", length = 200)
     private String parameterDescription;
 
@@ -148,20 +161,7 @@ public class EligibilityParameter implements Serializable {
 
     @Override
     public String toString() {
-        return "EligibilityParameter{" +
-                "parameterCode='" + parameterCode + '\'' +
-                ", parameterName='" + parameterName + '\'' +
-                ", minValue=" + minValue +
-                ", maxValue=" + maxValue +
-                ", parameterDescription='" + parameterDescription + '\'' +
-                ", createDate=" + createDate +
-                ", createdBy='" + createdBy + '\'' +
-                ", modifiedDate=" + modifiedDate +
-                ", modifiedBy='" + modifiedBy + '\'' +
-                ", authorizedDate=" + authorizedDate +
-                ", authorizedBy='" + authorizedBy + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return parameterName;
     }
 
     @Override
