@@ -3,6 +3,7 @@ package com.nucleus.repaymentpolicy.controller;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -98,6 +99,7 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/edit", method = RequestMethod.GET)
     public ModelAndView getEdit(@RequestParam(value="policyCode", required=true) String policyCode,
                           Model model) {

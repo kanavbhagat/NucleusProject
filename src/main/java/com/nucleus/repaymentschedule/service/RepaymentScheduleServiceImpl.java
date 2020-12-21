@@ -41,7 +41,6 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
     public int addRepaymentSchedule(LoanApplications loanApplication) {
 
         int loanApplicationNumber = loanApplication.getLoanApplicationNumber();
-        //String productCode = loanApplication.getProductCode();
         double loanAmountRequested = loanApplication.getLoanAmountRequested();
         int tenure = loanApplication.getTenure();
         double rate = loanApplication.getRate();

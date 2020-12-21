@@ -76,11 +76,17 @@
                     <c:url var="deleteUrl" value="/showRepaymentPolicy/delete?policyCode=${newRepaymentPolicy.policyCode}" />
                     <c:url var="checkUrl" value="/showRepaymentPolicy/check?policyCode=${newRepaymentPolicy.policyCode}" />
                     <tr>
+
                         <sec:authorize access="hasRole('MAKER')">
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
+                            <c:if test = "${newRepaymentPolicy.status ne 'Incomplete'}">
                                 <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
+                            </c:if>
+                            <c:if test = "${newRepaymentPolicy.status == 'Incomplete'}">
+                                <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
+                            </c:if>
                         </sec:authorize>
 
                         <td><c:out value="${newRepaymentPolicy.policyName}" /></td>
