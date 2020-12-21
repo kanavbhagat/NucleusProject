@@ -57,17 +57,19 @@
                   <td>${cust.dateOfBirth}</td>
                   <td>${cust.nationality}</td>
                   <td>${cust.occupationType}</td>
+                  <td>${cust.totalWorkExperience}</td>
                   <td>${cust.organizationName}</td>
                  </tr>
             </c:forEach>
             </c:if>
             </tbody>
         </table>
-
+        <br><br>
         <table id="LoanApplicationsTable" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                     <tr>
                         <th>Loan Application Number</th>
+                        <th>Customer Code</th>
                         <th>Product Code</th>
                         <th>Loan Amount Requested</th>
                         <th>Tenure</th>
@@ -80,6 +82,7 @@
                         <th>Modified By</th>
                         <th>Authorized Date</th>
                         <th>Authorized By</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -87,7 +90,8 @@
                     <c:forEach var="loan" items="${loanApplications}">
                          <tr>
                           <td>${loan.loanApplicationNumber}</td>
-                          <td>${loan.productCode}</td>
+                          <td>${loan.customer.customerCode}</td>
+                          <td>${loan.product.productCode}</td>
                           <td>${loan.loanAmountRequested}</td>
                           <td>${loan.tenure}</td>
                           <td>${loan.rate}</td>
@@ -99,6 +103,7 @@
                           <td>${loan.modifiedBy}</td>
                           <td>${loan.authorizedDate}</td>
                           <td>${loan.authorizedBy}</td>
+                          <td>${loan.status}</td>
                            </tr>
                         </c:forEach>
                     </c:if>
