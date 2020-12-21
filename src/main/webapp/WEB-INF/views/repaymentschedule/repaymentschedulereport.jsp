@@ -35,7 +35,7 @@
                 <input type="Number" id="loanAccountNumber" name="loanAccountNumber"><br>
             </h2>
         </div>
-        <div  style = "padding-top: 200px; class="col-sm-2 col-12" >
+        <div  style = "padding-top: 200px" class="col-sm-2 col-12" >
             <button type="button" class="btn btn-primary" id="showReport">show report</button>
             <button type="button" class="btn btn-primary" id="clear">clear</button>
 
