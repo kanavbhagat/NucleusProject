@@ -53,10 +53,20 @@
                  </li>
 
 
-                <li class="nav-item mx-2">
+                  <li class="nav-item dropdown dmenu mx-2">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarReportDropdown" data-toggle="dropdown">
+                         Receipt
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                          <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptSearch">Receipt Search</a>
+                          <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptChecker">Receipt Overview</a>
+                      </div>
+                  </li>
+
+                <%--<li class="nav-item mx-2">
                     <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
-                    <%--<a class="nav-link" href="#">Receipt</a>--%>
-                </li>
+
+                </li>--%>
 
                 <li class="nav-item dropdown dmenu mx-2">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarAccountingDropDown" data-toggle="dropdown">
