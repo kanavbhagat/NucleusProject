@@ -1,10 +1,12 @@
 package com.nucleus.customer.controller;
 
 
-//temporary file -- testing purpose
+
+
 
 import com.nucleus.customer.model.Address;
 import com.nucleus.customer.service.AddressService;
+
 import com.nucleus.customer.service.NewCustomerService;
 import com.nucleus.customer.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,11 @@ public class NewCustomerController {
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
 
+
         ModelAndView modelAndView=new ModelAndView("views/customerInfo/customerInfo");
+
+        ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");
+
         modelAndView.addObject("customer", new Customer());
         return modelAndView;
     }
