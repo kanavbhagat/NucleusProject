@@ -28,6 +28,7 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         return session;
     }
     public void insert(ChargePolicy chargePolicy) {
+        System.out.println("In Service insert query");
         boolean insertStatus;
         String todayDate = LocalDate.now().toString();
         chargePolicy.setCreatedDate(todayDate);
@@ -66,8 +67,9 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");
+            Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");;
             chargePolicy= (ChargePolicy)query.getSingleResult();
+            System.out.println(chargePolicy.getChargePolicyName() + "---------------------------------------------------------------" );
             session.getTransaction().commit();
             session.close();
         } catch(Exception exception) {
@@ -76,5 +78,51 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         }
         return chargePolicy;
 
+    }
+    public void updateStatus(String chargePolicyCode,String status){
+        ChargePolicy chargePolicy;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query q=session.createQuery("update ChargePolicy set status=:status where policy_code=:policyCode");
+            q.setParameter("status",status);
+            q.setParameter("policyCode",chargePolicyCode);
+
+            int s=q.executeUpdate();
+            System.out.println("Status  updated as "+ s);
+            session.getTransaction().commit();
+            session.close();
+        } catch(Exception exception) {
+            chargePolicy = null;
+            exception.printStackTrace();
+        }
+    }
+
+    public void updateEntry(ChargePolicy chargePolicy){
+        boolean updateStatus;
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(chargePolicy);
+            session.getTransaction().commit();
+
+        } catch (Exception exception) {
+            updateStatus = false;
+            exception.printStackTrace();
+        }
+    }
+    public void deleteChargePolicy(String chargePolicyCode){
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query q=session.createQuery("delete from ChargePolicy where chargePolicyCode= :chargePolicyCode");
+            q.setParameter("chargePolicyCode", chargePolicyCode);
+            int s=q.executeUpdate();
+            System.out.println("Status  deleted as "+ s);
+            session.getTransaction().commit();
+            session.close();
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }
