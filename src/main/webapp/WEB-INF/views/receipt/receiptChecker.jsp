@@ -28,11 +28,11 @@
     <jsp:include page="/navbar.jsp" />
 
     <br>
-    <sec:authorize access="hasRole('CHECKER')">
+
     <div class="row">
         <div class="col-sm-10 col-12">
             <h2 class="display-3" style="font-size: 30px">
-                <strong>Receipt Table</strong>
+                <strong>Receipt Overview</strong>
             </h2>
         </div>
     </div>
@@ -46,12 +46,12 @@
         <table id="receiptTable" class="table table-striped table-bordered display" style="width:100%">
             <thead>
             <tr>
-                <th>Receipt Type</th>
-                <th>Receipt basis</th>
-                <th>Receipt Status</th>
-                <th>Receipt Amount</th>
-                <th>Loan Account#</th>
                 <th>Receipt Ref#</th>
+                <th>Loan Account#</th>
+                <th>Receipt Type</th>
+                <th>Receipt Basis</th>
+                <th>Receipt Amount</th>
+                <th>Receipt Status</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -59,24 +59,28 @@
             <c:if test="${!empty receipts}">
             <c:forEach var="receipt" items="${receipts}">
                  <tr>
-                  <td>${receipt.receiptType}</td>
-                  <td>${receipt.receiptBasis}</td>
-                  <td>${receipt.receiptStatus}</td>
-                  <td>${receipt.receiptAmount}</td>
-                  <td>${receipt.loanApplicationNumber}</td>
-                  <td>${receipt.receiptNo}</td>
-                  <td>
-                    <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
-                    |
-                    <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
-                  </td>
+                      <td>${receipt.receiptNo}</td>
+                      <td>${receipt.loanApplicationNumber.loanApplicationNumber}</td>
+                      <td>${receipt.receiptType}</td>
+                      <td>${receipt.receiptBasis}</td>
+                      <td>${receipt.receiptStatus}</td>
+                      <td>${receipt.receiptAmount}</td>
+                      <sec:authorize access="hasRole('CHECKER')">
+                        <td>
+                            <a href="<%= request.getContextPath()%>/receiptChecker/approve/${receipt.receiptNo}">Approve</a> |
+                            <a href="<%= request.getContextPath()%>/receiptChecker/reject/${receipt.receiptNo}">Reject</a>
+                        </td>
+                      </sec:authorize>
+                      <sec:authorize access="hasRole('MAKER')">
+                        <td style="color:grey;">Approve | Reject</td>
+                      </sec:authorize>
                  </tr>
                 </c:forEach>
             </c:if>
             </tbody>
         </table>
     </div>
-</sec:authorize>
+
 </div>
 </body>
 </html>

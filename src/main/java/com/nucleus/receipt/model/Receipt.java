@@ -55,10 +55,6 @@ public class Receipt {
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
 
-
-    @Column(name="receipt_status")
-    private String receiptStatus;
-
     @ManyToOne
     @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number", nullable = false)
     private LoanApplications loanApplicationNumber;
@@ -97,14 +93,9 @@ public class Receipt {
     @Min(value = 0, message = "Loan Application Number must be positive")
     private String loanApplicationValue;
 
-    public String getLoanApplicationValue(){
-        return loanApplicationValue;
-    }
 
-    public void setLoanApplicationValue(String loanApplicationValue) {
-        this.loanApplicationValue = loanApplicationValue;
-    }
-
+    @Column(name="receipt_status")
+    private String receiptStatus;
 
 
     public Receipt() {
@@ -244,6 +235,14 @@ public class Receipt {
 
     public void setReceiptStatus(String receiptStatus) {
         this.receiptStatus = receiptStatus;
+    }
+
+    public String getLoanApplicationValue(){
+        return loanApplicationValue;
+    }
+
+    public void setLoanApplicationValue(String loanApplicationValue) {
+        this.loanApplicationValue = loanApplicationValue;
     }
 
 }
