@@ -13,4 +13,6 @@ public interface ProductDAOInterface {
     public Product getProductById(String id);
 
     public Product updateProduct(Product product);
+
+    public Boolean deleteProduct(String productId);
 }

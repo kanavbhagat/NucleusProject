@@ -43,4 +43,7 @@ public class ProductService {
         return productDAO.updateProduct(product);
     }
 
+    public Boolean deleteProduct(String productId){
+        return productDAO.deleteProduct(productId);
+    }
 }
