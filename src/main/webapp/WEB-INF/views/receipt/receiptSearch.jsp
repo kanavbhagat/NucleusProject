@@ -79,8 +79,8 @@
                     <label class="font-weight-bold required-field">Receipt Type</label>
                     <select id="receiptType" class="form-control" name="receiptType" required>
                         <option value="-" disabled label="Select One Option">
-                        <option value="payment" label="Payment">
-                        <option value="receipt" label="Receipt">
+                        <option value="Payment" label="Payment">
+                        <option value="Receipt" label="Receipt">
                     </select>
                     <span id="receiptTypeError" style="color:red;"> Receipt Type is Required </span>
                 </div>

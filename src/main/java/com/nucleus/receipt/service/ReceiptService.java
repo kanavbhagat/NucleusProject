@@ -22,6 +22,14 @@ public class ReceiptService {
     }
 
     public List<Receipt>getReceiptList(){
-        return receiptDAOInterface.getRecceiptDetail();
+        return receiptDAOInterface.getReceiptList();
+    }
+
+    public Boolean updateReceipt(Receipt receipt){
+        return receiptDAOInterface.updateReceipt(receipt);
+    }
+
+    public Receipt getReceipt(Integer receiptId){
+        return receiptDAOInterface.getReceipt(receiptId);
     }
 }

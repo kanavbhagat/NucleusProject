@@ -40,6 +40,7 @@ public class ReceiptSearchController {
         for(Object o : listReceipts){
             receiptList.add((Receipt) o);
         }
+        System.out.println(listReceipts.size());
         modelAndView.addObject("receiptList", receiptList);
         return modelAndView;
     }

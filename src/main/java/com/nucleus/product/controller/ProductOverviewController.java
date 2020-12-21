@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,10 @@ public class ProductOverviewController {
     @GetMapping(value = {"/product" })
     public ModelAndView productOverview() {
         ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
-        modelAndView.addObject("products", productService.getProductList());
+        LoginDetailsImpl details = new LoginDetailsImpl();
+        List<Product> productList = productService.getProductList();
+//        productList.removeIf(p -> "Saved".equals(p.getStatus()) || !details.getUserName().equals(p.getCreatedBy()));
+        modelAndView.addObject("products", productList);
         return modelAndView;
     }
 

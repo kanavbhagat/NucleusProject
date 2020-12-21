@@ -27,22 +27,25 @@ public class NewReceiptController {
 
         ModelAndView modelAndView = new ModelAndView("views/receipt/newReceiptCreation");
         Receipt receipt = new Receipt();
-        modelAndView.addObject("receipt",receipt);
+        modelAndView.addObject("receipt", receipt);
         return modelAndView;
     }
 
 
     @PostMapping(value = {"/registerReceipt"})
     public ModelAndView addReceipt(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult result){
-
         ModelAndView modelAndView=new ModelAndView();
-        receipt.setReceiptStatus("Pending");
-
-        System.out.println(receipt.getLoanApplicationValue());
         new ReceiptValidator().validate(receipt, result);
+
         if(result.hasErrors()){
             modelAndView.setViewName("views/receipt/newReceiptCreation");
+            return modelAndView;
         }
+
+        modelAndView.setViewName("views/receipt/receiptSuccess");
+
+        receipt.setReceiptStatus("Pending");
+
         Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
         receipt.setLoanApplicationNumber(loanApplications);
@@ -50,10 +53,11 @@ public class NewReceiptController {
         Boolean success = receiptService.registerReceipt(receipt);
 
         if(success){
-            System.out.println("success");
+            modelAndView.addObject("message", "Receipt Creation was Successful");
+            return modelAndView;
         }
-        modelAndView.setViewName("views/receipt/receiptSearch");
 
+        modelAndView.addObject("message", "Receipt Creation Failed");
         return modelAndView;
     }
 
