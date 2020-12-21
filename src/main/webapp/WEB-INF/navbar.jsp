@@ -45,7 +45,7 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%=request.getContextPath() %>/newCustomer">Application</a>
+                    <a class="nav-link" href="<%=request.getContextPath() %>/newLoanApplication">Application</a>
                 </li>
 
                 <li class="nav-item mx-2">
@@ -58,7 +58,7 @@
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>

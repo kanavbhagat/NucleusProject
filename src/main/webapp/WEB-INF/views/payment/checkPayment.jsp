@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: Asus
@@ -6,6 +5,10 @@
   Time: 03:59 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+           prefix="security"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,7 +25,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#example').DataTable();
+            $('#paymentTable').DataTable();
         } );
     </script>
     <title>Check Payment</title>
@@ -34,7 +37,12 @@
             <h3>Payments</h3>
         </div>
     <div class="d-flex justify-content-end">
-        <a class="btn btn-primary" href="<%= request.getContextPath()%>/payment/newPayment">New Eligibility Policy</a>
+        <sec:authorize access="hasRole('MAKER')">
+            <a class="btn btn-primary" href="<%= request.getContextPath()%>/payment/newPayment">New Payment</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('CHECKER')">
+            <button class="btn btn-primary" disabled="disabled">New Payment</button>
+        </sec:authorize>
     </div>
     <hr width="" color="#b3b3b3">
 </div>
@@ -53,7 +61,26 @@
             </tr>
             </thead>
             <tbody>
-
+                <c:forEach items="${paymentList}" var="singlePayment">
+                    <tr>
+                        <td>${singlePayment.loanApplicationNumber}</td>
+                        <td>${singlePayment.customerCode}</td>
+                        <td>${singlePayment.paymentAmount}</td>
+                        <td>Created By</td>
+                        <td>Status</td>
+                        <td>Reviewed By</td>
+                        <sec:authorize access="hasRole('MAKER')">
+                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('CHECKER')">
+                            <td>
+                                <a href="${editUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a>
+                                |
+                                <a href="${deleteUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Delete</a>
+                            </td>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>

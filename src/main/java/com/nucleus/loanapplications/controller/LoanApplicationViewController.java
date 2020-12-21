@@ -12,7 +12,7 @@ public class LoanApplicationViewController {
     @Autowired
     LoanApplicationService loanApplicationService;
 
-    @GetMapping(value="/loanApplications")
+    @GetMapping(value="/loanApplication")
     public ModelAndView loanApplicatonView(){
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplications");
         modelAndView.addObject("loanApplications",loanApplicationService.getAllLoanApplicationsList());
