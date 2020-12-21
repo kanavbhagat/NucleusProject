@@ -82,4 +82,9 @@ public class PaymentDAOImpl implements PaymentDAO{
         }
         return deleteStatus;
     }
+
+    public void updatePaymentEditor(String loanID, String user){
+        Session session = getSession();
+        Payment payment = session.get(Payment.class, loanID);
+    }
 }

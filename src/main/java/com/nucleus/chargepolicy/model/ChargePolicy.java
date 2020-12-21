@@ -1,23 +1,27 @@
 package com.nucleus.chargepolicy.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "charge_policy")
-public class ChargePolicy implements Serializable {
+public class ChargePolicy {
 
     @Id
     @Column(name = "policy_code")
+            @NotEmpty(message = "Charge Policy Code cannot be empty")
     String chargePolicyCode;
 
     @Column(name = "policy_name")
+    @NotEmpty(message = "Charge Policy Name cannot be empty")
     String chargePolicyName;
 
     @Column(name = "policy_description")
+    @NotEmpty(message = "Charge Policy Description cannot be empty")
     String chargePolicyDesc;
 
     @Column(name = "created_date")
@@ -39,10 +43,23 @@ public class ChargePolicy implements Serializable {
     String authorizedBy;
 
     @Column
+    String status;
+
+    @Column
     String chargeCode;
 
     @Column
+    @NotEmpty(message = "Please select Charge Code")
     String chargeCodeName;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getChargePolicyCode() {
         return chargePolicyCode;

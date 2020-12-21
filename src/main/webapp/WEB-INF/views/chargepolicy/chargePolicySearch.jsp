@@ -25,21 +25,23 @@
 </head>
 <body>
 <jsp:include page="/navbar.jsp" />
+ <div class="container-fluid">
+        <div class="row pt-3 pl-3 flex-column">
+        	<h2 class="display-3" style="font-size: 30px">
+        		<b>Eligibility Policies</b>
+        	</h2>
+
+        	<div class=" px-4 mt-0 align-self-end ">
+       			<a class="btn btn-primary" href="<%= request.getContextPath()%>/chargePolicy/newChargePolicy">New Eligibility Policy</a>
+       		</div>
+        </div>
+
+        <hr width="" color="#b3b3b3">
+
+    </div>
+
+
 <form:form method = "Post" modelAttribute = "chargePolicy">
-<div class="row pt-3 pl-3 flex-column">
-		<h2 class="  display-3" style="font-size: 30px">
-			<b> Products
-			 </b>
-		</h2>
-
-		<div class=" px-4 mt-0 align-self-end ">
-			<button type="button" class="btn btn-primary">New Product</button>
-		</div>
-	</div>
-
-	<hr width="" color="#b3b3b3">
-
-	</div>
 <div class="container-fluid">
 		<div class="row px-3 flex-column">
 			<!-- Show n entries -->
@@ -50,7 +52,7 @@
 		                <th>Charge Policy Code</th>
 		                <th>Charge Policy Name</th>
 		                <th>Charge Policy Description</th>
-		                <th>Product Type</th>
+		                <th>Created Date</th>
 		                <th>Status</th>
 		                <th>Created By</th>
 		                <th>Reviewed By</th>
@@ -60,9 +62,14 @@
 		        <tbody>
 		           <c:forEach items="${chargePolicyList}" var="chargePolicy" varStatus="tagStatus">
                      <tr>
-                       <td>${chargePolicy.chargePolicyCode}</td>
+                       <td><a href="get/${chargePolicy.chargePolicyCode}">${chargePolicy.chargePolicyCode}</td>
                        <td>${chargePolicy.chargePolicyName}</td>
                        <td>${chargePolicy.chargePolicyDesc}</td>
+                       <td>${chargePolicy.createdDate}</td>
+                       <td>${chargePolicy.status}</td>
+                       <td>Admin</td>
+                       <td>Admin</td>
+                       <td><a href = "edit/${chargePolicy.chargePolicyCode}">Edit  | <a href = "delete/${chargePolicy.chargePolicyCode}">Delete</td>
                      </tr>
                    </c:forEach>
 

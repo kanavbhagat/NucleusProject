@@ -16,32 +16,32 @@
 <body>
 <script>
 $(document).ready(function(){
-
+        alert("Saved Succcessfully");
   $("#chargeCode").focusout(function(){
 
     var charge  = {};
     charge["chargeCode"] =$('#chargeCode').find(":selected").text();
-    charge["chargeCodeName"] =  "default";
+    charge["chargeCodeName"] =  $("chargeCodeName").val();
     $.ajax({
-        				type : "POST",
-        				contentType : "application/json",
-        				url : "newChargePolicy/getCharge",
-        				data : JSON.stringify(charge),
-        				dataType : 'json',
-        				success : function(data) {
+    				type : "POST",
+    				contentType : "application/json",
+    				url : "newChargePolicy/postEmployee",
+    				data : JSON.stringify(charge),
+    				dataType : 'json',
+    				success : function(data) {
 
-        					$('#chargeCodeName').val(data.chargeCodeName);
-                            $('#chargeCodeName').attr('readonly', true);
+    					$('#chargeCodeName').val(data.chargeCodeName);
+                        $('#chargeCodeName').attr('readonly', true);
 
-        				}
+    				}
 
-        			});
+    			});
   });
 });
 </script>
 
 <jsp:include page="/navbar.jsp" />
-    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy">
+    <form:form  method = "POST" modelAttribute= "chargePolicy">
 
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>
@@ -49,13 +49,13 @@ $(document).ready(function(){
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
       <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
-      <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
+      <form:errors path = "chargePolicyCode" cssClass = "error" ></form:errors>
 
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
       <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px"/>
-      <form:errors path = "chargePolicyName" cssClass = "error" style = "color:red"></form:errors>
+      <form:errors path = "chargePolicyName" cssClass = "error" ></form:errors>
 
     </div>
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
       <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
-      <form:errors path = "chargePolicyDesc" cssClass = "error" style = "color:red"></form:errors>
+      <form:errors path = "chargePolicyDesc" cssClass = "error" ></form:errors>
     </div>
   </div>
 
@@ -94,7 +94,7 @@ $(document).ready(function(){
   </div>
   <div class="float-right">
     <button type="submit" class="btn btn-primary" name ="action" value="save">Save</button>
-    <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
+        <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
   </div>
 
   </div>
