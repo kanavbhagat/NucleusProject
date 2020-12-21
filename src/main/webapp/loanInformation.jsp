@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
 
@@ -106,8 +104,8 @@
         <form class="font-weight-bold mb-5" action="/loan.do">
             <section>
                 <div class="row">
-                    <a href="<%=request.getContextPath()%>/newCustomer" class="col-lg-2 col-md-2 col-6">New Customer </a>
-                    <a aclass="col-lg-2 col-md-2 col-6">Loan Information</a>
+                    <a href="customerInfo.jsp" class="col-lg-2 col-md-2 col-6">Customer Information</a>
+                    <a class="col-lg-2 col-md-2 col-6">Loan Information</a>
 
                 </div>
             </section>

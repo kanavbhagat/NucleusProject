@@ -1,8 +1,11 @@
 package com.nucleus.eligibilitypolicy.model;
 
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,13 +15,20 @@ import java.util.Objects;
 @Table(name = "eligibility_policies")
 public class EligibilityPolicy implements Serializable {
 
+    @NotEmpty(message = "Policy code must not be empty!")
+    @Pattern(regexp = "^([A-Za-z0-9_]+)$", message = "Policy code cannot contain spaces or special characters!")
+    @Size(max = 10, message = "Policy code must not have more than 10 characters!")
     @Id
     @Column(name = "policy_code", length = 10)
     private String policyCode;
 
+    @NotEmpty(message = "Policy name must not be empty!")
+    @Size(min = 2, max = 20,  message = "Policy name must have at least 2 and maximum 20 characters!")
+    @Pattern(regexp = "^([A-Za-z0-9_]+)$", message = "Policy name cannot contain spaces or special characters!")
     @Column(name = "policy_name", length = 20, nullable = false, unique = true)
     private String policyName;
 
+    @Size(max = 200,  message = "Policy description cannot have more than 200 characters!")
     @Column(name = "policy_description", length = 200)
     private String policyDescription;
 
@@ -51,7 +61,7 @@ public class EligibilityPolicy implements Serializable {
     private String status;
 
     @Transient
-    private String[] eligibilityParameterNames;
+    private String[] eligibilityParameterCodes;
 
     //Getters - Setters
 
@@ -143,12 +153,12 @@ public class EligibilityPolicy implements Serializable {
         this.status = status;
     }
 
-    public String[] getEligibilityParameterNames() {
-        return eligibilityParameterNames;
+    public String[] getEligibilityParameterCodes() {
+        return eligibilityParameterCodes;
     }
 
-    public void setEligibilityParameterNames(String[] eligibilityParameterNames) {
-        this.eligibilityParameterNames = eligibilityParameterNames;
+    public void setEligibilityParameterCodes(String[] eligibilityParameterCodes) {
+        this.eligibilityParameterCodes = eligibilityParameterCodes;
     }
 
     @Override
