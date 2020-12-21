@@ -1,8 +1,5 @@
 package com.nucleus.customer.controller;
 
-
-//temporary file -- testing purpose
-
 import com.nucleus.customer.service.NewCustomerService;
 import com.nucleus.customer.model.Customer;
 import com.nucleus.product.model.Product;
@@ -21,6 +18,7 @@ public class NewCustomerController {
 
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
+
 
         ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");
         modelAndView.addObject("customer", new Customer());
