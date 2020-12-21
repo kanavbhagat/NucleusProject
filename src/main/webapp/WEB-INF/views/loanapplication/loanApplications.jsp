@@ -36,7 +36,7 @@
     		</h2>
 
     		<div class=" px-4 mt-0 align-self-end ">
-    			<button type="button" class="btn btn-primary">Create Application</button>
+    			 <button type="button" onclick='location.href="<%= request.getContextPath()%>/newLoanApplication"' class="btn btn-primary" id="newLoanApplication">Create Application</button>
     		</div>
     	</div>
 
@@ -47,7 +47,7 @@
     		<div class="row px-3 flex-column">
     			<!-- Show n entries -->
     			<!-- Source : https://stackoverflow.com/questions/41436805/how-to-display-a-table-with-10-rows-per-page -->
-    			<table id="example" class="table table-striped table-bordered display" style="width:100%">
+    			<table id="loanApplicationsTable" class="table table-striped table-bordered display" style="width:100%">
     		        <thead>
     		            <tr>
     		                <th>Application ID</th>
@@ -62,28 +62,20 @@
     		            </tr>
     		        </thead>
     		        <tbody>
-    		            <tr>
-    		                <td style="text-align: center;"></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		                <td><button type="button" class="btn btn-link">Edit</button> | <button type="button" class="btn btn-link">Delete</button></td>
-    		            </tr>
-    		             <tr>
-    		                <td style="text-align: center;"></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		               <td></td>
-    		                <td><button type="button" class="btn btn-link">Edit</button> | <button type="button" class="btn btn-link">Delete</button></td>
-    		            </tr>
+    		            <c:if test="${!empty loanApplications}">
+                                   <c:forEach var="product" items="${loanApplications}">
+                                        <tr>
+                                         <td>${loanApplications.loanApplicationNumber}</td>
+                                         <td>${loanApplications.customerCode}</td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                                        </tr>
+                                       </c:forEach>
+                                   </c:if>
     		        </tbody>
 
     		    </table>

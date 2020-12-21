@@ -74,4 +74,38 @@
         </div>
     </div>
 </body>
+<script>
+$(document).ready(function() {
+    var url = new URL(window.location.href);
+
+    var insertStatus = url.searchParams.get("insertStatus");
+    var deleteStatus = url.searchParams.get("deleteStatus");
+    var updateStatus = url.searchParams.get("updateStatus");
+    var editStatus = url.searchParams.get("editStatus");
+
+    if(insertStatus === "true") {
+        alert("Eligibility Policy Added Successfully!");
+    } else if(insertStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(deleteStatus === "true") {
+        alert("Eligibility Policy Deleted Successfully!");
+    } else if(deleteStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(updateStatus === "true") {
+        alert("Status Change Successful!");
+    } else if(updateStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+
+    if(editStatus === "true") {
+        alert("Eligibility Policy Edited Successfully!");
+    } else if(editStatus === "false") {
+        alert("Action Unsuccessful!");
+    }
+});
+</script>
 </html>
