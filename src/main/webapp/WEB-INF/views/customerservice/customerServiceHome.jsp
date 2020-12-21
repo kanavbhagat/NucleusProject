@@ -51,7 +51,7 @@
                     <td><a class="nav-link" href="#" id="repaySchedule">Repayment Schedule</a></td>
                 </tr>
                 <tr>
-                    <td><a class="nav-link" href="<%= request.getContextPath()%>/loandisbursalDetails" id="disDetails">Disbursal Details</a></td>
+                    <td><a class="nav-link" href="<%= request.getContextPath()%>/loanDisbursalForm" id="disDetails">Disbursal Details</a></td>
                 </tr>
             </table>
         </nav>
