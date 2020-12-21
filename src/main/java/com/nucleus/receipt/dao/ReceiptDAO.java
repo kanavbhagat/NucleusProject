@@ -23,7 +23,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         Session session;
         try {
             session = sessionFactory.getCurrentSession();
-        } catch (HibernateException E){
+        } catch (Exception E){
             session = sessionFactory.openSession();
         }
         return session;
@@ -37,13 +37,13 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.save(receipt);
                 session.getTransaction().commit();
                 return true;
-            } catch (HibernateException e){
+            } catch (Exception e){
                 e.printStackTrace();
                 session.getTransaction().rollback();
                 return false;
             }
         }
-        //return null;
+
     }
 
     public List<Object> receiptSearch(String receiptType, String receiptBasis, Integer accountNumber, Integer receiptNo){

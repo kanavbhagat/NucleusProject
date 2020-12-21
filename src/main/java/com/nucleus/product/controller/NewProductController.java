@@ -10,9 +10,7 @@ import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -49,7 +47,7 @@ public class NewProductController {
     }
 
     @PostMapping(value = "/newProduct")
-    public ModelAndView addProduct(@Valid Product product, BindingResult result){
+    public ModelAndView addProduct(@Valid Product product, @RequestParam("action") String action, BindingResult result){
         ModelAndView modelAndView;
         EligibilityPolicy epolicy = eligibilityPolicyService.getOneEligibilityPolicy(product.getEligibilityPolicyCodeString());
         RepaymentPolicy rpolicy = repaymentPolicyService.getRepaymentPolicyById(product.getRepaymentPolicyCodeString());
@@ -61,8 +59,10 @@ public class NewProductController {
 
         modelAndView = new ModelAndView("views/product/newProductSave");
 
+        product.setStatus(action);
         product.setEligibilityPolicyCode(epolicy);
         product.setRepaymentPolicyCode(rpolicy);
+
         if(product.getChargeCodePolicyString()!=null){
             // TODO: 20/12/20 ask Jigme team to fix single charge policy retrieval
 //            ChargePolicy cpolicy = chargePolicyService
@@ -72,12 +72,11 @@ public class NewProductController {
         Boolean success = productService.createNewProduct(product);
 
         if(success){
-            modelAndView.addObject("message", "was Successful");
+            modelAndView.addObject("message", "Product was " + action + " successfully." );
         }
         else{
-            modelAndView.addObject("message", "Failed");
+            modelAndView.addObject("message", "Product Creation Failed");
         }
-
         return modelAndView;
     }
 

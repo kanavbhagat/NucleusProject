@@ -11,4 +11,6 @@ public interface ProductDAOInterface {
     Boolean createNewProduct(Product product);
 
     public Product getProductById(String id);
+
+    public Product updateProduct(Product product);
 }

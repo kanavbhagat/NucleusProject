@@ -43,3 +43,122 @@
     <hr width="" color="#b3b3b3">
 
 </div>
+
+<sec:authorize access="hasRole('CHECKER')">
+    <div class="container-fluid">
+        <form action="${product.productCode}/update" method="post">
+            <div class="row">
+                <div class="col-sm-3">
+
+                    <div class="form-group">
+                        <label class="font-weight-bold required-field">Product Code:</label>
+                        <input class="form-control" disabled="disabled" value="${product.productCode}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Product Description:</label>
+                        <textarea rows="3" disabled="disabled" class="form-control">${product.productDescription}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Maximum Exposure Amount:</label>
+                        <input type="number" disabled="disabled" value="${product.maxExposureAmount}" class="form-control"/>
+                    </div>
+
+                </div>
+                <div class="col-sm-3 offset-sm-4">
+
+                    <div class="form-group">
+                        <label class="font-weight-bold required-field">Product Name:</label>
+                        <input class="form-control" disabled="disabled" value="${product.productName}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold required-field">Product Type:</label>
+                        <select class="form-control">
+                            <option value="-"  disabled="disabled" selected="true">${product.productType}</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr width="" color="#b3b3b3">
+            <div class="row pt-3 pl-3 flex-column">
+                <h2 class="  display-3" style="font-size: 30px">
+                    <b> Policies </b>
+                </h2>
+            </div>
+            <div class="row col-sm-8">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Policy</th>
+                        <th scope="col">Policy Name</th>
+                        <th scope="col">Policy Description</th>
+                    </tr>
+                    </thead>
+
+                    <tr>
+                        <td>
+                            <label class="required-field">Repayment Policy</label>
+                        </td>
+                        <td>
+                            <select class="form-control">
+                                <option value="-"  disabled="disabled" selected>${product.repaymentPolicyCode.policyCode}</option>
+                            </select>
+                        </td>
+                        <td><input class="form-control" id="repaymentDesc" type="text" value="${product.repaymentPolicyCode.policyDescription}" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="required-field">Eligibility Policy</label>
+                            <br>
+                        </td>
+                        <td>
+                            <select class="form-control">
+                                <option value="-"  disabled="disabled" selected>${product.eligibilityPolicyCode.policyCode}</option>
+                            <select>
+                        </td>
+                        <td><input class="form-control" id="eligibilityDesc" type="text" value="${product.eligibilityPolicyCode.policyDescription}" disabled></td>
+                    </tr>
+                    <tr>
+                    <c:if test="${!empty product.chargeCodePolicy}">
+                        <td>Charge Policy</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="-"  disabled="disabled" selected> ${product.chargeCodePolicy.policyCode} </option>s
+                            </select>
+                        </td>
+                        <td><input class="form-control" id="chargeDesc" type="text" value="${product.chargeCodePolicy.policyDescription}" disabled></td>
+                    </c:if>
+                    <c:if test="${empty product.chargeCodePolicy}">
+                        <td>Charge Policy</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="-"  disabled="disabled" selected/>None</option>
+                            </select>
+                        </td>
+                        <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
+                    </c:if>
+                    </tr>
+
+                </table>
+            </div>
+            <hr width="" color="#b3b3b3">
+            <div class="row" style="margin-bottom:20px">
+                <div class="col-sm-3 offset-sm-9">
+                    <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
+                    <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                </div>
+            </div>
+             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
+    </div>
+    </sec:authorize>
+
+
+
+</div>
+</body>
+</html>
