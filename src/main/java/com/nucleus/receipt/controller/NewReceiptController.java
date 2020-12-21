@@ -1,7 +1,8 @@
 package com.nucleus.receipt.controller;
 
 
-import com.nucleus.loanapplications.service.NewLoanApplicationService;
+import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import com.nucleus.receipt.service.ReceiptValidator;
@@ -19,7 +20,7 @@ public class NewReceiptController {
     ReceiptService receiptService;
 
     @Autowired
-    NewLoanApplicationService newLoanApplicationService;
+    LoanApplicationService loanApplicationService;
 
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
@@ -35,18 +36,21 @@ public class NewReceiptController {
     public ModelAndView addReceipt(@Valid @ModelAttribute Receipt receipt, BindingResult result){
 
         ModelAndView modelAndView=new ModelAndView();
-        //receipt.getReceiptNo()
         System.out.println(receipt.getLoanApplicationValue());
         new ReceiptValidator().validate(receipt, result);
         if(result.hasErrors()){
-            //modelAndView.addObject("error", "Number Exception");
             modelAndView.setViewName("views/receipt/newReceiptCreation");
         }
-        //System.out.println(receipt.getLoanApplicationValue());
-        //receipt.setLoanApplicationNumber(newLoanApplicationService.);
-        else{
-            modelAndView.setViewName("views/receipt/receiptSearch");
+        Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
+        LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
+        receipt.setLoanApplicationNumber(loanApplications);
+
+        Boolean success = receiptService.registerReceipt(receipt);
+
+        if(success){
+            System.out.println("success");
         }
+        modelAndView.setViewName("views/receipt/receiptSearch");
         //receiptService.registerReceipt(receipt);
         //modelAndView.se
         return modelAndView;
