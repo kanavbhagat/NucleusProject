@@ -2,7 +2,6 @@ package com.nucleus.receipt.model;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table( name= "settlement")
 public class Settlement {

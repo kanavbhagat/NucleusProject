@@ -1,19 +1,17 @@
 package com.nucleus.product.controller;
 
 import com.nucleus.login.logindetails.LoginDetailsImpl;
-import com.nucleus.product.dao.ProductDAO;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-@RestController
+@Controller
 public class ProductOverviewController {
 
     @Autowired
@@ -23,9 +21,7 @@ public class ProductOverviewController {
     @GetMapping(value = {"/product" })
     public ModelAndView productOverview() {
         ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
-        LoginDetailsImpl details = new LoginDetailsImpl();
-        List<Product> productList = productService.getProductList();
-        modelAndView.addObject("products", productList);
+        modelAndView.addObject("products", productService.getProductList());
         return modelAndView;
     }
 

@@ -1,6 +1,5 @@
 package com.nucleus.product.controller;
 
-
 import com.nucleus.chargepolicy.service.ChargePolicyService;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
@@ -11,7 +10,7 @@ import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class NewProductController {
 
     @Autowired
