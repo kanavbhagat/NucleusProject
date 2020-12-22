@@ -72,16 +72,9 @@ window.onload = function() {
                     <h2 class="mb-lg-3">Personal Information</h2>
 
                     <div class="row ">
+
+
                         <div class="form-group col-sm-3">
-                            <label for="gender">Gender<a class="text-danger">*</a></label>
-                            <spring:select class="form-control" id="gender" name="gender" placeholder = "Select One Opion">
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-
-                            </select>
-                        </div>
-
-                        <div class="form-group col-sm-3 offset-4">
                             <label for="fName">First Name<a class="text-danger">*</a></label>
                             <spring:input type="text" class="form-control" id="fName"  path="firstName"/>
                         </div>
@@ -90,12 +83,12 @@ window.onload = function() {
                     <div class="row ">
                         <div class="form-group col-sm-3">
                             <label for="lName">Last Name<a class="text-danger">*</a></label>
-                            <spring:input type="text" class="form-control" id="lName" name="lName" path="lastName" />
+                            <spring:input type="text" class="form-control" id="lName" path="lastName" />
                         </div>
 
                        <div class="form-group col-sm-3 offset-4">
                             <label for="name">Full Name<a class="text-danger">*</a></label>
-                            <spring:input type="text" class="form-control" id="name" name="name"/>
+                            <input type="text" class="form-control" id="name" path="name"/>
                         </div>
                     </div>
 
@@ -103,15 +96,15 @@ window.onload = function() {
                          <div class="form-group col-sm-3">
                             <label for="country">Nationality</label>
                             <spring:select class="form-control" id="country" name="nationality" path="nationality">
-                                <option value="india">India</option>
-                                <option value="india">China</option>
+                                <spring:option value="india">India</spring:option>
+                                <spring:option value="china">China</spring:option>
 
-                            </select>
+                            </spring:select>
                         </div>
 
                        <div class="form-group col-sm-3 offset-4">
                             <label for="dob">Date of Birth<a class="text-danger">*</a></label>
-                            <spring:input class="form-control" type="date" name="dob" placeholder="dd-mm-yyyy" path="dateOfBirth" min="1920-01-01" max="2130-12-31"/>
+                            <spring:input class="form-control" type="date" name="dob" placeholder="dd-mm-yyyy" path="dateOfBirth" />
                         </div>
                     </div>
                 </div>
@@ -125,84 +118,82 @@ window.onload = function() {
                     <div class="form-group col-sm-3">
                         <label for="occupation">Occupation Type<a class="text-danger">*</a></label>
                         <spring:select class="form-control" id="occupation" path="occupationType">
-                            <option>Select One Option</option>
-                            <option value="selfEmployed">Self Employed</option>
-                            <option value="service">Serivce</option>
 
-                        </select>
+                            <spring:option value="selfEmployed">Self Employed</spring:option>
+                            <spring:option value="service">Serivce</spring:option>
+
+                        </spring:select>
                     </div>
 
                    <div class="form-group col-sm-3 offset-4">
-                        <label for="experiece">Total Work Experience</label>
+                        <label for="experience">Total Work Experience</label>
                         <spring:input type="number" class="form-control" id="experience"  path="totalWorkExperience"/>
                     </div>
                 </div>
 
                 <div class="row ">
                      <div class="form-group col-sm-3">
-                        <label for="occupationName">Occupation Name</label>
-                        <spring:input type="text" class="form-control" id="occupationName" path="occupationName"/>
+                        <label for="occupationName">Organisation Name</label>
+                        <spring:input type="text" class="form-control" id="occupationName" path="organizationName"/>
                     </div>
                 </div>
 
 
             </section>
             <hr>
-            <!--Address Details-->
-            <section>
-                <h2 class="mb-lg-3">Address Details</h2>
-                <div class="row ">
-                    <div class="form-group col-sm-3">
-                        <label for="houseNo">House No</label>
-                        <spring:input type="number" class="form-control" id="houseNo" name="houseNo"/>
+             <h2 class="mb-lg-3">Address Details</h2>
+                                <div class="row ">
+                                    <div class="form-group col-sm-3">
+                                        <label for="houseNo">House No</label>
+                                        <spring:input type="number" class="form-control" id="houseNo" path="add.houseNo"/>
 
-                    </div>
+                                    </div>
 
-                    <div class="form-group col-sm-3 offset-4">
-                        <label for="country">Country</label>
-                        <spring:select class="form-control" id="country1" name="country">
-                            <option>Select One Option</option>
-
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="form-group col-sm-3">
-                        <label for="state">State</label>
-                        <spring:select class="form-control" id="state1" name="state">
-                            <option>Select One Option</option>
-
-                        </select>
-                    </div>
-                     <div class="form-group col-sm-3 offset-4">
-                        <label for="city">City</label>
-                        <Spring:select class="form-control" id="city1" name="city">
-                            <option>Select One Option</option>
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row ">
-                   <div class="form-group col-sm-3">
-                        <label for="pinCode">Pin Code</label>
-                        <spring:input type="number" class="form-control" id="pinCode" name="pinCode"/>
-                    </div>
-                </div>
+                                    <div class="form-group col-sm-3 offset-4">
+                                        <label for="country">Country</label>
+                                        <spring:select class="form-control" id="country1" path="add.country">
+                                             <spring:option value="india">India</spring:option>
+                                             <spring:option value="china">China</spring:option>
 
 
-            </section>
+                                        </spring:select>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="form-group col-sm-3">
+                                        <label for="state">State</label>
+                                        <spring:select class="form-control" id="state1" path="add.state">
+                                           <spring:option value="delhi">delhi</spring:option>
+                                           <spring:option value="jammu">jammu</spring:option>
+
+                                        </spring:select>
+                                    </div>
+                                     <div class="form-group col-sm-3 offset-4">
+                                        <label for="city">City</label>
+                                        <spring:select class="form-control" id="city1" path="add.city">
+                                           <spring:option value="noida">noida</spring:option>
+                                           <spring:option value="meerut">bareli</spring:option>
+
+
+                                        </spring:select>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                   <div class="form-group col-sm-3">
+                                        <label for="pinCode">Pin Code</label>
+                                        <spring:input type="number" class="form-control" id="pinCode" path="add.pinCode"/>
+                                    </div>
+                                </div>
+
             <hr>
             <div class="text-center">
                 <input class="btn-primary mr-3" type="submit" value="save" name="submit">
-                <input class="btn-primary" type="submit" value="next" name="submit">
+                 <a href="<%= request.getContextPath()%>/newLoanApplication"><input class="btn-primary mr-3"type="button" value="next"></a>
             </div>
         </spring:form>
     </article>
 </body>
-${cust}
-${add}
 
 </html>
