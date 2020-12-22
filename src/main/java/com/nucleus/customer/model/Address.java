@@ -1,15 +1,14 @@
 package com.nucleus.customer.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "address")
 public class Address {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "address_id")
     private Integer addressId;
 
@@ -25,11 +24,21 @@ public class Address {
     @Column(name = "country",nullable = false, length = 20)
     private String country;
 
-    @Column(name = "pincode", nullable = false)
-    private Integer pincode;
+    @Column(name = "pinCode", nullable = false)
+    private Integer pinCode;
 
-    @Column(name = "customer_code", nullable = false,length = 20)
-    private Integer customerCode;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
+    private Customer customerCode;
+
+    public Customer getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(Customer customerCode) {
+        this.customerCode = customerCode;
+    }
 
     public Integer getAddressId() {
         return addressId;
@@ -71,19 +80,12 @@ public class Address {
         this.country = country;
     }
 
-    public Integer getPincode() {
-        return pincode;
+    public Integer getPinCode() {
+        return pinCode;
     }
 
-    public void setPincode(Integer pincode) {
-        this.pincode = pincode;
+    public void setPinCode(Integer pincode) {
+        this.pinCode = pincode;
     }
 
-    public Integer getCustomerCode() {
-        return customerCode;
-    }
-
-    public void setCustomerCode(Integer customerCode) {
-        this.customerCode = customerCode;
-    }
 }

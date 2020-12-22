@@ -1,9 +1,24 @@
 package com.nucleus.receipt.model;
 
 
-import com.nucleus.loanaplications.model.LoanApplications;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+
+import com.nucleus.loanapplications.model.LoanApplications;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Entity
@@ -11,26 +26,37 @@ import java.time.LocalDate;
 public class Receipt {
 
     @Id
+    @Digits(fraction = 0, integer = 10, message = "Receipt Number must be an integer")
+    @Min(value = 0, message = "Receipt Number must be positive")
+    @NotNull(message = "Receipt Number cannot be blank")
     @Column(name = "receipt_no",length = 10,nullable = false)
     private Integer receiptNo;
 
-    @Column(name="receipt_basis",length = 40,nullable = false)
+    @NotBlank(message = "Receipt Basis cannot be blank")
+    @Column(name="receipt_basis",length = 40, nullable = false)
     private String receiptBasis;
 
-    @Column(name="receipt_type",length = 20,nullable = false)
+    @NotBlank(message = "Receipt Type cannot be blank")
+    @Column(name="receipt_type",length = 20, nullable = false)
     private String receiptType;
 
+    @NotNull(message = "Date of Receipt cannot be blank")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     @Column(name="date_of_receipt")
     private LocalDate dateOfReceipt;
 
+    @Digits(fraction = 0, integer = 10, message = "Receipt Amount must be an integer")
+    @Min(value = 0, message = "Receipt Amount must be positive")
+    @NotNull(message = "Receipt Amount cannot be blank")
     @Column(name = "receipt_amount",nullable = false)
-    private double receiptAmount;
+    private Integer receiptAmount;
 
+    @NotBlank(message = "Receipt Purpose cannot be blank")
     @Column(name="receipt_purpose",length = 20)
     private String receiptPurpose;
 
     @ManyToOne
-    @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number" ,nullable = false)
+    @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number", nullable = false)
     private LoanApplications loanApplicationNumber;
 
     @Column(name="create_date")
@@ -54,11 +80,27 @@ public class Receipt {
     @Column(name = "remarks")
     private String remarks;
 
+    @NotEmpty(message = "Payment Mode cannot be blank")
     @Column(name = "payment_mode",length = 30)
     private String paymentMode;
 
+    @NotEmpty(message = "Select one")
     @Column(name = "auto_allocation",length = 20)
     private String autoAllocation;
+
+    @NotNull(message = "Loan Application Number cannot be blank")
+    @Digits(fraction = 0, integer = 10, message = "Loan Application Number must be an integer")
+    @Min(value = 0, message = "Loan Application Number must be positive")
+    private String loanApplicationValue;
+
+    public String getLoanApplicationValue(){
+        return loanApplicationValue;
+    }
+
+    public void setLoanApplicationValue(String loanApplicationValue) {
+        this.loanApplicationValue = loanApplicationValue;
+    }
+
 
 
     public Receipt() {
@@ -120,11 +162,11 @@ public class Receipt {
         this.dateOfReceipt = dateOfReceipt;
     }
 
-    public double getReceiptAmount() {
+    public Integer getReceiptAmount() {
         return receiptAmount;
     }
 
-    public void setReceiptAmount(double receiptAmount) {
+    public void setReceiptAmount(Integer receiptAmount) {
         this.receiptAmount = receiptAmount;
     }
 

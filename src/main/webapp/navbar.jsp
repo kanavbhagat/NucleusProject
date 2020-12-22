@@ -1,4 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+  pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+  prefix="security"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 
@@ -25,7 +29,7 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/showRepaymentPolicy">Repayment Policy</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/eligibilityPolicy/">Eligibility Policy</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/chargePolicy/searchScreen">Charge Policy</a>
                     </div>
                 </li>
 
@@ -34,15 +38,31 @@
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
+<<<<<<< HEAD
                         <a class="dropdown-item" href="main/getmaker">Eligibility Parameter Maker</a>
                         <a class="dropdown-item" href="main/getchecker">Eligibility Parameter Checker</a>
                         <a class="dropdown-item" href="#">Link 3</a>
+=======
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getmaker">Eligibility Parameter Maker</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getchecker">Eligibility Parameter Checker</a>
+                        <sec:authorize access = "hasRole('MAKER')">
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge Maker</a>
+                        </sec:authorize>
+                        <sec:authorize access = "hasRole('CHECKER')">
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/checkerList">Charge Checker</a>
+                        </sec:authorize>
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
                     </div>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Application</a>
+                    <a class="nav-link" href="<%=request.getContextPath() %>/loanApplication">Application</a>
                 </li>
+
+                <li class="nav-item mx-2">
+                   <a class="nav-link" href="<%=request.getContextPath() %>/newCustomer">Register Customer</a>
+                 </li>
+
 
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
@@ -54,14 +74,14 @@
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch">Customer Service</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/customerServiceHome">Customer Service</a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
@@ -79,13 +99,21 @@
                         BOD
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="main/loanClosureBod">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport"">Temp Add Loan</a>
                     </div>
+                </li>
+                <li class="nav-item mx-2">
+                    <security:authorize access="isAuthenticated()">
+                        <b>Welcome!  <security:authentication property="principal.username" /></b>
+                        |
+                        <sec:authentication property="principal.authorities"/>
+                        |
+                        <a href="<%= request.getContextPath()%>/logout">Logout</a>
+                      </security:authorize>
                 </li>
             </ul>
         </div>
     </nav>
     <!-- NavBar Ends -->
-

@@ -1,9 +1,11 @@
 package com.nucleus.customer.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.nucleus.loanapplications.model.LoanApplications;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table( name= "customer")
 public class Customer {
@@ -18,8 +20,8 @@ public class Customer {
     @Column(name="last_name",length = 30,nullable = false)
     private String lastName;
 
-    @Column(name="date_of_birth", nullable = false)
-    private LocalDate dateOfBirth;
+    @Column(name="date_of_birth" , nullable = false)
+    private String dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
     private String nationality;
@@ -33,6 +35,43 @@ public class Customer {
     @Column(name="organization_name",length = 30)
     private String organizationName;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private List<LoanApplications> loanApplications;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private List<Address> addresses;
+
+    @Transient
+    private Address add;
+
+    public Customer(){
+        super();
+        add = new Address();
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Address getAdd() {
+        return add;
+    }
+
+    public void setAdd(Address add) {
+        this.add = add;
+    }
+
+    public List<LoanApplications> getLoanApplications() {
+        return loanApplications;
+    }
+
+    public void setLoanApplications(List<LoanApplications> loanApplications) {
+        this.loanApplications = loanApplications;
+    }
 
     public String getCustomerCode() {
         return customerCode;
@@ -58,11 +97,12 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -31,7 +31,11 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
 
     @Override
     public boolean deleteEligibilityParameter(String parameterCode){
+<<<<<<< HEAD
        return eligibilityParameterDao.deleteEligibilityParameter(parameterCode);
+=======
+        return eligibilityParameterDao.deleteEligibilityParameter(parameterCode);
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     }
 
     @Override
@@ -44,4 +48,8 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
     {
         return eligibilityParameterDao.updateStatus(parameterCode,newStatus);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97

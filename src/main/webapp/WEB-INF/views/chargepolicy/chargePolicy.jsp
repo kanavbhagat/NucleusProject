@@ -1,96 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
   <title></title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<script>
+$(document).ready(function(){
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Product </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Policy Setup
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Parameters
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Application </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Reciept </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Accounting
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Customer Service </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Report
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-      </ul>
+  $("#chargeCode").focusout(function(){
 
-    </div>
-  </nav>
-    <form:form method = "Post" modelAttribute= "chargePolicy">
+    var charge  = {};
+    charge["chargeCode"] =$('#chargeCode').find(":selected").text();
+    charge["chargeCodeName"] =  "default";
+    $.ajax({
+        				type : "POST",
+        				contentType : "application/json",
+        				url : "newChargePolicy/getCharge",
+        				data : JSON.stringify(charge),
+        				dataType : 'json',
+        				success : function(data) {
+
+        					$('#chargeCodeName').val(data.chargeCodeName);
+                            $('#chargeCodeName').attr('readonly', true);
+
+        				}
+
+        			});
+  });
+});
+</script>
+
+<jsp:include page="/navbar.jsp" />
+    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy">
 
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>
   <div class="row">
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
-      <form:input path="chargePolicyCode" class="form-control" style="width : 400px"/>
+      <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
+      <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
-      <form:input path="chargePolicyName" class="form-control" style="width : 400px"/>
+      <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px"/>
+      <form:errors path = "chargePolicyName" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
 
@@ -98,7 +63,8 @@
   <div class="row">
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
-      <form:textarea path="chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
+      <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
+      <form:errors path = "chargePolicyDesc" cssClass = "error" style = "color:red"></form:errors>
     </div>
   </div>
 
@@ -115,20 +81,22 @@
           <th scope="col">Charge Code Name</th>
         </tr>
       </thead>
-      <tbody>
+  <tbody>
         <tr>
-          <th scope="row"><form:select path="chargeCode" class = "custom-select">
+          <th scope="row"><form:select path="chargeCode" class = "custom-select" id = "chargeCode">
                             			<form:options items="${chargeCodeList}" />
                             		</form:select></th>
-          <td><form:input path="chargeCodeName" class="form-control" style="width : 400px"/></td>
+          <td><form:input path="chargeCodeName" class="form-control" style="width : 400px" id = "chargeCodeName"/></td>
 
         </tr>
       </tbody>
     </table>
   </div>
   <div class="float-right">
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button type="submit" class="btn btn-primary">Save & Request Approval</button>
+    <button type="submit" class="btn btn-primary" name ="action" value="save">Save</button>
+    <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
+  </div>
+
   </div>
 </form:form>
 </body>

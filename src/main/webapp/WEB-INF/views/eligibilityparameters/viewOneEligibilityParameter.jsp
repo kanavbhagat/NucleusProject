@@ -6,7 +6,11 @@
 <html>
 
 <head>
+<<<<<<< HEAD
     <title>Allocation Policy Creator</title>
+=======
+    <title>View One Eligibility Parameter</title>
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -21,7 +25,10 @@
     		    content: ' *';
     		    display:inline;
     		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     </style>
 </head>
 <body>

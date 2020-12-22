@@ -4,11 +4,19 @@
 <html>
 
 <head>
+<<<<<<< HEAD
     <title>Allocation Policy Creator</title>
+=======
+    <title>Eligibility Parameter Failure Page</title>
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <h1>Error : Cannot change parameter code</h1>
+<<<<<<< HEAD
 <a href="getmaker">Back</a>
+=======
+<a href="<%= request.getContextPath()%>/main/getmaker">Back</a>
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
 </body>
 </html>

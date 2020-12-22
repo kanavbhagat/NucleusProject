@@ -69,6 +69,37 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- Spring Security Core -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Spring Security Config -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Spring Security Web -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>${tld.version}</version>
+        </dependency>
+
 <!--        Hibernate-->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -98,7 +129,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.2.3.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>
@@ -155,7 +186,6 @@
             <artifactId>reactive-streams</artifactId>
             <version>1.0.1</version>
         </dependency>
-
 
     </dependencies>
 

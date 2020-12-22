@@ -1,15 +1,15 @@
 package com.nucleus.loanclosurebod.database;
 
-import com.nucleus.loanclosurebod.model.LoanApplication;
+import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 
 import java.util.List;
 
 public interface LoanClosureDao {
 
-    public int function1();
-    public List<LoanApplication> function2(int loanId);
-    public void function3();
-    public void addDummyData();
+    public List<LoanApplications> getLoanApplications();
+    public List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication);
+    public boolean updateStatus(LoanApplications loanApplicationNumber, String newStatus);
 
-    public void updateStatus();
+    public void addDummyData();
 }

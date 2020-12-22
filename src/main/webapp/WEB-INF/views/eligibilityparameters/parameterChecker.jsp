@@ -5,7 +5,7 @@
 <%@ include file = "/navbar.jsp"%>
 <html>
 <head>
-<title>Allocation Policy Creator</title>
+<title>Eligibility Parameter Checker</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -57,7 +57,11 @@
 		        <tbody>
 		        <c:forEach items="${parameters}" var="parameter">
 		            <tr>
+<<<<<<< HEAD
 		                <td><a href="get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
+=======
+		                <td><a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}"> ${parameter.parameterCode}</a></td>
+>>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
 		                <td><c:out value="${parameter.parameterName}" /></td>
 		                <td><c:out value="${parameter.parameterDescription}" /></td>
 		                <td><c:out value="${parameter.createdBy}" /></td>
