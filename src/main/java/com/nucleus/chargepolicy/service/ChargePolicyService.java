@@ -10,7 +10,7 @@ public interface ChargePolicyService {
     public List<String> getChargeCodes();
     public List<ChargePolicy> getPolicyList();
     public void setEligibilityPolicyDAO(ChargePolicyDao chargePolicyDao);
-    public void insert(ChargePolicy chargePolicy);
+    public int insert(ChargePolicy chargePolicy);
     public void getCharge(String code);
 
     ChargePolicy getChargePolicy(String chargePolicyCode);
