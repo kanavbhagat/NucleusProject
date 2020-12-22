@@ -6,6 +6,8 @@ import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -32,6 +34,8 @@ public class Product {
     @Column(name = "product_type", length = 30, nullable = false)
     private String productType;
 
+    @Digits(integer = 10, fraction = 0, message = "Maximum exposure amount must be an integer")
+    @Min(value = 0, message = "Maximum exposure amount must be at least 0")
     @Column(name = "max_exposure_amount")
     private Integer maxExposureAmount;
 
@@ -71,8 +75,10 @@ public class Product {
     @Column(name = "status", length = 30)
     private String status;
 
+    @NotBlank(message = "Product must have an Eligibility Policy")
     private String eligibilityPolicyCodeString;
 
+    @NotBlank(message = "Product must have a Repayment Policy")
     private String repaymentPolicyCodeString;
 
     private String chargeCodePolicyString;

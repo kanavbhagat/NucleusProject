@@ -12,7 +12,7 @@
 
 <h1>Policies</h1>
 
-<p>You have edited an employee with policyCode ${policyCode} at <%= new java.util.Date() %></p>
+<p>You have edited a policy with policyCode ${policyCode} at <%= new java.util.Date() %></p>
 
 <c:url var="mainUrl" value="/showRepaymentPolicy" />
 <p>Return to <a href="${mainUrl}">Main List</a></p>
