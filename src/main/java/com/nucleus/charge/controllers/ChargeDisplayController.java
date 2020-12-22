@@ -51,7 +51,8 @@ public class ChargeDisplayController {
     @PreAuthorize("hasRole('MAKER')")
     public String onSubmit(@RequestParam("action") String action,
                            @Valid @ModelAttribute("newChargeData") NewCharge charge,
-                           BindingResult result) {
+                           BindingResult result,
+                           Model model) {
         if(result.hasErrors()) {
             return "views/charge/chargeDefinition";
         }
@@ -68,6 +69,7 @@ public class ChargeDisplayController {
                 return "redirect:../charges/makerList";
             }
             else {
+                model.addAttribute("msg","Failed to create charge. Try again.");
                 return "views/charge/chargeDefinition";
             }
         }
