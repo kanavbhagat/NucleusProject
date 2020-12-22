@@ -1,5 +1,6 @@
 package com.nucleus.product.controller;
 
+import com.nucleus.chargepolicy.model.ChargePolicy;
 import com.nucleus.chargepolicy.service.ChargePolicyService;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
@@ -70,9 +71,10 @@ public class NewProductController {
         product.setStatus(action);
 
         if(product.getChargeCodePolicyString()!=null){
-            // TODO: 20/12/20 ask Jigme team to fix single charge policy retrieval
-            product.setChargeCodePolicy(null);
+            ChargePolicy cpolicy = chargePolicyService.getChargePolicy(product.getChargeCodePolicyString());
+            product.setChargeCodePolicy(cpolicy);
         }
+
         if(id!=null){
             return this.updateProduct(product);
         }
