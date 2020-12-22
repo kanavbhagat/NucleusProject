@@ -114,6 +114,22 @@ public class ChargeDaoImpl implements ChargeDao{
     }
 
     @Override
+    public boolean updateCharge(NewCharge charge) {
+        boolean updateStatus;
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(charge);
+            session.getTransaction().commit();
+            updateStatus = true;
+        } catch (Exception exception) {
+            updateStatus = false;
+            exception.printStackTrace();
+        }
+        return updateStatus;
+    }
+
+    @Override
     public void updateStatus(String chargeCode, String status) {
         try(Session session = getSession()) {
             session.beginTransaction();
