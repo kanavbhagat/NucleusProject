@@ -58,7 +58,7 @@ public class AppConfig {
     private Properties hibernateProperties() {
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         properties.put("hibernate.show_sql","true");
-        properties.put("hibernate.hbm2ddl.auto","create");
+        properties.put("hibernate.hbm2ddl.auto","update");
         properties.put("current_session_context_class","thread");
         return properties;
     }
@@ -76,19 +76,13 @@ public class AppConfig {
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
 //
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//        ds.setUsername("sys as sysdba");
-//        ds.setPassword("gyanesh10");
-
-
-         /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-         ds.setUsername("c##username");
-         ds.setPassword("pwd");*/
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("sys as sysdba");
+        ds.setPassword("gyanesh10");
 
 //         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
 //         ds.setUsername("c##username");
 //         ds.setPassword("pwd");
-
 
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
@@ -99,14 +93,10 @@ public class AppConfig {
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
-
-
-          /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-
-             ds.setUsername("system");
-             ds.setPassword("hemant12345");*/
-
-            return ds;
+//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//         ds.setUsername("megha");
+//         ds.setPassword("megha");
+        return ds;
 
     }
 
