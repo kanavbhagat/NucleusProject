@@ -78,6 +78,22 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/showPayment/{loanID}")
+    public ModelAndView showPaymentForSuggestion(@PathVariable(value = "loanID") int loanID){
+        ModelAndView modelAndView = new ModelAndView("views/payment/approveRejectPayment");
+        modelAndView.addObject("approveRejectThisPayment", paymentService.getPaymentByLoanID(loanID));
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/approveRejectPayment/{loanID}")
+    public ModelAndView submitApproveRejectPaymentRequest(@PathVariable(value = "loanID") int loanID,
+                                                          @RequestParam("suggestion") String suggestion){
+        System.out.println("submitApproveRejectPaymentRequest"+loanID+getModifiedBy()+suggestion);
+        paymentService.approveRejectPayment(loanID, suggestion, getModifiedBy());
+        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/editPayment/{loanID}")
     public ModelAndView editPayment(@PathVariable(value = "loanID") int loanID){
         ModelAndView modelAndView = new ModelAndView("views/payment/editPayment");
@@ -85,8 +101,25 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/editPayment/edit")
+    public ModelAndView submitEditedPayment(@Valid @ModelAttribute("editThisPayment")Payment payment, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+        {
+            ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
+            return modelAndView;
+        }
+        System.out.println(payment.getLoanApplicationNumber());
+        System.out.println("Edited Payment");
+        System.out.println(payment.getCustomerCode());
+        payment.setPaymentStatus("PENDING");
+        payment.setMadeBy(getModifiedBy());
+        paymentService.updatePayment(payment);
+        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        return modelAndView;
+    }
+
     private String getModifiedBy(){
-        String user = null;
+        String user;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             user = ((UserDetails)principal).getUsername();
