@@ -2,6 +2,7 @@ package com.nucleus.customer.dao;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,19 +31,20 @@ public class CustomerDAO implements CustomerDaoInterface{
     @Override
     public boolean addCustomer(Customer c) {
 
-        try(Session session=getSession()){
-            session.beginTransaction();
-            try {
-                session.save(c);
-                session.getTransaction().commit();
-                return true;
-            } catch (HibernateException e){
-                e.printStackTrace();
-                session.getTransaction().rollback();
-                return false;
-            }
+        boolean successful = false;
+        try
+        {
 
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(c);
+            session.getTransaction().commit();
+            session.close();
+            successful=true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
         }
+        return successful;
     }
 
     @Override
@@ -114,12 +116,10 @@ public class CustomerDAO implements CustomerDaoInterface{
     @Override
     public Customer getCustomerById(String id) {
 
-        try(Session session = getSession()) {
-            session.beginTransaction();
-            Customer customer = session.get(Customer.class , id);
-            return customer;
-        }
-
+        Session session = sessionFactory.openSession();
+        Customer customer = session.get(Customer.class, id);
+        session.close();
+        return customer;
 
     }
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){

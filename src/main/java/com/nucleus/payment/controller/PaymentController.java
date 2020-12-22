@@ -78,6 +78,7 @@ public class PaymentController {
         return modelAndView;
     }
 
+
     private String getModifiedBy(){
         String user = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
