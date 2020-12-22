@@ -12,6 +12,7 @@ public class LoanApplications {
 
     @Id
     @Column(name = "loan_application_number")
+   /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
     @ManyToOne
