@@ -25,8 +25,8 @@
         <form:form class="font-weight-bold mb-5" modelAttribute="loanApplications" method="post">
             <section>
                 <div class="row">
-                    <a href="../customer/customerInfo.jsp" class="col-lg-2 col-md-2 col-6">Customer Information</a>
-                    <a class="col-lg-2 col-md-2 col-6">Loan Information</a>
+                    <a href="<%=request.getContextPath()%>/newCustomer" class="col-lg-2 col-md-2 col-6">New Customer </a>
+                    <a aclass="col-lg-2 col-md-2 col-6">Loan Information</a>
 
                 </div>
             </section>
