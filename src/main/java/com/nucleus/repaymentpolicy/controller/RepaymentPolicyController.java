@@ -34,19 +34,18 @@ public class RepaymentPolicyController {
         mv.setViewName("views/repaymentpolicy/allRepaymentPoliciesData");
         mv.addObject("newRepaymentPolicies", newRepaymentPolicies);
         return mv;
-        //model.addAttribute("newRepaymentPolicies", newRepaymentPolicies);
-        //return "views/repaymentpolicy/allRepaymentPoliciesData";
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/add", method = RequestMethod.GET)
     public ModelAndView getAdd(Model model) {
-        //model.addAttribute("newRepaymentPolicy", new RepaymentPolicy());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
         mv.addObject("newRepaymentPolicy", new RepaymentPolicy());
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="save",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
     public ModelAndView add(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
         if(result.hasErrors())
@@ -54,19 +53,17 @@ public class RepaymentPolicyController {
             ModelAndView mv = new ModelAndView();
             mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
             return mv;
-            //return "views/repaymentpolicy/newRepaymentPolicyScreenMaker";
         }
         String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Incomplete");
         repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
-        //map.addAttribute("policyCode",policyCode);
-        //return "views/repaymentpolicy/addedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/addedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="saveApprove",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
     public ModelAndView addAndSendForApproval(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
         if(result.hasErrors())
@@ -74,25 +71,21 @@ public class RepaymentPolicyController {
             ModelAndView mv = new ModelAndView();
             mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
             return mv;
-            //return "views/repaymentpolicy/newRepaymentPolicyScreenMaker";
         }
         String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Pending");
         repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
-        //map.addAttribute("policyCode",policyCode);
-        //return "views/repaymentpolicy/addedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/addedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/delete", method = RequestMethod.GET)
     public ModelAndView delete(@RequestParam(value="policyCode", required=true) String policyCode,
                          Model model) {
         repaymentPolicyService.deleteRepaymentPolicy(policyCode);
-        //model.addAttribute("policyCode", policyCode);
-        //return "views/repaymentpolicy/deletedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/deletedpage");
         mv.addObject("policyCode", policyCode);
@@ -103,14 +96,13 @@ public class RepaymentPolicyController {
     @RequestMapping(value = "/showRepaymentPolicy/edit", method = RequestMethod.GET)
     public ModelAndView getEdit(@RequestParam(value="policyCode", required=true) String policyCode,
                           Model model) {
-        //model.addAttribute("newRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
-        //return "views/repaymentpolicy/editpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editpage");
         mv.addObject("newRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="update",value = "/showRepaymentPolicy/edit", method = RequestMethod.POST)
     public ModelAndView saveEdit(@ModelAttribute("newRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
                            @RequestParam(value="policyCode", required=true) String policyCode,
@@ -120,14 +112,13 @@ public class RepaymentPolicyController {
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(policyCode,"Incomplete");
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
-        //model.addAttribute("policyCode", policyCode);
-        //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="updateApprove",value = "/showRepaymentPolicy/edit", method = RequestMethod.POST)
     public ModelAndView saveApproveEdit(@ModelAttribute("newRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
                                   @RequestParam(value="policyCode", required=true) String policyCode,
@@ -137,26 +128,23 @@ public class RepaymentPolicyController {
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
         repaymentPolicyService.changeStatus(policyCode,"Pending");
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
-        //model.addAttribute("policyCode", policyCode);
-        //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(value = "/showRepaymentPolicy/check", method = RequestMethod.GET)
     public ModelAndView getCheck(@RequestParam(value="policyCode", required=true) String policyCode,
                            Model model) {
-
-        //model.addAttribute("checkRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
-        //return "views/repaymentpolicy/newRepaymentPolicyScreenChecker";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenChecker");
         mv.addObject("checkRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
         return mv;
     }
 
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(params ="approve" ,value = "/showRepaymentPolicy/check", method = RequestMethod.POST)
     public ModelAndView approve(@ModelAttribute("checkRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
                           @RequestParam(value="policyCode", required=true) String policyCode,
@@ -164,14 +152,13 @@ public class RepaymentPolicyController {
 
         repaymentPolicyService.changeStatus(policyCode,"Approved");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
-        //model.addAttribute("policyCode", policyCode);
-        //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
-
     }
+
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(params ="reject" ,value = "/showRepaymentPolicy/check", method = RequestMethod.POST)
     public ModelAndView reject(@ModelAttribute("checkRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
                          @RequestParam(value="policyCode", required=true) String policyCode,
@@ -179,8 +166,6 @@ public class RepaymentPolicyController {
 
         repaymentPolicyService.changeStatus(policyCode,"Rejected");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
-        //model.addAttribute("policyCode", policyCode);
-        //return "views/repaymentpolicy/editedpage";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
         mv.addObject("policyCode", policyCode);
@@ -198,28 +183,4 @@ public class RepaymentPolicyController {
         }
         return userName;
     }
-
-
-//    @RequestMapping("/showRepaymentPolicy")
-//    public ModelAndView showRepaymentPolicyList()
-//    {
-//        //repaymentPolicyService.addTempRepaymentPolicy();
-//        List<RepaymentPolicy> policyList =  repaymentPolicyService.getRepaymentPolicyList();
-//        ModelAndView mv = new ModelAndView();
-//        mv.setViewName("views/repaymentpolicy/repaymentPolicyMaker");
-//        mv.addObject("policyList",policyList);
-//        return mv;
-//    }
-
-//    @GetMapping("/editRepaymentPolicy/{policyCode}")
-//    public String editRepaymentPolicy(@PathVariable String policyCode)
-//    {
-//        return "Edit Policy "+ policyCode;
-//    }
-//
-//    @GetMapping("/deleteRepaymentPolicy/{policyCode}")
-//    public String deleteRepaymentPolicy(@PathVariable String policyCode)
-//    {
-//        return "Delete Policy "+ policyCode;
-//    }
 }
