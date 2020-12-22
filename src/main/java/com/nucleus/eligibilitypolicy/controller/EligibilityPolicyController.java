@@ -19,6 +19,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class acts as a Controller for all
+ * Eligibility Policy related operations.
+ *
+ */
 @Controller
 @RequestMapping("eligibilityPolicy")
 public class EligibilityPolicyController {
@@ -29,15 +34,11 @@ public class EligibilityPolicyController {
     @Autowired
     EligibilityParameterDAO eligibilityParameterService;
 
-    public EligibilityPolicyService getEligibilityPolicyService() {
-        return eligibilityPolicyService;
-    }
-
-    public void setEligibilityPolicyService(EligibilityPolicyService eligibilityPolicyService) {
-        this.eligibilityPolicyService = eligibilityPolicyService;
-    }
-
-    //To display a list of existing Eligibility Policies:
+    /**
+     * This method is used to display a list of existing Eligibility Policies.
+     *
+     * @return ModelAndView This returns a view with a list of all Eligibility Policies.
+     */
     @GetMapping(value = {"/", ""})
     public ModelAndView showAllEligibilityPolicies() {
         ModelAndView modelAndView = new ModelAndView();
@@ -47,7 +48,11 @@ public class EligibilityPolicyController {
         return modelAndView;
     }
 
-    //To display the form for adding a new Eligibility Policy:
+    /**
+     * This method is used to display the form for adding a new Eligibility Policy.
+     *
+     * @return ModelAndView This returns a form view.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/new"})
     public ModelAndView newEligibilityPolicy() {
@@ -60,7 +65,19 @@ public class EligibilityPolicyController {
         return modelAndView;
     }
 
-    //To add an Eligibility Policy (entered by the user) to the database:
+    /**
+     * This method is used to add an Eligibility Policy (entered by the user) to the database.
+     *
+     * @param action This holds one of two actions,
+     *               (i.e. Save/Save & Request Approval), that decide the status.
+     * @param parameterCountString This holds the count of parameters
+     *                             that a particular policy will contain.
+     * @param eligibilityPolicy This is the modelAttribute received from the form.
+     * @param result This contains data validation errors, if any.
+     * @param model This model object is passed to the next pages.
+     *
+     * @return String This returns path to a view according to the data received.
+     */
     @PostMapping(value = {"/add"})
     public String addEligibilityPolicy(@RequestParam("action")String action,
                                        @RequestParam("count")String parameterCountString,
@@ -105,7 +122,15 @@ public class EligibilityPolicyController {
         return "redirect:/eligibilityPolicy/";
     }
 
-    //To display details of one Eligibility Policy based on user's selection of hyperlink of code:
+    /**
+     * This method is used to display details of one Eligibility Policy
+     * based on user's selection of hyperlink of code.
+     *
+     * @param policyCode This holds policy code of the Eligibility Policy
+     *                   that has to be displayed.
+     *
+     * @return ModelAndView This returns a form view with read-only details.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = {"/get/{policyCode}"})
     public ModelAndView showOneEligibilityPolicy(@PathVariable("policyCode") String policyCode) {
@@ -116,7 +141,17 @@ public class EligibilityPolicyController {
         return modelAndView;
     }
 
-    //To update status {Approve, Reject} of already existing Eligibility Policy:
+    /**
+     * This method is used to update status {Approve, Reject} of already existing Eligibility Policy.
+     *
+     * @param policyCode This holds policy code of the Eligibility Policy
+     *                   whose status has to be updated.
+     * @param action This holds one of two actions,
+     *               (i.e. Approve/Reject), that decide the status.
+     * @param model This model object is passed to the next pages.
+     *
+     * @return String This returns path to a view according to the data received.
+     */
     @PostMapping(value = {"/get/updateStatus/{policyCode}"})
     public String updateStatus(@PathVariable("policyCode") String policyCode, @RequestParam("action")String action, Model model) {
         String authorizedBy = getPrincipal();
@@ -125,7 +160,15 @@ public class EligibilityPolicyController {
         return "redirect:/eligibilityPolicy/";
     }
 
-    //To display editable details of existing Eligibility Policy:
+    /**
+     * This method is used to display editable details of existing Eligibility Policy.
+     *
+     * @param policyCode This holds policy code of the Eligibility Policy
+     *                   which is going to be edited.
+     * @param model This model object is passed to the next pages.
+     *
+     * @return String This returns path to a view according to the data received.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/edit/{policyCode}"})
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
@@ -138,7 +181,19 @@ public class EligibilityPolicyController {
         return "views/eligibilitypolicies/editOneEligibilityPolicy";
     }
 
-    //To update Eligibility Policy after user has edited the fields:
+    /**
+     * This method is used to update Eligibility Policy after user has edited the fields.
+     *
+     * @param action This holds one of two actions,
+     *               (i.e. Save/Save & Request Approval), that decide the status.
+     * @param parameterCountString This holds the count of parameters
+     *                             that a particular policy will contain.
+     * @param eligibilityPolicy This is the modelAttribute received from the form after editing.
+     * @param result This contains data validation errors, if any.
+     * @param model This model object is passed to the next pages.
+     *
+     * @return String This returns path to a view according to the data received.
+     */
     @PostMapping(value = {"edit/addEdited"})
     public String addEditedEligibilityPolicy(@RequestParam("action")String action,
                                        @RequestParam("count")String parameterCountString,
@@ -187,7 +242,15 @@ public class EligibilityPolicyController {
         return "redirect:/eligibilityPolicy/";
     }
 
-    //To delete an existing Eligibility Policy from database:
+    /**
+     * This method is used to delete an existing Eligibility Policy from database.
+     *
+     * @param policyCode This holds policy code of the Eligibility Policy
+     *                   which is going to be deleted.
+     * @param model This model object is passed to the next pages.
+     *
+     * @return String This returns path to a view with list of all policies.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/delete/{policyCode}"})
     public String deletePolicy(@PathVariable("policyCode") String policyCode, Model model) {
