@@ -148,8 +148,14 @@
             <hr width="" color="#b3b3b3">
             <div class="row" style="margin-bottom:20px">
                 <div class="col-sm-3 offset-sm-9">
-                    <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
-                    <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                    <c:if test = "${product.status != 'Approved'}">
+                        <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
+                        <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                    </c:if>
+                    <c:if test = "${product.status == 'Approved'}">
+                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
+                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                    </c:if>
                 </div>
             </div>
              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

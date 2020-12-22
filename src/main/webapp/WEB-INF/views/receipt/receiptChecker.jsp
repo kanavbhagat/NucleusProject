@@ -66,10 +66,16 @@
                       <td>${receipt.receiptStatus}</td>
                       <td>${receipt.receiptAmount}</td>
                       <sec:authorize access="hasRole('CHECKER')">
-                        <td>
-                            <a href="<%= request.getContextPath()%>/receiptChecker/approve/${receipt.receiptNo}">Approve</a> |
-                            <a href="<%= request.getContextPath()%>/receiptChecker/reject/${receipt.receiptNo}">Reject</a>
-                        </td>
+                        <c:if test = "${receipt.receiptStatus == 'Approved' || receipt.receiptStatus == 'Settled'}">
+                            <td style="color:grey;">Approve | Reject</td>
+                        </c:if>
+                        <c:if test = "${receipt.receiptStatus != 'Approved' && receipt.receiptStatus != 'Settled'}">
+                            <td>
+                                <a href="<%= request.getContextPath()%>/receiptChecker/approve/${receipt.receiptNo}">Approve</a> |
+                                <a href="<%= request.getContextPath()%>/receiptChecker/reject/${receipt.receiptNo}">Reject</a>
+                            </td>
+                        </c:if>
+
                       </sec:authorize>
                       <sec:authorize access="hasRole('MAKER')">
                         <td style="color:grey;">Approve | Reject</td>

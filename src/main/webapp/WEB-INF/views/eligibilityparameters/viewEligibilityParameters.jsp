@@ -33,7 +33,9 @@
 			 </b>
 		</h2>
 <div class=" px-4 mt-0 align-self-end ">
+<sec:authorize access="hasRole('MAKER')">
 			<a class="btn btn-primary" href="<%= request.getContextPath()%>/main/createparameter">New Eligibility Parameter</a>
+			</sec:authorize>
 		</div>
 
 	</div>
@@ -62,13 +64,35 @@
     		        <tbody>
     		        <c:forEach items="${parameters}" var="parameter">
     		            <tr>
-    		                <td><c:out value="${parameter.parameterCode}" /></td>
+    		            <td>
+                         <security:authorize access="hasRole('CHECKER')">
+                         <c:if test = "${parameter.status ne 'Saved'}">
+                         <a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}">
+                            ${parameter.parameterCode}
+                         </a>
+                         </c:if>
+                         <c:if test = "${parameter.status == 'Saved'}">
+                         ${parameter.parameterCode}
+                         </c:if>
+                         </security:authorize>
+                         <security:authorize access="hasRole('MAKER')">
+                         ${parameter.parameterCode}
+                         </security:authorize>
+                         <security:authorize access="isAnonymous()">
+                         ${parameter.parameterCode}
+                         </security:authorize>
+                         </td>
     		                <td><c:out value="${parameter.parameterName}" /></td>
     		                <td><c:out value="${parameter.parameterDescription}" /></td>
     		                <td><c:out value="${parameter.createdBy}" /></td>
     		                <td><c:out value="${parameter.status}" /></td>
     		                <td><c:out value="${parameter.authorizedBy}" /></td>
+    		                <sec:authorize access="hasRole('MAKER')">
     		                <td><a href="<%= request.getContextPath()%>/main/edit/${parameter.parameterCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/main/delete/${parameter.parameterCode}">Delete</a></td>
+    		                </sec:authorize>
+    		                <sec:authorize access="hasRole('CHECKER')">
+                            <td><a>Edit</a>  |  <a>Delete</a></td>
+                            </sec:authorize>
     		            </tr>
 
                     </c:forEach>

@@ -26,6 +26,22 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     public boolean deletePayment(int loanID){
-        return  this.paymentDAO.deletePayment(loanID);
+        return this.paymentDAO.deletePayment(loanID);
+    }
+
+    public Payment getPaymentByLoanID(int loanID){
+        return this.paymentDAO.getPaymentById(loanID);
+    }
+
+    public void updatePayment(Payment payment){
+        this.paymentDAO.updatePayment(payment);
+    }
+
+    public void setReviewedBy(int loanID, String user){
+        this.paymentDAO.updateApprovedBy(loanID, user);
+    }
+
+    public boolean approveRejectPayment(int loanID, String suggestion, String user){
+        return this.paymentDAO.updateStatus(loanID, suggestion, user);
     }
 }
