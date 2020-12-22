@@ -8,18 +8,24 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class implements the functions declared by the LoanClosureDao
+ * Interface.
+ */
 @Repository
 public class LoanClosureDaoImpl implements LoanClosureDao{
 
     @Autowired
     private SessionFactory sessionFactory;
 
+    /**
+     * Method for creating a session and returning an object for
+     * using session functionalities to other class methods.
+     * @return Session
+     */
     private Session getSession(){
         Session session;
         try {
@@ -30,9 +36,16 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         return session;
     }
 
+    /**
+     * This method retrieves the list of all the loan applications
+     * from the database.
+     * @return list of type LoanApplication containing all the Loan Applications.
+     */
     @Override
     public List<LoanApplications> getLoanApplications(){
         List<LoanApplications> list = new ArrayList<>();
+        /* Retrieving all the loan applications from the database
+          in the list. */
         try{
             Session session = getSession();
             session.beginTransaction();
@@ -45,9 +58,17 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         return list;
     }
 
+    /**
+     * This method retrieves the list of all entries of Repayment Schedule
+     * for a particular Loan Application from the database.
+     * @param loanApplication
+     * @return list of all entries of Repayment Schedule
+     */
     @Override
     public List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication){
         List<RepaymentSchedule> list = new ArrayList<>();
+        /* Retrieving all the entries of Repayment Schedule for given Loan Application
+           in the list. */
         try{
             Session session = getSession();
             session.beginTransaction();
@@ -61,9 +82,17 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         return list;
     }
 
+    /**
+     * This method updates the status of Loan Application in the database
+     * depending on whether the loan application is eligible for closing or not.
+     * @param loanApplication
+     * @param newStatus
+     * @return updateStatus
+     */
     @Override
     public boolean updateStatus(LoanApplications loanApplication, String newStatus){
         boolean updateStatus;
+        /* Updating the status of the Loan Application with newStatus. */
         try{
             Session session = getSession();
             session.beginTransaction();
@@ -76,43 +105,5 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             exception.printStackTrace();
         }
         return updateStatus;
-    }
-
-    @Override
-    public void addDummyData() {
-        Session session = getSession();
-        session.beginTransaction();
-
-        LoanApplications loanApplication = new LoanApplications();
-        loanApplication.setLoanApplicationNumber(1);
-        loanApplication.setAgreementDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setAuthorizedBy("Apurv");
-        loanApplication.setAuthorizedDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setCreateDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setCreatedBy("Richa");
-        loanApplication.setInstallmentDueDate(LocalDate.of(2021, 06, 10));
-        loanApplication.setLoanAmountRequested(100000);
-        loanApplication.setStatus("Active");
-        loanApplication.setModifiedDate(LocalDate.of(2020, 9, 10));
-        loanApplication.setModifiedBy("Kirtika");
-        loanApplication.setRate(20.0);
-        loanApplication.setTenure(5);
-
-        session.save(loanApplication);
-
-        RepaymentSchedule repaymentSchedule = new RepaymentSchedule();
-        repaymentSchedule.setInstallmentNumber(1);
-        repaymentSchedule.setLoanApplicationn(loanApplication);
-        repaymentSchedule.setBillFlag("Y");
-        repaymentSchedule.setClosingBalance(0);
-        repaymentSchedule.setDueDate(LocalDate.of(2021, 06, 10));
-        repaymentSchedule.setEMI(20000);
-        repaymentSchedule.setInterestComponent(0.2);
-        repaymentSchedule.setOpeningBalance(30000);
-
-        repaymentSchedule.setPrincipalComponent(10000);
-        session.save(repaymentSchedule);
-
-        session.getTransaction().commit();
     }
 }

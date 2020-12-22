@@ -1,10 +1,16 @@
 package com.nucleus.loanclosurebod.controller;
 
-
 import com.nucleus.loanclosurebod.service.LoanClosureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * The LoanClosureController class starts the Loan Closure BOD process
+ * by calling the required method of the Loan Closure Service Class with the
+ * help of an object of LoanClosureService Interface. It also defines the getter
+ * and setter methods for the mentioned object.
+ */
 
 @Controller
 @RequestMapping("/main")
@@ -13,6 +19,7 @@ public class LoanClosureController {
     @Autowired
     LoanClosureService loanClosureService;
 
+
     public LoanClosureService getLoanClosureService(){
         return loanClosureService;
     }
@@ -20,12 +27,11 @@ public class LoanClosureController {
         this.loanClosureService = loanClosureService;
     }
 
-//    @RequestMapping("/loanClosureBod")
-//    public void updateStatus(){
-//        loanClosureService.addDummyData();
-//
-//    }
-
+    /**
+     * loanClosureBod is the main method which is triggered. It calls the
+     * loaClosureBod method of Service class with the help of its object
+     * declared above.
+     */
     @RequestMapping("/loanClosureBod")
     public void loanClosureBod(){
         loanClosureService.loanClosureBod();
