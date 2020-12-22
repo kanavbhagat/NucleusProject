@@ -19,12 +19,12 @@ public class ProductOverviewController {
     @Autowired
     ProductService productService;
 
+    @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/product" })
     public ModelAndView productOverview() {
         ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
         LoginDetailsImpl details = new LoginDetailsImpl();
         List<Product> productList = productService.getProductList();
-//        productList.removeIf(p -> "Saved".equals(p.getStatus()) || !details.getUserName().equals(p.getCreatedBy()));
         modelAndView.addObject("products", productList);
         return modelAndView;
     }
@@ -41,7 +41,6 @@ public class ProductOverviewController {
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(value = "/product/{productId}/update")
     public ModelAndView updateProductStatus(@PathVariable(value = "productId") String productId, @RequestParam("action") String action){
-        ModelAndView modelAndView = new ModelAndView("views/product/newProductSave");
         Product product = productService.getProductById(productId);
         LoginDetailsImpl details = new LoginDetailsImpl();
 
@@ -50,11 +49,17 @@ public class ProductOverviewController {
         product.setStatus(action);
 
         product = productService.updateProduct(product);
-        if(product==null){
-            modelAndView.addObject("message", "Product was not " + action +" due to an error. Please try again.");
+        if(product!=null){
+            ModelAndView modelAndView = new ModelAndView("views/product/productSuccess");
+            modelAndView.addObject("messageHeader", "Product was successfully " + action );
+            modelAndView.addObject("messageBody", "You successfully changed the product status." );
+            modelAndView.addObject("productCode", productId);
             return modelAndView;
         }
-        modelAndView.addObject("message", "Product was " + action + " successfully.");
+        ModelAndView modelAndView = new ModelAndView("views/product/productError");
+        modelAndView.addObject("messageHeader", "Product status could not be updated" );
+        modelAndView.addObject("messageBody", "Product status update failed. Please try again" );
+        modelAndView.addObject("productCode", productId);
         return modelAndView;
 
     }
@@ -62,13 +67,18 @@ public class ProductOverviewController {
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/product/{productId}/delete")
     public ModelAndView deleteProduct(@PathVariable(value = "productId") String productId){
-        ModelAndView modelAndView = new ModelAndView("views/product/newProductSave");
         Boolean success = productService.deleteProduct(productId);
         if(success){
-            modelAndView.addObject("message", "Product was deleted successfully.");
+            ModelAndView modelAndView = new ModelAndView("views/product/productSuccess");
+            modelAndView.addObject("messageHeader", "Product was deleted" );
+            modelAndView.addObject("messageBody", "You successfully deleted a product" );
+            modelAndView.addObject("productCode", productId);
             return modelAndView;
         }
-        modelAndView.addObject("message", "Product could not be deleted");
+        ModelAndView modelAndView = new ModelAndView("views/product/productError");
+        modelAndView.addObject("messageHeader", "Product could not be deleted" );
+        modelAndView.addObject("messageBody", "Product deletion failed. Please try again" );
+        modelAndView.addObject("productCode", productId);
         return modelAndView;
     }
 }
