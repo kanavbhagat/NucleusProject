@@ -30,6 +30,9 @@ public class ReceiptAspect {
     @Pointcut("execution (* com.nucleus.receipt.service.ReceiptService.getReceipt(..))")
     public void receiptById(){}
 
+    @Pointcut("execution (* com.nucleus.receipt.service.ReceiptService.runBOD(..))")
+    public void BOD(){}
+
     @AfterReturning("register()")
     public void registerReceipt(JoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
@@ -57,6 +60,11 @@ public class ReceiptAspect {
     @AfterReturning("receiptById()")
     public void getReceiptById(JoinPoint joinPoint){
         logger.info("Receipt fetched from Database by Id");
+    }
+
+    @AfterReturning("BOD()")
+    public void runBOD(JoinPoint joinPoint){
+        logger.info("Receipt BOD process ran successfully");
     }
 
 
