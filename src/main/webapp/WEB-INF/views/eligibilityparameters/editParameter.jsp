@@ -6,11 +6,7 @@
 <html>
 
 <head>
-<<<<<<< HEAD
-    <title>Allocation Policy Creator</title>
-=======
     <title>Eligibility Parameter Editor</title>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -25,13 +21,9 @@
     		    content: ' *';
     		    display:inline;
     		}
-<<<<<<< HEAD
-
-=======
     	.error{
     	color:red;
     	}
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
     </style>
 </head>
 <body>
@@ -54,22 +46,14 @@
 
 
 <div class="container-fluid">
-<<<<<<< HEAD
-    <form:form action="../../../../../editparameter" method="Post" modelAttribute="eligibilityParameter1">
-=======
     <form:form action="editparameter" method="Post" modelAttribute="eligibilityParameter1">
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
 
 
         <div class="form-group row pt-2 pl-3">
             <div class="col-md-3 required">
                 <label>Eligibility Parameter Code</label><br>
-<<<<<<< HEAD
-                <form:input type="text" class="form-control"  id="parameterCode" name="parameterCode" path="parameterCode" required="required"/>
-=======
                 <form:input type="text" class="form-control"  id="parameterCode" name="parameterCode" path="parameterCode" required="required" readonly="true" />
                 <form:errors path="parameterCode" cssClass="error"/>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
             </div>
 
             <div class="col-md-3">
@@ -78,22 +62,15 @@
             <div class="col-md-3 required">
                 <label>Eligibility Parameter Name</label><br>
                 <form:input type="text" class="form-control"  id="parameterName" name="parameterName" path="parameterName" required="required"/>
-<<<<<<< HEAD
-=======
                 <form:errors path="parameterName" cssClass="error"/>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
             </div>
         </div>
 
         <div class="row pt-2 pl-3">
             <div class="col-md-3">
                 <label>Eligibility Parameter Description</label><br>
-<<<<<<< HEAD
-                <form:input type="text" class="form-control"  id="parameterDescription" name="parameterDescription" path="parameterDescription"/>
-=======
                 <form:textarea path="parameterDescription" class="form-control"  id="parameterDescription" name="parameterDescription"/>
                 <form:errors path="parameterDescription" cssClass="error"/>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
             </div>
 
             <div class="col-md-3">
@@ -101,12 +78,8 @@
 
             <div class="col-md-3 ">
                 <label >Parameter Min Value</label><br>
-<<<<<<< HEAD
-                <form:input type="text" class="form-control"  id="minValue" name="minValue" path="minValue"/>
-=======
                 <form:input type="text" class="form-control"  id="minValue" name="minValue" path="minValue" pattern = "^[0-9]\d*(\.\d+)?$" title="numbers or decimals only"/>
                 <form:errors path="minValue" cssClass="error"/>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
             </div>
 
         </div>
@@ -114,11 +87,7 @@
         <div class="form-group row pt-2 pl-3">
             <div class="col-md-3">
                 <label>Parameter Max Value</label><br>
-<<<<<<< HEAD
-                <form:input type="text" class="form-control"  id="maxValue" name="maxValue" path="maxValue"/>
-=======
                 <form:input type="text" class="form-control"  id="maxValue" name="maxValue" path="maxValue" pattern = "^[0-9]\d*(\.\d+)?$" title="numbers or decimals only"/>
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97
             </div>
 
 

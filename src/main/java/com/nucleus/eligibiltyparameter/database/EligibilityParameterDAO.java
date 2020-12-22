@@ -6,14 +6,10 @@ import java.util.List;
 
 public interface EligibilityParameterDAO {
     public List<EligibilityParameter> getAll() ;
-    public void insertParameter(EligibilityParameter eligibilityParameter);
-    public void insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter);
+    public String insertParameter(EligibilityParameter eligibilityParameter);
+    public String insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter);
     public EligibilityParameter getOneEligibilityParameter(String parameterCode);
-    public boolean deleteEligibilityParameter(String parameterCode);
+    public String deleteEligibilityParameter(String parameterCode);
     public boolean editParameter(EligibilityParameter eligibilityParameter);
-    public boolean updateStatus(String parameterCode,String newStatus);
-<<<<<<< HEAD
+    public boolean updateStatus(String parameterCode,String newStatus,String authorizedBy);
 }
-=======
-}
->>>>>>> f3dea3e8b05710ff514aebc41edfc71353014f97

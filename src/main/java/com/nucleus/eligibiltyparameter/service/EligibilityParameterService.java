@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface EligibilityParameterService {
     public List<EligibilityParameter> getAll() ;
-    public void insertParameter(EligibilityParameter eligibilityParameter);
-    public void insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter);
+    public String insertParameter(EligibilityParameter eligibilityParameter);
+    public String insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter);
     public EligibilityParameter getOneEligibilityParameter(String parameterCode);
-    public boolean deleteEligibilityParameter(String parameterCode);
+    public String deleteEligibilityParameter(String parameterCode);
     public boolean editParameter(EligibilityParameter eligibilityParameter);
-    public boolean updateStatus(String parameterCode,String newStatus);
+    public boolean updateStatus(String parameterCode,String newStatus,String authorizedBy);
 }
 
 

@@ -38,19 +38,12 @@
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="main/getmaker">Maker</a>
-                        <a class="dropdown-item" href="main/getchecker">Checker</a>
-                        <sec:authorize access = "hasRole('MAKER')">
-                            <a class="dropdown-item" href="charges/makerList">Charge Maker</a>
-                        </sec:authorize>
-                        <sec:authorize access = "hasRole('CHECKER')">
-                            <a class="dropdown-item" href="charges/checkerList">Charge Checker</a>
-                        </sec:authorize>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/eligibilityparameter">Eligibility Parameter</a>
                     </div>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%=request.getContextPath() %>/newLoanApplication">Application</a>
+                    <a class="nav-link" href="<%=request.getContextPath() %>/newCustomer">Application</a>
                 </li>
 
                 <li class="nav-item mx-2">
@@ -63,14 +56,14 @@
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/customerServiceHome">Customer Service</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch">Customer Service</a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
@@ -88,9 +81,9 @@
                         BOD
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport"">Temp Add Loan</a>
+                        <a class="dropdown-item" href="#">Link 1</a>
+                        <a class="dropdown-item" href="main/loanClosureBod">Link 2</a>
+                        <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
                 <li class="nav-item mx-2">
@@ -106,3 +99,4 @@
         </div>
     </nav>
     <!-- NavBar Ends -->
+
