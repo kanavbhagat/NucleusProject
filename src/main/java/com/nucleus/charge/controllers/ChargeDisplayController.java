@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +103,34 @@ public class ChargeDisplayController {
     public String deleteCharge(@PathVariable("chargeCode") String chargeCode, Model model) {
         boolean deleteStatus = chargeService.deleteCharge(chargeCode);
         model.addAttribute("deleteStatus", deleteStatus);
+        return "redirect:/charges/makerList";
+    }
+
+    @PreAuthorize("hasRole('MAKER')")
+    @RequestMapping(value = {"/edit/{chargeCode}"})
+    public String getEditPolicyPage(@PathVariable("chargeCode") String chargeCode, Model model) {
+        System.out.println("In edit controller");
+        NewCharge charge = chargeService.getOneCharge(chargeCode);
+        model.addAttribute("charge", charge);
+        return "views/charge/editOneCharge";
+    }
+
+    @PreAuthorize("hasRole('MAKER')")
+    @PostMapping(value = {"edit/addEdited"})
+    public String addEditedCharge(@RequestParam("action")String action,
+
+                                  @ModelAttribute("charge") NewCharge charge,
+                                  Model model) {
+
+        System.out.println("In Addedit controller");
+        if(action.equalsIgnoreCase("save")) {
+            charge.setStatus("INACTIVE");
+        } else if (action.equalsIgnoreCase("save & request approval")) {
+            charge.setStatus("PENDING");
+        }
+
+        boolean editStatus = chargeService.updateCharge(charge);
+        model.addAttribute("editStatus", editStatus);
         return "redirect:/charges/makerList";
     }
 

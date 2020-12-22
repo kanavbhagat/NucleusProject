@@ -17,7 +17,7 @@ public class NewCharge {
     private String chargeCode;
 
     @NotEmpty(message = "Charge Code Name cannot be empty.")
-    @Pattern(regexp="^[a-zA-Z]+$", message="Only Alphabets are allowed")
+    @Pattern(regexp="^[a-zA-Z ]+$", message="Only Alphabets are allowed")
     @Column(name = "ChargeCodeName", unique = true, nullable = false, length = 20)
     private String chargeCodeName;
 
