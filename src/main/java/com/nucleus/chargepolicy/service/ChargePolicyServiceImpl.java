@@ -30,9 +30,8 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     public void setEligibilityPolicyDAO(ChargePolicyDao chargePolicyDao) {
         this.chargePolicyDao = chargePolicyDao;
     }
-    public void insert(ChargePolicy chargePolicy) {
-        System.out.println("In Service insert query");
-        this.chargePolicyDao.insert(chargePolicy);
+    public int insert(ChargePolicy chargePolicy) {
+        return this.chargePolicyDao.insert(chargePolicy);
     }
     public List<String> getChargeCodes(){
         List<String> chargeCodes = new ArrayList<String>();
