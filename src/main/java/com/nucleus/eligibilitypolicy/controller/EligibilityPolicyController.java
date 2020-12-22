@@ -5,6 +5,9 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,6 +48,7 @@ public class EligibilityPolicyController {
     }
 
     //To display the form for adding a new Eligibility Policy:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/new"})
     public ModelAndView newEligibilityPolicy() {
         ModelAndView modelAndView = new ModelAndView();
@@ -80,6 +84,9 @@ public class EligibilityPolicyController {
         //Setting "createdDate" field:
         eligibilityPolicy.setCreateDate(LocalDate.now());
 
+        //Setting "createdBy" field:
+        eligibilityPolicy.setCreatedBy(getPrincipal());
+
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
         if(parameterCountString != null) {
@@ -99,6 +106,7 @@ public class EligibilityPolicyController {
     }
 
     //To display details of one Eligibility Policy based on user's selection of hyperlink of code:
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = {"/get/{policyCode}"})
     public ModelAndView showOneEligibilityPolicy(@PathVariable("policyCode") String policyCode) {
         ModelAndView modelAndView = new ModelAndView();
@@ -111,12 +119,14 @@ public class EligibilityPolicyController {
     //To update status {Approve, Reject} of already existing Eligibility Policy:
     @PostMapping(value = {"/get/updateStatus/{policyCode}"})
     public String updateStatus(@PathVariable("policyCode") String policyCode, @RequestParam("action")String action, Model model) {
-        boolean updateStatus = eligibilityPolicyService.updateStatus(policyCode, action);
+        String authorizedBy = getPrincipal();
+        boolean updateStatus = eligibilityPolicyService.updateStatus(policyCode, action, authorizedBy);
         model.addAttribute("updateStatus", updateStatus);
         return "redirect:/eligibilityPolicy/";
     }
 
     //To display editable details of existing Eligibility Policy:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/edit/{policyCode}"})
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
@@ -135,6 +145,7 @@ public class EligibilityPolicyController {
                                        @Valid @ModelAttribute("eligibilityPolicy") EligibilityPolicy eligibilityPolicy,
                                        BindingResult result,
                                        Model model) {
+
         //Annotation based data validation:
         if (result.hasErrors()) {
             List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
@@ -152,8 +163,11 @@ public class EligibilityPolicyController {
         } else if (action.equalsIgnoreCase("save & request approval")) {
             eligibilityPolicy.setStatus("PENDING");
         }
-        //Setting "createdDate" field:
+        //Setting "modifiedDate" field:
         eligibilityPolicy.setModifiedDate(LocalDate.now());
+
+        //Setting "modifiededBy" field:
+        eligibilityPolicy.setModifiedBy(getPrincipal());
 
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
@@ -174,10 +188,23 @@ public class EligibilityPolicyController {
     }
 
     //To delete an existing Eligibility Policy from database:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/delete/{policyCode}"})
     public String deletePolicy(@PathVariable("policyCode") String policyCode, Model model) {
         boolean deleteStatus = eligibilityPolicyService.deleteEligibilityPolicy(policyCode);
         model.addAttribute("deleteStatus", deleteStatus);
         return "redirect:/eligibilityPolicy/";
+    }
+
+    //Method to get username:
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 }

@@ -58,7 +58,7 @@ public class AppConfig {
     private Properties hibernateProperties() {
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         properties.put("hibernate.show_sql","true");
-        properties.put("hibernate.hbm2ddl.auto","update");
+        properties.put("hibernate.hbm2ddl.auto","create");
         properties.put("current_session_context_class","thread");
         return properties;
     }
@@ -69,7 +69,8 @@ public class AppConfig {
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 
         // Jigme's Oracle db credentials
-        /*ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+
+       /* ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
         ds.setUsername("nsbt");
         ds.setPassword("qwerty");*/
 
@@ -78,11 +79,17 @@ public class AppConfig {
 //
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("sys as sysdba");
-//        ds.setPassword("pwd");
+//        ds.setPassword("gyanesh10");
+
+
+         /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+         ds.setPassword("pwd");*/
 
          ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
          ds.setUsername("c##username");
          ds.setPassword("pwd");
+
 
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
@@ -93,7 +100,10 @@ public class AppConfig {
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
+
+
           /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+
              ds.setUsername("system");
              ds.setPassword("hemant12345");*/
 

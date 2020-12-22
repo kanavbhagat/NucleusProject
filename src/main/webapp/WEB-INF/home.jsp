@@ -14,7 +14,7 @@
 <body>
 
 <div class="container-fluid">
-    <jsp:include page="navbar.jsp" />
+    <jsp:include page="/navbar.jsp" />
 </div>
 </body>
 </html>
