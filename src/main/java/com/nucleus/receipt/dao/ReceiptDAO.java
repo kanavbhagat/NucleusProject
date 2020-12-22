@@ -1,5 +1,6 @@
 package com.nucleus.receipt.dao;
 
+import com.nucleus.product.model.Product;
 import com.nucleus.receipt.model.Receipt;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -23,7 +24,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         Session session;
         try {
             session = sessionFactory.getCurrentSession();
-        } catch (HibernateException E){
+        } catch (Exception E){
             session = sessionFactory.openSession();
         }
         return session;
@@ -37,13 +38,46 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.save(receipt);
                 session.getTransaction().commit();
                 return true;
-            } catch (HibernateException e){
+            } catch (Exception e){
                 e.printStackTrace();
                 session.getTransaction().rollback();
                 return false;
             }
         }
-        //return null;
+    }
+
+    @Override
+    public Boolean updateReceipt(Receipt receipt) {
+
+        try(Session session = getSession()){
+            session.beginTransaction();
+            try {
+                session.update(receipt);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public Receipt getReceipt(Integer receiptId) {
+        Receipt receipt;
+        try(Session session = getSession()){
+            session.beginTransaction();
+            try {
+                receipt = session.get(Receipt.class, receiptId);
+                session.getTransaction().commit();
+                return receipt;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return null;
+            }
+        }
     }
 
     public List<Object> receiptSearch(String receiptType, String receiptBasis, Integer accountNumber, Integer receiptNo){
@@ -67,6 +101,18 @@ public class ReceiptDAO implements ReceiptDAOInterface{
         } catch (Exception exception){
             exception.printStackTrace();
             receiptList = new ArrayList<>();
+            System.out.println("it come here. ono");
+            return receiptList;
+        }
+    }
+
+    @Override
+    public List<Receipt> getReceiptList() {
+        try(Session session = getSession()) {
+            session.beginTransaction();
+            Query<Receipt> query = session.createQuery("from Receipt r");
+            List<Receipt> receiptList = query.list();
+            session.getTransaction().commit();
             return receiptList;
         }
     }

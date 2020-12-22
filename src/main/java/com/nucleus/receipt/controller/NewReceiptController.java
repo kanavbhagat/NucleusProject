@@ -1,7 +1,8 @@
 package com.nucleus.receipt.controller;
 
 
-import com.nucleus.loanapplications.service.NewLoanApplicationService;
+import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import com.nucleus.receipt.service.ReceiptValidator;
@@ -19,36 +20,44 @@ public class NewReceiptController {
     ReceiptService receiptService;
 
     @Autowired
-    NewLoanApplicationService newLoanApplicationService;
+    LoanApplicationService loanApplicationService;
 
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
 
         ModelAndView modelAndView = new ModelAndView("views/receipt/newReceiptCreation");
         Receipt receipt = new Receipt();
-        modelAndView.addObject("receipt",receipt);
+        modelAndView.addObject("receipt", receipt);
         return modelAndView;
     }
 
 
     @PostMapping(value = {"/registerReceipt"})
-    public ModelAndView addReceipt(@Valid @ModelAttribute Receipt receipt, BindingResult result){
-
+    public ModelAndView addReceipt(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult result){
         ModelAndView modelAndView=new ModelAndView();
-        //receipt.getReceiptNo()
-        System.out.println(receipt.getLoanApplicationValue());
         new ReceiptValidator().validate(receipt, result);
+
         if(result.hasErrors()){
-            //modelAndView.addObject("error", "Number Exception");
             modelAndView.setViewName("views/receipt/newReceiptCreation");
+            return modelAndView;
         }
-        //System.out.println(receipt.getLoanApplicationValue());
-        //receipt.setLoanApplicationNumber(newLoanApplicationService.);
-        else{
-            modelAndView.setViewName("views/receipt/receiptSearch");
+
+        modelAndView.setViewName("views/receipt/receiptSuccess");
+
+        receipt.setReceiptStatus("Pending");
+
+        Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
+        LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
+        receipt.setLoanApplicationNumber(loanApplications);
+
+        Boolean success = receiptService.registerReceipt(receipt);
+
+        if(success){
+            modelAndView.addObject("message", "Receipt Creation was Successful");
+            return modelAndView;
         }
-        //receiptService.registerReceipt(receipt);
-        //modelAndView.se
+
+        modelAndView.addObject("message", "Receipt Creation Failed");
         return modelAndView;
     }
 
