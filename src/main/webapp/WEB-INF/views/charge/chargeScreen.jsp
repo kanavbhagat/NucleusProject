@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en" dir="ltr">
 <head>
@@ -33,7 +34,12 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newChargeCreation"' class="btn btn-primary" id="newCharge">New Charge Definition</button>
+            <security:authorize access = "hasRole('MAKER')">
+                <button type="button" onclick='location.href="<%= request.getContextPath()%>/charges/newChargeCreation"' class="btn btn-primary" id="newCharge">New Charge Definition</button>
+            </security:authorize>
+            <security:authorize access = "hasRole('CHECKER')">
+                <button type="button" class="btn btn-primary" id="newCharge" disabled = "disabled">New Charge Definition</button>
+            </security:authorize>
         </div>
     </div>
 </div>
@@ -59,14 +65,32 @@
             <tbody>
             <c:forEach var="charge" items="${chargeList}">
                  <tr>
-                  <td>${charge.chargeCode}</td>
+                  <security:authorize access="hasRole('MAKER')">
+                    <td>${charge.chargeCode}</td>
+                  </security:authorize>
+                  <security:authorize access="hasRole('CHECKER')">
+                    <td><a href = "<%= request.getContextPath()%>/charges/${charge.chargeCode}">${charge.chargeCode}</a></td>
+                  </security:authorize>
                   <td>${charge.chargeCodeName}</td>
                   <td>${charge.chargeDescription}</td>
                   <td>${charge.transactionEvent}</td>
                   <td>${charge.createdBy}</td>
                   <td>${charge.status}</td>
                   <td>${charge.authorizedBy}</td>
-                  <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                  <security:authorize access = "hasRole('MAKER')">
+                    <td>
+                        <a href="#">Edit</a>
+                        |
+                        <a href="<%= request.getContextPath()%>/charges/delete/${charge.chargeCode}">Delete</a>
+                        </td>
+                  </security:authorize>
+                  <security:authorize access = "hasRole('CHECKER')">
+                    <td>
+                        <a href="#" disabled = "disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a>
+                        |
+                        <a href="#" disabled = "disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Delete</a>
+                    </td>
+                  </security:authorize>
                  </tr>
                 </c:forEach>
             </tbody>
