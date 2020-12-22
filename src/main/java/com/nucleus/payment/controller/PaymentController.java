@@ -92,7 +92,11 @@ public class PaymentController {
             ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
             return modelAndView;
         }
+        System.out.println(payment.getLoanApplicationNumber());
+        System.out.println("Edited Payment");
         System.out.println(payment.getCustomerCode());
+        payment.setPaymentStatus("PENDING");
+        payment.setMadeBy(getModifiedBy());
         paymentService.updatePayment(payment);
         ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
         return modelAndView;

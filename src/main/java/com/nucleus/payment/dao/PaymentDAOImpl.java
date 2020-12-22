@@ -47,6 +47,7 @@ public class PaymentDAOImpl implements PaymentDAO{
         try {
             Session session = getSession();
             session.beginTransaction();
+            System.out.println(payment.getCustomerCode());
 //            Payment existingPayment = session.load(Payment.class, payment.getLoanApplicationNumber());
 //            existingPayment.setLoanApplicationNumber(payment.getLoanApplicationNumber());
 //            existingPayment.setPaymentCode(payment.getPaymentCode());

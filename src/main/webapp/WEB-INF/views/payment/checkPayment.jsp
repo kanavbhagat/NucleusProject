@@ -84,7 +84,7 @@
                         <td>${singlePayment.paymentAmount}</td>
                         <td>${singlePayment.paymentStatus}</td>
                         <td>${singlePayment.madeBy}</td>
-                        <td>Reviewed By</td>
+                        <td>${singlePayment.reviewedBy}</td>
                         <sec:authorize access="hasRole('MAKER')">
                             <td>
                                 <a href="<%=request.getContextPath()%>/payment/editPayment/${singlePayment.loanApplicationNumber}">Edit</a>

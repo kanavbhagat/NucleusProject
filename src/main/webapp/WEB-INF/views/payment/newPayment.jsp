@@ -76,7 +76,7 @@
                     <div class="form-group col-sm-3 offset-4">
                         <label class="font-weight-bold required-field">Customer Code</label>
                         <form:input path="customerCode" cssClass="form-control"></form:input>
-                        <from:errors path="customerCode" cssClass="error"></from:errors>
+                        <form:errors path="customerCode" cssClass="error"></form:errors>
                     </div>
                 </div>
                 <div class="row">
