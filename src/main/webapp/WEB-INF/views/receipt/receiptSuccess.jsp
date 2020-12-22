@@ -4,6 +4,6 @@
 <html>
 <body>
     <h1>${message}</h1>
-    <h3> Click <a href="<%= request.getContextPath()%>/product"> here </a> to go back
+    <h3> Click <a href="<%= request.getContextPath()%>/receiptSearch"> here </a> to go back
 </body>
 </html>

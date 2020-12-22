@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>New Product</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -20,6 +21,7 @@
     <script type="text/javascript">
          function getRepaymentDesc(){
          var text = '#repaymentData #'+ $( "#repaymentPolicyCodeString option:selected" ).val();
+         console.log(text);
             $('#repaymentDesc').val($(text).text())
          }
 
@@ -78,25 +80,26 @@
 
 
 <!-- Form Container -->
+
         <div class="container-fluid">
-            <form:form modelAttribute="product" method="post" action="newProduct">
+            <form:form modelAttribute="product" method="post" action="save">
                 <div class="row">
                     <div class="col-sm-3">
 
                         <div class="form-group">
                             <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
-                            <form:input cssClass="form-control" path="productCode"/>
+                            <form:input cssClass="form-control" value="${product1.productCode}" path="productCode"/>
                             <form:errors path="productCode" cssClass="error"/>
                         </div>
 
                         <div class="form-group">
                             <form:label path="productDescription" cssClass="font-weight-bold">Product Description:</form:label>
-                            <form:textarea rows="3" cssClass="form-control" path="productDescription"/>
+                            <form:textarea rows="3" cssClass="form-control" value="${product1.productDescription}" path="productDescription"/>
                         </div>
 
                         <div class="form-group">
                             <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
-                            <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
+                            <form:input type="number" cssClass="form-control" value="${product1.maxExposureAmount}" path="maxExposureAmount"/>
                             <form:errors path="maxExposureAmount" cssClass="error"/>
                         </div>
 
@@ -105,7 +108,7 @@
 
                         <div class="form-group">
                             <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
-                            <form:input cssClass="form-control" path="productName"/>
+                            <form:input cssClass="form-control" path="productName" value="${product1.productName}"/>
                             <form:errors path="productName" cssClass="error"/>
                         </div>
 
@@ -181,10 +184,7 @@
                 <hr width="" color="#b3b3b3">
                 <div class="row" style="margin-bottom:20px">
                     <div class="col-sm-3 offset-sm-9">
-                        <button type="submit" class="btn btn-primary" name="action" value="Saved">Save</button>
-                        <button type="submit" class="btn btn-primary" name="action" value="Saved and Approval Requested">
-                            Save & Request Approval
-                        </button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Updated">Update</button>
                     </div>
                 </div>
             </form:form>
@@ -241,6 +241,7 @@
                     </c:if>
             </tbody>
         </table>
+
 </div>
 </body>
 </html>

@@ -15,6 +15,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+     <script type="text/javascript">
+                function checkEmpty(){
+                    var value1 = document.getElementById("customerCode").value;
+                    var value2 = document.getElementById("loanApplicationNumber").value;
+
+                    if ( (!value1 || !value1.trim()) && (!value2 || !value2.trim()) ){
+                        alert("Please enter the value in at least one field");
+                        $("#error").show();
+                        return false;
+                    }
+
+                    return true;
+                }
+
+        		$(document).ready(function() {
+                    $( "#error" ).hide();
+        		});
+
+     </script
 
 </head>
 
@@ -36,13 +55,13 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form  action="customerLoanSearch" method="Post">
+    <form  action="customerLoanSearch" method="post">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
                     <label for="customerCode" class="font-weight-bold ">Customer #</label>
-                    <input type="text" class="form-control" name="customerCode"/>
+                    <input type="text" id="customerCode" class="form-control" name="customerCode" title="Customer Id should be alphanumeric with no spaces around"  pattern="^[a-zA-Z0-9]*$"/>
                 </div>
 
 
@@ -51,7 +70,7 @@
 
                 <div class="form-group">
                     <label for="loanApplicationNumber" class="font-weight-bold ">Loan Account #</label>
-                    <input type="text" class="form-control" name="loanApplicationNumber"/>
+                    <input type="number" id="loanApplicationNumber" class="form-control" name="loanApplicationNumber"/>
                 </div>
 
             </div>
@@ -59,13 +78,15 @@
 
         <hr width="" color="#b3b3b3">
 
+        <span id="error" style="color:red;">Please enter the value in at least one field</span>
+
     <div class="row">
         <div class="col-sm-3 offset-sm-10">
-            <button type="submit" class="btn btn-primary" id="search">Search</button>
-            <button type="button" class="btn btn-primary" id="clear">Clear</button>
+            <button type="submit" onclick="return checkEmpty()" class="btn btn-primary" id="search">Search</button>
+            <button type="reset" class="btn btn-primary" id="clear">Clear</button>
         </div>
     </div>
-
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </form>
 </div>
 
