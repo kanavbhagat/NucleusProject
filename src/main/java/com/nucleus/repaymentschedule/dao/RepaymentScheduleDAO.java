@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface RepaymentScheduleDAO {
-    public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) ;
+    public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule);
 }
 
 
