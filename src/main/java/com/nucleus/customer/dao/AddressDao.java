@@ -26,18 +26,19 @@ public class AddressDao implements  AddressDaoInterface{
 
     @Override
     public boolean insertAddress(Address address) {
-        try(Session session=getSession()){
-            session.beginTransaction();
-            try {
-                session.save(address);
-                session.getTransaction().commit();
-                return true;
-            } catch (HibernateException e){
-                e.printStackTrace();
-                session.getTransaction().rollback();
-                return false;
-            }
+        boolean successful = false;
+        try
+        {
 
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(address);
+            session.getTransaction().commit();
+            session.close();
+            successful=true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
         }
+        return successful;
     }
 }

@@ -20,7 +20,7 @@ public class Customer {
     @Column(name="last_name",length = 30,nullable = false)
     private String lastName;
 
-    @Column(name="date_of_birth", nullable = false)
+    @Column(name="date_of_birth" , nullable = false)
     private String dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
@@ -38,8 +38,32 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private List<Address> addresses;
 
+    @Transient
+    private Address add;
 
+    public Customer(){
+        super();
+        add = new Address();
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Address getAdd() {
+        return add;
+    }
+
+    public void setAdd(Address add) {
+        this.add = add;
+    }
 
     public List<LoanApplications> getLoanApplications() {
         return loanApplications;

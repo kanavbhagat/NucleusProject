@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -16,94 +16,13 @@
 
 <body class="container-fluid">
     <header>
-       <!-- NavBar Starts -->
-    <nav class="navbar navbar-expand-sm navbar-light bg-secondary mb-3" >
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03 ">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/product">Product <span class="sr-only">(current)</span></a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarPolicyDropdown" data-toggle="dropdown">
-                        Policy Setup
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/showRepaymentPolicy">Repayment Policy</a>
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/eligibilityPolicy/">Eligibility Policy</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarParametersDropdown" data-toggle="dropdown">
-                        Parameters
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Application</a>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Receipt</a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarAccountingDropDown" data-toggle="dropdown">
-                        Accounting
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/newPayment">New Payment</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="#">Customer Service</a>
-                </li>
-
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarReportDropdown" data-toggle="dropdown">
-                        Report
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown dmenu mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop5" data-toggle="dropdown">
-                        BOD
-                    </a>
-                    <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- NavBar Ends -->
+        <jsp:include page="/navbar.jsp" />
     </header>
 
 
 
     <article>
-        <form class="font-weight-bold mb-5" action="/loan.do">
+        <form:form class="font-weight-bold mb-5" modelAttribute="loanApplications" method="post">
             <section>
                 <div class="row">
                     <a href="../customer/customerInfo.jsp" class="col-lg-2 col-md-2 col-6">Customer Information</a>
@@ -119,70 +38,83 @@
             <section>
                 <div>
                     <div class="row ">
-                        <div class="form-group col-lg-4 col-md-6 col-12 col-xl-4 ">
-                            <label for="pwd">Loan Application No<a class="text-danger">*</a></label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter Loan Application No" name="Lid">
+                        <div class="form-group col-sm-3">
+                            <label>Loan Application Number<a class="text-danger">*</a></label>
+                            <form:input type="number" class="form-control" path="loanApplicationNumber" />
                         </div>
 
-                        <div class="form-group col-lg-6 col-md-6 col-12 col-xl-4 ml-xl-5 pl-5">
-                            <label for="sel1">Produt Type<a class="text-danger">*</a></label>
-                            <select class="form-control" id="sel1" name="productType">
-                                <option>Auto Loan</option>
-                                <option>Property Loan</option>
 
-                            </select>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-sm-3">
+                            <label>Loan Amount Requested<a class="text-danger">*</a></label>
+                            <form:input type="number" class="form-control" path="loanAmountRequested" />
+                        </div>
+
+                        <div class="form-group col-sm-3 offset-4">
+                            <label>Tenure<a class="text-danger">*</a></label>
+                            <form:input type="number" class="form-control" path="tenure" />
                         </div>
                     </div>
 
                     <div class="row ">
-                        <div class="form-group col-lg-4 col-md-6 col-12 col-xl-4 ">
-                            <label for="sel1">Product<a class="text-danger">*</a></label>
-                            <select class="form-control" id="sel1">
-                                <option>Select One option</option>
-                                <option>Home Loan</option>
-                                <option>Car Loan</option>
-
-                            </select>
+                        <div class="form-group col-sm-3">
+                            <label>Rate<a class="text-danger">*</a></label>
+                            <form:input type="number" class="form-control" path="rate" />
                         </div>
 
-                        <div class="form-group col-lg-6 col-md-6 col-12 col-xl-4 ml-xl-5 pl-5">
-                            <label for="pwd">Loan Amount Requested<a class="text-danger">*</a></label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter Loan Amount Requested" name="loanAmountRequested">
+                        <div class="form-group col-sm-3 offset-4">
+                            <label>Agreement Date<a class="text-danger">*</a></label>
+                            <form:input type="date" class="form-control" path="agreementDate" />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-sm-3">
+                            <label>Installment Due Date<a class="text-danger">*</a></label>
+                            <form:input type="date" class="form-control" path="installmentDueDate" />
+                        </div>
+
+                        <div class="form-group col-sm-3 offset-4">
+                            <label>Create Date<a class="text-danger">*</a></label>
+                            <form:input type="date" class="form-control" path="createDate" />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-sm-3">
+                            <label>Created By<a class="text-danger">*</a></label>
+                            <form:input type="text" class="form-control" path="createdBy" />
+                        </div>
+
+                        <div class="form-group col-sm-3 offset-4">
+                            <label> Modified Date<a class="text-danger">*</a></label>
+                            <form:input type="date" class="form-control" path="modifiedDate" />
                         </div>
                     </div>
 
                     <div class="row ">
-                        <div class="form-group col-lg-4 col-md-6 col-12 col-xl-4 ">
-                            <label for="pwd">Tenure(months)<a class="text-danger">*</a></label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter Tenue" name="tenure">
+                        <div class="form-group col-sm-3">
+                            <label>Modified By<a class="text-danger">*</a></label>
+                            <form:input type="text" class="form-control" path="modifiedBy" />
                         </div>
 
-                        <div class="form-group col-lg-6 col-md-6 col-12 col-xl-4 ml-xl-5 pl-5">
-                            <label for="pwd">Rate<a class="text-danger">*</a></label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter rate" name="rate">
+                        <div class="form-group col-sm-3 offset-4">
+                            <label> Authorized Date<a class="text-danger">*</a></label>
+                            <form:input type="date" class="form-control" path="authorizedDate" />
                         </div>
                     </div>
-
                     <div class="row ">
-                        <div class="form-group col-lg-4 col-md-6 col-12 col-xl-4 ">
-                            <label for="pwd">Agreement Date</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter Agreement date" name="date">
-                        </div>
-
-                        <div class="form-group col-lg-6 col-md-6 col-12 col-xl-4 ml-xl-5 pl-5">
-                            <label for="pwd">Installment Due Date<a class="text-danger">*</a></label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter Installment due date" name="due date">
+                        <div class="form-group col-sm-3">
+                            <label>Authorized By<a class="text-danger">*</a></label>
+                            <form:input type="text" class="form-control" path="authorizedBy" />
                         </div>
                     </div>
-
-
                 </div>
             </section>
             <hr>
             <div class="text-center">
                 <input class="btn-primary" type="submit" value="Move to Next Stage">
             </div>
-        </form>
+        </form:form>
     </article>
 </body>
 
