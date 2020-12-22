@@ -50,7 +50,7 @@ $(document).ready(function(){
       <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
       <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
       <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
-
+       <p style = "color : red">${exception}</p>
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>

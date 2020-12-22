@@ -32,7 +32,7 @@
 <body>
 <div class="container-fluid">
     <jsp:include page="/navbar.jsp" />
-    <form:form method="Post" action="add" modelAttribute="editThisPayment">
+    <form:form method="Post" action="edit" modelAttribute="editThisPayment">
     <div class="row m-3">
         <h3>Edit Payment Cash</h3>
         <div class="offset-9">
@@ -46,41 +46,41 @@
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Loan Application Number</label>
-                    <form:input cssClass="form-control" path="loanApplicationNumber"></form:input>
-                    <form:errors path="loanApplicationNumber" cssClass="error"></form:errors>
+                    <form:input cssClass="form-control" path="loanApplicationNumber"/>
+                    <form:errors path="loanApplicationNumber" cssClass="error"/>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Payment Code</label>
-                    <form:input path="paymentCode" cssClass="form-control"></form:input>
+                    <form:input path="paymentCode" cssClass="form-control"/>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Payment Amount</label>
-                    <form:input cssClass="form-control" path="paymentAmount"></form:input>
+                    <form:input cssClass="form-control" path="paymentAmount"/>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Payment Date</label>
-                    <form:input path="paymentDate" type="date" cssClass="form-control"></form:input>
+                    <form:input path="paymentDate" type="date" cssClass="form-control"/>
                     <form:errors path="paymentDate" cssClass="error"><p class="error">Invalid Date</p></form:errors>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Payout Bank Account</label>
-                    <form:input path="payoutBankAccount" cssClass="form-control"></form:input>
+                    <form:input path="payoutBankAccount" cssClass="form-control"/>
                     <form:errors path="payoutBankAccount" cssClass="error"></form:errors>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Customer Code</label>
-                    <form:input path="customerCode" cssClass="form-control"></form:input>
-                    <from:errors path="customerCode" cssClass="error"></from:errors>
+                    <form:input path="customerCode" cssClass="form-control"/>
+                    <form:errors path="customerCode" cssClass="error"></form:errors>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Remarks</label>
-                    <form:textarea path="remarks" cssClass="form-control"></form:textarea>
+                    <form:textarea path="remarks" cssClass="form-control"/>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="required-field font-weight-bold">Payment Channel</label>
