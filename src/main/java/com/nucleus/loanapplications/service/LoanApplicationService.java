@@ -16,4 +16,8 @@ public class LoanApplicationService {
     public List<LoanApplications> getAllLoanApplicationsList(){
         return loanApplicationDAO.getLoanApplicationList();
     }
+
+    public LoanApplications getLoanApplicationId(Integer id){
+        return loanApplicationDAO.getLoanApplicationId(id);
+    }
 }
