@@ -72,7 +72,6 @@ public class AppConfig {
         ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
 
        /* ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
->>>>>>> upstream/main
         ds.setUsername("nsbt");
         ds.setPassword("qwerty");
 
