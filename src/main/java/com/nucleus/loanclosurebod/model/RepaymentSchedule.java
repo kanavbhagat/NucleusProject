@@ -1,5 +1,7 @@
 package com.nucleus.loanclosurebod.model;
 
+import com.nucleus.loanapplications.model.LoanApplications;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,7 +11,7 @@ public class RepaymentSchedule {
 
     @ManyToOne
     @JoinColumn(name="loan_application_number", referencedColumnName="loan_application_number", foreignKey=@ForeignKey(name="loan_FK"))
-    private LoanApplication loanApplication;
+    private LoanApplications loanApplication;
 
     @Id
     @Column(name="installment_number", length = 10)
@@ -36,11 +38,11 @@ public class RepaymentSchedule {
     @Column(name="bill_flag")
     private String BillFlag;
 
-    public LoanApplication getLoanApplicationn() {
+    public LoanApplications getLoanApplicationn() {
         return loanApplication;
     }
 
-    public void setLoanApplicationn(LoanApplication loanApplication) {
+    public void setLoanApplicationn(LoanApplications loanApplication) {
         this.loanApplication = loanApplication;
     }
 

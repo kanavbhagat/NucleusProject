@@ -1,7 +1,7 @@
 package com.nucleus.loanclosurebod.service;
 
+import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanclosurebod.database.LoanClosureDao;
-import com.nucleus.loanclosurebod.model.LoanApplication;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,16 +24,16 @@ public class LoanClosureServiceImpl implements LoanClosureService {
 
     @Override
     public void loanClosureBod() {
-        List<LoanApplication> loanApplications = loanClosureDao.getLoanApplications();
-        for (LoanApplication loanApplication : loanApplications) {
+        List<LoanApplications> loanApplications = loanClosureDao.getLoanApplications();
+        for (LoanApplications loanApplication : loanApplications) {
             closeOneLoan(loanApplication);
         }
     }
 
-    public boolean closeOneLoan(LoanApplication loanApplication){
+    public boolean closeOneLoan(LoanApplications loanApplication){
         boolean flag = true;
         boolean closureStatus = false;
-        String currentStatus = loanApplication.getLoanStatus();
+        String currentStatus = loanApplication.getStatus();
         if (currentStatus.equalsIgnoreCase("Closed") ||
                 currentStatus.equalsIgnoreCase("Pending") ||
                 currentStatus.equalsIgnoreCase("Inactive")) {

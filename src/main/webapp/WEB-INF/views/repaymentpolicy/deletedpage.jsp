@@ -12,7 +12,7 @@
 
 <h1>Employees</h1>
 
-<p>You have deleted a employee with policyCode ${policyCode} at <%= new java.util.Date() %></p>
+<p>You have deleted a policy with policyCode ${policyCode} at <%= new java.util.Date() %></p>
 
 <c:url var="mainUrl" value="/showRepaymentPolicy" />
 <p>Return to <a href="${mainUrl}">Main List</a></p>

@@ -16,8 +16,9 @@ public class PaymentValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Payment payment = (Payment) o;
-        if (payment.getLoanApplicationNumber() == 0){
-            errors.rejectValue("loanApplicationNumber", "", "Cannot be Zero");
-        }
+//        if (payment.getLoanApplicationNumber() == 0){
+//            errors.rejectValue("loanApplicationNumber", "", "Cannot be Zero");
+//        }
     }
+
 }

@@ -9,6 +9,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
            prefix="security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,6 +29,16 @@
             $('#paymentTable').DataTable();
         } );
     </script>
+    <style>
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
     <title>Check Payment</title>
 </head>
 <body>
@@ -54,8 +65,8 @@
                 <th>Loan Application Number</th>
                 <th>Customer Code</th>
                 <th>Payment Amount</th>
-                <th>Created By</th>
                 <th>Status</th>
+                <th>Created By</th>
                 <th>Reviewed By</th>
                 <th>Actions</th>
             </tr>
@@ -63,14 +74,23 @@
             <tbody>
                 <c:forEach items="${paymentList}" var="singlePayment">
                     <tr>
+                        <sec:authorize access="hasRole('MAKER')">
                         <td>${singlePayment.loanApplicationNumber}</td>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('CHECKER')">
+                            <td><a href="#">${singlePayment.loanApplicationNumber}</a></td>
+                        </sec:authorize>
                         <td>${singlePayment.customerCode}</td>
                         <td>${singlePayment.paymentAmount}</td>
-                        <td>Created By</td>
-                        <td>Status</td>
+                        <td>${singlePayment.paymentStatus}</td>
+                        <td>${singlePayment.madeBy}</td>
                         <td>Reviewed By</td>
                         <sec:authorize access="hasRole('MAKER')">
-                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            <td>
+                                <a href="#">Edit</a>
+                                |
+                                <a href="<%=request.getContextPath()%>/payment/deletePayment/${singlePayment.loanApplicationNumber}">Delete</a>
+                            </td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
                             <td>
