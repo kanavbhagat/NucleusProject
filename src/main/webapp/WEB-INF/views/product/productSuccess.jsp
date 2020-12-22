@@ -34,14 +34,14 @@
 
                 <%-- Insert Dynamic Message Here Eg- policy code etc --%>
                 <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(141, 181, 150, 0.8); padding: 5px;background-color:rgba(141, 181, 150, 0.1);width: 50%;">
-                <strong>Receipt Number : </strong> ${receiptNumber}</p>
+                <strong>Product Number : </strong> ${productCode}</p>
 
               </div>
               <%-- Put your link in the value field below where you want to redirect to. --%>
               <div class="d-flex justify-content-center">
                     <c:url var="mainUrl" value="/showRepaymentPolicy" />
-                    <a href="<%= request.getContextPath()%>/receiptChecker">
-                    <button class="btn btn-info">Go Back to Receipt Overview</button>
+                    <a href="<%= request.getContextPath()%>/product">
+                    <button class="btn btn-info">Go Back to Product Overview</button>
                     </a>
               </div>
 		</div>

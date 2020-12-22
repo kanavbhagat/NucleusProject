@@ -1,7 +1,9 @@
 package com.nucleus.receipt.dao;
 
 import com.nucleus.product.model.Product;
+import com.nucleus.receipt.model.Advice;
 import com.nucleus.receipt.model.Receipt;
+import com.nucleus.receipt.model.Settlement;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -114,6 +116,23 @@ public class ReceiptDAO implements ReceiptDAOInterface{
             List<Receipt> receiptList = query.list();
             session.getTransaction().commit();
             return receiptList;
+        }
+    }
+
+    public Boolean runBOD(Receipt receipt, Advice advice, Settlement settlement){
+        try(Session session = getSession()) {
+            session.beginTransaction();
+            try {
+                session.update(receipt);
+                session.save(advice);
+                session.save(settlement);
+                session.getTransaction().commit();
+                return true;
+            }catch (Exception e) {
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
         }
     }
 }
