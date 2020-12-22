@@ -41,7 +41,7 @@ public class Receipt {
     private String receiptType;
 
     @NotNull(message = "Date of Receipt cannot be blank")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "MM/dd/yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     @Column(name="date_of_receipt")
     private LocalDate dateOfReceipt;
 

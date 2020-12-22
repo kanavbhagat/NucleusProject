@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -34,7 +35,12 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            <sec:authorize access="hasRole('MAKER')">
+                <button type="button" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            </sec:authorize>
+            <sec:authorize access="hasRole('CHECKER')">
+                <button type="button" disabled="disabled" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            </sec:authorize>
         </div>
     </div>
 </div>

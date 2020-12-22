@@ -111,16 +111,8 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         try {
             Session session = getSession();
             session.beginTransaction();
-            System.out.println("inside edit query");
-            Query query1 = session.createQuery("from EligibilityParameter e where e.parameterCode= ?1");
-            query1.setParameter(1, eligibilityParameter.getParameterCode());
-            EligibilityParameter ep = null;
-            ep = (EligibilityParameter) query1.getSingleResult();
-            if (ep == null)
-                System.out.println("null true");
 
-
-            query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
+            Query query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
                     "e.parameterDescription = ?2 , e.minValue = ?3 , e.maxValue = ?4 , e.modifiedBy = ?5 ," +
                     "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8");
 

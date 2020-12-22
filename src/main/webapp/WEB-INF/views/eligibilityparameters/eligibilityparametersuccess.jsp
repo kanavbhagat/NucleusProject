@@ -4,11 +4,11 @@
 <html>
 
 <head>
-    <title>Allocation Policy Creator</title>
+    <title>Eligibility Parameter Success Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <h1>Inserted Parameter Successfully</h1>
-<a href="getmaker">Back</a>
+<a href="<%= request.getContextPath()%>/main/getmaker">Back</a>
 </body>
 </html>

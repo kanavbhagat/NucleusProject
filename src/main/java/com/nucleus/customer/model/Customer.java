@@ -21,7 +21,7 @@ public class Customer {
     private String lastName;
 
     @Column(name="date_of_birth", nullable = false)
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
     private String nationality;
@@ -37,6 +37,7 @@ public class Customer {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
+
 
 
 
@@ -72,11 +73,12 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

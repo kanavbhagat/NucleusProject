@@ -42,19 +42,49 @@ public class PaymentDAOImpl implements PaymentDAO{
         return insertStatus;
     }
 
-//    public List<Payment> getPaymentsList(){
-//        List<Payment> paymentList;
-//        try {
-//            Session session  = getSession();
-//            session.beginTransaction();
-//            Query<Payment> query = session.createQuery("from Payment p");
-//            paymentList = query.list();
-//            session.getTransaction().commit();
-//        }
-//        catch (HibernateException e){
-//            paymentList = null;
-//            e.printStackTrace();
-//        }
-//        return paymentList;
-//    }
+    public List<Payment> getPaymentsList(){
+        List<Payment> paymentList;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query<Payment> query = session.createQuery("from Payment p", Payment.class);
+            paymentList = query.getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (HibernateException e){
+            paymentList = null;
+            e.printStackTrace();
+        }
+        return paymentList;
+    }
+
+    public Payment getPaymentById(int loanID){
+        Session session = getSession();
+        Payment payment = session.get(Payment.class, loanID);
+        session.close();
+        return payment;
+    }
+
+    public boolean deletePayment(int loanID){
+        boolean deleteStatus = false;
+        try{
+           Payment payment = getPaymentById(loanID);
+           Session session = getSession();
+           session.beginTransaction();
+           session.delete(payment);
+           session.getTransaction().commit();;
+           session.close();
+           deleteStatus = true;
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+        }
+        return deleteStatus;
+    }
+
+    public void updatePaymentEditor(String loanID, String user){
+        Session session = getSession();
+        Payment payment = session.get(Payment.class, loanID);
+    }
 }

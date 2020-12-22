@@ -4,6 +4,7 @@ package com.nucleus.receipt.controller;
 import com.nucleus.loanapplications.service.NewLoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
+import com.nucleus.receipt.service.ReceiptValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class NewReceiptController {
         ModelAndView modelAndView=new ModelAndView();
         //receipt.getReceiptNo()
         System.out.println(receipt.getLoanApplicationValue());
+        new ReceiptValidator().validate(receipt, result);
         if(result.hasErrors()){
             //modelAndView.addObject("error", "Number Exception");
             modelAndView.setViewName("views/receipt/newReceiptCreation");

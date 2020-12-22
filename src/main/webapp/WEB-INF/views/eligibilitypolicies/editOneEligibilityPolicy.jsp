@@ -21,6 +21,9 @@
         content:" *";
         color: red;
     }
+    .error-messages {
+        color:red;
+    }
 </style>
 
 </head>
@@ -42,6 +45,7 @@
     			      <div class="col-md-3">
     			        <label class="required" for="policyName" >Eligibility Policy Code</label><br>
     					<form:input path="policyCode" type="text" class="form-control" id="policyCode" name="policyCode" required="required" readonly="true"/>
+    			        <form:errors path="policyCode" class="error-messages"/>
     			      </div>
 
     			      <div class="col-md-3">
@@ -50,6 +54,7 @@
     			      <div class="col-md-3">
     			        <label class="required" for="policyName">Eligibility Policy Name</label><br>
     					<form:input path="policyName" type="text" id="policyName" name="policyName" class="form-control" required="required"/>
+    			        <form:errors path="policyName" class="error-messages"/>
     			      </div>
     		    </div>
 
@@ -57,6 +62,7 @@
     				<div class="col-md-3">
     					<label for="policyDescription">Eligibility Policy Description</label><br>
     					<form:textarea path="policyDescription" class="form-control"  id="policyDescription" name="policyDescription"/>
+    				    <form:errors path="policyDescription" class="error-messages"/>
     				</div>
     			</div>
     			<br><br>
@@ -82,12 +88,27 @@
     				      </tr>
     				    </thead>
     				    <tbody id = "tableBody">
-                        <c:forEach items="${existingParameterList}" var="existingParameter" varStatus="tagStatus">
+
+                          <tr class="d-flex" id = "tableRow0">
+    				        <td class="col-7"  style="text-align:center;">
+    				            <form:select path="eligibilityParameterCodes[0]" class="custom-select selectTags" multiple="false">
+    				            <form:option label="${existingParameterList[0].parameterName}" value="${existingParameterList[0].parameterCode}" selected="true"/>
+    				            <form:options items="${allEligibilityParameterList}" itemLabel="parameterName" itemValue="parameterCode"/>
+                                </form:select>
+                            </td>
+    				        <td class="col-5" style="text-align:center;">
+    				            <textarea id = "textarea0" class="form-control" disabled>${existingParameterList[0].parameterDescription}</textarea>
+    				        </td>
+    				      </tr>
+
+
+                        <c:forEach items="${existingParameterList}" begin="1" var="existingParameter" varStatus="tagStatus">
     				      <tr class="d-flex" id = "tableRow${tagStatus.index}">
     				        <td class="col-7"  style="text-align:center;">
-    				            <form:select path="eligibilityParameterNames[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
-    				            <form:option value="${existingParameter}"/>
-    				            <form:options items="${allEligibilityParameterList}"/>
+    				            <form:select path="eligibilityParameterCodes[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
+    				            <form:option value="-" label="Select One Option"/>
+    				            <form:option label="${existingParameter.parameterName}" value="${existingParameter.parameterCode}" selected="true"/>
+    				            <form:options items="${allEligibilityParameterList}" itemLabel="parameterName" itemValue="parameterCode"/>
                                 </form:select>
                             </td>
     				        <td class="col-5" style="text-align:center;">
@@ -98,12 +119,13 @@
     				    <c:forEach items="${allEligibilityParameterList}" begin="${existingParameterList.size()}" varStatus="tagStatus">
     				      <tr class="d-none" id = "tableRow${tagStatus.index}" style="display:none;">
     				        <td class="col-7"  style="text-align:center;">
-    				            <form:select path="eligibilityParameterNames[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
-    				            <form:options items="${allEligibilityParameterList}"/>
+    				            <form:select path="eligibilityParameterCodes[${tagStatus.index}]" class="custom-select selectTags" multiple="false">
+    				            <form:option value="-" label="Select One Option" selected="true"/>
+    				            <form:options items="${allEligibilityParameterList}" itemLabel="parameterName" itemValue="parameterCode"/>
                                 </form:select>
                             </td>
     				        <td class="col-5" style="text-align:center;">
-    				            <textarea id = "textarea${tagStatus.index}" class="form-control" disabled>${allEligibilityParameterList[0].parameterDescription}</textarea>
+    				            <textarea id = "textarea${tagStatus.index}" class="form-control" disabled></textarea>
     				        </td>
     				      </tr>
     				    </c:forEach>
@@ -114,7 +136,7 @@
                 <input type="hidden" id="eligibilityParametersCountInput" name="count"/>
 
                 <c:forEach items="${allEligibilityParameterList}" var="eligibilityParam" varStatus="tagStatus">
-                                <input type="hidden" class="allParameterNames" value="${eligibilityParam.parameterName}"/>
+                                <input type="hidden" class="allParameterCodes" value="${eligibilityParam.parameterCode}"/>
                                 <input type="hidden" class="allParameterDescriptions" value="${eligibilityParam.parameterDescription}"/>
                 </c:forEach>
                 <hr width="" color="#b3b3b3">
@@ -133,7 +155,7 @@
 <script>
 $(document).ready(function() {
 
-    var arrParamName = $(".allParameterNames").map(function() {
+    var arrParamCodes = $(".allParameterCodes").map(function() {
         return $(this).val();
     });
     var arrParamDescriptions = $(".allParameterDescriptions").map(function() {
@@ -146,6 +168,7 @@ $(document).ready(function() {
         $('#addButton').css('display', 'none');
     }
     $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
+
     $('#addButton').click(function() {
         $('#tableRow'+eligibilityParametersCount).css('display', 'block');
         $('#tableRow'+eligibilityParametersCount).addClass("d-flex").removeClass("d-none");
@@ -155,12 +178,12 @@ $(document).ready(function() {
         }
         $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
     });
+
     $('.selectTags').change(function(){
-        var desc;
-        for(var i=0; i<arrParamName.length; i++) {
-            if(arrParamName[i] === $(this).val()) {
+        var desc = " ";
+        for(var i=0; i<arrParamCodes.length; i++) {
+            if(arrParamCodes[i] === $(this).val()) {
                 desc = arrParamDescriptions[i];
-                console.log(desc);
             }
         }
         $(this).parent().siblings().children('textarea').val(desc);
