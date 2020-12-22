@@ -29,7 +29,7 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/showRepaymentPolicy">Repayment Policy</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/eligibilityPolicy/">Eligibility Policy</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/chargePolicy/searchScreen">Charge Policy</a>
                     </div>
                 </li>
 
@@ -39,6 +39,12 @@
                     </a>
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/eligibilityparameter">Eligibility Parameter</a>
+                        <sec:authorize access = "hasRole('MAKER')">
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge Maker</a>
+                        </sec:authorize>
+                        <sec:authorize access = "hasRole('CHECKER')">
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/checkerList">Charge Checker</a>
+                        </sec:authorize>
                     </div>
                 </li>
 
@@ -63,7 +69,6 @@
 
                 <%--<li class="nav-item mx-2">
                     <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
-
                 </li>--%>
 
                 <li class="nav-item dropdown dmenu mx-2">
@@ -71,7 +76,7 @@
                         Accounting
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">New Payment</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
                         <a class="dropdown-item" href="#">Link 2</a>
                         <a class="dropdown-item" href="#">Link 3</a>
                     </div>
@@ -98,7 +103,7 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport"">Temp Add Loan</a>
                     </div>
                 </li>
                 <li class="nav-item mx-2">
