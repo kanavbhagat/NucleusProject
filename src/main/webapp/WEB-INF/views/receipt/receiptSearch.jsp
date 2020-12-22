@@ -111,7 +111,7 @@
         <div class="row" style="margin-bottom:20px">
             <div class="col-sm-3 offset-sm-10">
                 <button type="submit" onclick="return checkEmpty()" id="save" class="btn btn-primary">Search</button>
-                <button type="button" id="clear" class="btn btn-primary">Clear</button>
+                <button type="reset" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
