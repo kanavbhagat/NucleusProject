@@ -69,16 +69,16 @@ public class AppConfig {
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 
         // Jigme's Oracle db credentials
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-//        ds.setUsername("nsbt");
-//        ds.setPassword("qwerty");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        ds.setUsername("nsbt");
+        ds.setPassword("qwerty");
 
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
 //
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("sys as sysdba");
-        ds.setPassword("gyanesh10");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("gyanesh10");
 
 //         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
 //         ds.setUsername("c##username");
@@ -93,9 +93,9 @@ public class AppConfig {
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
-//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//         ds.setUsername("megha");
-//         ds.setPassword("megha");
+         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+         ds.setUsername("megha");
+         ds.setPassword("megha");
         return ds;
 
     }
