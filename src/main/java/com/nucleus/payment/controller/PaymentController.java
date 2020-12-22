@@ -78,6 +78,22 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/showPayment/{loanID}")
+    public ModelAndView showPaymentForSuggestion(@PathVariable(value = "loanID") int loanID){
+        ModelAndView modelAndView = new ModelAndView("views/payment/approveRejectPayment");
+        modelAndView.addObject("approveRejectThisPayment", paymentService.getPaymentByLoanID(loanID));
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/approveRejectPayment/{loanID}")
+    public ModelAndView submitApproveRejectPaymentRequest(@PathVariable(value = "loanID") int loanID,
+                                                          @RequestParam("suggestion") String suggestion){
+        System.out.println("submitApproveRejectPaymentRequest"+loanID+getModifiedBy()+suggestion);
+        paymentService.approveRejectPayment(loanID, suggestion, getModifiedBy());
+        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/editPayment/{loanID}")
     public ModelAndView editPayment(@PathVariable(value = "loanID") int loanID){
         ModelAndView modelAndView = new ModelAndView("views/payment/editPayment");
