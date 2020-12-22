@@ -1,7 +1,5 @@
 package com.nucleus.receipt.aspect;
 
-
-
 import com.nucleus.receipt.model.Receipt;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -10,9 +8,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-
-
 
 @Component
 @Aspect
