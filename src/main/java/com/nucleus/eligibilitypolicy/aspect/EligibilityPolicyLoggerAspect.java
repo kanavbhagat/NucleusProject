@@ -49,7 +49,10 @@ public class EligibilityPolicyLoggerAspect {
     }
     @AfterReturning(pointcut = "getAllPolicies()", returning = "allPolicies")
     public void afterGettingAllPolicies(JoinPoint joinPoint, List<EligibilityPolicy> allPolicies) {
-        int length = allPolicies.size();
+        int length = 0;
+        if(allPolicies!=null) {
+            length = allPolicies.size();
+        }
         logger.info(length + " Eligibility Policies Fetched!");
     }
 
