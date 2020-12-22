@@ -67,14 +67,24 @@
             <c:if test="${!empty products}">
             <c:forEach var="product" items="${products}">
                  <tr>
-                  <td>${product.productCode}</td>
+                 <sec:authorize access="hasRole('CHECKER')">
+                    <td><a href="<%= request.getContextPath()%>/product/${product.productCode}">${product.productCode}</a></td>
+                 </sec:authorize>
+                 <sec:authorize access="hasRole('MAKER')">
+                    <td>${product.productCode}</td>
+                 </sec:authorize>
                   <td>${product.productName}</td>
                   <td>${product.productDescription}</td>
                   <td>${product.productType}</td>
                   <td>${product.status}</td>
                   <td>${product.createdBy}</td>
                   <td>${product.authorizedBy}</td>
-                  <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                  <sec:authorize access="hasRole('CHECKER')">
+                    <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
+                  </sec:authorize>
+                  <sec:authorize access="hasRole('MAKER')">
+                    <td><a href="<%= request.getContextPath()%>/product/${product.productCode}/edit">Edit</a> | <a href="<%= request.getContextPath()%>/product/${product.productCode}/delete">Delete</a></td>
+                  </sec:authorize>
                  </tr>
                 </c:forEach>
             </c:if>

@@ -6,7 +6,6 @@ import jdk.vm.ci.meta.Local;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -50,6 +49,39 @@ public class Payment {
 
     @Column(name = "payment_channel", length = 30)
     private String paymentChannel;
+
+    @Column(name = "reviewed_by", length = 20)
+    private String reviewedBy;
+
+    @Column(name = "payment_status", length = 10)
+    private String paymentStatus;
+
+    @Column(name = "made_by", length = 20)
+    private String madeBy;
+
+    public String getMadeBy() {
+        return madeBy;
+    }
+
+    public void setMadeBy(String madeBy) {
+        this.madeBy = madeBy;
+    }
+
+    public String getReviewedBy() {
+        return reviewedBy;
+    }
+
+    public void setReviewedBy(String reviewedBy) {
+        this.reviewedBy = reviewedBy;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public int getLoanApplicationNumber() {
         return loanApplicationNumber;

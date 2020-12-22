@@ -3,7 +3,7 @@
 
 <html>
 <body>
-    <h1> New Product Creation ${message} </h1>
+    <h1>${message}</h1>
     <h3> Click <a href="<%= request.getContextPath()%>/product"> here </a> to go back
 </body>
 </html>

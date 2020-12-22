@@ -3,23 +3,162 @@ package com.nucleus.charge.controllers;
 import com.nucleus.charge.model.NewCharge;
 import com.nucleus.charge.service.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller("/charges")
+@Controller
+@RequestMapping("/charges")
 public class ChargeDisplayController {
 
     @Autowired
     ChargeService chargeService;
 
-    @GetMapping
+    @GetMapping("/makerList")
+    @PreAuthorize("hasRole('MAKER')")
     public String chargeDisplay(ModelMap model) {
         List<NewCharge> chargeList = chargeService.getChargeList();
         model.put("chargeList",chargeList);
         return "views/charge/chargeScreen";
+    }
+
+    @GetMapping("/checkerList")
+    @PreAuthorize("hasRole('CHECKER')")
+    public String pendingChargeDisplay(ModelMap model) {
+        List<NewCharge> chargeList = chargeService.getPendingChargeList();
+        model.put("chargeList",chargeList);
+        return "views/charge/chargeScreen";
+
+    }
+
+    @GetMapping("/newChargeCreation")
+    @PreAuthorize("hasRole('MAKER')")
+    public String showForm(ModelMap model) {
+        NewCharge charge = new NewCharge();
+        model.put("newChargeData", charge);
+        return ("views/charge/chargeDefinition");
+    }
+
+    @PostMapping("/newChargeCreation")
+    @PreAuthorize("hasRole('MAKER')")
+    public String onSubmit(@RequestParam("action") String action,
+                           @Valid @ModelAttribute("newChargeData") NewCharge charge,
+                           BindingResult result,
+                           Model model) {
+        if(result.hasErrors()) {
+            return "views/charge/chargeDefinition";
+        }
+        else {
+            String status = null;
+            if(action.equalsIgnoreCase("save")) {
+                status = "Inactive";
+            }
+            else if(action.equalsIgnoreCase("save & request approval")) {
+                status = "Pending";
+            }
+            boolean b = chargeService.insertCharge(charge, status);
+            if(b) {
+                return "redirect:../charges/makerList";
+            }
+            else {
+                model.addAttribute("msg","Failed to create charge. Try again.");
+                return "views/charge/chargeDefinition";
+            }
+        }
+    }
+
+
+    @GetMapping("{chargeCode}")
+    @PreAuthorize("hasRole('CHECKER')")
+    public String getSpecifiedCharge(@PathVariable("chargeCode") String chargeCode,
+                                     ModelMap model)
+    {
+        NewCharge charge = chargeService.getOneCharge(chargeCode);
+        model.put("newChargeData", charge);
+        return "views/charge/chargeDefinition";
+    }
+
+    @PostMapping("{chargeCode}")
+    @PreAuthorize("hasRole('CHECKER')")
+    public String chargeChecker(@PathVariable("chargeCode") String chargeCode,
+                                @RequestParam("action") String action) {
+        String status = null;
+        if(action.equalsIgnoreCase("approve")) {
+            status = "Approved";
+        }else if(action.equalsIgnoreCase("reject")) {
+            status = "Rejected";
+        }
+        chargeService.updateStatus(chargeCode, status);
+        return "redirect:/charges/checkerList";
+    }
+
+    @RequestMapping(value = {"/delete/{chargeCode}"})
+    @PreAuthorize("hasRole('MAKER')")
+    public String deleteCharge(@PathVariable("chargeCode") String chargeCode, Model model) {
+        boolean deleteStatus = chargeService.deleteCharge(chargeCode);
+        model.addAttribute("deleteStatus", deleteStatus);
+        return "redirect:/charges/makerList";
+    }
+
+    @PreAuthorize("hasRole('MAKER')")
+    @RequestMapping(value = {"/edit/{chargeCode}"})
+    public String getEditPolicyPage(@PathVariable("chargeCode") String chargeCode, Model model) {
+        System.out.println("In edit controller");
+        NewCharge charge = chargeService.getOneCharge(chargeCode);
+        model.addAttribute("charge", charge);
+        return "views/charge/editOneCharge";
+    }
+
+    @PreAuthorize("hasRole('MAKER')")
+    @PostMapping(value = {"edit/addEdited"})
+    public String addEditedCharge(@RequestParam("action")String action,
+
+                                  @ModelAttribute("charge") NewCharge charge,
+                                  Model model) {
+
+        System.out.println("In Addedit controller");
+        if(action.equalsIgnoreCase("save")) {
+            charge.setStatus("INACTIVE");
+        } else if (action.equalsIgnoreCase("save & request approval")) {
+            charge.setStatus("PENDING");
+        }
+
+        boolean editStatus = chargeService.updateCharge(charge);
+        model.addAttribute("editStatus", editStatus);
+        return "redirect:/charges/makerList";
+    }
+
+    @ModelAttribute("eventList")
+    public List<String> populateEventList() {
+        List<String> eventList = new ArrayList<>();
+        eventList.add("Processing Fees");
+        eventList.add("Repayment Reschedule Fees");
+        eventList.add("Part Prepayment Fees");
+        return eventList;
+    }
+
+    @ModelAttribute("chargeTypeList")
+    public List<String> populateChargeTypeList() {
+        List<String> chargeTypeList = new ArrayList<>();
+        chargeTypeList.add("Amount Based");
+        return chargeTypeList;
+    }
+
+    @ModelAttribute("paymentTypeList")
+    public List<String> populatePaymentType() {
+        List<String> paymentTypeList = new ArrayList<>();
+        paymentTypeList.add("Receivable");
+        paymentTypeList.add("Payable");
+        paymentTypeList.add("Both");
+        return paymentTypeList;
     }
 
 }

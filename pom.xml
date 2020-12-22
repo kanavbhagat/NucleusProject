@@ -187,6 +187,13 @@
             <version>1.0.1</version>
         </dependency>
 
+        <!--Logging with Logback-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
     </dependencies>
 
 

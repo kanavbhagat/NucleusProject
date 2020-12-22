@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html lang="en" dir="ltr">
 <head>
@@ -77,8 +76,8 @@
 
 </div>
 
+
 <!-- Form Container -->
-<sec:authorize access="hasRole('MAKER')">
         <div class="container-fluid">
             <form:form modelAttribute="product" method="post" action="newProduct">
                 <div class="row">
@@ -182,8 +181,10 @@
                 <hr width="" color="#b3b3b3">
                 <div class="row" style="margin-bottom:20px">
                     <div class="col-sm-3 offset-sm-9">
-                        <button type="submit" class="btn btn-primary" id="save">Save</button>
-                        <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Saved">Save</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Saved and Approval Requested">
+                            Save & Request Approval
+                        </button>
                     </div>
                 </div>
             </form:form>
@@ -240,113 +241,6 @@
                     </c:if>
             </tbody>
         </table>
-    </sec:authorize>
-
-    <sec:authorize access="hasRole('CHECKER')">
-    <div class="container-fluid">
-        <form>
-            <div class="row">
-                <div class="col-sm-3">
-
-                    <div class="form-group">
-                        <label class="font-weight-bold required-field">Product Code:</label>
-                        <input class="form-control" disabled="disabled" value="${product.productCode}"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="font-weight-bold">Product Description:</label>
-                        <textarea rows="3" disabled="disabled" class="form-control">
-                        ${product.productDescription}
-                        </textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="font-weight-bold">Maximum Exposure Amount:</label>
-                        <input type="number" disabled="disabled" value="${product.maxExposureAmount}" class="form-control"/>
-                    </div>
-
-                </div>
-                <div class="col-sm-3 offset-sm-4">
-
-                    <div class="form-group">
-                        <label class="font-weight-bold required-field">Product Name:</label>
-                        <input class="form-control" disabled="disabled" value="${product.productName}"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="font-weight-bold required-field">Product Type:</label>
-                        <select class="form-control">
-                            <option value="-"  disabled="disabled" selected="true" label="${product.productType}"/>
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-
-            <hr width="" color="#b3b3b3">
-            <div class="row pt-3 pl-3 flex-column">
-                <h2 class="  display-3" style="font-size: 30px">
-                    <b> Policies </b>
-                </h2>
-            </div>
-            <div class="row col-sm-8">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col">Policy</th>
-                        <th scope="col">Policy Name</th>
-                        <th scope="col">Policy Description</th>
-                    </tr>
-                    </thead>
-
-                    <tr>
-                        <td>
-                            <label class="required-field">Repayment Policy</label>
-                        </td>
-                        <td>
-                            <select class="form-control">
-                                <option value="-"  disabled="disabled" selected label="${product.repaymentPolicyCode}"/>
-                            </select>
-                        </td>
-                        <td><input class="form-control" id="repaymentDesc" type="text" disabled></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="required-field">Eligibility Policy</label>
-                            <br>
-                        </td>
-                        <td>
-                            <select class="form-control">
-                                <option value="-"  disabled="disabled" selected label="Choose a Policy"/>
-                            <select>
-                        </td>
-                        <td><input class="form-control" id="eligibilityDesc" type="text" disabled></td>
-                    </tr>
-                    <tr>
-                        <td>Charge Policy</td>
-                        <td>
-                            <select cssClass="form-control">
-                                <option value="-"  disabled="disabled" selected label="Choose a Policy"/>
-                            </select>
-                        </td>
-                        <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
-                    </tr>
-
-                </table>
-            </div>
-            <hr width="" color="#b3b3b3">
-            <div class="row" style="margin-bottom:20px">
-                <div class="col-sm-3 offset-sm-9">
-                    <button type="submit" class="btn btn-primary" id="save">Save</button>
-                    <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    </sec:authorize>
-
-
-
 </div>
 </body>
 </html>
