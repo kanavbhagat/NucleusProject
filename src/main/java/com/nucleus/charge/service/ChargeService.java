@@ -10,5 +10,6 @@ public interface ChargeService {
     boolean deleteCharge(String chargeCode);
     NewCharge getOneCharge(String chargeCode);
     void updateStatus(String chargeCode,String status);
+    boolean updateCharge(NewCharge charge);
 
 }
