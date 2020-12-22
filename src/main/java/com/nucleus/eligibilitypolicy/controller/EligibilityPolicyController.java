@@ -5,6 +5,9 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +51,16 @@ public class EligibilityPolicyController {
     @GetMapping(value = {"/new"})
     public ModelAndView newEligibilityPolicy() {
         ModelAndView modelAndView = new ModelAndView();
+
+        //Authorization check: Allow only maker!
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getAuthorities().stream()
+                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
+            modelAndView.addObject("user", getPrincipal());
+            modelAndView.setViewName("views/login/accessDenied");
+            return modelAndView;
+        }
+
         EligibilityPolicy eligibilityPolicy = new EligibilityPolicy();
         List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
@@ -80,6 +93,9 @@ public class EligibilityPolicyController {
         //Setting "createdDate" field:
         eligibilityPolicy.setCreateDate(LocalDate.now());
 
+        //Setting "createdBy" field:
+        eligibilityPolicy.setCreatedBy(getPrincipal());
+
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
         if(parameterCountString != null) {
@@ -102,6 +118,16 @@ public class EligibilityPolicyController {
     @GetMapping(value = {"/get/{policyCode}"})
     public ModelAndView showOneEligibilityPolicy(@PathVariable("policyCode") String policyCode) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //Authorization check: Allow only checker!
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getAuthorities().stream()
+                .noneMatch(r -> r.getAuthority().equals("ROLE_CHECKER"))) {
+            modelAndView.addObject("user", getPrincipal());
+            modelAndView.setViewName("views/login/accessDenied");
+            return modelAndView;
+        }
+
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
         modelAndView.setViewName("views/eligibilitypolicies/viewOneEligibilityPolicy");
@@ -111,7 +137,8 @@ public class EligibilityPolicyController {
     //To update status {Approve, Reject} of already existing Eligibility Policy:
     @PostMapping(value = {"/get/updateStatus/{policyCode}"})
     public String updateStatus(@PathVariable("policyCode") String policyCode, @RequestParam("action")String action, Model model) {
-        boolean updateStatus = eligibilityPolicyService.updateStatus(policyCode, action);
+        String authorizedBy = getPrincipal();
+        boolean updateStatus = eligibilityPolicyService.updateStatus(policyCode, action, authorizedBy);
         model.addAttribute("updateStatus", updateStatus);
         return "redirect:/eligibilityPolicy/";
     }
@@ -119,6 +146,15 @@ public class EligibilityPolicyController {
     //To display editable details of existing Eligibility Policy:
     @GetMapping(value = {"/edit/{policyCode}"})
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
+
+        //Authorization check: Allow only maker!
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getAuthorities().stream()
+                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
+            model.addAttribute("user", getPrincipal());
+            return "views/login/accessDenied";
+        }
+
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         List<EligibilityParameter> existingParameterList = eligibilityPolicy.getEligibilityParameterList();
         List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getAll();
@@ -135,6 +171,7 @@ public class EligibilityPolicyController {
                                        @Valid @ModelAttribute("eligibilityPolicy") EligibilityPolicy eligibilityPolicy,
                                        BindingResult result,
                                        Model model) {
+
         //Annotation based data validation:
         if (result.hasErrors()) {
             List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
@@ -152,8 +189,11 @@ public class EligibilityPolicyController {
         } else if (action.equalsIgnoreCase("save & request approval")) {
             eligibilityPolicy.setStatus("PENDING");
         }
-        //Setting "createdDate" field:
+        //Setting "modifiedDate" field:
         eligibilityPolicy.setModifiedDate(LocalDate.now());
+
+        //Setting "modifiededBy" field:
+        eligibilityPolicy.setModifiedBy(getPrincipal());
 
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
@@ -176,8 +216,29 @@ public class EligibilityPolicyController {
     //To delete an existing Eligibility Policy from database:
     @GetMapping(value = {"/delete/{policyCode}"})
     public String deletePolicy(@PathVariable("policyCode") String policyCode, Model model) {
+
+        //Authorization check: Allow only maker!
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getAuthorities().stream()
+                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
+            model.addAttribute("user", getPrincipal());
+            return "views/login/accessDenied";
+        }
+
         boolean deleteStatus = eligibilityPolicyService.deleteEligibilityPolicy(policyCode);
         model.addAttribute("deleteStatus", deleteStatus);
         return "redirect:/eligibilityPolicy/";
+    }
+
+    //Method to get username:
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 }

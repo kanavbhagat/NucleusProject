@@ -15,6 +15,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Get an object of Session class:
     private Session getSession(){
         Session session;
         try {
@@ -25,6 +26,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return session;
     }
 
+    //To get a list of all Eligibility Policies:
     @Override
     public List<EligibilityPolicy> getAllEligibilityPolicies() {
         List<EligibilityPolicy> eligibilityPolicyList;
@@ -43,6 +45,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
 
     }
 
+    //To add a new Eligibility Policy to database:
     @Override
     public boolean insertEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean insertStatus;
@@ -60,6 +63,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return insertStatus;
     }
 
+    //To retrieve one Eligibility Policy by Policy Code:
     @Override
     public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
         EligibilityPolicy eligibilityPolicy;
@@ -78,7 +82,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return eligibilityPolicy;
     }
 
-
+    //To update an existing Eligibility Policy:
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean updateStatus;
@@ -88,6 +92,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.update(eligibilityPolicy);
             session.getTransaction().commit();
             updateStatus = true;
+            session.close();
         } catch (Exception exception) {
             updateStatus = false;
             exception.printStackTrace();
@@ -95,6 +100,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return updateStatus;
     }
 
+    //To delete an existing Eligibility Policy:
     @Override
     public boolean deleteEligibilityPolicy(String policyCode) {
         boolean deleteStatus;
