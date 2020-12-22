@@ -85,8 +85,8 @@ public class NewProductController {
     @GetMapping(value = "/product/{productId}/edit")
     public ModelAndView editProduct(@PathVariable(value = "productId") String productId){
         ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/editProduct"));
-        modelAndView.addObject("product", new Product());
-        modelAndView.addObject("product1", productService.getProductById(productId));
+//        modelAndView.addObject("product", new Product());
+        modelAndView.addObject("product", productService.getProductById(productId));
         return modelAndView;
     }
 
