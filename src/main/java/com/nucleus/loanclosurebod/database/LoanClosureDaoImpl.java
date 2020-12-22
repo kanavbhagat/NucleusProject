@@ -37,43 +37,21 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     }
 
     /**
-     * This method retrieves the list of all the loan applications
-     * from the database.
-     * @return list of type LoanApplication containing all the Loan Applications.
-     */
-    @Override
-    public List<LoanApplications> getLoanApplications(){
-        List<LoanApplications> list = new ArrayList<>();
-        /* Retrieving all the loan applications from the database
-          in the list. */
-        try{
-            Session session = getSession();
-            session.beginTransaction();
-            Query<LoanApplications> query = session.createQuery("FROM  LoanApplication", LoanApplications.class);
-            list = query.getResultList();
-            session.getTransaction().commit();
-        }catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return list;
-    }
-
-    /**
      * This method retrieves the list of all entries of Repayment Schedule
      * for a particular Loan Application from the database.
-     * @param loanApplication
+     * @param loanApplicationNumber
      * @return list of all entries of Repayment Schedule
      */
     @Override
-    public List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication){
+    public List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber){
         List<RepaymentSchedule> list = new ArrayList<>();
         /* Retrieving all the entries of Repayment Schedule for given Loan Application
            in the list. */
         try{
             Session session = getSession();
             session.beginTransaction();
-            Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplication=?1", RepaymentSchedule.class);
-            query.setParameter(1, loanApplication);
+            Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplicationNumber=?1", RepaymentSchedule.class);
+            query.setParameter(1, loanApplicationNumber);
             list = query.getResultList();
             session.getTransaction().commit();
         }catch (Exception exception){

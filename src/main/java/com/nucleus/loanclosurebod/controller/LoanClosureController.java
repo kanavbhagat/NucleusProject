@@ -4,6 +4,7 @@ import com.nucleus.loanclosurebod.service.LoanClosureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * The LoanClosureController class starts the Loan Closure BOD process
@@ -33,7 +34,11 @@ public class LoanClosureController {
      * declared above.
      */
     @RequestMapping("/loanClosureBod")
-    public void loanClosureBod(){
-        loanClosureService.loanClosureBod();
+    public ModelAndView loanClosureBod(){
+        int closedLoans = loanClosureService.loanClosureBod();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("ClosedLoans", closedLoans);
+        modelAndView.setViewName("views/loanclosurebod/viewClosedLoanCount");
+        return modelAndView;
     }
 }

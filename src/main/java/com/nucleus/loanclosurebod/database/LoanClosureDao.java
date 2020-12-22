@@ -10,9 +10,7 @@ import java.util.List;
  */
 public interface LoanClosureDao {
 
-    List<LoanApplications> getLoanApplications();
-
-    List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication);
+    List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber);
 
     boolean updateStatus(LoanApplications loanApplication, String newStatus);
 

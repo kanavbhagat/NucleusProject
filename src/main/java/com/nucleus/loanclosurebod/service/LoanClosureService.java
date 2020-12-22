@@ -6,6 +6,6 @@ package com.nucleus.loanclosurebod.service;
  */
 public interface LoanClosureService {
 
-    void loanClosureBod();
+    int loanClosureBod();
 
 }
