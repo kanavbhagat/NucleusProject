@@ -66,6 +66,4 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         this.chargePolicyDao.deleteChargePolicy(chargePolicyCode);
     }
 
-
-
 }

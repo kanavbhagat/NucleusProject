@@ -42,6 +42,25 @@ public class PaymentDAOImpl implements PaymentDAO{
         return insertStatus;
     }
 
+    public boolean updateStatus(int loanID, String suggestion, String user){
+        boolean updateStatusValue = false;
+        try{
+            Payment payment = getPaymentById(loanID);
+            payment.setPaymentStatus(suggestion);
+            payment.setReviewedBy(user);
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(payment);
+            session.getTransaction().commit();
+            updateStatusValue = true;
+            session.close();
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+        }
+        return updateStatusValue;
+    }
+
 
     public void updatePayment(Payment payment){
         try {
