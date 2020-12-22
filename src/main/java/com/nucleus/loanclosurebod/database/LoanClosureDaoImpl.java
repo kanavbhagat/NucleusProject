@@ -95,7 +95,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         loanApplication.setStatus("Active");
         loanApplication.setModifiedDate(LocalDate.of(2020, 9, 10));
         loanApplication.setModifiedBy("Kirtika");
-        loanApplication.setRate(20);
+        loanApplication.setRate(20.0);
         loanApplication.setTenure(5);
 
         session.save(loanApplication);
