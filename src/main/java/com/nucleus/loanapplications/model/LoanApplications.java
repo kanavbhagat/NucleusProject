@@ -27,8 +27,10 @@ public class LoanApplications {
         this.customerCode = customerCode;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
+
+    //set it to false optional and nullable
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = true)
     private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)

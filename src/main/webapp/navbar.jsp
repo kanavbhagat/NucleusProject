@@ -48,9 +48,6 @@
                     <a class="nav-link" href="<%=request.getContextPath() %>/loanApplication">Application</a>
                 </li>
 
-                <li class="nav-item mx-2">
-                   <a class="nav-link" href="<%=request.getContextPath() %>/newCustomer">Register Customer</a>
-                 </li>
 
 
                 <li class="nav-item mx-2">
