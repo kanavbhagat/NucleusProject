@@ -10,6 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * This class acts as a Database layer for all
+ * Eligibility Policy related operations.
+ *
+ */
 @Repository
 public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Autowired
