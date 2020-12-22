@@ -36,7 +36,7 @@ public class NewCustomerController {
 
         ModelAndView modelAndView=new ModelAndView("views/customerInfo/customerInfo");
 
-        ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");
+       /* ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");*/
 
         modelAndView.addObject("customer", new Customer());
         modelAndView.addObject("address",new Address());
