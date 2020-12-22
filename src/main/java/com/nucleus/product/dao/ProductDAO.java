@@ -68,4 +68,35 @@ public class ProductDAO implements ProductDAOInterface {
             }
         }
     }
+
+    public Product updateProduct(Product product){
+        try(Session session = getSession()){
+            session.beginTransaction();
+            try {
+                session.update(product);
+                session.getTransaction().commit();
+                return product;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return null;
+            }
+        }
+    }
+
+    public Boolean deleteProduct(String productId){
+        try(Session session = getSession()){
+            session.beginTransaction();
+            try {
+                Product product = session.get(Product.class, productId);
+                session.delete(product);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
+        }
+    }
 }

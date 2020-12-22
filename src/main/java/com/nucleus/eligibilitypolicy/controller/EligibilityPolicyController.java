@@ -5,7 +5,7 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -48,19 +48,10 @@ public class EligibilityPolicyController {
     }
 
     //To display the form for adding a new Eligibility Policy:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/new"})
     public ModelAndView newEligibilityPolicy() {
         ModelAndView modelAndView = new ModelAndView();
-
-        //Authorization check: Allow only maker!
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getAuthorities().stream()
-                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
-            modelAndView.addObject("user", getPrincipal());
-            modelAndView.setViewName("views/login/accessDenied");
-            return modelAndView;
-        }
-
         EligibilityPolicy eligibilityPolicy = new EligibilityPolicy();
         List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
@@ -115,19 +106,10 @@ public class EligibilityPolicyController {
     }
 
     //To display details of one Eligibility Policy based on user's selection of hyperlink of code:
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = {"/get/{policyCode}"})
     public ModelAndView showOneEligibilityPolicy(@PathVariable("policyCode") String policyCode) {
         ModelAndView modelAndView = new ModelAndView();
-
-        //Authorization check: Allow only checker!
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getAuthorities().stream()
-                .noneMatch(r -> r.getAuthority().equals("ROLE_CHECKER"))) {
-            modelAndView.addObject("user", getPrincipal());
-            modelAndView.setViewName("views/login/accessDenied");
-            return modelAndView;
-        }
-
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
         modelAndView.setViewName("views/eligibilitypolicies/viewOneEligibilityPolicy");
@@ -144,17 +126,9 @@ public class EligibilityPolicyController {
     }
 
     //To display editable details of existing Eligibility Policy:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/edit/{policyCode}"})
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
-
-        //Authorization check: Allow only maker!
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getAuthorities().stream()
-                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
-            model.addAttribute("user", getPrincipal());
-            return "views/login/accessDenied";
-        }
-
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         List<EligibilityParameter> existingParameterList = eligibilityPolicy.getEligibilityParameterList();
         List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getAll();
@@ -214,17 +188,9 @@ public class EligibilityPolicyController {
     }
 
     //To delete an existing Eligibility Policy from database:
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/delete/{policyCode}"})
     public String deletePolicy(@PathVariable("policyCode") String policyCode, Model model) {
-
-        //Authorization check: Allow only maker!
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getAuthorities().stream()
-                .noneMatch(r -> r.getAuthority().equals("ROLE_MAKER"))) {
-            model.addAttribute("user", getPrincipal());
-            return "views/login/accessDenied";
-        }
-
         boolean deleteStatus = eligibilityPolicyService.deleteEligibilityPolicy(policyCode);
         model.addAttribute("deleteStatus", deleteStatus);
         return "redirect:/eligibilityPolicy/";

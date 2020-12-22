@@ -60,9 +60,14 @@
         		        <tr>
         		            <td>
         		            <security:authorize access="hasRole('CHECKER')">
-        		            <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		            <c:if test = "${eligibilityPolicy.status ne 'INACTIVE'}">
+        		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		                    ${eligibilityPolicy.policyCode}
+        		                </a>
+        		            </c:if>
+        		            <c:if test = "${eligibilityPolicy.status == 'INACTIVE'}">
         		                ${eligibilityPolicy.policyCode}
-        		            </a>
+        		            </c:if>
         		            </security:authorize>
         		            <security:authorize access="hasRole('MAKER')">
         		                ${eligibilityPolicy.policyCode}
