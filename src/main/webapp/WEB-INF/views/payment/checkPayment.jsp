@@ -87,7 +87,7 @@
                         <td>Reviewed By</td>
                         <sec:authorize access="hasRole('MAKER')">
                             <td>
-                                <a href="#">Edit</a>
+                                <a href="<%=request.getContextPath()%>/payment/editPayment/${singlePayment.loanApplicationNumber}">Edit</a>
                                 |
                                 <a href="<%=request.getContextPath()%>/payment/deletePayment/${singlePayment.loanApplicationNumber}">Delete</a>
                             </td>

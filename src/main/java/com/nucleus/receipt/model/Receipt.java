@@ -93,14 +93,9 @@ public class Receipt {
     @Min(value = 0, message = "Loan Application Number must be positive")
     private String loanApplicationValue;
 
-    public String getLoanApplicationValue(){
-        return loanApplicationValue;
-    }
 
-    public void setLoanApplicationValue(String loanApplicationValue) {
-        this.loanApplicationValue = loanApplicationValue;
-    }
-
+    @Column(name="receipt_status")
+    private String receiptStatus;
 
 
     public Receipt() {
@@ -234,5 +229,20 @@ public class Receipt {
         this.authorizedBy = authorizedBy;
     }
 
+    public String getReceiptStatus() {
+        return receiptStatus;
+    }
+
+    public void setReceiptStatus(String receiptStatus) {
+        this.receiptStatus = receiptStatus;
+    }
+
+    public String getLoanApplicationValue(){
+        return loanApplicationValue;
+    }
+
+    public void setLoanApplicationValue(String loanApplicationValue) {
+        this.loanApplicationValue = loanApplicationValue;
+    }
 
 }

@@ -39,4 +39,11 @@ public class ProductService {
         return productDAO.getProductById(id);
     }
 
+    public Product updateProduct(Product product){
+        return productDAO.updateProduct(product);
+    }
+
+    public Boolean deleteProduct(String productId){
+        return productDAO.deleteProduct(productId);
+    }
 }

@@ -79,7 +79,7 @@
                   <td>${charge.authorizedBy}</td>
                   <security:authorize access = "hasRole('MAKER')">
                     <td>
-                        <a href="#">Edit</a>
+                        <a href="<%= request.getContextPath()%>/charges/edit/${charge.chargeCode}">Edit</a>
                         |
                         <a href="<%= request.getContextPath()%>/charges/delete/${charge.chargeCode}">Delete</a>
                         </td>
