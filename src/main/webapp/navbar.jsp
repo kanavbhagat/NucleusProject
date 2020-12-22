@@ -38,8 +38,7 @@
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getmaker">Eligibility Parameter Maker</a>
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getchecker">Eligibility Parameter Checker</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/eligibilityparameter">Eligibility Parameter</a>
                         <sec:authorize access = "hasRole('MAKER')">
                             <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge Maker</a>
                         </sec:authorize>
@@ -70,7 +69,6 @@
 
                 <%--<li class="nav-item mx-2">
                     <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
-
                 </li>--%>
 
                 <li class="nav-item dropdown dmenu mx-2">
