@@ -78,6 +78,12 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/editPayment/{loanID}")
+    public ModelAndView editPayment(@PathVariable(value = "loanID") int loanID){
+        ModelAndView modelAndView = new ModelAndView("views/payment/editPayment");
+        modelAndView.addObject("editThisPayment", paymentService.getPaymentByLoanID(loanID));
+        return modelAndView;
+    }
 
     private String getModifiedBy(){
         String user = null;
