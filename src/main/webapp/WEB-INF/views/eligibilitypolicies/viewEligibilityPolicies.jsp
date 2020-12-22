@@ -3,6 +3,7 @@
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
    <%@ include file = "/navbar.jsp"%>
+   <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,10 +29,11 @@
         	<h2 class="display-3" style="font-size: 30px">
         		<b>Eligibility Policies</b>
         	</h2>
-
+            <security:authorize access="hasRole('MAKER')">
         	<div class=" px-4 mt-0 align-self-end ">
        			<a class="btn btn-primary" href="<%= request.getContextPath()%>/eligibilityPolicy/new">New Eligibility Policy</a>
        		</div>
+       		</security:authorize>
         </div>
 
         <hr width="" color="#b3b3b3">
@@ -57,16 +59,39 @@
         		         <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
         		        <tr>
         		            <td>
-        		            <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		            <security:authorize access="hasRole('CHECKER')">
+        		            <c:if test = "${eligibilityPolicy.status ne 'INACTIVE'}">
+        		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		                    ${eligibilityPolicy.policyCode}
+        		                </a>
+        		            </c:if>
+        		            <c:if test = "${eligibilityPolicy.status == 'INACTIVE'}">
         		                ${eligibilityPolicy.policyCode}
-        		            </a>
+        		            </c:if>
+        		            </security:authorize>
+        		            <security:authorize access="hasRole('MAKER')">
+        		                ${eligibilityPolicy.policyCode}
+        		            </security:authorize>
+        		            <security:authorize access="isAnonymous()">
+          		                ${eligibilityPolicy.policyCode}
+                            </security:authorize>
         		            </td>
         		            <td>${eligibilityPolicy.policyName}</td>
         		            <td>${eligibilityPolicy.policyDescription}</td>
         		            <td>${eligibilityPolicy.createdBy}</td>
         		            <td>${eligibilityPolicy.status}</td>
                             <td>${eligibilityPolicy.authorizedBy}</td>
-       		                <td><a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
+       		                <td>
+       		                <security:authorize access="hasRole('MAKER')">
+       		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a>
+       		                </security:authorize>
+       		                <security:authorize access="hasRole('CHECKER')">
+       		                Edit  |  Delete
+       		                </security:authorize>
+       		                <security:authorize access="isAnonymous()">
+       		                Edit  |  Delete
+       		                </security:authorize>
+       		                </td>
        		            </tr>
        		            </c:forEach>
        		        </tbody>

@@ -63,6 +63,7 @@
                         <th>repaymentPolicyCode</th>
                         <th>repaymentPolicyName</th>
                         <th>repaymentPolicyDescription</th>
+                        <th>Status</th>
                         <th>Created By</th>
                         <th>Reviewed By</th>
                         <th>Actions</th>
@@ -75,15 +76,22 @@
                     <c:url var="deleteUrl" value="/showRepaymentPolicy/delete?policyCode=${newRepaymentPolicy.policyCode}" />
                     <c:url var="checkUrl" value="/showRepaymentPolicy/check?policyCode=${newRepaymentPolicy.policyCode}" />
                     <tr>
+
                         <sec:authorize access="hasRole('MAKER')">
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
+                            <c:if test = "${newRepaymentPolicy.status ne 'Incomplete'}">
                                 <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
+                            </c:if>
+                            <c:if test = "${newRepaymentPolicy.status == 'Incomplete'}">
+                                <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
+                            </c:if>
                         </sec:authorize>
 
                         <td><c:out value="${newRepaymentPolicy.policyName}" /></td>
                         <td><c:out value="${newRepaymentPolicy.policyDescription}" /></td>
+                        <td><c:out value="${newRepaymentPolicy.status}" /></td>
                         <td><c:out value="${newRepaymentPolicy.createdBy}" /></td>
                         <td><c:out value="${newRepaymentPolicy.authorizedBy}" /></td>
                         <sec:authorize access="hasRole('MAKER')">

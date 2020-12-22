@@ -12,6 +12,7 @@ public class LoanApplications {
 
     @Id
     @Column(name = "loan_application_number")
+   /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
     @ManyToOne
@@ -37,7 +38,7 @@ public class LoanApplications {
     private Integer tenure;
 
     @Column(name = "rate",nullable = false)
-    private Integer rate;
+    private Double rate;
 
     @Column(name = "agreement_date",nullable = false)
     private LocalDate agreementDate;
@@ -94,11 +95,11 @@ public class LoanApplications {
         this.tenure = tenure;
     }
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
