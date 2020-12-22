@@ -10,6 +10,7 @@ import com.nucleus.product.service.ProductService;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class NewProductController {
 
     private List<String> productTypes;
 
-
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/newProduct" })
     public ModelAndView newProduct() {
         ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/newProductCreation"));
@@ -45,7 +46,7 @@ public class NewProductController {
         return modelAndView;
     }
 
-
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = {"/newProduct", "/product/{productId}/save"})
     public ModelAndView addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result,
                                    @PathVariable(value = "productId", required = false) String id,
@@ -81,7 +82,7 @@ public class NewProductController {
         return saveNewProduct(product, modelAndView, action);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/product/{productId}/edit")
     public ModelAndView editProduct(@PathVariable(value = "productId") String productId){
         ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/editProduct"));

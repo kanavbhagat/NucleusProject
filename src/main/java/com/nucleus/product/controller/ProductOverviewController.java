@@ -5,6 +5,7 @@ import com.nucleus.product.dao.ProductDAO;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +29,7 @@ public class ProductOverviewController {
         return modelAndView;
     }
 
-
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/product/{productId}")
     public ModelAndView productViewById(@PathVariable(value = "productId") String productId){
         Product product = productService.getProductById(productId);
@@ -37,7 +38,7 @@ public class ProductOverviewController {
         return modelAndView;
     }
 
-
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(value = "/product/{productId}/update")
     public ModelAndView updateProductStatus(@PathVariable(value = "productId") String productId, @RequestParam("action") String action){
         ModelAndView modelAndView = new ModelAndView("views/product/newProductSave");
@@ -58,7 +59,7 @@ public class ProductOverviewController {
 
     }
 
-
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/product/{productId}/delete")
     public ModelAndView deleteProduct(@PathVariable(value = "productId") String productId){
         ModelAndView modelAndView = new ModelAndView("views/product/newProductSave");
