@@ -70,7 +70,7 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch">Customer Service</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/customerServiceHome">Customer Service</a>
                 </li>
 
                 <li class="nav-item dropdown dmenu mx-2">
@@ -88,9 +88,9 @@
                         BOD
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="main/loanClosureBod">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport"">Temp Add Loan</a>
                     </div>
                 </li>
                 <li class="nav-item mx-2">
@@ -106,4 +106,3 @@
         </div>
     </nav>
     <!-- NavBar Ends -->
-
