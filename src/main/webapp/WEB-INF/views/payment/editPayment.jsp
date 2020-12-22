@@ -32,7 +32,7 @@
 <body>
 <div class="container-fluid">
     <jsp:include page="/navbar.jsp" />
-    <form:form method="Post" action="add" modelAttribute="editThisPayment">
+    <form:form method="Post" action="edit" modelAttribute="editThisPayment">
     <div class="row m-3">
         <h3>Edit Payment Cash</h3>
         <div class="offset-9">
@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Loan Application Number</label>
-                    <form:input cssClass="form-control" path="loanApplicationNumber"></form:input>
+                    <form:input cssClass="form-control" path="loanApplicationNumber" disabled="true"></form:input>
                     <form:errors path="loanApplicationNumber" cssClass="error"></form:errors>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Customer Code</label>
-                    <form:input path="customerCode" cssClass="form-control"></form:input>
+                    <form:input path="customerCode" cssClass="form-control" disabled="true"></form:input>
                     <from:errors path="customerCode" cssClass="error"></from:errors>
                 </div>
             </div>

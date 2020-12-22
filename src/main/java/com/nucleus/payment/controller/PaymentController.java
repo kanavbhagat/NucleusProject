@@ -85,8 +85,21 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/editPayment/edit")
+    public ModelAndView submitEditedPayment(@Valid @ModelAttribute("editThisPayment")Payment payment, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+        {
+            ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
+            return modelAndView;
+        }
+        System.out.println(payment.getCustomerCode());
+        paymentService.updatePayment(payment);
+        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        return modelAndView;
+    }
+
     private String getModifiedBy(){
-        String user = null;
+        String user;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             user = ((UserDetails)principal).getUsername();
