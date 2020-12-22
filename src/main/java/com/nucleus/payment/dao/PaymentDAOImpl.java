@@ -42,6 +42,50 @@ public class PaymentDAOImpl implements PaymentDAO{
         return insertStatus;
     }
 
+    public boolean updateStatus(int loanID, String suggestion, String user){
+        boolean updateStatusValue = false;
+        try{
+            Payment payment = getPaymentById(loanID);
+            payment.setPaymentStatus(suggestion);
+            payment.setReviewedBy(user);
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(payment);
+            session.getTransaction().commit();
+            updateStatusValue = true;
+            session.close();
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+        }
+        return updateStatusValue;
+    }
+
+
+    public void updatePayment(Payment payment){
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            System.out.println(payment.getCustomerCode());
+//            Payment existingPayment = session.load(Payment.class, payment.getLoanApplicationNumber());
+//            existingPayment.setLoanApplicationNumber(payment.getLoanApplicationNumber());
+//            existingPayment.setPaymentCode(payment.getPaymentCode());
+//            existingPayment.setPaymentAmount(payment.getPaymentAmount());
+//            existingPayment.setPaymentDate(payment.getPaymentDate());
+//            existingPayment.setPayoutBankAccount(payment.getPayoutBankAccount());
+//            existingPayment.setCustomerCode(payment.getCustomerCode());
+//            existingPayment.setRemarks(payment.getRemarks());
+//            existingPayment.setPaymentChannel(payment.getPaymentChannel());
+//            session.update(existingPayment);
+            session.update(payment);
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+        }
+    }
+
     public List<Payment> getPaymentsList(){
         List<Payment> paymentList;
         try {
@@ -83,8 +127,19 @@ public class PaymentDAOImpl implements PaymentDAO{
         return deleteStatus;
     }
 
-    public void updatePaymentEditor(String loanID, String user){
-        Session session = getSession();
-        Payment payment = session.get(Payment.class, loanID);
+    public void updateApprovedBy(int loanID, String user){
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Payment payment = session.get(Payment.class, loanID);
+            payment.setReviewedBy(user);
+            session.update(payment);
+            session.getTransaction().commit();
+            session.close();;
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+        }
     }
+
 }
