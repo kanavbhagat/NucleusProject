@@ -189,9 +189,8 @@ window.onload = function() {
 
             <hr>
             <div class="text-center">
-                <input class="btn-primary mr-3" type="submit" value="save" name="submit">
-                 <a href="<%= request.getContextPath()%>/newLoanApplication"><input class="btn-primary mr-3"type="button" value="next"></a>
-            </div>
+                <input class="btn-primary mr-3" type="submit" value="Next" name="submit">
+           </div>
         </spring:form>
     </article>
 </body>

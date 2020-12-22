@@ -10,6 +10,17 @@ import java.util.Set;
 @Table( name= "customer")
 public class Customer {
 
+    static int id = 101;
+    static String code;
+    public Customer(){
+        super();
+        code = "L"+id;
+        id++;
+        this.setCustomerCode(code);
+        add = new Address();
+    }
+
+
     @Id
     @Column(name="customer_code",length = 20,nullable = false)
     private String customerCode;
@@ -44,10 +55,6 @@ public class Customer {
     @Transient
     private Address add;
 
-    public Customer(){
-        super();
-        add = new Address();
-    }
 
     public List<Address> getAddresses() {
         return addresses;
