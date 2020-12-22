@@ -44,30 +44,36 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
     }
 
     @Override
-    public void insertParameter(EligibilityParameter eligibilityParameter) {
+    public String insertParameter(EligibilityParameter eligibilityParameter) {
 
+        String parameterCode=null;
         try {
             Session session = getSession();
             session.beginTransaction();
+            parameterCode=eligibilityParameter.getParameterCode();
             session.save(eligibilityParameter);
             session.getTransaction().commit();
             session.close();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return parameterCode;
     }
 
     @Override
-    public void insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter) {
+    public String insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter) {
+        String parameterCode=null;
         try {
             Session session = getSession();
             session.beginTransaction();
+            parameterCode=eligibilityParameter.getParameterCode();
             session.save(eligibilityParameter);
             session.getTransaction().commit();
             session.close();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return parameterCode;
 
     }
 
@@ -89,21 +95,19 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
     }
 
     @Override
-    public boolean deleteEligibilityParameter(String parameterCode) {
-        boolean deleteStatus;
+    public String deleteEligibilityParameter(String parameterCode) {
+
         EligibilityParameter eligibilityParameter = getOneEligibilityParameter(parameterCode);
         try {
             Session session = getSession();
             session.beginTransaction();
             session.delete(eligibilityParameter);
             session.getTransaction().commit();
-            deleteStatus = true;
             session.close();
         } catch (Exception exception) {
-            deleteStatus = false;
             exception.printStackTrace();
         }
-        return deleteStatus;
+        return parameterCode;
     }
 
     @Override
@@ -148,12 +152,14 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
 
     }
 
-    public boolean updateStatus(String parameterCode, String newStatus) {
+    public boolean updateStatus(String parameterCode, String newStatus,String authorizedBy) {
         boolean updateStatus;
         try {
             Session session = getSession();
             session.beginTransaction();
             EligibilityParameter eligibilityParameter = getOneEligibilityParameter(parameterCode);
+            eligibilityParameter.setAuthorizedBy(authorizedBy);
+            eligibilityParameter.setAuthorizedDate(LocalDate.now());
             eligibilityParameter.setStatus(newStatus);
             session.update(eligibilityParameter);
             session.getTransaction().commit();

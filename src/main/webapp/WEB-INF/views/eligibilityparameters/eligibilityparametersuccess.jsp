@@ -9,6 +9,6 @@
 </head>
 <body>
 <h1>Inserted Parameter Successfully</h1>
-<a href="<%= request.getContextPath()%>/main/getmaker">Back</a>
+<a href="<%= request.getContextPath()%>/main/eligibilityparameter">Back</a>
 </body>
 </html>
