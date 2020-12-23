@@ -1,4 +1,4 @@
-package com.nucleus.config;
+
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +57,9 @@ public class TestConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-        ds.setUsername("c##username");
-        ds.setPassword("pwd");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("megha");
+        ds.setPassword("megha");
 
         return ds;
 
