@@ -8,7 +8,7 @@ public interface RepaymentPolicyService {
 
     public List<RepaymentPolicy> getRepaymentPolicyList() ;
     public RepaymentPolicy getRepaymentPolicyById(String id) ;
-    public String addRepaymentPolicy(RepaymentPolicy repaymentPolicy) ;
+    public boolean addRepaymentPolicy(RepaymentPolicy repaymentPolicy);
     public void deleteRepaymentPolicy(String id);
     public void updateRepaymentPolicy(RepaymentPolicy repaymentPolicy);
     public void changeStatus(String policyCode, String status);

@@ -6,7 +6,6 @@ import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.model.Settlement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

@@ -28,6 +28,17 @@
 <div class="container-fluid">
 
     <jsp:include page="/navbar.jsp" />
+    <br>
+    <div class="row">
+            <div class="col-sm-10 col-12">
+                <h2 class="display-3" style="font-size: 30px">
+                    <strong>Customer Details</strong>
+                </h2>
+
+            </div>
+        </div>
+    <hr width="" color="#b3b3b3">
+</div>
 
 <div class="container-fluid">
     <div class="row px-3 flex-column">
@@ -64,53 +75,57 @@
             </c:if>
             </tbody>
         </table>
-        <br><br>
-        <table id="LoanApplicationsTable" class="table table-striped table-bordered display" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>Loan Application Number</th>
-                        <th>Customer Code</th>
-                        <th>Product Code</th>
-                        <th>Loan Amount Requested</th>
-                        <th>Tenure</th>
-                        <th>Rate</th>
-                        <th>Agreement Date</th>
-                        <th>Installment Due Date</th>
-                        <th>Create Date</th>
-                        <th>Created By</th>
-                        <th>Modified Date</th>
-                        <th>Modified By</th>
-                        <th>Authorized Date</th>
-                        <th>Authorized By</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:if test="${!empty loanApplications}">
-                    <c:forEach var="loan" items="${loanApplications}">
-                         <tr>
-                          <td>${loan.loanApplicationNumber}</td>
-                          <td>${loan.customer.customerCode}</td>
-                          <td>${loan.product.productCode}</td>
-                          <td>${loan.loanAmountRequested}</td>
-                          <td>${loan.tenure}</td>
-                          <td>${loan.rate}</td>
-                          <td>${loan.agreementDate}</td>
-                          <td>${loan.installmentDueDate}</td>
-                          <td>${loan.createDate}</td>
-                          <td>${loan.createdBy}</td>
-                          <td>${loan.modifiedDate}</td>
-                          <td>${loan.modifiedBy}</td>
-                          <td>${loan.authorizedDate}</td>
-                          <td>${loan.authorizedBy}</td>
-                          <td>${loan.status}</td>
-                           </tr>
-                        </c:forEach>
-                    </c:if>
-                    </tbody>
-                </table>
     </div>
+</div>
+<br>
+<br>
+<div class="container-fluid">
+    <br>
+    <div class="row">
+            <div class="col-sm-10 col-12">
+                <h2 class="display-3" style="font-size: 30px">
+                    <strong>Loan Application Details</strong>
+                </h2>
 
+            </div>
+        </div>
+    <hr width="" color="#b3b3b3">
+</div>
+<div class="container-fluid">
+    <div class="row px-3 flex-column">
+        <table id="LoanApplicationsTable" class="table table-striped table-bordered display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Loan Application Number</th>
+                    <th>Customer Code</th>
+                    <th>Product Code</th>
+                    <th>Loan Amount Requested</th>
+                    <th>Tenure</th>
+                    <th>Rate</th>
+                    <th>Agreement Date</th>
+                    <th>Installment Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:if test="${!empty loanApplications}">
+                    <c:forEach var="loan" items="${loanApplications}">
+                        <tr>
+                            <td>${loan.loanApplicationNumber}</td>
+                            <td>${loan.customerCode.customerCode}</td>
+                            <td>${loan.productCode.productCode}</td>
+                            <td>${loan.loanAmountRequested}</td>
+                            <td>${loan.tenure}</td>
+                            <td>${loan.rate}</td>
+                            <td>${loan.agreementDate}</td>
+                            <td>${loan.installmentDueDate}</td>
+                            <td>${loan.status}</td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
