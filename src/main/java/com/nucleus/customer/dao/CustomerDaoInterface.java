@@ -13,5 +13,5 @@ public interface CustomerDaoInterface {
     boolean removeCustomer(Customer customer);
     boolean removeCustomer(String id);
     Customer getCustomerById(String id);
-    public List<LoanApplications> getCustomerLoanDetails(String customerCode);
+    List<LoanApplications> getCustomerLoanDetails(String customerCode);
 }

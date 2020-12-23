@@ -1,5 +1,6 @@
 package com.nucleus.loanclosurebod.database;
 
+import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import org.hibernate.HibernateException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class implements the functions declared by the LoanClosureDao
@@ -86,4 +88,64 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         }
         return updateStatus;
     }
+
+
+    @Override
+    public LoanApplications getLoanDetails(int loanApplicationNumber){
+        Session session = sessionFactory.openSession();
+        LoanApplications loanApplication = session.get(LoanApplications.class, loanApplicationNumber);
+        session.close();
+        return loanApplication;
+    }
+
+    @Override
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode){
+        Session session = sessionFactory.openSession();
+        List<LoanApplications> loanApplications=null;
+        Customer customer = session.get(Customer.class, customerCode);
+        if(customer != null) {
+            loanApplications=customer.getLoanApplications();
+        }
+        session.close();
+        return loanApplications;
+    }
+
+//    @Override
+//    public void addDummyData() {
+//        Session session = getSession();
+//        session.beginTransaction();
+//
+//        LoanApplications loanApplication = new LoanApplications();
+//        loanApplication.setLoanApplicationNumber(1);
+//        loanApplication.setAgreementDate(LocalDate.of(2020, 06, 10));
+//        loanApplication.setAuthorizedBy("Apurv");
+//        loanApplication.setAuthorizedDate(LocalDate.of(2020, 06, 10));
+//        loanApplication.setCreateDate(LocalDate.of(2020, 06, 10));
+//        loanApplication.setCreatedBy("Richa");
+//        loanApplication.setInstallmentDueDate(LocalDate.of(2021, 06, 10));
+//        loanApplication.setLoanAmountRequested(100000);
+//        loanApplication.setStatus("Active");
+//        loanApplication.setModifiedDate(LocalDate.of(2020, 9, 10));
+//        loanApplication.setModifiedBy("Kirtika");
+//        loanApplication.setRate(20.0);
+//        loanApplication.setTenure(5);
+//
+//        session.save(loanApplication);
+//
+//        RepaymentSchedule repaymentSchedule = new RepaymentSchedule();
+//        repaymentSchedule.setInstallmentNumber(1);
+//        repaymentSchedule.setLoanApplicationn(loanApplication);
+//        repaymentSchedule.setBillFlag("Y");
+//        repaymentSchedule.setClosingBalance(0);
+//        repaymentSchedule.setDueDate(LocalDate.of(2021, 06, 10));
+//        repaymentSchedule.setEMI(20000);
+//        repaymentSchedule.setInterestComponent(0.2);
+//        repaymentSchedule.setOpeningBalance(30000);
+//
+//        repaymentSchedule.setPrincipalComponent(10000);
+//        session.save(repaymentSchedule);
+//
+//        session.getTransaction().commit();
+//    }
+
 }

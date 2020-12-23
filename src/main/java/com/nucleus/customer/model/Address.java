@@ -28,7 +28,7 @@ public class Address {
     private Integer pinCode;
 
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false , cascade = CascadeType.REMOVE)
     @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
     private Customer customerCode;
 
