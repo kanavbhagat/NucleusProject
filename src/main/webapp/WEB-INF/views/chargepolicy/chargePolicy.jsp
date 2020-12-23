@@ -18,16 +18,20 @@
 $(document).ready(function(){
 
   $("#chargeCode").focusout(function(){
-
+    var token = $('input[name="csrfToken"]').attr('value');
     var charge  = {};
     charge["chargeCode"] =$('#chargeCode').find(":selected").text();
     charge["chargeCodeName"] =  "default";
+
     $.ajax({
         				type : "POST",
         				contentType : "application/json",
         				url : "newChargePolicy/getCharge",
         				data : JSON.stringify(charge),
         				dataType : 'json',
+        				 headers: {
+                                            'X-CSRF-Token': token
+                                       },
         				success : function(data) {
 
         					$('#chargeCodeName').val(data.chargeCodeName);
@@ -41,20 +45,20 @@ $(document).ready(function(){
 </script>
 
 <jsp:include page="/navbar.jsp" />
-    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy">
-
+    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy" >
+    <input name="csrfToken" value="${_csrf.token}" type="hidden">
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>
   <div class="row">
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
-      <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
+      <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px" required="required"/>
       <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
        <p style = "color : red">${exception}</p>
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
-      <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px"/>
+      <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px" required="required"/>
       <form:errors path = "chargePolicyName" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
@@ -63,7 +67,7 @@ $(document).ready(function(){
   <div class="row">
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
-      <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
+      <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" required="required"/>
       <form:errors path = "chargePolicyDesc" cssClass = "error" style = "color:red"></form:errors>
     </div>
   </div>

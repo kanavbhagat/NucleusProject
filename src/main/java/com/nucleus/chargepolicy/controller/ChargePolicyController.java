@@ -1,9 +1,12 @@
 package com.nucleus.chargepolicy.controller;
 
 
+import com.nucleus.charge.dao.ChargeDao;
 import com.nucleus.charge.model.NewCharge;
 import com.nucleus.chargepolicy.service.ChargePolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,6 +29,9 @@ public class ChargePolicyController {
     @Autowired
     ChargePolicyService chargePolicyService;
 
+    /*@Autowired
+    private ChargeDao chargeDao;*/
+
     public ChargePolicyService getChargePolicyService() {
         return chargePolicyService;
     }
@@ -39,56 +45,44 @@ public class ChargePolicyController {
     @GetMapping(value = {"/newChargePolicy"})
     public String showForm(ModelMap model){
         ChargePolicy chargePolicy = new ChargePolicy();
-        model.put("chargePolicy",chargePolicy);
+
         // model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
-        List<String> chargeCodeList = new ArrayList<String>();
-        chargeCodeList.add("101");
-        chargeCodeList.add("102");
+        List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
+        //chargePolicy.setChargeCodeName(getChargeCodeName(chargeCodeList.get(0)));
+        model.put("chargePolicy",chargePolicy);
         model.put("chargeCodeList",chargeCodeList);
         return "views/chargepolicy/chargePolicy";
     }
-    @GetMapping(value = {"/newChargePolicySuccess"})
-    public String showFormAfterSuccess(ModelMap model){
-        ChargePolicy chargePolicy = new ChargePolicy();
-        model.put("chargePolicy",chargePolicy);
-        // model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
-        List<String> chargeCodeList = new ArrayList<String>();
-        chargeCodeList.add("101");
-        chargeCodeList.add("102");
-        model.put("chargeCodeList",chargeCodeList);
-        return "views/chargepolicy/newChargePolicySuccess";
-    }
+
 
     @PostMapping(value = {"/newChargePolicy"})
     public String getFormData(@Valid @ModelAttribute("chargePolicy") ChargePolicy chargePolicy,BindingResult bindingResult,@RequestParam("action")String action,ModelMap model){
 
         if(bindingResult.hasErrors()){
             System.out.println("Error...........................................................");
-            List<String> chargeCodeList = new ArrayList<String>();
-            chargeCodeList.add("101");
-            chargeCodeList.add("102");
+            List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
             model.put("chargeCodeList",chargeCodeList);
             return "views/chargepolicy/chargePolicy";
         }
         else{
             if(action.equalsIgnoreCase("save")) {
-                chargePolicy.setStatus("Inactive");
+                chargePolicy.setStatus("Saved");
             } else {
                 chargePolicy.setStatus("Pending");
             }
-
+            chargePolicy.setCreatedDate(String.valueOf(LocalDate.now()));
+            chargePolicy.setCreatedBy(getPrincipal());
+            System.out.println("Inserted by " + getPrincipal());
             int status = this.chargePolicyService.insert(chargePolicy);
             if (status == 2){
                 model.put("exception", "Duplicate Charge Policy Code");
-                List<String> chargeCodeList = new ArrayList<String>();
-                chargeCodeList.add("101");
-                chargeCodeList.add("102");
+                List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
                 model.put("chargeCodeList",chargeCodeList);
                 return "views/chargepolicy/chargePolicy";
             }
             else if(status == 1){
                 model.put("message", "Saved Successfully");
-                return "redirect:/chargePolicy/searchScreen";
+                return "views/chargepolicy/Success";
             }
 
         }
@@ -99,9 +93,7 @@ public class ChargePolicyController {
         System.out.println("in getForm Data");
         if(bindingResult.hasErrors()){
             System.out.println("Error...........................................................");
-            List<String> chargeCodeList = new ArrayList<String>();
-            chargeCodeList.add("101");
-            chargeCodeList.add("102");
+            List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
             model.put("chargeCodeList",chargeCodeList);
             return "views/chargepolicy/newChargePolicySuccess";
         }
@@ -123,41 +115,24 @@ public class ChargePolicyController {
     public String showAllEligibilityPolicies(ModelMap modelMap) {
         List<ChargePolicy> chargePolicyList = new ArrayList<ChargePolicy>();
         chargePolicyList.addAll(this.chargePolicyService.getPolicyList());
-        List<String> chargeCodeList = this.chargePolicyService.getChargeCodes();
+        List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
         ChargePolicy chargePolicy = new ChargePolicy();
         modelMap.put("chargePolicy",chargePolicy);
         modelMap.put("chargePolicyList",chargePolicyList);
         //odelMap.put("chargeCodeList",chargeCodeList);
         return "views/chargepolicy/chargePolicySearch";
     }
-    @GetMapping(value = {"/getCharge"})
-    public void getCharge(ModelMap modelMap) {
-        System.out.println("in getCharge");
-       this.chargePolicyService.getCharge("1010");
-    }
+
 
     @PostMapping(value = "/newChargePolicy/getCharge", produces = "application/json")
     public @ResponseBody NewCharge getCharge(@RequestBody NewCharge charge) {
         // getCharge from the Model.
         // Take the chargeCode go to the db get the chargeCodeName and fill it.
         System.out.println("In getCharge Controllerrrr");
-        if(charge.getChargeCode().equals("101"))charge.setChargeCodeName("Disbursal");
-        if(charge.getChargeCode().equals("102"))charge.setChargeCodeName("CGST");
+        charge.setChargeCodeName(getChargeCodeName(charge.getChargeCode()));
 
         return charge;
     }
-
-   /* @PostMapping(value = "/insertChargePolicy", produces = "text/plain")
-    public @ResponseBody String insertChargePolicy(@Valid @RequestBody ChargePolicy chargePolicy, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            System.out.println("Errors in the Page .. .. . . . .");
-            return bindingResult.toString();
-        }
-        System.out.println(chargePolicy.getChargePolicyName() + " charggggggg");
-        this.chargePolicyService.insert(chargePolicy);
-        //put condition while handling exceptionsss
-        return "Successfully inserted";
-    }*/
 
 
     @GetMapping(value = {"/get/{chargePolicyCode}"})
@@ -174,8 +149,12 @@ public class ChargePolicyController {
 
         ModelAndView modelAndView = new ModelAndView();
         ChargePolicy chargePolicy = chargePolicyService.getChargePolicy(chargePolicyCode);
-        System.out.println("Charge Policy Name : - " + chargePolicy.getChargePolicyName());
+        System.out.println("Charge Policy Code : - " + chargePolicy.getChargeCode());
+        List<String> chargeCodeList =  this.chargePolicyService.getChargeCodesList();
+        chargePolicy.setChargeCodeName(getChargeCodeName(chargePolicy.getChargeCode()));
+        modelAndView.addObject("chargeCodeList",chargeCodeList);
         modelAndView.addObject("chargePolicyForEdit", chargePolicy);
+        modelAndView.addObject("chargePolicySelected", chargePolicy.getChargeCode());
         modelAndView.setViewName("views/chargepolicy/chargePolicyEditScreen");
         return modelAndView;
     }
@@ -197,7 +176,8 @@ public class ChargePolicyController {
         } else
             newStatus = "Pending";
         System.out.println(newStatus);
-        this.chargePolicyService.updateStatus(chargePolicyCode,newStatus);
+        String approvedBy = getPrincipal();
+        this.chargePolicyService.updateStatus(chargePolicyCode,newStatus,approvedBy);
         return "redirect:/chargePolicy/searchScreen";
     }
     @PostMapping(value = {"/updateEntry/{chargePolicyCode}"})
@@ -208,5 +188,19 @@ public class ChargePolicyController {
         System.out.println("chargePolicy " + chargePolicy.getChargePolicyName());
         this.chargePolicyService.updateEntry(chargePolicy,chargePolicyCode);
         return "redirect:/chargePolicy/searchScreen";
+    }
+
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+    private String getChargeCodeName(String chargeCode){
+       return  this.chargePolicyService.getChargeCodeName(chargeCode);
     }
 }

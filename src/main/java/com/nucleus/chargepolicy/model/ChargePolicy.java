@@ -1,11 +1,9 @@
 package com.nucleus.chargepolicy.model;
 
+import com.nucleus.charge.model.NewCharge;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -50,11 +48,15 @@ public class ChargePolicy {
     @Column
     String status;
 
-    @Column
+
+    @OneToOne
+    @JoinColumn(name = "charge_code",referencedColumnName="ChargeCode",unique = true)
+    NewCharge chargeCodeEntity;
+
+    @Transient
     String chargeCode;
 
-    @Column
-    @NotEmpty(message = "Please select Charge Code")
+    @Transient
     String chargeCodeName;
 
 
@@ -138,13 +140,6 @@ public class ChargePolicy {
         this.chargePolicyDesc = chargePolicyDesc;
     }
 
-    public String getChargeCode() {
-        return chargeCode;
-    }
-
-    public void setChargeCode(String chargeCode) {
-        this.chargeCode = chargeCode;
-    }
 
     public String getChargeCodeName() {
         return chargeCodeName;
@@ -154,5 +149,19 @@ public class ChargePolicy {
         this.chargeCodeName = chargeCodeName;
     }
 
+    public NewCharge getChargeCodeEntity() {
+        return chargeCodeEntity;
+    }
 
+    public void setChargeCodeEntity(NewCharge chargeCodeEntity) {
+        this.chargeCodeEntity = chargeCodeEntity;
+    }
+
+    public String getChargeCode() {
+        return chargeCode;
+    }
+
+    public void setChargeCode(String chargeCode) {
+        this.chargeCode = chargeCode;
+    }
 }
