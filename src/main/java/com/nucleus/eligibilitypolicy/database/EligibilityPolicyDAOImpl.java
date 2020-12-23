@@ -48,7 +48,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch(Exception exception) {
             eligibilityPolicyList = null;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return eligibilityPolicyList;
 
@@ -73,7 +73,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch (Exception exception) {
             insertStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return insertStatus;
     }
@@ -99,7 +99,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch(Exception exception) {
             eligibilityPolicy = null;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return eligibilityPolicy;
     }
@@ -124,7 +124,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch (Exception exception) {
             updateStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return updateStatus;
     }
@@ -150,7 +150,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.close();
         } catch (Exception exception) {
             deleteStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return deleteStatus;
     }
