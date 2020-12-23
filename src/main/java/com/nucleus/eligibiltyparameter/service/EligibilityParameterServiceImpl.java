@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class EligibilityParameterServiceImpl implements EligibilityParameterService{
+public class
+EligibilityParameterServiceImpl implements EligibilityParameterService{
     @Autowired
     private EligibilityParameterDAO eligibilityParameterDao;
 

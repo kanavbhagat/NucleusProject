@@ -67,16 +67,6 @@ public class PaymentDAOImpl implements PaymentDAO{
             Session session = getSession();
             session.beginTransaction();
             System.out.println(payment.getCustomerCode());
-//            Payment existingPayment = session.load(Payment.class, payment.getLoanApplicationNumber());
-//            existingPayment.setLoanApplicationNumber(payment.getLoanApplicationNumber());
-//            existingPayment.setPaymentCode(payment.getPaymentCode());
-//            existingPayment.setPaymentAmount(payment.getPaymentAmount());
-//            existingPayment.setPaymentDate(payment.getPaymentDate());
-//            existingPayment.setPayoutBankAccount(payment.getPayoutBankAccount());
-//            existingPayment.setCustomerCode(payment.getCustomerCode());
-//            existingPayment.setRemarks(payment.getRemarks());
-//            existingPayment.setPaymentChannel(payment.getPaymentChannel());
-//            session.update(existingPayment);
             session.update(payment);
             session.getTransaction().commit();
             session.close();
@@ -84,6 +74,19 @@ public class PaymentDAOImpl implements PaymentDAO{
         catch (HibernateException e){
             e.printStackTrace();
         }
+
+//        Payment existingPayment = getPaymentById(payment.getLoanApplicationNumber());
+//        existingPayment.setPaymentCode(payment.getPaymentCode());
+//        existingPayment.setPaymentAmount(payment.getPaymentAmount());
+//        existingPayment.setPaymentDate(payment.getPaymentDate());
+//        existingPayment.setPayoutBankAccount(payment.getPayoutBankAccount());
+//        existingPayment.setRemarks(payment.getRemarks());
+//        existingPayment.setPaymentChannel(payment.getPaymentChannel());
+//
+//        Session session = getSession();
+//        session.beginTransaction();
+//        session.update(existingPayment);
+//        session.getTransaction().commit();
     }
 
     public List<Payment> getPaymentsList(){
