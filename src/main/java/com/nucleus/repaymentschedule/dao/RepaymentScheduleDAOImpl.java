@@ -13,8 +13,9 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-
-public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO{
+@Transactional
+public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
+{
 
     @Autowired
     private SessionFactory sessionFactory;

@@ -25,10 +25,12 @@
         $(document).ready(function() {
 
 
+
         window.onload = function() {
             document.getElementById("minTenure").onchange();
             document.getElementById("maxTenure").onchange();
         };
+
 
 
 
