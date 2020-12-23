@@ -68,8 +68,6 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return parameterCode;
     }
 
-
-
     /**
      * Getting a particular eligibility parameter
      * @param parameterCode - get eligibility parameter having a particular parameter code
@@ -124,11 +122,10 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             Session session = getSession();
             session.beginTransaction();
 
-            Query query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
+            Query<EligibilityParameter> query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
                     "e.parameterDescription = ?2 , e.minValue = ?3 , e.maxValue = ?4 , e.modifiedBy = ?5 ," +
-                    "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8");
+                    "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8", EligibilityParameter.class);
 
-            System.out.println(eligibilityParameter.getParameterName());
             String name = eligibilityParameter.getParameterName();
             String desc = eligibilityParameter.getParameterDescription();
             double min = eligibilityParameter.getMinValue();
@@ -146,7 +143,6 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             query1.setParameter(7, status);
             query1.setParameter(8, code);
 
-            System.out.println(eligibilityParameter.getParameterName());
             query1.executeUpdate();
 
 
