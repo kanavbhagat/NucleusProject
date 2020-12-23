@@ -37,59 +37,53 @@ public class ProductLogger {
     @AfterReturning(pointcut = "create()",returning = "val")
     public void createNewProduct(JoinPoint joinPoint,boolean val){
         Object[] args = joinPoint.getArgs();
-        Product product = (Product) args[0];
-
         if(val){
+            Product product = (Product) args[0];
             logger.info("New product created with ProductCode " + product.getProductCode());
-        }else {
-            logger.info("New product not created ");
+        } else {
+            logger.info("New product not created. Method returned " + val);
         }
-        logger.info("val " + val);
-
     }
 
     @AfterReturning(pointcut = "getProduct()",returning = "list")
     public void getProductList(JoinPoint joinPoint, List<Product> list){
-        if(list.size()>0) {
+        if( list!=null && !list.isEmpty()) {
             logger.info("Product list fetched from database with size "+list.size());
-        }else {
-            logger.info("no list exist yet");
+        } else {
+            logger.info("Product list fetched, but returned empty or null.");
         }
     }
 
     @AfterReturning(pointcut = "update()",returning = "val")
     public void updateProduct(JoinPoint joinPoint,Object val){
         Object[] args = joinPoint.getArgs();
-        Product product = (Product) args[0];
         if(val!=null) {
+            Product product = (Product) args[0];
             logger.info("Product updated with status " + product.getStatus());
-        }
-        else{
-            logger.info("Product not updated ");
+        } else{
+            logger.info("Product not updated. ProductDAO.update() returned null.");
         }
     }
 
     @AfterReturning(pointcut = "productById()",returning = "val")
     public void getProductById(JoinPoint joinPoint,Object val){
         Object[] args = joinPoint.getArgs();
-        String id = (String) args[0];
         if(val!=null) {
+            String id = (String) args[0];
             logger.info("Product fetched by Id from database with id " + id);
         }else{
-            logger.info("Product not fetched by id");
+            logger.info("Product not fetched by id. ProductDAO.getProductById() returned null.");
         }
-
     }
 
     @AfterReturning(pointcut = "delete()",returning = "returnValue")
     public void deleteProduct(JoinPoint joinPoint,boolean returnValue){
         Object[] args = joinPoint.getArgs();
-        String id = (String) args[0];
         if(returnValue) {
+            String id = (String) args[0];
             logger.info("Product deleted with Product Id " + id);
-        }else {
-            logger.info("Product not deleted");
+        } else {
+            logger.info("Product not deleted. ProductDAO.delete() returned " + returnValue);
         }
-        logger.info("val "+returnValue);
     }
 }
