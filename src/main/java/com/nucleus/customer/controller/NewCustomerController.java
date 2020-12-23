@@ -39,6 +39,8 @@ public class NewCustomerController {
 
 
         ModelAndView modelAndView=new ModelAndView("views/customerInfo/customerInfo");
+/*
+        ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");*/
 
         modelAndView.addObject("customer", new Customer());
 
@@ -48,6 +50,8 @@ public class NewCustomerController {
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newCustomer")
     public ModelAndView addCustomer(@Valid @ModelAttribute Customer customer ,  HttpServletRequest request){
+       // customer.setCustomerCode("L102");
+
 
         Address add = customer.getAdd();
         add.setCustomerCode(customer);
@@ -59,6 +63,13 @@ public class NewCustomerController {
         session.setAttribute("customer" , customer);
         session.setAttribute("address" ,add);
 
+        /*boolean customerAdded  = newCustomerService.createNewCustomer(customer);
+        boolean addressAdded = addressService.insertAddress(add);*/
+
+       //ModelAndView modelAndView=new ModelAndView("views/customerInfo/success");
+       /*modelAndView.addObject("addAddress" , addressAdded);
+       modelAndView.addObject("addCust" , customerAdded);*/
+       // modelAndView.addObject("address", add);
 
 
         return new ModelAndView("redirect:/newLoanApplication");
