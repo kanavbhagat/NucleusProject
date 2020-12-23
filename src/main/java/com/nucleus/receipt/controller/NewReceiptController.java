@@ -1,6 +1,5 @@
 package com.nucleus.receipt.controller;
 
-
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.receipt.model.Receipt;
@@ -8,13 +7,14 @@ import com.nucleus.receipt.service.ReceiptService;
 import com.nucleus.receipt.service.ReceiptValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@RestController
+@Controller
 public class NewReceiptController {
 
     @Autowired
