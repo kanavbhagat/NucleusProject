@@ -56,10 +56,9 @@ public class CustomerLoanSearchController {
             // avoid sending nothing to model and view. This case *should* never happen.
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
         }
 
-        if(customerId==null || customerId.isEmpty()){
+        else if(customerId==null || customerId.isEmpty()){
             // get loan application details and corresponding customer details.
             LoanApplications loanApplication = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
             if(loanApplication!=null){
@@ -69,10 +68,9 @@ public class CustomerLoanSearchController {
             System.out.println(customers.size());
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
         }
 
-        if(loanApplicationNumber==null){
+        else if(loanApplicationNumber==null){
             // get customer details and all loans corresponding to customer.
             Customer customer = customerService.getCustomer(customerId);
             if(customer!=null){
@@ -82,20 +80,27 @@ public class CustomerLoanSearchController {
             loanApplications.removeIf(la -> !customerId.equals(la.getCustomerCode().getCustomerCode()));
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
+        }
+        else{
+            // if both customer code and loan application number are present.
+            LoanApplications la = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
+            Customer customer = customerService.getCustomer(customerId);
+            if(customer!=null){
+                customers.add(customer);
+            }
+            if(la!=null){
+                loanApplications.add(la);
+            }
+            mv.addObject("customer", customers);
+            mv.addObject("loanApplications", loanApplications);
         }
 
-        // if both customer code and loan application number are present.
-        LoanApplications la = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
-        Customer customer = customerService.getCustomer(customerId);
-        if(customer!=null){
-            customers.add(customer);
+        if(customers.isEmpty() && loanApplications.isEmpty()){
+            mv.setViewName("views/customerservice/searchError");
+            mv.addObject("messageHeader", "No results found");
+            mv.addObject("messageBody", "No results were found matching your criteria. Please try again");
         }
-        if(la!=null){
-            loanApplications.add(la);
-        }
-        mv.addObject("customer", customers);
-        mv.addObject("loanApplications", loanApplications);
+
         return mv;
     }
 }
