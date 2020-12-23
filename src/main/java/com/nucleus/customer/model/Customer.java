@@ -10,12 +10,11 @@ import java.util.Set;
 @Table( name= "customer")
 public class Customer {
 
-    static int id = 101;
-    static String code;
+    public static  int id = 101;
+    public static String code;
     public Customer(){
         super();
         code = "L"+id;
-        id++;
         this.setCustomerCode(code);
         add = new Address();
     }
