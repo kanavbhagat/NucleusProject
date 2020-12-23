@@ -108,11 +108,11 @@ public class EligibilityParameterLoggerAspect {
     }
 
 
-    @AfterReturning(pointcut = "getOneParameterMethodDAO()", returning = "eligibilityParameter")
-    public void afterGettingParameterDAO(Object eligibilityParameter) {
-        EligibilityParameter ep=(EligibilityParameter)eligibilityParameter;
-        logger.info("(@AFTER RETURNING)Got Eligibility Parameter with Parameter Code : (DATABASE): " + ep.getParameterCode());
-    }
+//    @AfterReturning(pointcut = "getOneParameterMethodDAO()", returning = "eligibilityParameter")
+//    public void afterGettingParameterDAO(Object eligibilityParameter) {
+//        EligibilityParameter ep=(EligibilityParameter)eligibilityParameter;
+//        logger.info("(@AFTER RETURNING)Got Eligibility Parameter with Parameter Code : (DATABASE): " + ep.getParameterCode());
+//    }
 
     @Before("deleteParameterMethodDAO()")
     public void beforeDeletingParameterDAO() {
@@ -163,10 +163,10 @@ public class EligibilityParameterLoggerAspect {
     }
 
 
-    @AfterReturning("getAllParametersMethodService()")
-    public void afterGettingParametersService() {
-        logger.info("(@AFTER RETURNING)Got All Eligibility Parameters(SERVICE): ");
-    }
+//    @AfterReturning("getAllParametersMethodService()")
+//    public void afterGettingParametersService() {
+//        logger.info("(@AFTER RETURNING)Got All Eligibility Parameters(SERVICE): ");
+//    }
 
     @Before("requestApprovalMethodService()")
     public void beforeRequestingApprovalService() {
