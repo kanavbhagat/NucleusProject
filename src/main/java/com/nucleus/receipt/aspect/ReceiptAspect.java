@@ -1,7 +1,5 @@
 package com.nucleus.receipt.aspect;
 
-
-
 import com.nucleus.receipt.model.Receipt;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -10,9 +8,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-
-
 
 @Component
 @Aspect
@@ -34,6 +29,9 @@ public class ReceiptAspect {
 
     @Pointcut("execution (* com.nucleus.receipt.service.ReceiptService.getReceipt(..))")
     public void receiptById(){}
+
+    @Pointcut("execution (* com.nucleus.receipt.service.ReceiptService.runBOD(..))")
+    public void BOD(){}
 
     @AfterReturning("register()")
     public void registerReceipt(JoinPoint joinPoint){
@@ -62,6 +60,11 @@ public class ReceiptAspect {
     @AfterReturning("receiptById()")
     public void getReceiptById(JoinPoint joinPoint){
         logger.info("Receipt fetched from Database by Id");
+    }
+
+    @AfterReturning("BOD()")
+    public void runBOD(JoinPoint joinPoint){
+        logger.info("Receipt BOD process ran successfully");
     }
 
 
