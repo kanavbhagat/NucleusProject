@@ -41,16 +41,23 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
     public int addRepaymentSchedule(LoanApplications loanApplication) {
 
         int loanApplicationNumber = loanApplication.getLoanApplicationNumber();
+        System.out.println("loanApplicationNumber-----------"+loanApplicationNumber);
         double loanAmountRequested = loanApplication.getLoanAmountRequested();
         int tenure = loanApplication.getTenure();
         double rate = loanApplication.getRate();
         LocalDate installmentDueDate = loanApplication.getInstallmentDueDate();
 
-        List<RepaymentSchedule> repaymentSchedules = generateRepaymentSchedule(loanApplicationNumber, rate, loanAmountRequested, tenure,
+        List<RepaymentSchedule> repaymentSchedules = generateRepaymentSchedule(loanApplication, rate, loanAmountRequested, tenure,
                 installmentDueDate);
+        System.out.println("repaymentSchedule-----------"+repaymentSchedules.size()+"--------------------------");
+
         int r = 0;
         for (int i = 0; i < repaymentSchedules.size(); i++) {
+            System.out.println("i---------------------  "+i+"  ----------------");
+            System.out.println("RepaymentSchedule=================="+repaymentSchedules.get(i).getBillFlag()+"----------------");
+
             repaymentScheduleDAO.addRepaymentSchedule(repaymentSchedules.get(i));
+
         }
         return r;
     }
@@ -65,12 +72,12 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
     }
 
 
-    List<RepaymentSchedule> generateRepaymentSchedule(int loanApplicationNumber, double rate, double loanAmount,
+    List<RepaymentSchedule> generateRepaymentSchedule(LoanApplications loanApplicationNumber, double rate, double loanAmount,
                                                       int tenure, LocalDate installmentDueDate) {
         int numberOfInstallment = 12; // Reapyment Frequency Assumed Monthly
 
         double installmentAmt = calculateEMI(rate, loanAmount, tenure, numberOfInstallment);
-
+        System.out.println("installmentAmount-----------"+installmentAmt+"--------------");
         int installmentNumber;
         double principalComp;
         double interestComp;
@@ -98,6 +105,7 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
             repaymentSchedule.setClosingBalance(Double.parseDouble(String.format("%.2f", closingBalance)));
             repaymentSchedule.setBillFlag("F");
             repaymentSchedule.setDueDate(installmentDueDate);
+            System.out.println("RepaymentSchedule=================="+repaymentSchedule.getBillFlag()+"----------------");
             installmentDueDate = futureDate;
 
             repaymentSchedule.setEmi(Double.parseDouble(String.format("%.2f", installmentAmt)));
