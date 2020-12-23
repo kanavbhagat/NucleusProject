@@ -14,6 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+
+/**
+ * <p> controller for new receipt creation </p>
+ */
 @Controller
 public class NewReceiptController {
 
@@ -23,6 +27,12 @@ public class NewReceiptController {
     @Autowired
     LoanApplicationService loanApplicationService;
 
+
+    /**
+     * <p> Get mapping for the new receipt creation page. returns a model and view with an empty receipt object attached
+     * for the receipt creation form.</p>
+     * @return modelAndView for new receipt creation.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
@@ -33,10 +43,19 @@ public class NewReceiptController {
         return modelAndView;
     }
 
+    /**
+     * <p> Post mapping for creating a new receipt. Retrieves the model receipt object from the receipt creation
+     * form and saves it into the database. </p>
+     * @param Receipt receipt the model object created from the form.
+     * @param BindingResult result the binding result for errors.
+     * @return either the success or error modelAndView depending on whether receipt creation was successful.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = {"/registerReceipt"})
     public ModelAndView addReceipt(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult result){
         ModelAndView modelAndView = new ModelAndView();
+
+        // extra validation so that hibernate validations continue to work.
         new ReceiptValidator().validate(receipt, result);
 
         if(result.hasErrors()){

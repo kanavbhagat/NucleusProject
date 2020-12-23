@@ -66,9 +66,17 @@ public class EligibilityParameterController {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
             eligibilityParameter.setStatus("Saved");
-            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            String pcode=eligibilityParameter.getParameterCode();
+            boolean success=eligibilityParameterService.insertParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            model.addAttribute("status","Inserted");
+            model.addAttribute("error","inserting");
+            if(success) {
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+            else {
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
         }
 
     }
@@ -91,9 +99,17 @@ public class EligibilityParameterController {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
             eligibilityParameter.setStatus("Pending");
-            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            String pcode=eligibilityParameter.getParameterCode();
+            boolean success=eligibilityParameterService.insertParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            model.addAttribute("status","Inserted");
+            model.addAttribute("error","inserting");
+            if(success) {
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+            else {
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
         }
 
     }
@@ -119,6 +135,8 @@ public class EligibilityParameterController {
             eligibilityParameter.setStatus("Saved");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
+            model.addAttribute("status","Edited");
+            model.addAttribute("error","editing");
             if(valid)
             {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
@@ -151,6 +169,8 @@ public class EligibilityParameterController {
             eligibilityParameter.setStatus("Pending");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
+            model.addAttribute("status","Edited");
+            model.addAttribute("error","editing");
             if(valid)
             {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
@@ -169,9 +189,18 @@ public class EligibilityParameterController {
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping("/delete/{parameterCode}")
-    public String deleteParameter(@PathVariable("parameterCode") String parameterCode) {
-        String pcode = eligibilityParameterService.deleteEligibilityParameter(parameterCode);
-        return "redirect:/main/eligibilityparameter/";
+    public String deleteParameter(@PathVariable("parameterCode") String parameterCode,Model model) {
+        String pcode=parameterCode;
+        boolean success = eligibilityParameterService.deleteEligibilityParameter(parameterCode);
+        model.addAttribute("parameterCode",pcode);
+        model.addAttribute("status","Deleted");
+        model.addAttribute("error","deleting");
+        if(success) {
+            return "views/eligibilityparameters/eligibilityparametersuccess";
+        }
+        else {
+            return "views/eligibilityparameters/eligibilityparameterfailure";
+        }
     }
 
     /**
@@ -213,7 +242,7 @@ public class EligibilityParameterController {
      * @return checker screen
      */
     @PostMapping(value = {"/updateStatus/{parameterCode}"})
-    public String updateStatus(@PathVariable("parameterCode") String parameterCode, @RequestParam("action")String action) {
+    public String updateStatus(@PathVariable("parameterCode") String parameterCode, @RequestParam("action")String action,Model model) {
         String newStatus;
         if(action.equalsIgnoreCase("approve")) {
             newStatus = "Approved";
@@ -223,8 +252,16 @@ public class EligibilityParameterController {
             newStatus = "Pending";
         }
         String authorizedBy = getPrincipal();
-        boolean updateStatus = eligibilityParameterService.updateStatus(parameterCode, newStatus,authorizedBy);
-        return "redirect:/main/eligibilityparameter/";
+        boolean success = eligibilityParameterService.updateStatus(parameterCode, newStatus,authorizedBy);
+        model.addAttribute("parameterCode",parameterCode);
+        model.addAttribute("status","Updated");
+        model.addAttribute("error","updating");
+        if(success) {
+            return "views/eligibilityparameters/eligibilityparametersuccess";
+        }
+        else {
+            return "views/eligibilityparameters/eligibilityparameterfailure";
+        }
     }
 
     private String getPrincipal(){

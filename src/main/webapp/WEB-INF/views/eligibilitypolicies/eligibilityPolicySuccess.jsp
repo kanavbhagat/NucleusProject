@@ -2,7 +2,6 @@
    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file = "/navbar.jsp"%>
    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
@@ -20,6 +19,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/navbar.jsp" />
 	<hr style="width: 98%">
 
 	<div class="container pt-4 ">

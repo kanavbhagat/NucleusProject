@@ -36,7 +36,7 @@
 
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
-            <b> Create Products </b>
+            <b> Review Product Details </b>
         </h2>
     </div>
 

@@ -20,11 +20,6 @@ public class ProductServiceTest {
     ProductService productService;
 
     @Test
-    public void getProductListTest(){
-        assertFalse(productService.getProductList().isEmpty());
-    }
-
-    @Test
     public void createNewProductTest(){
         assertFalse(productService.createNewProduct(new Product()));
     }
@@ -33,4 +28,15 @@ public class ProductServiceTest {
     public void getProductByIdTest(){
         assertNull(productService.getProductById("random"));
     }
+
+    @Test
+    public void updateProductTest(){
+        assertNull(productService.updateProduct(new Product()));
+    }
+
+    @Test
+    public void deleteProductTest(){
+        assertFalse(productService.deleteProduct("random"));
+    }
+
 }
