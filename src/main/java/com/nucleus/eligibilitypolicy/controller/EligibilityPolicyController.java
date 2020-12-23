@@ -94,9 +94,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("INACTIVE");
+            eligibilityPolicy.setStatus("Saved");
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("PENDING");
+            eligibilityPolicy.setStatus("Pending");
         }
         //Setting "createdDate" field:
         eligibilityPolicy.setCreateDate(LocalDate.now());
@@ -118,8 +118,14 @@ public class EligibilityPolicyController {
         }
         //Adding the new Eligibility Policy object to database and getting a true/false based response:
         boolean insertStatus = eligibilityPolicyService.insertEligibilityPolicy(eligibilityPolicy);
-        model.addAttribute("insertStatus", insertStatus);
-        return "redirect:/eligibilityPolicy/";
+        model.addAttribute("policyCode", eligibilityPolicy.getPolicyCode());
+        if(insertStatus) {
+            model.addAttribute("operation", "Created");
+            return "views/eligibilitypolicies/eligibilityPolicySuccess";
+        } else {
+            model.addAttribute("operation", "Creation Unsuccessful!");
+            return "views/eligibilitypolicies/eligibilityPolicyFailure";
+        }
     }
 
     /**
@@ -156,8 +162,14 @@ public class EligibilityPolicyController {
     public String updateStatus(@PathVariable("policyCode") String policyCode, @RequestParam("action")String action, Model model) {
         String authorizedBy = getPrincipal();
         boolean updateStatus = eligibilityPolicyService.updateStatus(policyCode, action, authorizedBy);
-        model.addAttribute("updateStatus", updateStatus);
-        return "redirect:/eligibilityPolicy/";
+        model.addAttribute("policyCode", policyCode);
+        if(updateStatus) {
+            model.addAttribute("operation", "Status Updated");
+            return "views/eligibilitypolicies/eligibilityPolicySuccess";
+        } else {
+            model.addAttribute("operation", "Status Update Unsuccessful!");
+            return "views/eligibilitypolicies/eligibilityPolicyFailure";
+        }
     }
 
     /**
@@ -214,9 +226,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("INACTIVE");
+            eligibilityPolicy.setStatus("Saved");
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("PENDING");
+            eligibilityPolicy.setStatus("Pending");
         }
         //Setting "modifiedDate" field:
         eligibilityPolicy.setModifiedDate(LocalDate.now());
@@ -238,8 +250,14 @@ public class EligibilityPolicyController {
         }
         //Adding the new Eligibility Policy object to database and getting a true/false based response:
         boolean editStatus = eligibilityPolicyService.updateEligibilityPolicy(eligibilityPolicy);
-        model.addAttribute("editStatus", editStatus);
-        return "redirect:/eligibilityPolicy/";
+        model.addAttribute("policyCode", eligibilityPolicy.getPolicyCode());
+        if(editStatus) {
+            model.addAttribute("operation", "Edited");
+            return "views/eligibilitypolicies/eligibilityPolicySuccess";
+        } else {
+            model.addAttribute("operation", "Edit Unsuccessful!");
+            return "views/eligibilitypolicies/eligibilityPolicyFailure";
+        }
     }
 
     /**
@@ -255,8 +273,14 @@ public class EligibilityPolicyController {
     @GetMapping(value = {"/delete/{policyCode}"})
     public String deletePolicy(@PathVariable("policyCode") String policyCode, Model model) {
         boolean deleteStatus = eligibilityPolicyService.deleteEligibilityPolicy(policyCode);
-        model.addAttribute("deleteStatus", deleteStatus);
-        return "redirect:/eligibilityPolicy/";
+        model.addAttribute("policyCode", policyCode);
+        if(deleteStatus) {
+            model.addAttribute("operation", "Deleted");
+            return "views/eligibilitypolicies/eligibilityPolicySuccess";
+        } else {
+            model.addAttribute("operation", "Deletion Unsuccessful!");
+            return "views/eligibilitypolicies/eligibilityPolicyFailure";
+        }
     }
 
     //Method to get username:
