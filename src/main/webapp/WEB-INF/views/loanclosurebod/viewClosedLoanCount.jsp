@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.Date" %>
 <%@ page isELIgnored="false" %>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
 	<title>SuccessPage</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,26 +23,12 @@
 		<div class="jumbotron text-center" style="background-color:rgba(141, 181, 150, 0.3);">
 
               <%-- Insert Main Message Below --%>
-              <h1 class="display-4"> Eligibility Parameter added successfully</h1>
+              <h1 class="display-4"> Loan Closure BOD Run Successfully.</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Your Eligibility Parameter has been added successfully.</strong></p>
+              <p class="lead"><strong>${ClosedLoans} Loans have been Closed</strong></p>
 
               <hr>
-
-              <div class="d-flex justify-content-center">
-
-                <%-- Insert Dynamic Message Here Eg- policy code etc --%>
-                <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(141, 181, 150, 0.8); padding: 5px;background-color:rgba(141, 181, 150, 0.1);width: 50%;">
-                <strong>Eligibility Parameter Code : </strong> ${parameterCode}</p>
-
-              </div>
-              <%-- Put your link in the value field below where you want to redirect to. --%>
-              <div class="d-flex justify-content-center">
-                    <a href="<%= request.getContextPath()%>/main/eligibilityparameter">
-                    <button class="btn btn-info">Go To Eligibility Parameter List</button>
-                    </a>
-              </div>
 		</div>
 	</div>
 </body>

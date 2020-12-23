@@ -66,12 +66,12 @@
     		            <tr>
     		            <td>
                          <security:authorize access="hasRole('CHECKER')">
-                         <c:if test = "${parameter.status ne 'Inactive'}">
+                         <c:if test = "${parameter.status ne 'Saved'}">
                          <a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}">
                             ${parameter.parameterCode}
                          </a>
                          </c:if>
-                         <c:if test = "${parameter.status == 'Inactive'}">
+                         <c:if test = "${parameter.status == 'Saved'}">
                          ${parameter.parameterCode}
                          </c:if>
                          </security:authorize>
