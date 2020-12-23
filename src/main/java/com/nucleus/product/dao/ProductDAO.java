@@ -92,7 +92,7 @@ public class ProductDAO implements ProductDAOInterface {
                 session.getTransaction().commit();
                 return true;
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 session.getTransaction().rollback();
                 return false;
             }

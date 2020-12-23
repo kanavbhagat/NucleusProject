@@ -40,7 +40,7 @@ public class TestConfig {
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
         bean.setDataSource(getDataSource());
         bean.setHibernateProperties(hibernateProperties());
-        bean.setPackagesToScan(new String[]{"com.nucleus"});
+        bean.setPackagesToScan("com.nucleus");
         return bean;
     }
 
@@ -48,7 +48,7 @@ public class TestConfig {
     private Properties hibernateProperties() {
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         properties.put("hibernate.show_sql","false");
-        properties.put("hibernate.hbm2ddl.auto","validate");
+        properties.put("hibernate.hbm2ddl.auto","none");
         properties.put("current_session_context_class","thread");
         return properties;
     }
@@ -57,35 +57,9 @@ public class TestConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-
-        // Jigme's Oracle db credentials
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-        ds.setUsername("nsbt");
-        ds.setPassword("qwerty");
-
-//        ds.setUsername("c##username");
-//        ds.setPassword("pwd");
-//
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//        ds.setUsername("sys as sysdba");
-//        ds.setPassword("pwd");
-
         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
         ds.setUsername("c##username");
         ds.setPassword("pwd");
-
-
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//        ds.setUsername("sys as sysdba");
-//        ds.setPassword("pwd");
-
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
-//        ds.setUsername("MYUSERNAME");
-//        ds.setPassword("MYPASSWORD");
-
-          /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-             ds.setUsername("system");
-             ds.setPassword("hemant12345");*/
 
         return ds;
 
