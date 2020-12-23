@@ -10,6 +10,6 @@ public interface ChargeDao {
     boolean deleteCharge(String chargeCode);
     NewCharge getOneCharge(String chargeCode);
     boolean updateCharge(NewCharge charge);
-    void updateStatus(String chargeCode, String status);
+    boolean updateStatus(String chargeCode, String status);
 
 }
