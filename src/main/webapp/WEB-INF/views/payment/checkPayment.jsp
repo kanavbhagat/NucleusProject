@@ -78,7 +78,7 @@
                         <td>${singlePayment.loanApplicationNumber}</td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <td><a href="#">${singlePayment.loanApplicationNumber}</a></td>
+                            <td><a href="<%=request.getContextPath()%>/payment/showPayment/${singlePayment.loanApplicationNumber}">${singlePayment.loanApplicationNumber}</a></td>
                         </sec:authorize>
                         <td>${singlePayment.customerCode}</td>
                         <td>${singlePayment.paymentAmount}</td>

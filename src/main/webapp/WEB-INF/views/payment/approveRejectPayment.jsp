@@ -32,14 +32,9 @@
 <body>
 <div class="container-fluid">
     <jsp:include page="/navbar.jsp" />
-    <form:form modelAttribute="approveThisPayment">
+    <form:form modelAttribute="approveRejectThisPayment">
     <div class="row m-3">
-        <h3>Edit Payment Cash</h3>
-        <div class="offset-9">
-            <input type="submit" class="btn btn-primary" name ="action" value="Save">
-            <input type="reset" class="btn btn-warning" value="Clear">
-            <a class="btn btn-danger" href="<%= request.getContextPath()%>/payment/" role="button">Cancel</a>
-        </div>
+        <h3>Approve or Reject Payment Cash</h3>
     </div>
     <div class="card mb-3">
         <div class="card body p-3">
@@ -47,48 +42,51 @@
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Loan Application Number</label>
                     <form:input cssClass="form-control" path="loanApplicationNumber" disabled="true"></form:input>
-                    <form:errors path="loanApplicationNumber" cssClass="error"></form:errors>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Payment Code</label>
-                    <form:input path="paymentCode" cssClass="form-control"></form:input>
+                    <form:input path="paymentCode" cssClass="form-control" disabled="true"></form:input>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Payment Amount</label>
-                    <form:input cssClass="form-control" path="paymentAmount"></form:input>
+                    <form:input cssClass="form-control" path="paymentAmount" disabled="true"></form:input>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Payment Date</label>
-                    <form:input path="paymentDate" type="date" cssClass="form-control"></form:input>
-                    <form:errors path="paymentDate" cssClass="error"><p class="error">Invalid Date</p></form:errors>
+                    <form:input path="paymentDate" type="date" cssClass="form-control" disabled="true"></form:input>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Payout Bank Account</label>
-                    <form:input path="payoutBankAccount" cssClass="form-control"></form:input>
-                    <form:errors path="payoutBankAccount" cssClass="error"></form:errors>
+                    <form:input path="payoutBankAccount" cssClass="form-control" disabled="true"></form:input>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Customer Code</label>
                     <form:input path="customerCode" cssClass="form-control" disabled="true"></form:input>
-                    <from:errors path="customerCode" cssClass="error"></from:errors>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Remarks</label>
-                    <form:textarea path="remarks" cssClass="form-control"></form:textarea>
+                    <form:textarea path="remarks" cssClass="form-control" disabled="true"></form:textarea>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="required-field font-weight-bold">Payment Channel</label>
-                    <form:select path="paymentChannel" cssClass="form-control">
+                    <form:select path="paymentChannel" cssClass="form-control" disabled="true">
                         <form:option value="Bank Transfer"></form:option>
                         <form:option value="Cheque"></form:option>
                         <form:option value="Draft"></form:option>
                     </form:select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-9">
+                    <a class="btn btn-success" href="<%=request.getContextPath()%>/payment/approveRejectPayment/${approveRejectThisPayment.loanApplicationNumber}?suggestion=approve">Approve</a>
+                    <a class="btn btn-danger" href="<%= request.getContextPath()%>/payment/approveRejectPayment/${approveRejectThisPayment.loanApplicationNumber}?suggestion=reject">Reject</a>
+                    <a class="btn btn-primary" href="<%= request.getContextPath()%>/payment/" role="button">Cancel</a>
                 </div>
             </div>
         </div>

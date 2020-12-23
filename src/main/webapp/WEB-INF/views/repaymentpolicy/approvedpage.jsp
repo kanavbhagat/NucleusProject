@@ -23,10 +23,10 @@
 		<div class="jumbotron text-center" style="background-color:rgba(141, 181, 150, 0.3);">
 
               <%-- Insert Main Message Below --%>
-              <h1 class="display-4"> Policy Deleted Successfully.</h1>
+              <h1 class="display-4"> Policy Approved</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Your Repayment Policy has been deleted successfully.</strong></p>
+              <p class="lead"><strong>Repayment Policy has been approved successfully.</strong></p>
 
               <hr>
 

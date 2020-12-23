@@ -13,7 +13,7 @@ public class LoanApplicationViewController {
     LoanApplicationService loanApplicationService;
 
     @GetMapping(value="/loanApplication")
-    public ModelAndView loanApplicatonView(){
+    public ModelAndView loanApplicationView(){
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplications");
         modelAndView.addObject("loanApplications",loanApplicationService.getAllLoanApplicationsList());
         return modelAndView;

@@ -40,4 +40,8 @@ public class PaymentServiceImpl implements PaymentService{
     public void setReviewedBy(int loanID, String user){
         this.paymentDAO.updateApprovedBy(loanID, user);
     }
+
+    public boolean approveRejectPayment(int loanID, String suggestion, String user){
+        return this.paymentDAO.updateStatus(loanID, suggestion, user);
+    }
 }

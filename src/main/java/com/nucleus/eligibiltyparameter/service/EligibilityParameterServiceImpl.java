@@ -16,12 +16,12 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
         return eligibilityParameterDao.getAll();
     }
     @Override
-    public void insertParameter(EligibilityParameter eligibilityParameter){
-        eligibilityParameterDao.insertParameter(eligibilityParameter);
+    public String insertParameter(EligibilityParameter eligibilityParameter){
+        return eligibilityParameterDao.insertParameter(eligibilityParameter);
     }
     @Override
-    public void insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter){
-        eligibilityParameterDao.insertParameterAndRequestApproval(eligibilityParameter);
+    public String insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter){
+        return eligibilityParameterDao.insertParameterAndRequestApproval(eligibilityParameter);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
     }
 
     @Override
-    public boolean deleteEligibilityParameter(String parameterCode){
+    public String deleteEligibilityParameter(String parameterCode){
         return eligibilityParameterDao.deleteEligibilityParameter(parameterCode);
     }
 
@@ -40,8 +40,8 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
     }
 
     @Override
-    public boolean updateStatus(String parameterCode,String newStatus)
+    public boolean updateStatus(String parameterCode,String newStatus,String authorizedBy)
     {
-        return eligibilityParameterDao.updateStatus(parameterCode,newStatus);
+        return eligibilityParameterDao.updateStatus(parameterCode,newStatus,authorizedBy);
     }
 }

@@ -55,7 +55,6 @@ public class NewProductController {
 
         ModelAndView modelAndView;
 
-        System.out.println(result);
         if (result.hasErrors()) {
             if(id!=null){
                 return this.addAttributes( new ModelAndView("views/product/editProduct"));
@@ -67,19 +66,18 @@ public class NewProductController {
         EligibilityPolicy epolicy = eligibilityPolicyService.getOneEligibilityPolicy(product.getEligibilityPolicyCodeString());
         RepaymentPolicy rpolicy = repaymentPolicyService.getRepaymentPolicyById(product.getRepaymentPolicyCodeString());
 
-
-        modelAndView = new ModelAndView("views/product/newProductSave");
         product.setEligibilityPolicyCode(epolicy);
         product.setRepaymentPolicyCode(rpolicy);
+        product.setStatus(action);
 
         if(product.getChargeCodePolicyString()!=null){
             // TODO: 20/12/20 ask Jigme team to fix single charge policy retrieval
             product.setChargeCodePolicy(null);
         }
-        if("Updated".equals(action)){
-            return this.updateProduct(product, modelAndView, action);
+        if(id!=null){
+            return this.updateProduct(product);
         }
-        return saveNewProduct(product, modelAndView, action);
+        return saveNewProduct(product);
     }
 
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -92,39 +90,48 @@ public class NewProductController {
     }
 
 
-    private ModelAndView saveNewProduct(Product product, ModelAndView modelAndView, String action){
+    private ModelAndView saveNewProduct(Product product){
         LoginDetailsImpl details = new LoginDetailsImpl();
         product.setCreatedBy(details.getUserName());
         product.setCreateDate(LocalDate.now());
-        product.setStatus(action);
+
         Boolean success = productService.createNewProduct(product);
 
         if(success){
-            modelAndView.addObject("message", "Product was " + action + " successfully." );
+            ModelAndView modelAndView = new ModelAndView("views/product/productSuccess");
+            modelAndView.addObject("messageHeader", "Product was created successfully" );
+            modelAndView.addObject("messageBody", "You successfully created the product" );
+            modelAndView.addObject("productCode", product.getProductCode());
+            return modelAndView;
         }
-        else{
-            modelAndView.addObject("message", "Product Creation Failed");
-        }
+
+        ModelAndView modelAndView = new ModelAndView("views/product/productError");
+        modelAndView.addObject("messageHeader", "Product could not be created" );
+        modelAndView.addObject("messageBody", "Product creation failed. Please try again" );
+        modelAndView.addObject("productCode", product.getProductCode());
         return modelAndView;
     }
 
 
-    private ModelAndView updateProduct(Product product, ModelAndView modelAndView, String action){
+    private ModelAndView updateProduct(Product product){
         LoginDetailsImpl details = new LoginDetailsImpl();
         product.setModifiedBy(details.getUserName());
         product.setModifiedDate(LocalDate.now());
-
+        String productCode = product.getProductCode();
         product = productService.updateProduct(product);
-        if(product==null){
-            modelAndView.addObject("message", "Product was not " + action + " successfully." );
+        if(product!=null){
+            ModelAndView modelAndView = new ModelAndView("views/product/productSuccess");
+            modelAndView.addObject("messageHeader", "Product was updated successfully" );
+            modelAndView.addObject("messageBody", "You successfully updated the product" );
+            modelAndView.addObject("productCode", product.getProductCode());
+            return modelAndView;
         }
-        else{
-            modelAndView.addObject("message", "Product was " + action + " successfully." );
-        }
+        ModelAndView modelAndView = new ModelAndView("views/product/productError");
+        modelAndView.addObject("messageHeader", "Product could not be updated" );
+        modelAndView.addObject("messageBody", "Product update failed. Please try again" );
+        modelAndView.addObject("productCode", productCode);
         return modelAndView;
     }
-
-
 
 
     private List<String> getProductTypes(){

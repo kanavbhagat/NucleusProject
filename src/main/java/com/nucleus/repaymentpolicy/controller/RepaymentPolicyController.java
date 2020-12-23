@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 public class RepaymentPolicyController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class RepaymentPolicyController {
             return mv;
         }
         String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Incomplete");
+        repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Saved");
         repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/addedpage");
@@ -110,7 +110,7 @@ public class RepaymentPolicyController {
 
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,"Incomplete");
+        repaymentPolicyService.changeStatus(policyCode,"Saved");
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
@@ -153,7 +153,7 @@ public class RepaymentPolicyController {
         repaymentPolicyService.changeStatus(policyCode,"Approved");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
+        mv.setViewName("views/repaymentpolicy/approvedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
@@ -167,7 +167,7 @@ public class RepaymentPolicyController {
         repaymentPolicyService.changeStatus(policyCode,"Rejected");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
+        mv.setViewName("views/repaymentpolicy/rejectedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
