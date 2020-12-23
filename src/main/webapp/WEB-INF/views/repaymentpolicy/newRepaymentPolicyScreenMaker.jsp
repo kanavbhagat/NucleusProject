@@ -15,16 +15,33 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
+    <style type="text/css">
         .required-field::after{
              content: "*";
              color: red;
         }
+         .error {
+                    color: red;
+                }
     </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function validate_form ()
+               {
+                   valid = true;
+                   if (document.newRepaymentPolicy.minTenure.value>document.newRepaymentPolicy.maxTenure.value)
+                   {
+                        alert ( "Min Tenure should be less than or equal to Maximum Tenure" );
+                        valid = false;
+                   }
+
+                   return valid;
+               }
+           } );
+    </script>
 </head>
 
 <body>
-
 
 <div class="container-fluid">
     <!-- NavBar Starts -->
@@ -51,12 +68,13 @@
 
                 <div class="form-group">
                     <form:label path="policyCode" class="font-weight-bold required-field">Repayment Policy Code</form:label>
-                    <form:input path="policyCode" type="text" class="form-control" id="policyCode"/>
+                    <form:input path="policyCode" type="text" class="form-control" id="policyCode" required="true"  pattern="[A-Za-z].{3,10}" title="Only Alphanumeric characters allowed. Length should be from 3 to 10."/>
                 </div>
 
                 <div class="form-group">
                     <form:label path="policyDescription" class="font-weight-bold">Repayment Policy Description</form:label>
                     <form:textarea path="policyDescription" class="form-control" id="policyDescription" rows="3"/>
+
                 </div>
 
 
@@ -70,7 +88,7 @@
 
                 <div class="form-group">
                     <form:label path="maxTenure" class="font-weight-bold">Maximum Tenure(Months)</form:label>
-                    <form:input path="maxTenure" type="number" class="form-control" id="maxTenure"/>
+                    <form:input path="maxTenure" onkeypress="return event.charCode >= 48" min="0" onchange="document.getElementById('defaultTenure').max=this.value;" type="number" class="form-control" id="maxTenure"/>
                 </div>
 
 
@@ -88,14 +106,12 @@
 
                     <div class="form-group">
                         <form:label path="policyName" class="font-weight-bold required-field">Repayment Policy Name</form:label>
-                        <form:input path="policyName" type="text" class="form-control" id="policyName"/>
+                        <form:input path="policyName" type="text" class="form-control" id="policyName" required="true"  pattern="[A-Za-z].{3,30}" title="Only Alphanumeric characters allowed. Length should be from 3 to 30."/>
                     </div>
-
-
 
                     <div class="form-group">
                         <form:label path="date" class="font-weight-bold required-field">Instalment Due Date</form:label>
-                        <form:input path="date" type="date" class="form-control" id="date" placeholder="dd/MM/yyyy" />
+                        <form:input path="date" type="date" class="form-control" id="date" placeholder="dd/MM/yyyy" required="true" />
                     </div>
 
                     <br>
@@ -103,17 +119,17 @@
 
                     <div class="form-group">
                         <form:label path="minTenure" class="font-weight-bold">Minimum Tenure(Months)</form:label>
-                        <form:input path="minTenure" type="number" class="form-control" id="minTenure"/>
+                        <form:input path="minTenure" onkeypress="return event.charCode >= 48" min="0" onchange="document.getElementById('defaultTenure').min=this.value;" type="number" class="form-control" id="minTenure"/>
                     </div>
 
                     <div class="form-group">
                         <form:label path="defaultTenure" class="font-weight-bold">Default Tenure(Months)</form:label>
-                        <form:input path="defaultTenure" type="number" class="form-control" id="defaultTenure"/>
+                        <form:input path="defaultTenure" onkeypress="return event.charCode >= 48" min="0" type="number" class="form-control" id="defaultTenure"/>
                     </div>
 
                     <div class="form-group">
                         <form:label path="defaultRate" class="font-weight-bold required-field">Default Rate</form:label>
-                        <form:input path="defaultRate" type="number" class="form-control" id="defaultRate" step=".01"/>
+                        <form:input path="defaultRate" onkeypress="return event.charCode >= 48" min="0" type="number" class="form-control" id="defaultRate" step=".01"/>
                     </div>
             </div>
         </div>

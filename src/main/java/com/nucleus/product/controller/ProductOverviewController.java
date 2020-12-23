@@ -1,34 +1,48 @@
 package com.nucleus.product.controller;
 
 import com.nucleus.login.logindetails.LoginDetailsImpl;
-import com.nucleus.product.dao.ProductDAO;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-@RestController
+
+/**
+ * <p> Controller for the product overview page and associated checker/maker actions. </p>
+ */
+@Controller
 public class ProductOverviewController {
 
     @Autowired
     ProductService productService;
 
+
+    /**
+     * <p> Get Mapping for the product overview page. Sends a list of created products with the modelAndView for the
+     * datatable.
+     * </p>
+     * @return the modelAndView with the new product overview view.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/product" })
     public ModelAndView productOverview() {
         ModelAndView modelAndView = new ModelAndView("views/product/productOverview");
-        LoginDetailsImpl details = new LoginDetailsImpl();
-        List<Product> productList = productService.getProductList();
-        modelAndView.addObject("products", productList);
+        modelAndView.addObject("products", productService.getProductList());
         return modelAndView;
     }
 
+
+    /**
+     * <p> Get Mapping for the product approval page. Retrieves the product by its Id and attaches it to the returned model.
+     * </p>
+     * @param String productId id of the product that needs to be approved
+     * @return the modelAndView with the product approval page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/product/{productId}")
     public ModelAndView productViewById(@PathVariable(value = "productId") String productId){
@@ -38,6 +52,13 @@ public class ProductOverviewController {
         return modelAndView;
     }
 
+
+    /**
+     * <p>Post mapping for the product approval/rejection page. Receives the productId as a path variable to retrieve
+     * the product from the dao. Receives the action and updates the product's status depending on the action performed.
+     * </p>
+     * @return the modelAndView with the success or error page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(value = "/product/{productId}/update")
     public ModelAndView updateProductStatus(@PathVariable(value = "productId") String productId, @RequestParam("action") String action){
@@ -64,6 +85,13 @@ public class ProductOverviewController {
 
     }
 
+
+    /**
+     * <p> Get Mapping for delete product link. Returns either the success or error page depending on whether the product
+     * with the corresponding productId can be deleted.
+     * </p>
+     * @return the modelAndView with either the success or error page.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/product/{productId}/delete")
     public ModelAndView deleteProduct(@PathVariable(value = "productId") String productId){

@@ -6,19 +6,29 @@ import com.nucleus.receipt.model.Settlement;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@RestController
+
+/**
+ * <p> runs the receipt BOD process, which processes all approved receipts and settles their corresponding advices.</p>
+ */
+@Controller
 public class ReceiptBOD {
 
     @Autowired
     ReceiptService receiptService;
 
+
+    /**
+     * <p> Get mapping for running the receipt BOD process. returns a modelAndView showing the number of receipts
+     * processed </p>
+     * @return modelAndVew showing how many receipts were processed.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping(value = "/receiptBOD/run")
     public ModelAndView runReceiptBOD(){

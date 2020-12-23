@@ -7,14 +7,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@PropertySource("classpath:status.properties")
 public class ChargeDaoImpl implements ChargeDao{
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Value("${status.pending}")
+    private String pending;
 
     private Session getSession(){
         Session session;
@@ -37,8 +43,10 @@ public class ChargeDaoImpl implements ChargeDao{
                 session.save(charge);
                 session.getTransaction().commit();
                 return true;
-            } catch (HibernateException e){
-                e.printStackTrace();
+            } catch (Exception e){
+                System.out.println("*************************************");
+                System.out.println(e.getMessage());
+                System.out.println("*************************************");
                 session.getTransaction().rollback();
                 return false;
             }
@@ -54,7 +62,6 @@ public class ChargeDaoImpl implements ChargeDao{
             chargeList = session.createQuery("from NewCharge",NewCharge.class).getResultList();
             session.getTransaction().commit();
         }catch (Exception e) {
-            e.printStackTrace();
             chargeList = null;
         }
         return chargeList;
@@ -67,11 +74,10 @@ public class ChargeDaoImpl implements ChargeDao{
             Session session = getSession();
             session.beginTransaction();
             Query<NewCharge> query = session.createQuery("from NewCharge c where c.status=?1",NewCharge.class);
-            query.setParameter(1,"Pending");
+            query.setParameter(1,pending);
             chargeList = query.getResultList();
             session.getTransaction().commit();
         }catch (Exception e) {
-            e.printStackTrace();
             chargeList = null;
         }
         return chargeList;
@@ -115,22 +121,31 @@ public class ChargeDaoImpl implements ChargeDao{
 
     @Override
     public boolean updateCharge(NewCharge charge) {
-        boolean updateStatus;
-        try{
-            Session session = getSession();
+        try(Session session = getSession()) {
             session.beginTransaction();
-            session.update(charge);
-            session.getTransaction().commit();
-            updateStatus = true;
-        } catch (Exception exception) {
-            updateStatus = false;
-            exception.printStackTrace();
+            try {
+                NewCharge oldCharge = session.get(NewCharge.class, charge.getChargeCode());
+                oldCharge.setChargeDescription(charge.getChargeDescription());
+                oldCharge.setChargePaymentType(charge.getChargePaymentType());
+                oldCharge.setTransactionEvent(charge.getTransactionEvent());
+                oldCharge.setChargeType(charge.getChargeType());
+                oldCharge.setChargeAmount(charge.getChargeAmount());
+                oldCharge.setStatus(charge.getStatus());
+                oldCharge.setModifiedDate(LocalDate.now());
+                oldCharge.setModifiedBy(new LoginDetailsImpl().getUserName());
+                session.saveOrUpdate(oldCharge);
+                session.getTransaction().commit();
+                return true;
+            } catch (HibernateException e) {
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
         }
-        return updateStatus;
     }
 
     @Override
-    public void updateStatus(String chargeCode, String status) {
+    public boolean updateStatus(String chargeCode, String status) {
         try(Session session = getSession()) {
             session.beginTransaction();
             try {
@@ -140,9 +155,11 @@ public class ChargeDaoImpl implements ChargeDao{
                 charge.setAuthorizedBy(new LoginDetailsImpl().getUserName());
                 session.saveOrUpdate(charge);
                 session.getTransaction().commit();
+                return true;
             } catch (HibernateException e) {
                 e.printStackTrace();
                 session.getTransaction().rollback();
+                return false;
             }
         }
     }

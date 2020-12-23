@@ -40,10 +40,10 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/eligibilityparameter">Eligibility Parameter</a>
                         <sec:authorize access = "hasRole('MAKER')">
-                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge Maker</a>
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge</a>
                         </sec:authorize>
                         <sec:authorize access = "hasRole('CHECKER')">
-                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/checkerList">Charge Checker</a>
+                            <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/checkerList">Charge</a>
                         </sec:authorize>
                     </div>
                 </li>

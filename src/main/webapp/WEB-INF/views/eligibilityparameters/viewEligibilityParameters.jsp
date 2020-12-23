@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file = "/navbar.jsp"%>
+<jsp:directive.include file = "/navbar.jsp" />
 <html>
 <head>
 <title>Eligibility Parameter Maker</title>
@@ -66,12 +66,12 @@
     		            <tr>
     		            <td>
                          <security:authorize access="hasRole('CHECKER')">
-                         <c:if test = "${parameter.status ne 'Saved'}">
+                         <c:if test = "${parameter.status == 'Pending'}">
                          <a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}">
                             ${parameter.parameterCode}
                          </a>
                          </c:if>
-                         <c:if test = "${parameter.status == 'Saved'}">
+                         <c:if test = "${parameter.status ne 'Pending'}">
                          ${parameter.parameterCode}
                          </c:if>
                          </security:authorize>
@@ -88,7 +88,12 @@
     		                <td><c:out value="${parameter.status}" /></td>
     		                <td><c:out value="${parameter.authorizedBy}" /></td>
     		                <sec:authorize access="hasRole('MAKER')">
+    		                <c:if test = "${parameter.status == 'Approved' or parameter.status == 'Rejected'}">
+    		                <td><a>Edit</a>  |  <a>Delete</a></td>
+    		                </c:if>
+    		                <c:if test = "${parameter.status == 'Saved' or parameter.status == 'Pending'}">
     		                <td><a href="<%= request.getContextPath()%>/main/edit/${parameter.parameterCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/main/delete/${parameter.parameterCode}">Delete</a></td>
+    		                </c:if>
     		                </sec:authorize>
     		                <sec:authorize access="hasRole('CHECKER')">
                             <td><a>Edit</a>  |  <a>Delete</a></td>
