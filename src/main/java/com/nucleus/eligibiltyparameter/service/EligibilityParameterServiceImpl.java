@@ -27,7 +27,7 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
      * @return parameterCode against which parameter is inserted
      */
     @Override
-    public String insertParameter(EligibilityParameter eligibilityParameter){
+    public boolean insertParameter(EligibilityParameter eligibilityParameter){
         return eligibilityParameterDao.insertParameter(eligibilityParameter);
     }
 
@@ -47,7 +47,7 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
      * @return parameter code against which eligibility parameter is deleted
      */
     @Override
-    public String deleteEligibilityParameter(String parameterCode){
+    public boolean deleteEligibilityParameter(String parameterCode){
         return eligibilityParameterDao.deleteEligibilityParameter(parameterCode);
     }
 
@@ -72,5 +72,14 @@ public class EligibilityParameterServiceImpl implements EligibilityParameterServ
     public boolean updateStatus(String parameterCode,String newStatus,String authorizedBy)
     {
         return eligibilityParameterDao.updateStatus(parameterCode,newStatus,authorizedBy);
+    }
+
+    /**
+     * Fetching list of all eligibility parameters whose status is approved
+     * @return - list of all eligibility parameters whose status is approved
+     */
+    @Override
+    public List<EligibilityParameter> getApprovedParameters(){
+        return eligibilityParameterDao.getApprovedParameters();
     }
 }

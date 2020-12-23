@@ -58,7 +58,7 @@ public class EligibilityPolicyController {
     public ModelAndView newEligibilityPolicy() {
         ModelAndView modelAndView = new ModelAndView();
         EligibilityPolicy eligibilityPolicy = new EligibilityPolicy();
-        List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+        List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
         modelAndView.addObject("allEligibilityParameterList", eligibilityParameterList);
         modelAndView.setViewName("views/eligibilitypolicies/newEligibilityPolicy");
@@ -86,7 +86,7 @@ public class EligibilityPolicyController {
                                        Model model) {
         //Annotation based data validation:
         if (result.hasErrors()) {
-            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
             eligibilityPolicy.setEligibilityParameterCodes(new String[]{});
             return "views/eligibilitypolicies/newEligibilityPolicy";
@@ -186,7 +186,7 @@ public class EligibilityPolicyController {
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         List<EligibilityParameter> existingParameterList = eligibilityPolicy.getEligibilityParameterList();
-        List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getAll();
+        List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getApprovedParameters();
         model.addAttribute("eligibilityPolicy", eligibilityPolicy);
         model.addAttribute("existingParameterList", existingParameterList);
         model.addAttribute("allEligibilityParameterList", allEligibilityParameterList);
@@ -215,7 +215,7 @@ public class EligibilityPolicyController {
 
         //Annotation based data validation:
         if (result.hasErrors()) {
-            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
             EligibilityPolicy eligibilityPolicyOld = eligibilityPolicyService.getOneEligibilityPolicy(eligibilityPolicy.getPolicyCode());
             List<EligibilityParameter> existingParameterList = eligibilityPolicyOld.getEligibilityParameterList();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
