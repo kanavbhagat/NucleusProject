@@ -194,9 +194,16 @@ public class NewProductController {
      * @return modelAndView with the attributes attached.
      */
     private ModelAndView addAttributes(ModelAndView modelAndView){
-        modelAndView.addObject("eligibilityPolicies", eligibilityPolicyService.getAllEligibilityPolicies());
-        modelAndView.addObject("repaymentPolicies", repaymentPolicyService.getRepaymentPolicyList());
-        modelAndView.addObject("chargePolicies", chargePolicyService.getPolicyList());
+        List<EligibilityPolicy> epolicies = eligibilityPolicyService.getAllEligibilityPolicies();
+        List<RepaymentPolicy> rpolicies = repaymentPolicyService.getRepaymentPolicyList();
+        List<ChargePolicy> cpolicies = chargePolicyService.getPolicyList();
+        epolicies.removeIf(ep -> !"Approved".equals(ep.getStatus()));
+        rpolicies.removeIf(rp -> !"Approved".equals(rp.getStatus()));
+        cpolicies.removeIf(cp -> !"Approved".equals(cp.getStatus()));
+
+        modelAndView.addObject("eligibilityPolicies", epolicies);
+        modelAndView.addObject("repaymentPolicies", rpolicies);
+        modelAndView.addObject("chargePolicies", cpolicies);
         modelAndView.addObject("productTypes", getProductTypes());
         return modelAndView;
     }

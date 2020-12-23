@@ -127,10 +127,10 @@
                         <td>Charge Policy</td>
                         <td>
                             <select class="form-control">
-                                <option value="-"  disabled="disabled" selected> ${product.chargeCodePolicy.policyCode} </option>s
+                                <option value="-"  disabled="disabled" selected> ${product.chargeCodePolicy.chargePolicyCode} </option>s
                             </select>
                         </td>
-                        <td><input class="form-control" id="chargeDesc" type="text" value="${product.chargeCodePolicy.policyDescription}" disabled></td>
+                        <td><input class="form-control" id="chargeDesc" type="text" value="${product.chargeCodePolicy.chargePolicyDesc}" disabled></td>
                     </c:if>
                     <c:if test="${empty product.chargeCodePolicy}">
                         <td>Charge Policy</td>
