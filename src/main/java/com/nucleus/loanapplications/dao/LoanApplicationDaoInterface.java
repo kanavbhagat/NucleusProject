@@ -7,5 +7,5 @@ public interface LoanApplicationDaoInterface {
     boolean addApplication(LoanApplications loanApplications);
     public List<LoanApplications> getLoanApplicationList();
     public LoanApplications getLoanApplicationId(Integer id);
-
+    public boolean deleteLoanApplication(Integer id) ;
 }

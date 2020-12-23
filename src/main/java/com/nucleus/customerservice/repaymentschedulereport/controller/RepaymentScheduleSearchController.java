@@ -38,7 +38,7 @@ public class RepaymentScheduleSearchController {
     public ModelAndView showRepaymentScheduleSubmit(@Valid @ModelAttribute RepaymentSchedule repaymentSchedule,
                                                     BindingResult result)
     {
-        int loanApplicationNumber= repaymentSchedule.getLoanApplicationNumber();
+        int loanApplicationNumber= repaymentSchedule.getLoanApplicationNumber().getLoanApplicationNumber();
         List<RepaymentSchedule> rslist=repaymentScheduleService.getRepaymentScheduleReport(loanApplicationNumber);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/customerservice/RepaymentScheduleReport");

@@ -3,6 +3,7 @@ package com.nucleus.charge.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -13,52 +14,53 @@ public class NewCharge {
 
     @NotEmpty(message = "Charge code cannot be empty.")
     @Id
-    @Column(name="ChargeCode", nullable = false, length = 10)
+    @Column(name="charge_code", nullable = false, length = 10)
     private String chargeCode;
 
     @NotEmpty(message = "Charge Code Name cannot be empty.")
     @Pattern(regexp="^[a-zA-Z ]+$", message="Only Alphabets are allowed")
-    @Column(name = "ChargeCodeName", unique = true, nullable = false, length = 20)
+    @Column(name = "charge_code_name", unique = true, nullable = false, length = 20)
     private String chargeCodeName;
 
-    @Column(name = "ChargePolicyDesc", length = 200)
+    @Column(name = "charge_policy_desc", length = 200)
     private String chargeDescription;
 
     @NotEmpty(message = "Please select a Transaction Event")
-    @Column(name = "TransactionEvent", length = 40)
+    @Column(name = "transaction_event", length = 40)
     private String transactionEvent;
 
     @NotEmpty(message = "Please select charge payment type")
-    @Column(name = "ChargePaymentType", nullable = false, length = 20)
+    @Column(name = "charge_payment_type", nullable = false, length = 20)
     private String chargePaymentType;
 
     @NotEmpty(message = "Please select a charge type")
-    @Column(name = "ChargeType", nullable = false, length = 20)
+    @Column(name = "charge_type", nullable = false, length = 20)
     private String chargeType;
 
     @Digits(integer = 10, fraction = 2, message = "Charge Amount should be of 0000000000.00")
-    @Column(name = "ChargeAmount")
+    @DecimalMin(value = "0.0",message = "Charge cannot be negative")
+    @Column(name = "charge_amount")
     private double chargeAmount;
 
-    @Column
+    @Column(name = "create_date")
     private LocalDate createDate;
 
-    @Column(length = 30)
+    @Column(name = "created_by", length = 30)
     private String createdBy;
 
-    @Column
+    @Column(name = "modified_date")
     private LocalDate modifiedDate;
 
-    @Column(length = 30)
+    @Column(name = "modified_by", length = 30)
     private String modifiedBy;
 
-    @Column
+    @Column(name = "authorized_date")
     private LocalDate authorizedDate;
 
-    @Column(length = 30)
+    @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
 
-    @Column(length = 50)
+    @Column(name = "status", length = 50)
     private String status;
 
     public String getChargeCode() {

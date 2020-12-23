@@ -7,7 +7,6 @@
 <head>
     <meta charset="utf-8">
     <title>Edit Product</title>
-    <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -88,18 +87,18 @@
 
                         <div class="form-group">
                             <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
-                            <form:input cssClass="form-control" value="${product1.productCode}" path="productCode"/>
+                            <form:input cssClass="form-control" path="productCode"/>
                             <form:errors path="productCode" cssClass="error"/>
                         </div>
 
                         <div class="form-group">
                             <form:label path="productDescription" cssClass="font-weight-bold">Product Description:</form:label>
-                            <form:textarea rows="3" cssClass="form-control" value="${product1.productDescription}" path="productDescription"/>
+                            <form:textarea rows="3" cssClass="form-control" path="productDescription"/>
                         </div>
 
                         <div class="form-group">
                             <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
-                            <form:input type="number" cssClass="form-control" value="${product1.maxExposureAmount}" path="maxExposureAmount"/>
+                            <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
                             <form:errors path="maxExposureAmount" cssClass="error"/>
                         </div>
 
@@ -108,7 +107,7 @@
 
                         <div class="form-group">
                             <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
-                            <form:input cssClass="form-control" path="productName" value="${product1.productName}"/>
+                            <form:input cssClass="form-control" path="productName"/>
                             <form:errors path="productName" cssClass="error"/>
                         </div>
 
@@ -173,7 +172,7 @@
                             <td>
                                 <form:select  path="chargeCodePolicyString" cssClass="form-control">
                                     <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
-                                    <form:options items="${chargePolicies}" />
+                                    <form:options items="${chargePolicies}" itemLabel="chargePolicyName" itemValue="chargePolicyCode"/>
                                 </form:select>
                             </td>
                             <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
@@ -235,8 +234,8 @@
                     <c:if test="${!empty chargePolicies}">
                     <c:forEach var="policy" items="${chargePolicies}">
                          <tr>
-                          <td>${policy.policyCode}</td>
-                          <td id=${policy.policyCode}>${policy.policyDescription}</td>
+                          <td>${policy.chargePolicyCode}</td>
+                          <td id=${policy.chargePolicyCode}>${policy.chargePolicyDesc}</td>
                          </tr>
                         </c:forEach>
                     </c:if>

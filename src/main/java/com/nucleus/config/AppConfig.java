@@ -68,40 +68,19 @@ public class AppConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 
-        // Jigme's Oracle db credentials
-       // ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-
-       /* ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-        ds.setUsername("nsbt");
-        ds.setPassword("qwerty");
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("c##asaf");
-        ds.setPassword("asaf");
-=======
-=======
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("c##asaf");
-        ds.setPassword("asaf");
-
-        */
 
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
 
-//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-//         ds.setUsername("c##username");
-//         ds.setPassword("pwd");
-
-//
+         /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+         ds.setPassword("pwd");*/
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("sys as sysdba");
 //       ds.setPassword("gyanesh10");
 
-         /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+        /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
          ds.setUsername("c##username");
 <<<<<<< HEAD
          ds.setPassword("pwd");
@@ -116,27 +95,26 @@ public class AppConfig {
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//       ds.setUsername("megha");
-//       ds.setPassword("megha");
 
 //         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //         ds.setUsername("megha");
 //         ds.setPassword("megha");
 
-
-
           /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+=======
+>>>>>>> b62af43ac6b34c9b9dbf921806e793f75f73301b
+
+        /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
              ds.setUsername("system");
              ds.setPassword("hemant12345");*/
 
-        /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+       /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
         ds.setUsername("sys as sysdba");
         ds.setPassword("gkul0289");*/
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+       /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
         ds.setUsername("c##asaf");
-        ds.setPassword("asaf");
+        ds.setPassword("asaf");*/
         return ds;
 
     }

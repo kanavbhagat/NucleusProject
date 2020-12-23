@@ -19,11 +19,21 @@ public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO{
     @Autowired
     private SessionFactory sessionFactory;
 
+    private Session getSession(){
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException E){
+            session = sessionFactory.openSession();
+        }
+        return session;
+    }
+
     @Override
     public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) {
 
         try {
-            Session session = sessionFactory.openSession();
+            Session session = getSession();
             session.beginTransaction();
             session.save(repaymentSchedule);
             session.getTransaction().commit();
