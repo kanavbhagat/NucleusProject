@@ -1,6 +1,7 @@
 package com.nucleus.repaymentschedule.model;
 
 import com.nucleus.loanapplications.model.LoanApplications;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "repayment_schedule")
+@Check(constraints = "billFlag IN ('Y' ,'N')")
 public class RepaymentSchedule implements Serializable {
 
     @Id
