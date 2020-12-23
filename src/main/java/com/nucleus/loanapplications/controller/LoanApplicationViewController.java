@@ -43,7 +43,7 @@ public class LoanApplicationViewController {
     @PreAuthorize("hasRole ('ROLE_MAKER')")
     public ModelAndView editLoanApplication(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
-        ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationChecker");
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationMaker");
         modelAndView.addObject("loanApplicationNumber",loanApplications.getLoanApplicationNumber());
         modelAndView.addObject("loanApplication",loanApplications);
         return modelAndView;

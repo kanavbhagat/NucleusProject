@@ -79,7 +79,7 @@
                                             <td>${loan.loanApplicationNumber}</td>
                                          </sec:authorize>
                                          <sec:authorize access="hasRole('CHECKER')">
-                                            <td><a href = "{checkrl}">${loan.loanApplicationNumber}</a></td>
+                                            <td><a href = "{checkUrl}">${loan.loanApplicationNumber}</a></td>
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
