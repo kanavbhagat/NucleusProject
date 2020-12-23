@@ -47,14 +47,12 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         List<RepaymentSchedule> list = new ArrayList<>();
         /* Retrieving all the entries of Repayment Schedule for given Loan Application
            in the list. */
-        try{
-            Session session = getSession();
+        try(Session session = getSession()) {
             session.beginTransaction();
             Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplicationNumber=?1", RepaymentSchedule.class);
             query.setParameter(1, loanApplicationNumber);
             list = query.getResultList();
             session.getTransaction().commit();
-            session.close();
         }catch (Exception exception){
             exception.printStackTrace();
         }
@@ -72,14 +70,12 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     public boolean updateStatus(LoanApplications loanApplication, String newStatus){
         boolean updateStatus;
         /* Updating the status of the Loan Application with newStatus. */
-        try{
-            Session session = getSession();
+        try(Session session = getSession()){
             session.beginTransaction();
             loanApplication.setStatus(newStatus);
             session.update(loanApplication);
             session.getTransaction().commit();
             updateStatus = true;
-            session.close();
         }catch (Exception exception) {
             updateStatus = false;
             exception.printStackTrace();
