@@ -23,10 +23,10 @@
 		<div class="jumbotron text-center" style="background-color:rgba(141, 181, 150, 0.3);">
 
               <%-- Insert Main Message Below --%>
-              <h1 class="display-4"> Eligibility Parameter added successfully</h1>
+              <h1 class="display-4"> Eligibility Parameter ${status} successfully</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Your Eligibility Parameter has been added successfully.</strong></p>
+              <p class="lead"><strong>Your Eligibility Parameter has been ${status} successfully.</strong></p>
 
               <hr>
 

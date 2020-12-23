@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <p> Controller handling the serving of loan summary seach, and the customerservice home.  </p>
+ */
 @Controller
 public class CustomerLoanSearchController {
 
@@ -22,7 +26,11 @@ public class CustomerLoanSearchController {
     @Autowired
     LoanApplicationService loanApplicationService;
 
-    // Go to customerservice loan search page.
+
+    /**
+     * <p> Get mapping for the customer loan service loan summary page.  </p>
+     * @return returns a modelAndView of the customerservice search.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping("/customerLoanSearch")
     public ModelAndView customerLoanSearch(){
@@ -32,7 +40,11 @@ public class CustomerLoanSearchController {
 
     }
 
-    // Go to Customer Service Homepage
+
+    /**
+     * <p> Get mapping for the customer service home page. </p>
+     * @return returns a modelAndView of the customerservice home page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping("/customerServiceHome")
     public ModelAndView getCustomerServiceHome(){
@@ -42,7 +54,13 @@ public class CustomerLoanSearchController {
 
     }
 
-    // receive loan disbursal search details, and perform search accordingly.
+
+    /**
+     * <p> Post mapping for the loan summary search. </p>
+     * @param String customerId customer id to search via
+     * @param Integer loanApplicationNumber loan application number to search for.
+     * @return returns a modelAndView of the search results, or an error page if no results found.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @PostMapping(value = "/customerLoanSearch")
     public @ResponseBody ModelAndView customerLoanDetail(@RequestParam(value="customerCode", required = false) String customerId,
@@ -56,10 +74,9 @@ public class CustomerLoanSearchController {
             // avoid sending nothing to model and view. This case *should* never happen.
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
         }
 
-        if(customerId==null || customerId.isEmpty()){
+        else if(customerId==null || customerId.isEmpty()){
             // get loan application details and corresponding customer details.
             LoanApplications loanApplication = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
             if(loanApplication!=null){
@@ -69,10 +86,9 @@ public class CustomerLoanSearchController {
             System.out.println(customers.size());
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
         }
 
-        if(loanApplicationNumber==null){
+        else if(loanApplicationNumber==null){
             // get customer details and all loans corresponding to customer.
             Customer customer = customerService.getCustomer(customerId);
             if(customer!=null){
@@ -82,20 +98,27 @@ public class CustomerLoanSearchController {
             loanApplications.removeIf(la -> !customerId.equals(la.getCustomerCode().getCustomerCode()));
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
-            return mv;
+        }
+        else{
+            // if both customer code and loan application number are present.
+            LoanApplications la = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
+            Customer customer = customerService.getCustomer(customerId);
+            if(customer!=null){
+                customers.add(customer);
+            }
+            if(la!=null && customerId.equals(la.getCustomerCode().getCustomerCode())){
+                loanApplications.add(la);
+            }
+            mv.addObject("customer", customers);
+            mv.addObject("loanApplications", loanApplications);
         }
 
-        // if both customer code and loan application number are present.
-        LoanApplications la = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
-        Customer customer = customerService.getCustomer(customerId);
-        if(customer!=null){
-            customers.add(customer);
+        if(customers.isEmpty() || loanApplications.isEmpty()){
+            mv.setViewName("views/customerservice/searchError");
+            mv.addObject("messageHeader", "No results found");
+            mv.addObject("messageBody", "No results were found matching your criteria. Please try again");
         }
-        if(la!=null){
-            loanApplications.add(la);
-        }
-        mv.addObject("customer", customers);
-        mv.addObject("loanApplications", loanApplications);
+
         return mv;
     }
 }

@@ -13,7 +13,12 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import com.nucleus.repaymentschedule.service.RepaymentScheduleServiceImpl;
 
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -24,7 +29,8 @@ import java.util.List;
 @RestController
 public class NewLoanApplicationController {
 
-
+    @Autowired
+    RepaymentScheduleServiceImpl rs;
 
     @Autowired
     NewLoanApplicationService newLoanApplicationService;
@@ -41,6 +47,7 @@ public class NewLoanApplicationController {
         binder.registerCustomEditor(LocalDate.class , new DateEditor());
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/newLoanApplication")
     public ModelAndView addNewLoanApplication(){
         ModelAndView modelAndView= new ModelAndView("views/loanapplication/loanInformation");
@@ -48,6 +55,7 @@ public class NewLoanApplicationController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newLoanApplication")
     public ModelAndView addCustomer(@Valid @ModelAttribute LoanApplications loanApplications , HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -64,12 +72,14 @@ public class NewLoanApplicationController {
         customer.setLoanApplications(loanApplications1);
         loanApplications.setStatus("Pending");
 
-
      /*   loanApplications.setProductCode(product);*/
 
        boolean a =  newCustomerService.createNewCustomer(customer);
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
+        rs =new RepaymentScheduleServiceImpl();
+        rs.addRepaymentSchedule(loanApplications);
+
 
 
         ModelAndView modelAndView = new ModelAndView("views/customerInfo/success");

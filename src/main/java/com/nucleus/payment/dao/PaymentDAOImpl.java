@@ -62,7 +62,8 @@ public class PaymentDAOImpl implements PaymentDAO{
     }
 
 
-    public void updatePayment(Payment payment){
+    public boolean updatePayment(Payment payment){
+        boolean updateStatus = false;
         try {
             Session session = getSession();
             session.beginTransaction();
@@ -70,23 +71,12 @@ public class PaymentDAOImpl implements PaymentDAO{
             session.update(payment);
             session.getTransaction().commit();
             session.close();
+            updateStatus = true;
         }
         catch (HibernateException e){
             e.printStackTrace();
         }
-
-//        Payment existingPayment = getPaymentById(payment.getLoanApplicationNumber());
-//        existingPayment.setPaymentCode(payment.getPaymentCode());
-//        existingPayment.setPaymentAmount(payment.getPaymentAmount());
-//        existingPayment.setPaymentDate(payment.getPaymentDate());
-//        existingPayment.setPayoutBankAccount(payment.getPayoutBankAccount());
-//        existingPayment.setRemarks(payment.getRemarks());
-//        existingPayment.setPaymentChannel(payment.getPaymentChannel());
-//
-//        Session session = getSession();
-//        session.beginTransaction();
-//        session.update(existingPayment);
-//        session.getTransaction().commit();
+        return updateStatus;
     }
 
     public List<Payment> getPaymentsList(){
@@ -130,19 +120,5 @@ public class PaymentDAOImpl implements PaymentDAO{
         return deleteStatus;
     }
 
-    public void updateApprovedBy(int loanID, String user){
-        try {
-            Session session = getSession();
-            session.beginTransaction();
-            Payment payment = session.get(Payment.class, loanID);
-            payment.setReviewedBy(user);
-            session.update(payment);
-            session.getTransaction().commit();
-            session.close();;
-        }
-        catch (HibernateException e){
-            e.printStackTrace();
-        }
-    }
 
 }
