@@ -64,7 +64,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.close();
         } catch (Exception exception) {
             success=false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return success;
     }
@@ -87,6 +87,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.close();
         } catch (Exception exception) {
             eligibilityParameter = null;
+            System.out.println(exception.getMessage());
         }
         return eligibilityParameter;
     }
@@ -109,7 +110,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.close();
         } catch (Exception exception) {
             success=false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return success;
     }
@@ -121,42 +122,46 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
      */
     @Override
     public boolean editParameter(EligibilityParameter eligibilityParameter) {
-        try {
-            Session session = getSession();
-            session.beginTransaction();
+        if(eligibilityParameter!=null) {
+            try {
+                Session session = getSession();
+                session.beginTransaction();
 
-            Query query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
-                    "e.parameterDescription = ?2 , e.minValue = ?3 , e.maxValue = ?4 , e.modifiedBy = ?5 ," +
-                    "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8");
+                Query query1 = session.createQuery("update EligibilityParameter e set e.parameterName = ?1 , " +
+                        "e.parameterDescription = ?2 , e.minValue = ?3 , e.maxValue = ?4 , e.modifiedBy = ?5 ," +
+                        "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8");
 
-            String name = eligibilityParameter.getParameterName();
-            String desc = eligibilityParameter.getParameterDescription();
-            double min = eligibilityParameter.getMinValue();
-            double max = eligibilityParameter.getMaxValue();
-            String modified = eligibilityParameter.getModifiedBy();
-            String status = eligibilityParameter.getStatus();
-            String code = eligibilityParameter.getParameterCode();
+                String name = eligibilityParameter.getParameterName();
+                String desc = eligibilityParameter.getParameterDescription();
+                double min = eligibilityParameter.getMinValue();
+                double max = eligibilityParameter.getMaxValue();
+                String modified = eligibilityParameter.getModifiedBy();
+                String status = eligibilityParameter.getStatus();
+                String code = eligibilityParameter.getParameterCode();
 
-            query1.setParameter(1, name);
-            query1.setParameter(2, desc);
-            query1.setParameter(3, min);
-            query1.setParameter(4, max);
-            query1.setParameter(5, modified);
-            query1.setParameter(6, LocalDate.now());
-            query1.setParameter(7, status);
-            query1.setParameter(8, code);
+                query1.setParameter(1, name);
+                query1.setParameter(2, desc);
+                query1.setParameter(3, min);
+                query1.setParameter(4, max);
+                query1.setParameter(5, modified);
+                query1.setParameter(6, LocalDate.now());
+                query1.setParameter(7, status);
+                query1.setParameter(8, code);
 
-            query1.executeUpdate();
+                query1.executeUpdate();
 
 
-            session.getTransaction().commit();
-            session.close();
-        } catch (Exception exception) {
-            return false;
-
+                session.getTransaction().commit();
+                session.close();
+                return true;
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+                return false;
+            }
         }
-        return true;
-
+        else {
+            return false;
+        }
     }
 
     /**
@@ -181,6 +186,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.close();
         } catch (Exception exception) {
             updateStatus = false;
+            System.out.println(exception.getMessage());
         }
         return updateStatus;
     }
@@ -202,6 +208,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.close();
         } catch (Exception exception) {
             eligibilityParameterList = null;
+            System.out.println(exception.getMessage());
         }
         return eligibilityParameterList;
 
