@@ -79,9 +79,8 @@
                                             <td>${loan.loanApplicationNumber}</td>
                                          </sec:authorize>
                                          <sec:authorize access="hasRole('CHECKER')">
-                                            <td><a href = "{editUrl}">${loan.loanApplicationNumber}</a></td>
-                                         </sec:authorize>
-                                         <td>${loan.customerCode.customerCode}</td>
+                                            <td><a href = "<%= request.getContextPath()%>/charges/${loan.loanApplicationNumber}">${loan.loanApplicationNumber}</a></td>
+                                         </sec:authorize>                                         <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
                                          <td></td>
                                          <td></td>
@@ -92,11 +91,11 @@
                                             <c:if test = "${loan.status == 'Approved'}">
                                                  <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                                             </c:if>
-                                            <c:if test = "$loan{.status != 'Approved'}">
+                                            <c:if test = "${loan.status != 'Approved'}">
                                                 <td><a href="${editUrl}">Edit</a> | <a href="${deleteUrl}">Delete</a></td>
                                             </c:if>
                                         </sec:authorize>
-                                        <sec:authorize access="hasRole('CHECKER')">
+                                                <sec:authorize access="hasRole('CHECKER')">
                                              <c:if test = "${loan.status == 'Approved'}">
                                                  <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                                              </c:if>
