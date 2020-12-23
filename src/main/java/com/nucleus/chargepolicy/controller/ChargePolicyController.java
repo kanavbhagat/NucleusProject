@@ -70,6 +70,8 @@ public class ChargePolicyController {
             } else {
                 chargePolicy.setStatus("Pending");
             }
+
+            System.out.println( "   *(*******  " + chargePolicy.getCharge().getChargeCode());
             chargePolicy.setCreatedDate(String.valueOf(LocalDate.now()));
             chargePolicy.setCreatedBy(getPrincipal());
             System.out.println("Inserted by " + getPrincipal());
@@ -81,41 +83,19 @@ public class ChargePolicyController {
                 return "views/chargepolicy/chargePolicy";
             }
             else if(status == 1){
-                model.put("message", "Saved Successfully");
-                return "views/chargepolicy/Success";
+                model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
+                model.put("status", "saved");
+                return "views/chargepolicy/chargepolicysuccess";
             }
 
         }
         return "views/chargepolicy/chargePolicy";
     }
-    @PostMapping(value = {"/newChargePolicySuccess"})
-    public String getFormDataPostSuccess(@Valid @ModelAttribute ChargePolicy chargePolicy,BindingResult bindingResult,@RequestParam("action")String action,ModelMap model){
-        System.out.println("in getForm Data");
-        if(bindingResult.hasErrors()){
-            System.out.println("Error...........................................................");
-            List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
-            model.put("chargeCodeList",chargeCodeList);
-            return "views/chargepolicy/newChargePolicySuccess";
-        }
-        else{
-            if(action.equalsIgnoreCase("save")) {
-                chargePolicy.setStatus("Inactive");
-            } else  {
-                chargePolicy.setStatus("Pending");
-            }
-            this.chargePolicyService.insert(chargePolicy);
-            return "redirect:/chargePolicy/newChargePolicySuccess";
-        }
-
-    }
-
-
 
     @GetMapping(value = {"/searchScreen"})
     public String showAllEligibilityPolicies(ModelMap modelMap) {
         List<ChargePolicy> chargePolicyList = new ArrayList<ChargePolicy>();
         chargePolicyList.addAll(this.chargePolicyService.getPolicyList());
-        List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
         ChargePolicy chargePolicy = new ChargePolicy();
         modelMap.put("chargePolicy",chargePolicy);
         modelMap.put("chargePolicyList",chargePolicyList);
@@ -124,11 +104,11 @@ public class ChargePolicyController {
     }
 
 
-    @PostMapping(value = "/newChargePolicy/getCharge", produces = "application/json")
+    @PostMapping(value ={ "/newChargePolicy/getCharge", "edit/newChargePolicy/getCharge"}, produces = "application/json")
     public @ResponseBody NewCharge getCharge(@RequestBody NewCharge charge) {
         // getCharge from the Model.
         // Take the chargeCode go to the db get the chargeCodeName and fill it.
-        System.out.println("In getCharge Controllerrrr");
+        System.out.println("In getCharge Controllerrrr with  " + charge.getChargeCode());
         charge.setChargeCodeName(getChargeCodeName(charge.getChargeCode()));
 
         return charge;
@@ -141,6 +121,7 @@ public class ChargePolicyController {
         ChargePolicy chargePolicy = chargePolicyService.getChargePolicy(chargePolicyCode);
         System.out.println("Charge Policy Name : - " + chargePolicy.getChargePolicyName());
         modelAndView.addObject("chargePolicyForApproval", chargePolicy);
+        modelAndView.addObject("chargeCodeName", getChargeCodeName(chargePolicy.getCharge().getChargeCode()));
         modelAndView.setViewName("views/chargepolicy/chargePolicyApprovalScreen");
         return modelAndView;
     }
@@ -149,21 +130,27 @@ public class ChargePolicyController {
 
         ModelAndView modelAndView = new ModelAndView();
         ChargePolicy chargePolicy = chargePolicyService.getChargePolicy(chargePolicyCode);
-        System.out.println("Charge Policy Code : - " + chargePolicy.getChargeCode());
+        System.out.println("Charge Policy Code : - " + chargePolicy.getChargePolicyCode());
         List<String> chargeCodeList =  this.chargePolicyService.getChargeCodesList();
-        chargePolicy.setChargeCodeName(getChargeCodeName(chargePolicy.getChargeCode()));
+
         modelAndView.addObject("chargeCodeList",chargeCodeList);
         modelAndView.addObject("chargePolicyForEdit", chargePolicy);
-        modelAndView.addObject("chargePolicySelected", chargePolicy.getChargeCode());
+        modelAndView.addObject("chargePolicySelected", chargePolicy.getCharge().getChargeCode());
+       // System.out.println( "Charge Code " + chargePolicy.getChargeCode());
+        String chargeCodeName = this.chargePolicyService.getChargeCodeName(chargePolicy.getCharge().getChargeCode());
+        System.out.println("Charge Code NAme"+ chargeCodeName);
+        modelAndView.addObject("chargeCodeName", chargeCodeName);
         modelAndView.setViewName("views/chargepolicy/chargePolicyEditScreen");
         return modelAndView;
     }
     @GetMapping(value = {"/delete/{chargePolicyCode}"})
-    public String deleteChargePolicyCode(@PathVariable("chargePolicyCode") String chargePolicyCode) {
+    public ModelAndView deleteChargePolicyCode(@PathVariable("chargePolicyCode") String chargePolicyCode) {
         ModelAndView modelAndView = new ModelAndView();
         chargePolicyService.deleteChargePolicy(chargePolicyCode);
-
-        return "redirect:/chargePolicy/searchScreen";
+        modelAndView.addObject("chargePolicyCode", chargePolicyCode);
+        modelAndView.addObject("status","deleted");
+        modelAndView.setViewName("views/chargepolicy/chargepolicysuccess");
+        return modelAndView;
     }
 
     @PostMapping(value = {"/updateStatus/{chargePolicyCode}"})
@@ -181,13 +168,18 @@ public class ChargePolicyController {
         return "redirect:/chargePolicy/searchScreen";
     }
     @PostMapping(value = {"/updateEntry/{chargePolicyCode}"})
-    public String updateEntry(@PathVariable("chargePolicyCode") String chargePolicyCode,@ModelAttribute ChargePolicy chargePolicy) {
-
+    public ModelAndView updateEntry(@PathVariable("chargePolicyCode") String chargePolicyCode,@ModelAttribute ChargePolicy chargePolicy) {
+        System.out.println("In update Entry");
+        ModelAndView modelAndView = new ModelAndView();
         chargePolicy.setCreatedDate(String.valueOf(LocalDate.now()));
         chargePolicy.setStatus(this.chargePolicyService.getChargePolicy(chargePolicyCode).getStatus());
         System.out.println("chargePolicy " + chargePolicy.getChargePolicyName());
+        chargePolicy.setModifiedBy(getPrincipal());
         this.chargePolicyService.updateEntry(chargePolicy,chargePolicyCode);
-        return "redirect:/chargePolicy/searchScreen";
+        modelAndView.addObject("status", "edited");
+        modelAndView.addObject("chargePolicyCode", chargePolicyCode);
+        modelAndView.setViewName("views/chargepolicy/chargepolicysuccess");
+        return modelAndView;
     }
 
     private String getPrincipal(){
