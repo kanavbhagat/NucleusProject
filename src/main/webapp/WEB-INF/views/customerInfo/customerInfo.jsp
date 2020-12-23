@@ -57,13 +57,6 @@ window.onload = function() {
     </header>
     <article>
         <spring:form class="font-weight-bold mb-5" modelAttribute="customer" method="post" >
-            <section>
-                <div class="row">
-                    <a class="col-lg-2 col-md-2 col-6">Customer Information</a>
-                    <a href="loanInformation.jsp" class="col-lg-2 col-md-2 col-6">Loan Information</a>
-
-                </div>
-            </section>
 
             <hr>
             <!--Personal Information-->

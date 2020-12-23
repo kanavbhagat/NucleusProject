@@ -6,5 +6,9 @@ import java.util.List;
 public interface LoanApplicationDaoInterface {
     boolean addApplication(LoanApplications loanApplications);
     public List<LoanApplications> getLoanApplicationList();
+    boolean updateApplication(LoanApplications loanApplications);
+    boolean removeApplication(LoanApplications loanApplications);
+    boolean removeApplication(int id);
+
 
 }

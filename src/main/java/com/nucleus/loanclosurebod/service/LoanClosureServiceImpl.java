@@ -1,5 +1,6 @@
 package com.nucleus.loanclosurebod.service;
 
+import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanclosurebod.database.LoanClosureDao;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class LoanClosureServiceImpl implements LoanClosureService {
@@ -54,7 +56,16 @@ public class LoanClosureServiceImpl implements LoanClosureService {
     }
 
     @Override
-    public void addDummyData() {
-        loanClosureDao.addDummyData();
+    public LoanApplications getLoanDetails(int loanApplicationNumber){
+        return loanClosureDao.getLoanDetails(loanApplicationNumber);
     }
+
+    @Override
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode){
+        return loanClosureDao.getCustomerLoanDetails(customerCode);
+    }
+//    @Override
+//    public void addDummyData() {
+//        loanClosureDao.addDummyData();
+//    }
 }

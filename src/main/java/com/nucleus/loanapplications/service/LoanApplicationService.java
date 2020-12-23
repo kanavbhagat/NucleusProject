@@ -11,9 +11,9 @@ import java.util.List;
 public class LoanApplicationService {
 
     @Autowired
-    LoanApplicationDAO loanApplicationDAO;
+    NewLoanApplicationService newLoanApplicationService;
 
     public List<LoanApplications> getAllLoanApplicationsList(){
-        return loanApplicationDAO.getLoanApplicationList();
+        return newLoanApplicationService.getLoanApplicationList();
     }
 }

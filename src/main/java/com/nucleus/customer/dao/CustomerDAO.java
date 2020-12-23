@@ -52,6 +52,8 @@ public class CustomerDAO implements CustomerDaoInterface{
         try(Session session=getSession()){
             session.beginTransaction();
             try {
+              /*  Customer customer1 = session.get(Customer.class , customer.getCustomerCode());
+                customer = customer1;*/
                 session.update(customer);
                 session.getTransaction().commit();
                 return true;
@@ -126,5 +128,6 @@ public class CustomerDAO implements CustomerDaoInterface{
         Session session = sessionFactory.openSession();
         Customer customer = session.get(Customer.class, customerCode);
         return customer.getLoanApplications();
+
     }
 }
