@@ -45,7 +45,7 @@
                     <td><a class="nav-link" href="<%= request.getContextPath()%>/customerLoanSearch" id="loanSummary">Loan Summary</a></td>
                 </tr>
                 <tr>
-                    <td><a class="nav-link" href="#" id="custDetails">Customer Details</a>
+                    <td><a class="nav-link" href="<%= request.getContextPath()%>/customerdetailsform" id="custDetails">Customer Details</a>
                 </tr>
                 <tr>
                     <td><a class="nav-link" href="<%= request.getContextPath()%>/getRepaymentScheduleReportSearchPage" id="repaySchedule">Repayment Schedule</a></td>

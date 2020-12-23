@@ -1,6 +1,5 @@
 package com.nucleus.eligibiltyparameter.database;
 
-import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -27,6 +26,10 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return session;
     }
 
+    /**
+     * Getting list of all eligibility parameters
+     * @return - returns a list of all eligibility parameters
+     */
     public List<EligibilityParameter> getAll() {
 
         List<EligibilityParameter> eligibilityParameterList;
@@ -43,6 +46,11 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return eligibilityParameterList;
     }
 
+    /**
+     * Inserting eligibility parameters into database
+     * @param eligibilityParameter - object of Eligibility Parameter to be inserted
+     * @return parameterCode against which parameter is inserted
+     */
     @Override
     public String insertParameter(EligibilityParameter eligibilityParameter) {
 
@@ -60,23 +68,13 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return parameterCode;
     }
 
-    @Override
-    public String insertParameterAndRequestApproval(EligibilityParameter eligibilityParameter) {
-        String parameterCode=null;
-        try {
-            Session session = getSession();
-            session.beginTransaction();
-            parameterCode=eligibilityParameter.getParameterCode();
-            session.save(eligibilityParameter);
-            session.getTransaction().commit();
-            session.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return parameterCode;
 
-    }
 
+    /**
+     * Getting a particular eligibility parameter
+     * @param parameterCode - get eligibility parameter having a particular parameter code
+     * @return object of eligibility parameter
+     */
     @Override
     public EligibilityParameter getOneEligibilityParameter(String parameterCode) {
         EligibilityParameter eligibilityParameter;
@@ -94,6 +92,11 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return eligibilityParameter;
     }
 
+    /**
+     * Delete a particular eligibility parameter
+     * @param parameterCode - Delete eligibility parameter against parameter code
+     * @return parameter code against which eligibility parameter is deleted
+     */
     @Override
     public String deleteEligibilityParameter(String parameterCode) {
 
@@ -110,6 +113,11 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         return parameterCode;
     }
 
+    /**
+     * Edit eligibility parameter
+     * @param eligibilityParameter - object of eligibility parameter to be edited
+     * @return - true if successfully edited else false
+     */
     @Override
     public boolean editParameter(EligibilityParameter eligibilityParameter) {
         try {
@@ -152,6 +160,13 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
 
     }
 
+    /**
+     * Update status of eligibility parameter
+     * @param parameterCode - updating status of particular eligibility parameter identified by parameter code
+     * @param newStatus - new status to be updated
+     * @param authorizedBy - name of the person who has updated eligibility parameter
+     * @return true if updated successfully, else false
+     */
     public boolean updateStatus(String parameterCode, String newStatus,String authorizedBy) {
         boolean updateStatus;
         try {

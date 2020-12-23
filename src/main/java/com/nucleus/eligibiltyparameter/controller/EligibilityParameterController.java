@@ -1,10 +1,7 @@
 package com.nucleus.eligibiltyparameter.controller;
 
-import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
-import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import com.nucleus.eligibiltyparameter.service.EligibilityParameterService;
-import com.nucleus.product.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,11 +53,12 @@ public class EligibilityParameterController {
 
     /**
      * Saving a Parameter in database
-     * @param (Model Attribute) object of eligibility parameter
+     * @param eligibilityParameter object of eligibility parameter
+     * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
     @RequestMapping(value = "/insertparameter", params = "action1",method = RequestMethod.POST)
-    public String saveParameter(@Valid @ModelAttribute("eligibilityParameter") EligibilityParameter eligibilityParameter, BindingResult br){
+    public String saveParameter(@Valid @ModelAttribute("eligibilityParameter") EligibilityParameter eligibilityParameter, BindingResult br,Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/createParameter";
@@ -69,8 +67,9 @@ public class EligibilityParameterController {
         {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
-            eligibilityParameter.setStatus("Inactive");
-            eligibilityParameterService.insertParameter(eligibilityParameter);
+            eligibilityParameter.setStatus("Saved");
+            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            model.addAttribute("parameterCode",pcode);
             return "views/eligibilityparameters/eligibilityparametersuccess";
         }
 
@@ -78,11 +77,12 @@ public class EligibilityParameterController {
 
     /**
      * Saving parameter in database and requesting for approval by checker
-     * @param (Model Attribute) object of eligibility parameter
+     * @param eligibilityParameter object of eligibility parameter
+     * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
     @RequestMapping(value = "/insertparameter", params = "action2",method = RequestMethod.POST)
-    public String saveAndRequestApproval(@Valid @ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter,BindingResult br){
+    public String saveAndRequestApproval(@Valid @ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/createParameter";
@@ -92,7 +92,8 @@ public class EligibilityParameterController {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
             eligibilityParameter.setStatus("Pending");
-            eligibilityParameterService.insertParameterAndRequestApproval(eligibilityParameter);
+            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            model.addAttribute("parameterCode",pcode);
             return "views/eligibilityparameters/eligibilityparametersuccess";
         }
 
@@ -100,11 +101,12 @@ public class EligibilityParameterController {
 
     /**
      * Editing an Eligibility Parameter and saving it into database
-     * @param (Model Attribute) object of eligibility parameter
+     * @param eligibilityParameter object of eligibility parameter
+     * @param br
      * @return success page if no error, same page (Eligibility Parameter edit page) if error
      */
     @RequestMapping(value = "/edit/editparameter", params = "action1",method = RequestMethod.POST)
-    public String editParameter1(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br){
+    public String editParameter1(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
 
         if(br.hasErrors())
         {
@@ -112,10 +114,11 @@ public class EligibilityParameterController {
         }
         else
         {
+            String pcode=eligibilityParameter.getParameterCode();
             eligibilityParameter.setModifiedBy(getPrincipal());
-            eligibilityParameter.setStatus("Inactive");
+            eligibilityParameter.setStatus("Saved");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
-
+            model.addAttribute("parameterCode",pcode);
             if(valid==true)
             {
                 System.out.println("true");
@@ -133,21 +136,23 @@ public class EligibilityParameterController {
 
     /**
      * Editing an eligibility parameter and saving it into database and requesting a approval by checker
-     * @param (Model Attribute) object of eligibility parameter
+     * @param eligibilityParameter object of eligibility parameter
+     * @param br
      * @return success page if no error, same page (Eligibility Parameter edit page) if error
      */
     @RequestMapping(value = "/edit/editparameter", params = "action2",method = RequestMethod.POST)
-    public String editParameter2(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br){
+    public String editParameter2(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/editParameter";
         }
         else
         {
+            String pcode=eligibilityParameter.getParameterCode();
             eligibilityParameter.setModifiedBy(getPrincipal());
             eligibilityParameter.setStatus("Pending");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
-
+            model.addAttribute("parameterCode",pcode);
             if(valid==true)
             {
                 System.out.println("true");
@@ -165,7 +170,7 @@ public class EligibilityParameterController {
 
     /**
      * Deleting a particular eligibility parameter from database
-     * @param (parameterCode)which is used to delete eligibility parameter
+     * @param parameterCode which is used to delete eligibility parameter
      * @return maker screen
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -178,7 +183,8 @@ public class EligibilityParameterController {
 
     /**
      * Edit parameter screen
-     * @param 1. (parameterCode) to edit particular eligibility parameter , 2. (Model) to store eligibility parameter object
+     * @param parameterCode to edit particular eligibility parameter
+     * @param model to store eligibility parameter object
      * @return edit eligibility parameter page
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -211,8 +217,8 @@ public class EligibilityParameterController {
 
     /**
      * Updating status of a particular eligibility parameter as updated or rejected into database
-     * @param 1. (parameterCode) to update status of a particular eligibility parameter , 2. (action) to update status
-     * of eligibility parameter according to action
+     * @param  parameterCode to update status of a particular eligibility parameter
+     * @param action to update status of eligibility parameter according to action
      * @return checker screen
      */
     @PostMapping(value = {"/updateStatus/{parameterCode}"})

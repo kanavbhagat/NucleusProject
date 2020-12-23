@@ -39,7 +39,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.getTransaction().commit();
                 return true;
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 session.getTransaction().rollback();
                 return false;
             }
@@ -56,7 +56,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.getTransaction().commit();
                 return true;
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 session.getTransaction().rollback();
                 return false;
             }
@@ -73,7 +73,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.getTransaction().commit();
                 return receipt;
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 session.getTransaction().rollback();
                 return null;
             }
@@ -99,7 +99,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
             session.getTransaction().commit();
             return receiptList;
         } catch (Exception exception){
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
             receiptList = new ArrayList<>();
             System.out.println("it come here. ono");
             return receiptList;
@@ -127,7 +127,7 @@ public class ReceiptDAO implements ReceiptDAOInterface{
                 session.getTransaction().commit();
                 return true;
             }catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 session.getTransaction().rollback();
                 return false;
             }
