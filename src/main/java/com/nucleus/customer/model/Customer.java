@@ -3,11 +3,23 @@ package com.nucleus.customer.model;
 import com.nucleus.loanapplications.model.LoanApplications;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table( name= "customer")
 public class Customer {
+
+    static int id = 101;
+    static String code;
+    public Customer(){
+        super();
+        code = "L"+id;
+        id++;
+        this.setCustomerCode(code);
+        add = new Address();
+    }
+
 
     @Id
     @Column(name="customer_code",length = 20,nullable = false)
@@ -19,8 +31,8 @@ public class Customer {
     @Column(name="last_name",length = 30,nullable = false)
     private String lastName;
 
-    @Column(name="date_of_birth", nullable = false)
-    private LocalDate dateOfBirth;
+    @Column(name="date_of_birth" , nullable = false)
+    private String dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
     private String nationality;
@@ -35,13 +47,36 @@ public class Customer {
     private String organizationName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
-    private Set<LoanApplications> loanApplications;
+    private List<LoanApplications> loanApplications;
 
-    public Set<LoanApplications> getLoanApplications() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    private List<Address> addresses;
+
+    @Transient
+    private Address add;
+
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Address getAdd() {
+        return add;
+    }
+
+    public void setAdd(Address add) {
+        this.add = add;
+    }
+
+    public List<LoanApplications> getLoanApplications() {
         return loanApplications;
     }
 
-    public void setLoanApplications(Set<LoanApplications> loanApplications) {
+    public void setLoanApplications(List<LoanApplications> loanApplications) {
         this.loanApplications = loanApplications;
     }
 
@@ -69,11 +104,12 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

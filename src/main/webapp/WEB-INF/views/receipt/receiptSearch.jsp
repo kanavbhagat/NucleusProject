@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
-
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
    <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Payment Search Screen</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Receipt Search Screen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -17,6 +16,21 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function checkEmpty(){
+            var value = $("#receiptType").val();
+            if ( value==null || value==="-" ){
+                $("#receiptTypeError").show();
+                return false;
+            }
+            return true;
+        }
+
+		$(document).ready(function() {
+            $( "#receiptTypeError" ).hide();
+		});
+
+    </script>
     <style>
         .required-field::after{
              content: "*";
@@ -38,44 +52,56 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
-            <%--<button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>--%>
+             <sec:authorize access="hasRole('MAKER')">
+                 <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+             </sec:authorize>
+             <sec:authorize access="hasRole('CHECKER')">
+                 <button type="button" disabled="disabled" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+             </sec:authorize>
         </div>
+
+        <%--<div class="col-sm-2 col-12">
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+
+        </div>--%>
     </div>
 
     <hr>
-
 </div>
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form:form method="post">
+    <form method="Post" action="receiptSearchResults">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
-                    <form:label path="receiptType" cssClass="font-weight-bold required-field">Receipt Type</form:label>
-                    <form:select class="form-control" path="receiptType">
-                        <form:option value="Select One Option" label="select"/>
-                        <form:options items="${receiptTypes}"/>
-                    </form:select>
+                    <label class="font-weight-bold required-field">Receipt Type</label>
+                    <select id="receiptType" class="form-control" name="receiptType" required>
+                        <option value="-" disabled label="Select One Option">
+                        <option value="Payment" label="Payment">
+                        <option value="Receipt" label="Receipt">
+                    </select>
+                    <span id="receiptTypeError" style="color:red;"> Receipt Type is Required </span>
                 </div>
                 <div class="form-group">
-                    <form:label path="receiptBasis" cssClass="font-weight-bold">Receipt basis</form:label>
-                    <form:select cssClass="form-control" path="receiptBasis">
-                        <form:option value="Select One Option" label="select" />
-                    </form:select>
+                    <label for="receiptBasis" class="font-weight-bold">Receipt Basis</label>
+                    <select class="form-control" name="receiptBasis">
+                        <option value="-" selected disabled label="Select One Option">
+                        <option value="Against Single Loan" label="Against Single Loan">
+                    </select>
                 </div>
-                <div class="col-sm-3 offset-sm-4">
+            </div>
+            <div class="col-sm-3 offset-sm-4">
 
                 <div class="form-group">
-                    <label for="loanAccount" class="font-weight-bold required-field">Loan Account#</label>
-                    <form:input type="text" cssClass="form-control" path="loanAccount"/>
+                    <label for="loanAccount" class="font-weight-bold">Loan Account #</label>
+                    <input type="number" class="form-control" name="loanAccount">
                 </div>
 
                 <div class="form-group">
-                    <label for="receiptRef" class="font-weight-bold required-field">Receipt Ref#</label>
-                    <form:input type="text" cssClass="form-control" path="receiptRef"/>
+                    <label for="receiptNo" class="font-weight-bold">Receipt Ref #</label>
+                    <input type="number" class="form-control" name="receiptNo">
                 </div>
             </div>
         </div>
@@ -84,11 +110,12 @@
 
         <div class="row" style="margin-bottom:20px">
             <div class="col-sm-3 offset-sm-10">
-                <button type="button"  id="save" class="btn btn-primary">Save</button>
-                <button type="button" id="clear" class="btn btn-primary">Clear</button>
+                <button type="submit" onclick="return checkEmpty()" id="save" class="btn btn-primary">Search</button>
+                <button type="reset" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
-    </form:form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <form>
 </div>
 </body>
 </html>

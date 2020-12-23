@@ -7,11 +7,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "loan_application")
+@Table(name = "loan_applications")
 public class LoanApplications {
 
     @Id
     @Column(name = "loan_application_number")
+   /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
     @ManyToOne
@@ -26,8 +27,10 @@ public class LoanApplications {
         this.customerCode = customerCode;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = false)
+
+    //set it to false optional and nullable
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "product_code", referencedColumnName = "product_code",nullable = true)
     private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
@@ -37,7 +40,7 @@ public class LoanApplications {
     private Integer tenure;
 
     @Column(name = "rate",nullable = false)
-    private Integer rate;
+    private Double rate;
 
     @Column(name = "agreement_date",nullable = false)
     private LocalDate agreementDate;
@@ -45,23 +48,34 @@ public class LoanApplications {
     @Column(name = "installment_due_date",nullable = false)
     private LocalDate installmentDueDate;
 
-    @Column(name = "create_date",nullable = false)
+    @Column(name = "create_date")
     private LocalDate createDate;
 
-    @Column(name = "created_by", nullable = false, length = 30)
+    @Column(name = "created_by", length = 30)
     private String createdBy;
 
-    @Column(name = "modified_date",nullable = false)
+    @Column(name = "modified_date")
     private LocalDate modifiedDate;
 
-    @Column(name = "modified_by", nullable = false, length = 30)
+    @Column(name = "modified_by",  length = 30)
     private String modifiedBy;
 
-    @Column(name = "authorized_date",nullable = false)
+    @Column(name = "authorized_date")
     private LocalDate authorizedDate;
 
-    @Column(name = "authorized_by", nullable = false, length = 30)
+    @Column(name = "authorized_by", length = 30)
     private String authorizedBy;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Column(name = "status",nullable = false, length = 10)
+    private String status;
 
     public Integer getLoanApplicationNumber() {
         return loanApplicationNumber;
@@ -83,11 +97,11 @@ public class LoanApplications {
         this.tenure = tenure;
     }
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 

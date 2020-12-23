@@ -2,6 +2,7 @@ package com.nucleus.repaymentpolicy.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ public class RepaymentPolicy implements Serializable {
 
     @Id
     @Column(name = "POLICY_CODE",nullable=false,length=10, unique = true)
+    @NotNull
+    @Size(min=3, max=30, message="policy code is required")
     private String policyCode;
 
     @NotEmpty

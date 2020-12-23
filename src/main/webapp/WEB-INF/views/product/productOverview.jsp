@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -34,7 +35,12 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            <sec:authorize access="hasRole('MAKER')">
+                <button type="button" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            </sec:authorize>
+            <sec:authorize access="hasRole('CHECKER')">
+                <button type="button" disabled="disabled" onclick='location.href="<%= request.getContextPath()%>/newProduct"' class="btn btn-primary" id="newProduct">New Product</button>
+            </sec:authorize>
         </div>
     </div>
 </div>
@@ -61,14 +67,31 @@
             <c:if test="${!empty products}">
             <c:forEach var="product" items="${products}">
                  <tr>
-                  <td>${product.productCode}</td>
+                 <sec:authorize access="hasRole('CHECKER')">
+                    <td><a href="<%= request.getContextPath()%>/product/${product.productCode}">${product.productCode}</a></td>
+                 </sec:authorize>
+                 <sec:authorize access="hasRole('MAKER')">
+                    <td>${product.productCode}</td>
+                 </sec:authorize>
                   <td>${product.productName}</td>
                   <td>${product.productDescription}</td>
                   <td>${product.productType}</td>
                   <td>${product.status}</td>
                   <td>${product.createdBy}</td>
                   <td>${product.authorizedBy}</td>
-                  <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                  <sec:authorize access="hasRole('CHECKER')">
+                    <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
+                  </sec:authorize>
+                  <sec:authorize access="hasRole('MAKER')">
+                    <c:if test = "${product.status == 'Approved'}">
+                        <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
+                    </c:if>
+                    <c:if test = "${product.status != 'Approved'}">
+                        <td><a href="<%= request.getContextPath()%>/product/${product.productCode}/edit">Edit</a> |
+                            <a href="<%= request.getContextPath()%>/product/${product.productCode}/delete">Delete</a>
+                        </td>
+                    </c:if>
+                  </sec:authorize>
                  </tr>
                 </c:forEach>
             </c:if>

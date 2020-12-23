@@ -76,163 +76,171 @@
 
 </div>
 
+
 <!-- Form Container -->
-<div class="container-fluid">
-    <form:form modelAttribute="product" method="post" action="newProduct">
-        <div class="row">
-            <div class="col-sm-3">
+        <div class="container-fluid">
+            <form:form modelAttribute="product" method="post" action="newProduct">
+                <div class="row">
+                    <div class="col-sm-3">
 
-                <div class="form-group">
-                    <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
-                    <form:input cssClass="form-control" path="productCode"/>
-                    <form:errors path="productCode" cssClass="error"/>
+                        <div class="form-group">
+                            <form:label path="productCode" cssClass="font-weight-bold required-field">Product Code:</form:label>
+                            <form:input cssClass="form-control" path="productCode"/>
+                            <form:errors path="productCode" cssClass="error"/>
+                        </div>
+
+                        <div class="form-group">
+                            <form:label path="productDescription" cssClass="font-weight-bold">Product Description:</form:label>
+                            <form:textarea rows="3" cssClass="form-control" path="productDescription"/>
+                        </div>
+
+                        <div class="form-group">
+                            <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
+                            <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
+                            <form:errors path="maxExposureAmount" cssClass="error"/>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3 offset-sm-4">
+
+                        <div class="form-group">
+                            <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
+                            <form:input cssClass="form-control" path="productName"/>
+                            <form:errors path="productName" cssClass="error"/>
+                        </div>
+
+                        <div class="form-group">
+                            <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
+                            <form:select path="productType" cssClass="form-control">
+                                <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+                                <form:options items="${productTypes}" />
+                            </form:select>
+                            <form:errors path="productType" cssClass="error"/>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <form:label path="productDescription" cssClass="font-weight-bold">Product Description:</form:label>
-                    <form:textarea rows="3" cssClass="form-control" path="productDescription"/>
+                <hr width="" color="#b3b3b3">
+                <div class="row pt-3 pl-3 flex-column">
+                    <h2 class="  display-3" style="font-size: 30px">
+                        <b> Policies </b>
+                    </h2>
                 </div>
+                <div class="row col-sm-8">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Policy</th>
+                            <th scope="col">Policy Name</th>
+                            <th scope="col">Policy Description</th>
+                        </tr>
+                        </thead>
 
-                <div class="form-group">
-                    <form:label path="maxExposureAmount" cssClass="font-weight-bold">Maximum Exposure Amount:</form:label>
-                    <form:input type="number" cssClass="form-control" path="maxExposureAmount"/>
+                        <tr>
+                            <td>
+                                <form:label path="repaymentPolicyCodeString" cssClass="required-field">Repayment Policy</form:label>
+                                <br>
+                                <form:errors path="repaymentPolicyCodeString" cssClass="error"/>
+                            </td>
+                            <td>
+                                <form:select required="required" path="repaymentPolicyCodeString" cssClass="form-control">
+                                    <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                                    <form:options items="${repaymentPolicies}" itemLabel="policyName" itemValue="policyCode" />
+                                </form:select>
+                            </td>
+                            <td><input class="form-control" id="repaymentDesc" type="text" disabled></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="eligibilityPolicyCodeString" cssClass="required-field">Eligibility Policy</form:label>
+                                <br>
+                                <form:errors path="eligibilityPolicyCodeString" cssClass="error"/>
+                            </td>
+                            <td>
+                                <form:select required="required" path="eligibilityPolicyCodeString" cssClass="form-control">
+                                    <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                                    <form:options items="${eligibilityPolicies}" itemLabel="policyName" itemValue="policyCode"/>
+                                </form:select>
+                            </td>
+                            <td><input class="form-control" id="eligibilityDesc" type="text" disabled></td>
+                        </tr>
+                        <tr>
+                            <td>Charge Policy</td>
+                            <td>
+                                <form:select  path="chargeCodePolicyString" cssClass="form-control">
+                                    <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
+                                    <form:options items="${chargePolicies}" />
+                                </form:select>
+                            </td>
+                            <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
+                        </tr>
+
+                    </table>
                 </div>
-
-            </div>
-            <div class="col-sm-3 offset-sm-4">
-
-                <div class="form-group">
-                    <form:label path="productName" cssClass="font-weight-bold required-field">Product Name:</form:label>
-                    <form:input cssClass="form-control" path="productName"/>
-                    <form:errors path="productName" cssClass="error"/>
+                <hr width="" color="#b3b3b3">
+                <div class="row" style="margin-bottom:20px">
+                    <div class="col-sm-3 offset-sm-9">
+                        <button type="submit" class="btn btn-primary" name="action" value="Saved">Save</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Pending">
+                            Save & Request Approval
+                        </button>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
-                    <form:select path="productType" cssClass="form-control">
-                        <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
-                        <form:options items="${productTypes}" />
-                    </form:select>
-                    <form:errors path="productType" cssClass="error"/>
-                </div>
-
-            </div>
+            </form:form>
         </div>
 
-        <hr width="" color="#b3b3b3">
-        <div class="row pt-3 pl-3 flex-column">
-            <h2 class="  display-3" style="font-size: 30px">
-                <b> Policies </b>
-            </h2>
-        </div>
-        <div class="row col-sm-8">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">Policy</th>
-                    <th scope="col">Policy Name</th>
-                    <th scope="col">Policy Description</th>
-                </tr>
-                </thead>
-
-                <tr>
-                    <td>
-                        <form:label path="repaymentPolicyCode" cssClass="required-field">Repayment Policy</form:label>
-                    </td>
-                    <td>
-                        <form:select required="required" path="repaymentPolicyCodeString" cssClass="form-control">
-                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
-                            <form:options items="${repaymentPolicies}" itemLabel="policyName" itemValue="policyCode" />
-                        </form:select>
-                    </td>
-                    <td><input class="form-control" id="repaymentDesc" type="text" disabled></td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="eligibilityPolicyCode" cssClass="required-field">Eligibility Policy</form:label>
-                    </td>
-                    <td>
-                        <form:select required="required" path="eligibilityPolicyCodeString" cssClass="form-control">
-                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
-                            <form:options items="${eligibilityPolicies}" itemLabel="policyName" itemValue="policyCode"/>
-                        </form:select>
-                    </td>
-                    <td><input class="form-control" id="eligibilityDesc" type="text" disabled></td>
-                </tr>
-                <tr>
-                    <td>Charge Policy</td>
-                    <td>
-                        <form:select  path="chargeCodePolicyString" cssClass="form-control">
-                            <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
-                            <form:options items="${chargePolicies}" />
-                        </form:select>
-                    </td>
-                    <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
-                </tr>
-
-            </table>
-        </div>
-        <hr width="" color="#b3b3b3">
-        <div class="row" style="margin-bottom:20px">
-            <div class="col-sm-3 offset-sm-9">
-                <button type="submit" class="btn btn-primary" id="save">Save</button>
-                <button type="button" class="btn btn-primary" id="saveAndRequest">Save & Request Approval</button>
-            </div>
-        </div>
-    </form:form>
-
-<table id="repaymentData" hidden>
-    <thead>
-    <th> policy code <th>
-    <th> policy description <th>
-    </thead>
-    <tbody>
-            <c:if test="${!empty repaymentPolicies}">
-            <c:forEach var="policy" items="${repaymentPolicies}">
-                 <tr>
-                  <td>${policy.policyCode}</td>
-                  <td id=${policy.policyName}>${policy.policyDescription}</td>
-                 </tr>
-                </c:forEach>
-            </c:if>
-    </tbody>
-</table>
+        <table id="repaymentData" hidden>
+            <thead>
+            <th> policy code <th>
+            <th> policy description <th>
+            </thead>
+            <tbody>
+                    <c:if test="${!empty repaymentPolicies}">
+                    <c:forEach var="policy" items="${repaymentPolicies}">
+                         <tr>
+                          <td>${policy.policyCode}</td>
+                          <td id=${policy.policyCode}>${policy.policyDescription}</td>
+                         </tr>
+                        </c:forEach>
+                    </c:if>
+            </tbody>
+        </table>
 
 
-<table id="eligibilityData" hidden>
-    <thead>
-    <th> policy code <th>
-    <th> policy description <th>
-    </thead>
-    <tbody>
-            <c:if test="${!empty eligibilityPolicies}">
-            <c:forEach var="policy" items="${eligibilityPolicies}">
-                 <tr>
-                  <td>${policy.policyCode}</td>
-                  <td id=${policy.policyCode}>${policy.policyDescription}</td>
-                 </tr>
-                </c:forEach>
-            </c:if>
-    </tbody>
-</table>
+        <table id="eligibilityData" hidden>
+            <thead>
+            <th> policy code <th>
+            <th> policy description <th>
+            </thead>
+            <tbody>
+                    <c:if test="${!empty eligibilityPolicies}">
+                    <c:forEach var="policy" items="${eligibilityPolicies}">
+                         <tr>
+                          <td>${policy.policyCode}</td>
+                          <td id=${policy.policyCode}>${policy.policyDescription}</td>
+                         </tr>
+                        </c:forEach>
+                    </c:if>
+            </tbody>
+        </table>
 
-<table id="chargeData" hidden>
-    <thead>
-    <th> policy code <th>
-    <th> policy description <th>
-    </thead>
-    <tbody>
-            <c:if test="${!empty chargePolicies}">
-            <c:forEach var="policy" items="${chargePolicies}">
-                 <tr>
-                  <td>${policy.policyCode}</td>
-                  <td id=${policy.policyName}>${policy.policyDescription}</td>
-                 </tr>
-                </c:forEach>
-            </c:if>
-    </tbody>
-</table>
-
+        <table id="chargeData" hidden>
+            <thead>
+            <th> policy code <th>
+            <th> policy description <th>
+            </thead>
+            <tbody>
+                    <c:if test="${!empty chargePolicies}">
+                    <c:forEach var="policy" items="${chargePolicies}">
+                         <tr>
+                          <td>${policy.policyCode}</td>
+                          <td id=${policy.policyCode}>${policy.policyDescription}</td>
+                         </tr>
+                        </c:forEach>
+                    </c:if>
+            </tbody>
+        </table>
 </div>
 </body>
 </html>

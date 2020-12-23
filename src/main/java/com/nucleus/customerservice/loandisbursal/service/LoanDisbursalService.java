@@ -1,21 +1,21 @@
 package com.nucleus.customerservice.loandisbursal.service;
 
-import com.nucleus.customerservice.loandisbursal.database.LoanDisbursalDAO;
-import com.nucleus.customerservice.loandisbursal.model.LoanApplication;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.nucleus.loanapplications.model.LoanApplications;
 
-import java.util.Set;
-@Service
-public class LoanDisbursalService {
-    @Autowired
-    private LoanDisbursalDAO loanDisbursalDao;
+import java.util.List;
 
-    public LoanApplication getLoanDetails(int loanApplicationNumber){
-        return loanDisbursalDao.getLoanDetails(loanApplicationNumber);
-    }
+public interface LoanDisbursalService {
+    /**
+     * Get all Details of a Loan by loanApplicationNumber
+     * @param loanApplicationNumber
+     * @return Object of LoanApplications Class
+     */
+    public LoanApplications getLoanDetails(int loanApplicationNumber);
 
-    public Set<LoanApplication> getCustomerLoanDetails(String customerCode){
-        return loanDisbursalDao.getCustomerLoanDetails(customerCode);
-    }
+    /**
+     * Get all Loans associated with a customer by customerCode
+     * @param customerCode
+     * @return List<LoanApplications> list contains all loans taken by this customer
+     */
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode);
 }

@@ -1,8 +1,6 @@
 package com.nucleus.receipt.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-
 
 @Entity
 @Table( name= "settlement")
@@ -22,11 +20,15 @@ public class Settlement {
     @Column(name="status", nullable = false)
     private String status;
 
-    @Column(name="advice_id",length = 10, nullable = false)
-    private int adviceId;
+    //@Column(name="advice_id",length = 10, nullable = false)
+    @ManyToOne
+    @JoinColumn(name="advice_id",referencedColumnName ="advice_id" ,nullable = false)
+    private Advice adviceId;
 
-    @Column(name="receipt_no",length = 10, nullable = false)
-    private int receiptNo;
+    //@Column(name="receipt_no",length = 10, nullable = false)
+    @ManyToOne
+    @JoinColumn(name="receipt_no",referencedColumnName ="receipt_no" ,nullable = false)
+    private Receipt receiptNo;
 
 
     public long getPaymentId() {
@@ -61,19 +63,19 @@ public class Settlement {
         this.status = status;
     }
 
-    public int getAdviceId() {
+    public Advice getAdviceId() {
         return adviceId;
     }
 
-    public void setAdviceId(int adviceId) {
+    public void setAdviceId(Advice adviceId) {
         this.adviceId = adviceId;
     }
 
-    public int getReceiptNo() {
+    public Receipt getReceiptNo() {
         return receiptNo;
     }
 
-    public void setReceiptNo(int receiptNo) {
+    public void setReceiptNo(Receipt receiptNo) {
         this.receiptNo = receiptNo;
     }
 }

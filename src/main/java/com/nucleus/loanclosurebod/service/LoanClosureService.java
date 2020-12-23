@@ -1,17 +1,11 @@
 package com.nucleus.loanclosurebod.service;
 
-
-import com.nucleus.loanclosurebod.model.LoanApplication;
-
-import java.util.List;
-
+/**
+ * This is a Service Interface that declares the functionality
+ * of the LoanClosureServiceImpl Class.
+ */
 public interface LoanClosureService {
 
-    public int function1();
-    public List<LoanApplication> function2(int loanId);
-    public void funtion3();
+    int loanClosureBod();
 
-    public void addDummyData();
-
-    public void updateStatus();
 }

@@ -4,10 +4,14 @@ import com.nucleus.chargepolicy.model.ChargePolicy;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.ConstraintViolationException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,8 +31,9 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         }
         return session;
     }
-    public void insert(ChargePolicy chargePolicy) {
-        boolean insertStatus;
+    public int insert(ChargePolicy chargePolicy) {
+        System.out.println("In Service insert query");
+        int insertStatus = 0;
         String todayDate = LocalDate.now().toString();
         chargePolicy.setCreatedDate(todayDate);
         try {
@@ -36,14 +41,17 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             session.beginTransaction();
             session.save(chargePolicy);
             session.getTransaction().commit();
-            insertStatus = true;
+            insertStatus = 1;
         } catch (Exception exception) {
-            exception.printStackTrace();
-            insertStatus = false;
+            System.out.println("*************************************");
+            System.out.println(exception.getMessage());
+            if(exception.getMessage().contains("ConstraintViolation"))insertStatus = 2;
+            System.out.println("*************************************");
+
         }
 
         //SessionFactory factory = configuration.buildSessionFactory();
-
+        return insertStatus;
     }
 
     public List<ChargePolicy> getPolicyList(){
@@ -66,8 +74,9 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");
+            Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");;
             chargePolicy= (ChargePolicy)query.getSingleResult();
+            System.out.println(chargePolicy.getChargePolicyName() + "---------------------------------------------------------------" );
             session.getTransaction().commit();
             session.close();
         } catch(Exception exception) {
@@ -76,5 +85,50 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         }
         return chargePolicy;
 
+    }
+    public void updateStatus(String chargePolicyCode,String status){
+        ChargePolicy chargePolicy;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query q=session.createQuery("update ChargePolicy set status=:status where policy_code=:policyCode");
+            q.setParameter("status",status);
+            q.setParameter("policyCode",chargePolicyCode);
+
+            int s=q.executeUpdate();
+            System.out.println("Status  updated as "+ s);
+            session.getTransaction().commit();
+            session.close();
+        } catch(Exception exception) {
+            chargePolicy = null;
+            exception.printStackTrace();
+        }
+    }
+
+    public void updateEntry(ChargePolicy chargePolicy){
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            session.update(chargePolicy);
+            session.getTransaction().commit();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+    public int deleteChargePolicy(String chargePolicyCode){
+        int s = 0;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query q=session.createQuery("delete from ChargePolicy where chargePolicyCode= :chargePolicyCode");
+            q.setParameter("chargePolicyCode", chargePolicyCode);
+            s=q.executeUpdate();
+            session.getTransaction().commit();
+            session.close();
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return s;
     }
 }

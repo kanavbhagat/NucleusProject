@@ -1,15 +1,17 @@
 package com.nucleus.loanclosurebod.database;
 
-import com.nucleus.loanclosurebod.model.LoanApplication;
-
+import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import java.util.List;
 
+/**
+ * This is a DAO Interface that declares the functionality
+ * of the LoanClosureDaoImpl Class.
+ */
 public interface LoanClosureDao {
 
-    public int function1();
-    public List<LoanApplication> function2(int loanId);
-    public void function3();
-    public void addDummyData();
+    List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber);
 
-    public void updateStatus();
+    boolean updateStatus(LoanApplications loanApplication, String newStatus);
+
 }

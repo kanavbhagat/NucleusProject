@@ -1,28 +1,20 @@
 package com.nucleus.customerservice.loandisbursal.database;
 
-import com.nucleus.customerservice.loandisbursal.model.Customer;
-import com.nucleus.customerservice.loandisbursal.model.LoanApplication;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.nucleus.loanapplications.model.LoanApplications;
+import java.util.List;
 
-import java.util.Set;
+public interface LoanDisbursalDAO {
+    /**
+     * Get all Details of a Loan by loanApplicationNumber
+     * @param loanApplicationNumber
+     * @return Object of LoanApplications Class
+     */
+    public LoanApplications getLoanDetails(int loanApplicationNumber);
 
-@Component
-public class LoanDisbursalDAO {
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public LoanApplication getLoanDetails(int loanApplicationNumber){
-        Session session = sessionFactory.openSession();
-        LoanApplication loanApplication = session.get(LoanApplication.class, loanApplicationNumber);
-        return loanApplication;
-    }
-
-    public Set<LoanApplication> getCustomerLoanDetails(String customerCode){
-        Session session = sessionFactory.openSession();
-        Customer customer = session.get(Customer.class, customerCode);
-        return customer.getLoanApplications();
-    }
+    /**
+     * Get all Loans associated with a customer by customerCode
+     * @param customerCode
+     * @return list of LoanApplications contains all loans taken by this customer
+     */
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode);
 }

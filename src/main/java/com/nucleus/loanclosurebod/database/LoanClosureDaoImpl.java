@@ -1,23 +1,31 @@
 package com.nucleus.loanclosurebod.database;
 
-import com.nucleus.loanclosurebod.model.LoanApplication;
+import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanclosurebod.model.RepaymentSchedule;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class implements the functions declared by the LoanClosureDao
+ * Interface.
+ */
 @Repository
 public class LoanClosureDaoImpl implements LoanClosureDao{
 
     @Autowired
     private SessionFactory sessionFactory;
 
+    /**
+     * Method for creating a session and returning an object for
+     * using session functionalities to other class methods.
+     * @return Session
+     */
     private Session getSession(){
         Session session;
         try {
@@ -28,67 +36,54 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         return session;
     }
 
+    /**
+     * This method retrieves the list of all entries of Repayment Schedule
+     * for a particular Loan Application from the database.
+     * @param loanApplicationNumber
+     * @return list of all entries of Repayment Schedule
+     */
     @Override
-    public int function1() {
-        return 0;
+    public List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber){
+        List<RepaymentSchedule> list = new ArrayList<>();
+        /* Retrieving all the entries of Repayment Schedule for given Loan Application
+           in the list. */
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplicationNumber=?1", RepaymentSchedule.class);
+            query.setParameter(1, loanApplicationNumber);
+            list = query.getResultList();
+            session.getTransaction().commit();
+            session.close();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+        return list;
     }
 
+    /**
+     * This method updates the status of Loan Application in the database
+     * depending on whether the loan application is eligible for closing or not.
+     * @param loanApplication
+     * @param newStatus
+     * @return updateStatus
+     */
     @Override
-    public List<LoanApplication> function2(int loanId) {
-        return null;
-    }
-
-    @Override
-    public void function3() {
-
-    }
-
-    @Override
-    public void addDummyData() {
-        Session session = getSession();
-        session.beginTransaction();
-
-        LoanApplication loanApplication = new LoanApplication();
-        loanApplication.setLoanApplicationNumber(1);
-        loanApplication.setLoanAmountRequested(100000);
-        loanApplication.setTenure(5);
-        loanApplication.setRate(20);
-        loanApplication.setAgreementDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setAuthorizedBy("Apurv");
-        loanApplication.setAuthorizedDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setCreateDate(LocalDate.of(2020, 06, 10));
-        loanApplication.setInstallmentDueDate(LocalDate.of(2021, 06, 10));
-//        session.save(loanApplication);
-
-        RepaymentSchedule repaymentSchedule = new RepaymentSchedule();
-        repaymentSchedule.setLoanApplicationn(loanApplication);
-        repaymentSchedule.setInstallmentNumber(1);
-        repaymentSchedule.setDueDate(LocalDate.of(2021, 06, 10));
-        repaymentSchedule.setBillFlag("Y");
-        repaymentSchedule.setOpeningBalance(30000);
-        repaymentSchedule.setEMI(20000);
-        repaymentSchedule.setClosingBalance(0);
-        repaymentSchedule.setInterestComponent(0.2);
-        repaymentSchedule.setPrincipalComponent(10000);
-        session.save(repaymentSchedule);
-
-
-//        EligibilityParameter eligibilityParameter1 = new EligibilityParameter();
-//        eligibilityParameter1.setParameterName("Test 1");
-//        eligibilityParameter1.setParameterDescription("Testing 1");
-//        eligibilityParameter1.setParameterCode("101");
-//        session.save(eligibilityParameter1);
-
-//        EligibilityParameter eligibilityParameter2 = new EligibilityParameter();
-//        eligibilityParameter2.setParameterName("Test 2");
-//        eligibilityParameter2.setParameterDescription("Testing 2");
-//        eligibilityParameter2.setParameterCode("102");
-//        session.save(eligibilityParameter2);
-        session.getTransaction().commit();
-    }
-
-    @Override
-    public void updateStatus(){
-
+    public boolean updateStatus(LoanApplications loanApplication, String newStatus){
+        boolean updateStatus;
+        /* Updating the status of the Loan Application with newStatus. */
+        try{
+            Session session = getSession();
+            session.beginTransaction();
+            loanApplication.setStatus(newStatus);
+            session.update(loanApplication);
+            session.getTransaction().commit();
+            updateStatus = true;
+            session.close();
+        }catch (Exception exception) {
+            updateStatus = false;
+            exception.printStackTrace();
+        }
+        return updateStatus;
     }
 }

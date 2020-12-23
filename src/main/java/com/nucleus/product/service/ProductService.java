@@ -1,6 +1,7 @@
 package com.nucleus.product.service;
 
 import com.nucleus.product.dao.ProductDAO;
+import com.nucleus.product.dao.ProductDAOInterface;
 import com.nucleus.product.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    private ProductDAO productDAO;
+    private ProductDAOInterface productDAO;
 
     @Autowired
     private PlatformTransactionManager transactionManager;
@@ -34,4 +35,15 @@ public class ProductService {
         return productDAO.createNewProduct(product);
     }
 
+    public Product getProductById(String id){
+        return productDAO.getProductById(id);
+    }
+
+    public Product updateProduct(Product product){
+        return productDAO.updateProduct(product);
+    }
+
+    public Boolean deleteProduct(String productId){
+        return productDAO.deleteProduct(productId);
+    }
 }
