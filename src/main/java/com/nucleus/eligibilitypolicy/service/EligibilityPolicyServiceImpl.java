@@ -68,18 +68,21 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     @Override
     public boolean updateStatus(String policyCode, String action, String authorizedBy) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
-        String newStatus;
-        if(action.equalsIgnoreCase("approve")) {
-            newStatus = "Approved";
-        } else if (action.equalsIgnoreCase("reject")) {
-            newStatus = "Rejected";
-        } else {
-            newStatus = "Pending";
+        if(eligibilityPolicy!=null) {
+            String newStatus;
+            if (action.equalsIgnoreCase("approve")) {
+                newStatus = "Approved";
+            } else if (action.equalsIgnoreCase("reject")) {
+                newStatus = "Rejected";
+            } else {
+                newStatus = "Pending";
+            }
+            eligibilityPolicy.setStatus(newStatus);
+            eligibilityPolicy.setAuthorizedBy(authorizedBy);
+            eligibilityPolicy.setAuthorizedDate(LocalDate.now());
+            return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
         }
-        eligibilityPolicy.setStatus(newStatus);
-        eligibilityPolicy.setAuthorizedBy(authorizedBy);
-        eligibilityPolicy.setAuthorizedDate(LocalDate.now());
-        return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
+        return false;
     }
 
     /**
@@ -93,15 +96,18 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         EligibilityPolicy oldEligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(eligibilityPolicy.getPolicyCode());
-        oldEligibilityPolicy.setPolicyName(eligibilityPolicy.getPolicyName());
-        oldEligibilityPolicy.setPolicyDescription(eligibilityPolicy.getPolicyDescription());
-        oldEligibilityPolicy.setEligibilityParameterList(eligibilityPolicy.getEligibilityParameterList());
-        oldEligibilityPolicy.setStatus(eligibilityPolicy.getStatus());
-        oldEligibilityPolicy.setModifiedBy(eligibilityPolicy.getModifiedBy());
-        oldEligibilityPolicy.setModifiedDate(eligibilityPolicy.getModifiedDate());
-        oldEligibilityPolicy.setAuthorizedBy(null);
-        oldEligibilityPolicy.setAuthorizedDate(null);
-        return eligibilityPolicyDAO.updateEligibilityPolicy(oldEligibilityPolicy);
+        if(oldEligibilityPolicy!=null) {
+            oldEligibilityPolicy.setPolicyName(eligibilityPolicy.getPolicyName());
+            oldEligibilityPolicy.setPolicyDescription(eligibilityPolicy.getPolicyDescription());
+            oldEligibilityPolicy.setEligibilityParameterList(eligibilityPolicy.getEligibilityParameterList());
+            oldEligibilityPolicy.setStatus(eligibilityPolicy.getStatus());
+            oldEligibilityPolicy.setModifiedBy(eligibilityPolicy.getModifiedBy());
+            oldEligibilityPolicy.setModifiedDate(eligibilityPolicy.getModifiedDate());
+            oldEligibilityPolicy.setAuthorizedBy(null);
+            oldEligibilityPolicy.setAuthorizedDate(null);
+            return eligibilityPolicyDAO.updateEligibilityPolicy(oldEligibilityPolicy);
+        }
+        return false;
     }
 
     /**

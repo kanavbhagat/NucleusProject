@@ -8,21 +8,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
-public class EligibilityPolicyTesting {
+public class EligibilityPolicyTest {
 
     @Autowired
     EligibilityPolicyService eligibilityPolicyService;
 
 
-    @Test
-    public void gettingAllPoliciesTest() {
-        assertNull(eligibilityPolicyService.getAllEligibilityPolicies());
-    }
 
     @Test
     public void insertEligibilityPolicyTest() {
