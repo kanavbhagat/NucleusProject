@@ -20,7 +20,6 @@
 <body>
 <jsp:include page="/navbar.jsp" />
     <security:authorize access = "hasRole('MAKER')">
-        <center><font color=red>${msg}</font></center><br>
         <h3 class="p-2">Create Charge</h3>
     </security:authorize>
     <security:authorize access = "hasRole('CHECKER')">

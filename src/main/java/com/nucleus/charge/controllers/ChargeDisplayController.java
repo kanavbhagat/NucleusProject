@@ -3,24 +3,37 @@ package com.nucleus.charge.controllers;
 import com.nucleus.charge.model.NewCharge;
 import com.nucleus.charge.service.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@PropertySource("classpath:status.properties")
 @RequestMapping("/charges")
 public class ChargeDisplayController {
 
     @Autowired
     ChargeService chargeService;
+
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     @GetMapping("/makerList")
     @PreAuthorize("hasRole('MAKER')")
@@ -53,24 +66,30 @@ public class ChargeDisplayController {
                            @Valid @ModelAttribute("newChargeData") NewCharge charge,
                            BindingResult result,
                            Model model) {
+        System.out.println("In getForm");
         if(result.hasErrors()) {
+            System.out.println("Error occured while filling charge creation form...");
             return "views/charge/chargeDefinition";
         }
         else {
             String status = null;
             if(action.equalsIgnoreCase("save")) {
-                status = "Inactive";
+                status = saved;
             }
             else if(action.equalsIgnoreCase("save & request approval")) {
-                status = "Pending";
+                status = pending;
             }
             boolean b = chargeService.insertCharge(charge, status);
             if(b) {
-                return "redirect:../charges/makerList";
+                model.addAttribute("head","Charge Created Successfully");
+                model.addAttribute("msg","Your Charge has been created successfully.");
+                model.addAttribute("chargeCode",charge.getChargeCode());
+                return "views/charge/success";
             }
             else {
-                model.addAttribute("msg","Failed to create charge. Try again.");
-                return "views/charge/chargeDefinition";
+                model.addAttribute("description","Failed to create charge.");
+                model.addAttribute("chargeCode",charge.getChargeCode());
+                return "views/charge/moduleerrorpage";
             }
         }
     }
@@ -89,23 +108,58 @@ public class ChargeDisplayController {
     @PostMapping("{chargeCode}")
     @PreAuthorize("hasRole('CHECKER')")
     public String chargeChecker(@PathVariable("chargeCode") String chargeCode,
-                                @RequestParam("action") String action) {
+                                @RequestParam("action") String action,
+                                Model model) {
+        System.out.println("In Charge Checker controller");
         String status = null;
         if(action.equalsIgnoreCase("approve")) {
-            status = "Approved";
+            status = approved;
         }else if(action.equalsIgnoreCase("reject")) {
-            status = "Rejected";
+            status = rejected;
         }
-        chargeService.updateStatus(chargeCode, status);
-        return "redirect:/charges/checkerList";
+        boolean b = chargeService.updateStatus(chargeCode, status);
+        if(b) {
+            if(action.equalsIgnoreCase( "approve")) {
+                model.addAttribute("head","Charge Approved Successfully");
+                model.addAttribute("msg","Charge has been approved successfully.");
+            }
+            else if(action.equalsIgnoreCase("reject")) {
+                model.addAttribute("head","Charge Rejected Successfully");
+                model.addAttribute("msg","Your Charge has been rejected successfully.");
+            }
+            model.addAttribute("chargeCode", chargeCode);
+            return "views/charge/success";
+        }
+        else {
+            if(action.equalsIgnoreCase( "approve")) {
+                model.addAttribute("description","Failed to approve charge.");
+            }
+            else if(action.equalsIgnoreCase("reject")) {
+                model.addAttribute("description","Failed to reject charge.");
+            }
+            model.addAttribute("chargeCode",chargeCode);
+            return "views/charge/moduleerrorpage";
+        }
+        //return "redirect:/charges/checkerList";
     }
 
     @RequestMapping(value = {"/delete/{chargeCode}"})
     @PreAuthorize("hasRole('MAKER')")
     public String deleteCharge(@PathVariable("chargeCode") String chargeCode, Model model) {
+        System.out.println("In charge Deletion controller");
         boolean deleteStatus = chargeService.deleteCharge(chargeCode);
-        model.addAttribute("deleteStatus", deleteStatus);
-        return "redirect:/charges/makerList";
+        if(deleteStatus) {
+            model.addAttribute("head","Charge Deleted Successfully");
+            model.addAttribute("msg","Your Charge has been deleted successfully.");
+            model.addAttribute("chargeCode",chargeCode);
+            return "views/charge/success";
+        }
+        else {
+            model.addAttribute("description","Failed to delete charge.");
+            model.addAttribute("chargeCode",chargeCode);
+            return "views/charge/moduleerrorpage";
+        }
+        //return "redirect:/charges/makerList";
     }
 
     @PreAuthorize("hasRole('MAKER')")
@@ -120,20 +174,29 @@ public class ChargeDisplayController {
     @PreAuthorize("hasRole('MAKER')")
     @PostMapping(value = {"edit/addEdited"})
     public String addEditedCharge(@RequestParam("action")String action,
-
                                   @ModelAttribute("charge") NewCharge charge,
                                   Model model) {
 
         System.out.println("In Addedit controller");
         if(action.equalsIgnoreCase("save")) {
-            charge.setStatus("INACTIVE");
+            charge.setStatus(saved);
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            charge.setStatus("PENDING");
+            charge.setStatus(pending);
         }
 
         boolean editStatus = chargeService.updateCharge(charge);
-        model.addAttribute("editStatus", editStatus);
-        return "redirect:/charges/makerList";
+        if(editStatus) {
+            model.addAttribute("head","Charge Edited Successfully");
+            model.addAttribute("msg","Your Charge has been edited successfully.");
+            model.addAttribute("chargeCode",charge.getChargeCode());
+            return "views/charge/success";
+        }
+        else {
+            model.addAttribute("description","Failed to edit charge.");
+            model.addAttribute("chargeCode",charge.getChargeCode());
+            return "views/charge/moduleerrorpage";
+        }
+        //return "redirect:/charges/makerList";
     }
 
     @ModelAttribute("eventList")
