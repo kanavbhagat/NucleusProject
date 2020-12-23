@@ -9,5 +9,7 @@ public interface ChargeDao {
     List<NewCharge> getPendingChargeList();
     boolean deleteCharge(String chargeCode);
     NewCharge getOneCharge(String chargeCode);
+    boolean updateCharge(NewCharge charge);
     void updateStatus(String chargeCode, String status);
+
 }

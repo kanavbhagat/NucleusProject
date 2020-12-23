@@ -83,7 +83,14 @@
                     <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                   </sec:authorize>
                   <sec:authorize access="hasRole('MAKER')">
-                    <td><a href="<%= request.getContextPath()%>/product/${product.productCode}/edit">Edit</a> | <a href="<%= request.getContextPath()%>/product/${product.productCode}/delete">Delete</a></td>
+                    <c:if test = "${product.status == 'Approved'}">
+                        <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
+                    </c:if>
+                    <c:if test = "${product.status != 'Approved'}">
+                        <td><a href="<%= request.getContextPath()%>/product/${product.productCode}/edit">Edit</a> |
+                            <a href="<%= request.getContextPath()%>/product/${product.productCode}/delete">Delete</a>
+                        </td>
+                    </c:if>
                   </sec:authorize>
                  </tr>
                 </c:forEach>

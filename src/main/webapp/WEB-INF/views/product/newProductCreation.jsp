@@ -182,7 +182,7 @@
                 <div class="row" style="margin-bottom:20px">
                     <div class="col-sm-3 offset-sm-9">
                         <button type="submit" class="btn btn-primary" name="action" value="Saved">Save</button>
-                        <button type="submit" class="btn btn-primary" name="action" value="Saved and Approval Requested">
+                        <button type="submit" class="btn btn-primary" name="action" value="Pending">
                             Save & Request Approval
                         </button>
                     </div>

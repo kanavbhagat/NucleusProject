@@ -35,17 +35,17 @@ public class NewCustomerController {
 
 
         ModelAndView modelAndView=new ModelAndView("views/customerInfo/customerInfo");
-
-       /* ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");*/
+/*
+        ModelAndView modelAndView=new ModelAndView("views/customerInfo/testCustomer");*/
 
         modelAndView.addObject("customer", new Customer());
-        modelAndView.addObject("address",new Address());
+
         return modelAndView;
     }
 
     @PostMapping(value = "/newCustomer")
     public ModelAndView addCustomer(@Valid @ModelAttribute Customer customer ,  HttpServletRequest request){
-        customer.setCustomerCode("L102");
+       // customer.setCustomerCode("L102");
 
 
         Address add = customer.getAdd();
@@ -66,8 +66,8 @@ public class NewCustomerController {
        modelAndView.addObject("addCust" , customerAdded);*/
        // modelAndView.addObject("address", add);
 
-        ModelAndView modelAndView=new ModelAndView("views/customerInfo/customerInfo");
-        return modelAndView;
+
+        return new ModelAndView("redirect:/newLoanApplication");
     }
 
 }

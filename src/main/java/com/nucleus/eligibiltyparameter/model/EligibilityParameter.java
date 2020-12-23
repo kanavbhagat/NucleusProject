@@ -1,7 +1,6 @@
 package com.nucleus.eligibiltyparameter.model;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

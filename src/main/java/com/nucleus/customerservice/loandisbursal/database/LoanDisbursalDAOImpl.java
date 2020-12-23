@@ -15,6 +15,11 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO{
     @Autowired
     private SessionFactory sessionFactory;
 
+    /**
+     * Get all Details of a Loan by loanApplicationNumber
+     * @param loanApplicationNumber
+     * @return Object of LoanApplications Class
+     */
     @Override
     public LoanApplications getLoanDetails(int loanApplicationNumber){
         Session session = sessionFactory.openSession();
@@ -23,6 +28,11 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO{
         return loanApplication;
     }
 
+    /**
+     * Get all Loans associated with a customer by customerCode
+     * @param customerCode
+     * @return List<LoanApplications> list contains all loans taken by this customer
+     */
     @Override
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){
         Session session = sessionFactory.openSession();

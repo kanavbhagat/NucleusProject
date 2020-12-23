@@ -23,10 +23,10 @@
 		<div class="jumbotron text-center" style="background-color:rgba(141, 181, 150, 0.3);">
 
               <%-- Insert Main Message Below --%>
-              <h1 class="display-4"> Eligibility Parameter added successfully</h1>
+              <h1 class="display-4">${messageHeader}</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Your Eligibility Parameter has been added successfully.</strong></p>
+              <p class="lead"><strong>${messageBody}</strong></p>
 
               <hr>
 
@@ -34,13 +34,14 @@
 
                 <%-- Insert Dynamic Message Here Eg- policy code etc --%>
                 <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(141, 181, 150, 0.8); padding: 5px;background-color:rgba(141, 181, 150, 0.1);width: 50%;">
-                <strong>Eligibility Parameter Code : </strong> ${parameterCode}</p>
+                <strong>Product Number : </strong> ${productCode}</p>
 
               </div>
               <%-- Put your link in the value field below where you want to redirect to. --%>
               <div class="d-flex justify-content-center">
-                    <a href="<%= request.getContextPath()%>/main/eligibilityparameter">
-                    <button class="btn btn-info">Go To Eligibility Parameter List</button>
+                    <c:url var="mainUrl" value="/showRepaymentPolicy" />
+                    <a href="<%= request.getContextPath()%>/product">
+                    <button class="btn btn-info">Go Back to Product Overview</button>
                     </a>
               </div>
 		</div>
