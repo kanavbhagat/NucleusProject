@@ -172,7 +172,7 @@
                             <td>
                                 <form:select  path="chargeCodePolicyString" cssClass="form-control">
                                     <form:option value="-"  disabled="${'true'}" selected="true" label="Choose a Policy"/>
-                                    <form:options items="${chargePolicies}" />
+                                    <form:options items="${chargePolicies}" itemLabel="chargePolicyName" itemValue="chargePolicyCode"/>
                                 </form:select>
                             </td>
                             <td><input class="form-control" id="chargeDesc" type="text" disabled></td>
@@ -234,8 +234,8 @@
                     <c:if test="${!empty chargePolicies}">
                     <c:forEach var="policy" items="${chargePolicies}">
                          <tr>
-                          <td>${policy.policyCode}</td>
-                          <td id=${policy.policyCode}>${policy.policyDescription}</td>
+                          <td>${policy.chargePolicyCode}</td>
+                          <td id=${policy.chargePolicyCode}>${policy.chargePolicyDesc}</td>
                          </tr>
                         </c:forEach>
                     </c:if>
