@@ -76,10 +76,10 @@ public class AppConfig {
         ds.setPassword("qwerty");*/
 
         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("apk");
-        ds.setPassword("abcd1234");
+        ds.setUsername("c##asaf");
+        ds.setPassword("asaf");
 
-
+        */
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
 
