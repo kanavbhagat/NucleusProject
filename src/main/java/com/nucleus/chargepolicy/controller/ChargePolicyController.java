@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import javax.xml.bind.SchemaOutputResolver;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,6 @@ public class ChargePolicyController {
 
     @PostMapping(value = {"/newChargePolicy"})
     public String getFormData(@Valid @ModelAttribute("chargePolicy") ChargePolicy chargePolicy,BindingResult bindingResult,@RequestParam("action")String action,ModelMap model){
-        System.out.println("in getForm Data");
 
         if(bindingResult.hasErrors()){
             System.out.println("Error...........................................................");
@@ -77,10 +77,22 @@ public class ChargePolicyController {
                 chargePolicy.setStatus("Pending");
             }
 
-            this.chargePolicyService.insert(chargePolicy);
-            return "redirect:/chargePolicy/newChargePolicySuccess";
-        }
+            int status = this.chargePolicyService.insert(chargePolicy);
+            if (status == 2){
+                model.put("exception", "Duplicate Charge Policy Code");
+                List<String> chargeCodeList = new ArrayList<String>();
+                chargeCodeList.add("101");
+                chargeCodeList.add("102");
+                model.put("chargeCodeList",chargeCodeList);
+                return "views/chargepolicy/chargePolicy";
+            }
+            else if(status == 1){
+                model.put("message", "Saved Successfully");
+                return "redirect:/chargePolicy/searchScreen";
+            }
 
+        }
+        return "views/chargepolicy/chargePolicy";
     }
     @PostMapping(value = {"/newChargePolicySuccess"})
     public String getFormDataPostSuccess(@Valid @ModelAttribute ChargePolicy chargePolicy,BindingResult bindingResult,@RequestParam("action")String action,ModelMap model){
@@ -159,6 +171,7 @@ public class ChargePolicyController {
     }
     @GetMapping(value = {"/edit/{chargePolicyCode}"})
     public ModelAndView editChargePolicyCode(@PathVariable("chargePolicyCode") String chargePolicyCode) {
+
         ModelAndView modelAndView = new ModelAndView();
         ChargePolicy chargePolicy = chargePolicyService.getChargePolicy(chargePolicyCode);
         System.out.println("Charge Policy Name : - " + chargePolicy.getChargePolicyName());
@@ -189,6 +202,9 @@ public class ChargePolicyController {
     }
     @PostMapping(value = {"/updateEntry/{chargePolicyCode}"})
     public String updateEntry(@PathVariable("chargePolicyCode") String chargePolicyCode,@ModelAttribute ChargePolicy chargePolicy) {
+
+        chargePolicy.setCreatedDate(String.valueOf(LocalDate.now()));
+        chargePolicy.setStatus(this.chargePolicyService.getChargePolicy(chargePolicyCode).getStatus());
         System.out.println("chargePolicy " + chargePolicy.getChargePolicyName());
         this.chargePolicyService.updateEntry(chargePolicy,chargePolicyCode);
         return "redirect:/chargePolicy/searchScreen";

@@ -81,10 +81,10 @@
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <c:if test = "${newRepaymentPolicy.status ne 'Incomplete'}">
+                            <c:if test = "${newRepaymentPolicy.status ne 'Saved'}">
                                 <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
                             </c:if>
-                            <c:if test = "${newRepaymentPolicy.status == 'Incomplete'}">
+                            <c:if test = "${newRepaymentPolicy.status == 'Saved'}">
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                             </c:if>
                         </sec:authorize>

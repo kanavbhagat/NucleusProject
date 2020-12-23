@@ -16,7 +16,7 @@
     <%--
     <script type="text/javascript">
 		$(document).ready(function() {
-		    $('#productTable').DataTable();
+		    $('#loanApplicationsTable').DataTable();
 		} );
 	</script>
 	--%>
@@ -36,7 +36,7 @@
     		</h2>
 
     		<div class=" px-4 mt-0 align-self-end ">
-    			 <button type="button" onclick='location.href="<%= request.getContextPath()%>/newLoanApplication"' class="btn btn-primary" id="newLoanApplication">Create Application</button>
+    			 <button type="button" onclick='location.href="<%=request.getContextPath() %>/newCustomer"' class="btn btn-primary" id="newLoanApplication">Create Application</button>
     		</div>
     	</div>
 
@@ -63,14 +63,15 @@
     		        </thead>
     		        <tbody>
     		            <c:if test="${!empty loanApplications}">
-                                   <c:forEach var="product" items="${loanApplications}">
+                                   <c:forEach var="loan" items="${loanApplications}">
                                         <tr>
-                                         <td>${loanApplications.loanApplicationNumber}</td>
-                                         <td>${loanApplications.customerCode}</td>
+                                         <td>${loan.loanApplicationNumber}</td>
+                                         <td>${loan.customerCode.customerCode}</td>
+                                         <td>${loan.customerCode.firstName}</td>
                                          <td></td>
                                          <td></td>
                                          <td></td>
-                                         <td></td>
+                                         <td>${loan.status}</td>
                                          <td></td>
                                          <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
                                         </tr>
