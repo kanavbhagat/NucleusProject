@@ -8,12 +8,12 @@ import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanapplications.service.NewLoanApplicationService;
 import com.nucleus.payment.service.DateEditor;
 import com.nucleus.product.model.Product;
-import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import com.nucleus.repaymentschedule.service.RepaymentScheduleServiceImpl;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +30,7 @@ import java.util.List;
 public class NewLoanApplicationController {
 
     @Autowired
-    RepaymentScheduleService rs;
+    RepaymentScheduleServiceImpl rs;
 
     @Autowired
     NewLoanApplicationService newLoanApplicationService;
@@ -77,6 +77,7 @@ public class NewLoanApplicationController {
        boolean a =  newCustomerService.createNewCustomer(customer);
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
+        rs =new RepaymentScheduleServiceImpl();
         rs.addRepaymentSchedule(loanApplications);
 
 
