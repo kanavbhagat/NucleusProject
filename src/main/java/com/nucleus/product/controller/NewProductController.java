@@ -21,6 +21,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <p>Controller for the new product creation and product edit pages.</p>
+ */
 @Controller
 public class NewProductController {
 
@@ -38,6 +42,11 @@ public class NewProductController {
 
     private List<String> productTypes;
 
+    /**
+     * <p>Get Mapping for the product creation page. Sends a new product model for the new product form.
+     * </p>
+     * @return the modelAndView with the new product view.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/newProduct" })
     public ModelAndView newProduct() {
@@ -46,6 +55,17 @@ public class NewProductController {
         return modelAndView;
     }
 
+
+    /**
+     * <p> Post mapping for editing or adding a new product. Calls the appropriate createNewProduct or updateProduct
+     * function depending on the action performed.
+     * </p>
+     * @param Product product the product to be saved/updated.
+     * @param BindingResult result Binding result from the page for validation
+     * @param String id productId of the product to be updated. Is optional, only present during product update.
+     * @param String action the action performed, can be either Saved or Pending.
+     * @return the modelAndView of either the update success or creation success page.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = {"/newProduct", "/product/{productId}/save"})
     public ModelAndView addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result,
@@ -81,16 +101,29 @@ public class NewProductController {
         return saveNewProduct(product);
     }
 
+
+    /**
+     * <p> Get Mapping for the edit product screen. Retrieves the product via productId using the DAO, and then attaches
+     * that object to the returned modelAndView.
+     * </p>
+     * @param String productId the productId who's details are to be shown.
+     * @return the modelAndView of the edit page.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/product/{productId}/edit")
     public ModelAndView editProduct(@PathVariable(value = "productId") String productId){
         ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/editProduct"));
-//        modelAndView.addObject("product", new Product());
         modelAndView.addObject("product", productService.getProductById(productId));
         return modelAndView;
     }
 
 
+    /**
+     * <p> Internal function called from the new product/product update controller in case the product is to be created.
+     * </p>
+     * @param Product product which has to be saved
+     * @return the modelAndView of either the success or error page depending on whether the dao was able to insert it.
+     */
     private ModelAndView saveNewProduct(Product product){
         LoginDetailsImpl details = new LoginDetailsImpl();
         product.setCreatedBy(details.getUserName());
@@ -114,6 +147,12 @@ public class NewProductController {
     }
 
 
+    /**
+     * <p> Internal function called from the new product/product update controller in case the product is to be updated.
+     * </p>
+     * @param String productId the productId who's details are to be shown.
+     * @return the modelAndView of either the success or error page depending on whether the dao was able to udpate it.
+     */
     private ModelAndView updateProduct(Product product){
         LoginDetailsImpl details = new LoginDetailsImpl();
         product.setModifiedBy(details.getUserName());
@@ -135,6 +174,11 @@ public class NewProductController {
     }
 
 
+    /**
+     * <p> Internal function to get the possible loan product types.
+     * </p>
+     * @return List of Strings containing the prduct types.
+     */
     private List<String> getProductTypes(){
         List<String> productTypes = new ArrayList<>(2);
         productTypes.add("Home Loan");
@@ -143,6 +187,12 @@ public class NewProductController {
     }
 
 
+    /**
+     * <p> Internal function to add all necessary attributes for the product creation or edit product screen dropdowns.
+     * </p>
+     * @param ModelAndView modelAndView which needs the params to be attached
+     * @return modelAndView with the attributes attached.
+     */
     private ModelAndView addAttributes(ModelAndView modelAndView){
         modelAndView.addObject("eligibilityPolicies", eligibilityPolicyService.getAllEligibilityPolicies());
         modelAndView.addObject("repaymentPolicies", repaymentPolicyService.getRepaymentPolicyList());
