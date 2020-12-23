@@ -34,30 +34,30 @@ public class ProductLogger {
     @Pointcut("execution (* com.nucleus.product.service.ProductService.deleteProduct(..))")
     public void delete(){}
 
-    @AfterReturning(pointcut = "create()",returning = "val")
-    public void createNewProduct(JoinPoint joinPoint,boolean val){
+    @AfterReturning(pointcut = "create()",returning = "isCreated")
+    public void createNewProduct(JoinPoint joinPoint,boolean isCreated){
         Object[] args = joinPoint.getArgs();
-        if(val){
+        if(isCreated){
             Product product = (Product) args[0];
             logger.info("New product created with ProductCode " + product.getProductCode());
         } else {
-            logger.info("New product not created. Method returned " + val);
+            logger.info("New product not created. Method returned " + isCreated);
         }
     }
 
-    @AfterReturning(pointcut = "getProduct()",returning = "list")
-    public void getProductList(JoinPoint joinPoint, List<Product> list){
-        if( list!=null && !list.isEmpty()) {
-            logger.info("Product list fetched from database with size "+list.size());
+    @AfterReturning(pointcut = "getProduct()",returning = "productList")
+    public void getProductList(JoinPoint joinPoint, List<Product> productList){
+        if( productList!=null && !productList.isEmpty()) {
+            logger.info("Product list fetched from database with size "+productList.size());
         } else {
             logger.info("Product list fetched, but returned empty or null.");
         }
     }
 
-    @AfterReturning(pointcut = "update()",returning = "val")
-    public void updateProduct(JoinPoint joinPoint,Object val){
+    @AfterReturning(pointcut = "update()",returning = "project")
+    public void updateProduct(JoinPoint joinPoint,Object project){
         Object[] args = joinPoint.getArgs();
-        if(val!=null) {
+        if(project!=null) {
             Product product = (Product) args[0];
             logger.info("Product updated with status " + product.getStatus());
         } else{
@@ -65,10 +65,10 @@ public class ProductLogger {
         }
     }
 
-    @AfterReturning(pointcut = "productById()",returning = "val")
-    public void getProductById(JoinPoint joinPoint,Object val){
+    @AfterReturning(pointcut = "productById()",returning = "project")
+    public void getProductById(JoinPoint joinPoint,Object project){
         Object[] args = joinPoint.getArgs();
-        if(val!=null) {
+        if(project!=null) {
             String id = (String) args[0];
             logger.info("Product fetched by Id from database with id " + id);
         }else{
@@ -76,14 +76,14 @@ public class ProductLogger {
         }
     }
 
-    @AfterReturning(pointcut = "delete()",returning = "returnValue")
-    public void deleteProduct(JoinPoint joinPoint,boolean returnValue){
+    @AfterReturning(pointcut = "delete()",returning = "isDeleted")
+    public void deleteProduct(JoinPoint joinPoint,boolean isDeleted){
         Object[] args = joinPoint.getArgs();
-        if(returnValue) {
+        if(isDeleted) {
             String id = (String) args[0];
             logger.info("Product deleted with Product Id " + id);
         } else {
-            logger.info("Product not deleted. ProductDAO.delete() returned " + returnValue);
+            logger.info("Product not deleted. ProductDAO.delete() returned " + isDeleted);
         }
     }
 }
