@@ -1,9 +1,8 @@
 package com.nucleus.repaymentschedule.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nucleus.loanapplications.model.LoanApplications;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -13,11 +12,9 @@ import java.time.LocalDate;
 public class RepaymentSchedule implements Serializable {
 
     @Id
-    @Column(name = "loan_application_number", length = 10, nullable = false)
-
-//    @OneToOne
-//    @JoinColumn(name = "loan_application_number", referencedColumnName = "loan_application_number", nullable = false)
-    private int loanApplicationNumber;
+    @ManyToOne
+    @JoinColumn(name = "loan_application_number", referencedColumnName = "loan_application_number", nullable = false)
+    private LoanApplications loanApplicationNumber;
 
     @Id
     @Column(name = "installment_number", length = 10, nullable = false)
@@ -58,11 +55,11 @@ public class RepaymentSchedule implements Serializable {
                 '}';
     }
 
-    public int getLoanApplicationNumber() {
+    public LoanApplications getLoanApplicationNumber() {
         return loanApplicationNumber;
     }
 
-    public void setLoanApplicationNumber(int loanApplicationNumber) {
+    public void setLoanApplicationNumber(LoanApplications loanApplicationNumber) {
         this.loanApplicationNumber = loanApplicationNumber;
     }
 

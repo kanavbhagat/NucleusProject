@@ -14,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -30,6 +33,7 @@ public class NewCustomerController {
     @Autowired
     AddressService addressService;
 
+    @PreAuthorize("hasRole('MAKER')")
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
 
@@ -41,6 +45,7 @@ public class NewCustomerController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newCustomer")
     public ModelAndView addCustomer(@Valid @ModelAttribute Customer customer ,  HttpServletRequest request){
 

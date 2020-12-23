@@ -71,6 +71,7 @@ public class AppConfig {
         // Jigme's Oracle db credentials
         //ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
 
+
        /* ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
         ds.setUsername("nsbt");
         ds.setPassword("qwerty");*/
