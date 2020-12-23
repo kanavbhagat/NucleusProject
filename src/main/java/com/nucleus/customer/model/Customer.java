@@ -1,8 +1,6 @@
 package com.nucleus.customer.model;
 
 import com.nucleus.loanapplications.model.LoanApplications;
-import org.graalvm.compiler.virtual.phases.ea.PartialEscapeClosure;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,11 +10,12 @@ import java.util.Set;
 @Table( name= "customer")
 public class Customer {
 
-    public static int id = 101;
+    static int id = 101;
     static String code;
     public Customer(){
         super();
         code = "L"+id;
+        id++;
         this.setCustomerCode(code);
         add = new Address();
     }
@@ -33,7 +32,7 @@ public class Customer {
     private String lastName;
 
     @Column(name="date_of_birth" , nullable = false)
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
     private String nationality;
@@ -106,11 +105,11 @@ public class Customer {
     }
 
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
