@@ -119,19 +119,5 @@ public class PaymentDAOImpl implements PaymentDAO{
         return deleteStatus;
     }
 
-    public void updateApprovedBy(int loanID, String user){
-        try {
-            Session session = getSession();
-            session.beginTransaction();
-            Payment payment = session.get(Payment.class, loanID);
-            payment.setReviewedBy(user);
-            session.update(payment);
-            session.getTransaction().commit();
-            session.close();;
-        }
-        catch (HibernateException e){
-            e.printStackTrace();
-        }
-    }
 
 }
