@@ -11,10 +11,10 @@ import java.util.List;
 public class LoanApplicationService {
 
     @Autowired
-    NewLoanApplicationService newLoanApplicationService;
+    LoanApplicationDAO loanApplicationDAO;
 
     public List<LoanApplications> getAllLoanApplicationsList(){
-        return newLoanApplicationService.getLoanApplicationList();
+        return loanApplicationDAO.getLoanApplicationList();
     }
 
     public LoanApplications getLoanApplicationId(Integer id){

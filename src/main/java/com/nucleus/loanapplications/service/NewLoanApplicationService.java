@@ -33,16 +33,4 @@ public class NewLoanApplicationService {
     public List<LoanApplications> getLoanApplicationList(){
         return loanApplicationDAO.getLoanApplicationList();
     }
-
-    public boolean updateApplication(LoanApplications loanApplications){
-        return loanApplicationDAO.updateApplication(loanApplications);
-    }
-    public boolean removeApplication(LoanApplications loanApplications){
-        return loanApplicationDAO.removeApplication(loanApplications);
-    }
-    public boolean removeApplication(int id){
-        return loanApplicationDAO.removeApplication(id);
-    }
-
-
 }
