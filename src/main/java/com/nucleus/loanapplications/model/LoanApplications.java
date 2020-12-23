@@ -15,8 +15,8 @@ public class LoanApplications {
    /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code",nullable = false)
     private Customer customerCode;
 
     public Customer getCustomerCode() {
@@ -40,7 +40,7 @@ public class LoanApplications {
     private Integer tenure;
 
     @Column(name = "rate",nullable = false)
-    private double rate;
+    private Double rate;
 
     @Column(name = "agreement_date",nullable = false)
     private LocalDate agreementDate;
@@ -97,11 +97,11 @@ public class LoanApplications {
         this.tenure = tenure;
     }
 
-    public double getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
