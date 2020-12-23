@@ -39,12 +39,9 @@ public class Product {
     @Column(name = "max_exposure_amount")
     private Integer maxExposureAmount;
 
-
-
     @ManyToOne
     @JoinColumn(name = "repayment_policy_code", referencedColumnName = "POLICY_CODE", nullable = false)
     private RepaymentPolicy repaymentPolicyCode;
-
 
     @ManyToOne
     @JoinColumn(name = "eligibility_policy_code", referencedColumnName = "policy_code", nullable = false)

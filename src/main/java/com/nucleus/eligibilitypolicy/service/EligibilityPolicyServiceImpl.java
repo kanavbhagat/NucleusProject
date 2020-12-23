@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This class acts as a Service layer for all
+ * Eligibility Policy related operations.
+ *
+ */
 @Service
 public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
 
@@ -65,11 +70,12 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
         String newStatus;
         if(action.equalsIgnoreCase("approve")) {
-            newStatus = "APPROVED";
+            newStatus = "Approved";
         } else if (action.equalsIgnoreCase("reject")) {
-            newStatus = "REJECTED";
-        } else
-            newStatus = "PENDING";
+            newStatus = "Rejected";
+        } else {
+            newStatus = "Pending";
+        }
         eligibilityPolicy.setStatus(newStatus);
         eligibilityPolicy.setAuthorizedBy(authorizedBy);
         eligibilityPolicy.setAuthorizedDate(LocalDate.now());

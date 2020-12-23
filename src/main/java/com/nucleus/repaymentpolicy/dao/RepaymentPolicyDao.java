@@ -8,7 +8,7 @@ public interface RepaymentPolicyDao {
 
     public List<RepaymentPolicy> getRepaymentPolicyList() ;
     public RepaymentPolicy getRepaymentPolicyById(String id) ;
-    public String addRepaymentPolicy(RepaymentPolicy repaymentPolicy) ;
+    public boolean addRepaymentPolicy(RepaymentPolicy repaymentPolicy);
     public boolean deleteRepaymentPolicy(String id);
     public boolean updateRepaymentPolicy(RepaymentPolicy repaymentPolicy);
 }

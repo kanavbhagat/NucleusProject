@@ -1,7 +1,6 @@
 package com.nucleus.eligibiltyparameter.model;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +18,7 @@ import java.util.Objects;
 public class EligibilityParameter implements Serializable {
 
     @NotBlank(message = "Eligibility Parameter Code should not be empty")
-    @Pattern(regexp = "^([A-Za-z0-9\\_]+)$", message = "Eligibility Parameter code cannot contain spaces")
+    @Pattern(regexp = "^([A-Za-z0-9_]+)$", message = "Eligibility Parameter code cannot contain spaces")
     @Id
     @Column(name = "parameter_code", length = 10)
     private String parameterCode;
