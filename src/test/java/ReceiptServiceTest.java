@@ -1,5 +1,7 @@
 import com.nucleus.config.TestConfig;
+import com.nucleus.receipt.model.Advice;
 import com.nucleus.receipt.model.Receipt;
+import com.nucleus.receipt.model.Settlement;
 import com.nucleus.receipt.service.ReceiptService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +21,30 @@ public class ReceiptServiceTest {
     ReceiptService receiptService;
 
     @Test
-    public void registerEmptyReceiptTest(){
+    public void registerReceiptTest(){
         Receipt receipt = new Receipt();
         assertFalse(receiptService.registerReceipt(receipt));
     }
 
     @Test
-    public void randomReceiptSearchTest(){
+    public void ReceiptSearchTest(){
         assertTrue(receiptService.receiptSearch("random", "random", 111, 111).size() == 0);
+    }
+
+
+    @Test
+    public void updateReceiptTest(){
+        Receipt receipt = new Receipt();
+        assertFalse(receiptService.updateReceipt(receipt));
+    }
+
+    @Test
+    public void getReceiptTest(){
+        assertNull(receiptService.getReceipt(777));
+    }
+
+    @Test
+    public void runBODTest() {
+        assertFalse(receiptService.runBOD(new Receipt(), new Advice(), new Settlement()));
     }
 }
