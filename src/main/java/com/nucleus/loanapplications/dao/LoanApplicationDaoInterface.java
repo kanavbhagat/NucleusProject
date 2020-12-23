@@ -1,4 +1,5 @@
 package com.nucleus.loanapplications.dao;
+import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 
 import java.util.List;
@@ -8,4 +9,6 @@ public interface LoanApplicationDaoInterface {
     public List<LoanApplications> getLoanApplicationList();
     public LoanApplications getLoanApplicationId(Integer id);
     public boolean deleteLoanApplication(Integer id) ;
+    boolean updateLoanApplication(LoanApplications loanApplications);
+
 }
