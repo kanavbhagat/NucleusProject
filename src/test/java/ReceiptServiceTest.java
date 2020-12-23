@@ -1,4 +1,3 @@
-
 import com.nucleus.config.TestConfig;
 import com.nucleus.receipt.model.Advice;
 import com.nucleus.receipt.model.Receipt;
@@ -32,10 +31,6 @@ public class ReceiptServiceTest {
         assertTrue(receiptService.receiptSearch("random", "random", 111, 111).size() == 0);
     }
 
-    @Test
-    public void getReceiptListTest(){
-        assertFalse(receiptService.getReceiptList().isEmpty());
-    }
 
     @Test
     public void updateReceiptTest(){
