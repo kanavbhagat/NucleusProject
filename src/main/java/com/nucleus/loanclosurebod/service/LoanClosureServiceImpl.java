@@ -39,13 +39,9 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         return countofClosedLoans;
     }
 
-    /**
-     * Method for obtaining the repayment schedule for the given Loan Application
-     * and updating the status of the loan based on Bill Flags.
-     * @param loanApplication
-     * @return closureStatus
-     */
-    public boolean closeOneLoan(LoanApplications loanApplication){
+     /* Method for obtaining the repayment schedule for the given Loan Application
+     and updating the status of the loan based on Bill Flags. */
+    private boolean closeOneLoan(LoanApplications loanApplication){
         boolean flag = true;
         boolean closureStatus = false;
         String currentStatus = loanApplication.getStatus();
