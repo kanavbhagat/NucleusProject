@@ -52,23 +52,22 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
      * @return parameterCode against which parameter is inserted
      */
     @Override
-    public String insertParameter(EligibilityParameter eligibilityParameter) {
+    public boolean insertParameter(EligibilityParameter eligibilityParameter) {
 
-        String parameterCode=null;
+        boolean success;
         try {
             Session session = getSession();
             session.beginTransaction();
-            parameterCode=eligibilityParameter.getParameterCode();
             session.save(eligibilityParameter);
+            success=true;
             session.getTransaction().commit();
             session.close();
         } catch (Exception exception) {
+            success=false;
             exception.printStackTrace();
         }
-        return parameterCode;
+        return success;
     }
-
-
 
     /**
      * Getting a particular eligibility parameter
@@ -98,19 +97,21 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
      * @return parameter code against which eligibility parameter is deleted
      */
     @Override
-    public String deleteEligibilityParameter(String parameterCode) {
-
+    public boolean deleteEligibilityParameter(String parameterCode) {
+        boolean success;
         EligibilityParameter eligibilityParameter = getOneEligibilityParameter(parameterCode);
         try {
             Session session = getSession();
             session.beginTransaction();
             session.delete(eligibilityParameter);
+            success=true;
             session.getTransaction().commit();
             session.close();
         } catch (Exception exception) {
+            success=false;
             exception.printStackTrace();
         }
-        return parameterCode;
+        return success;
     }
 
     /**
@@ -128,7 +129,6 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
                     "e.parameterDescription = ?2 , e.minValue = ?3 , e.maxValue = ?4 , e.modifiedBy = ?5 ," +
                     "e.modifiedDate = ?6 , e.status = ?7 where e.parameterCode = ?8");
 
-            System.out.println(eligibilityParameter.getParameterName());
             String name = eligibilityParameter.getParameterName();
             String desc = eligibilityParameter.getParameterDescription();
             double min = eligibilityParameter.getMinValue();
@@ -146,7 +146,6 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             query1.setParameter(7, status);
             query1.setParameter(8, code);
 
-            System.out.println(eligibilityParameter.getParameterName());
             query1.executeUpdate();
 
 
@@ -179,9 +178,32 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
             session.update(eligibilityParameter);
             session.getTransaction().commit();
             updateStatus = true;
+            session.close();
         } catch (Exception exception) {
             updateStatus = false;
         }
         return updateStatus;
+    }
+
+    /**
+     * Fetching list of all eligibility parameters whose status is approved
+     * @return - list of all eligibility parameters whose status is approved
+     */
+    @Override
+    public List<EligibilityParameter> getApprovedParameters(){
+        List<EligibilityParameter> eligibilityParameterList;
+        try {
+            Session session = getSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from EligibilityParameter e where e.status= ?1");
+            query.setParameter(1, "Approved");
+            eligibilityParameterList = query.getResultList();
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception exception) {
+            eligibilityParameterList = null;
+        }
+        return eligibilityParameterList;
+
     }
 }

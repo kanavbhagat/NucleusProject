@@ -4,19 +4,28 @@ import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+
+/**
+ * <p> Serves the receipt overview page </p>
+ */
+@Controller
 public class receiptCheckerController {
 
 
     @Autowired
     ReceiptService receiptService;
 
+
+    /**
+     * <p> Get mapping for the receipt overview page. returns the model and view with a list of receipts attached for the
+     * datatable on the page. </p>
+     * @return the modelAndView for the receipt overview page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/receiptChecker" })
     public ModelAndView receiptChecker(){
@@ -25,6 +34,13 @@ public class receiptCheckerController {
         return mv;
     }
 
+
+    /**
+     * <p> Get mapping for receipt approval link. Redirects to a success/error page depending on whether the object
+     * update was successful. </p>
+     * @param String receiptIdString Path variable with the receipt Id to be updated.
+     * @return returns modelAndView of success page if operation was successful, else the error page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/receiptChecker/approve/{receiptId}")
     public ModelAndView receiptCheckerApprove(@PathVariable("receiptId") String receiptIdString){
@@ -47,6 +63,13 @@ public class receiptCheckerController {
         return mv;
     }
 
+
+    /**
+     * <p> Get mapping for receipt rejection link. Redirects to a success/error page depending on whether the object
+     * update was successful. </p>
+     * @param String receiptIdString Path variable with the receipt Id to be updated.
+     * @return returns modelAndView of success page if operation was successful, else the error page.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/receiptChecker/reject/{receiptId}")
     public ModelAndView receiptCheckerReject(@PathVariable("receiptId") String receiptIdString){

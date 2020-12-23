@@ -21,7 +21,6 @@
                     var value2 = document.getElementById("loanApplicationNumber").value;
 
                     if ( (!value1 || !value1.trim()) && (!value2 || !value2.trim()) ){
-                        alert("Please enter the value in at least one field");
                         $("#error").show();
                         return false;
                     }
@@ -78,7 +77,7 @@
 
         <hr width="" color="#b3b3b3">
 
-        <span id="error" style="color:red;">Please enter the value in at least one field</span>
+        <span id="error" style="color:red;">Please enter a value in at least one field</span>
 
     <div class="row">
         <div class="col-sm-3 offset-sm-10">

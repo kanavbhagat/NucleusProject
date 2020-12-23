@@ -132,5 +132,4 @@ public class EligibilityPolicyLoggerAspect {
             logger.info("Failed to delete eligibility policy!");
         }
     }
-
 }

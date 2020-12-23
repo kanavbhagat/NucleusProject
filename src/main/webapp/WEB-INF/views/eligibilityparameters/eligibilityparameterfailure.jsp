@@ -26,7 +26,7 @@
               <h1 class="display-4"> Error Occured</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Error in adding eligibility parameter</strong></p>
+              <p class="lead"><strong>Error in ${error} eligibility parameter</strong></p>
 
               <hr>
 

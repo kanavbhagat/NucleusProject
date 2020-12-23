@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table( name= "repayment_schedule")
+@Table( name= "repayment_schedules")
 public class RepaymentSchedule {
 
     @ManyToOne

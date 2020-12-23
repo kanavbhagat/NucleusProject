@@ -63,8 +63,8 @@
                       <td>${receipt.loanApplicationNumber.loanApplicationNumber}</td>
                       <td>${receipt.receiptType}</td>
                       <td>${receipt.receiptBasis}</td>
-                      <td>${receipt.receiptStatus}</td>
                       <td>${receipt.receiptAmount}</td>
+                      <td>${receipt.receiptStatus}</td>
                       <sec:authorize access="hasRole('CHECKER')">
                         <c:if test = "${receipt.receiptStatus == 'Approved' || receipt.receiptStatus == 'Settled'}">
                             <td style="color:grey;">Approve | Reject</td>

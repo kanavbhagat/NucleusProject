@@ -47,7 +47,7 @@ public class RepaymentPolicyController {
 
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="save",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
-    public ModelAndView add(@Valid RepaymentPolicy newRepaymentPolicy, BindingResult result, ModelMap map) {
+    public ModelAndView add(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
         if(result.hasErrors())
         {
             ModelAndView mv = new ModelAndView();
@@ -55,13 +55,23 @@ public class RepaymentPolicyController {
             mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
             return mv;
         }
-        String policyCode = repaymentPolicyService.addRepaymentPolicy(newRepaymentPolicy);
-        repaymentPolicyService.changeStatus(newRepaymentPolicy.getPolicyCode(),"Saved");
-        repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/addedpage");
-        mv.addObject("policyCode", policyCode);
-        return mv;
+
+        boolean successFlag = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+        if(successFlag)
+        {
+            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Saved");
+            repaymentPolicyService.updateCreationParameters(repaymentPolicy.getPolicyCode(),getPrincipal());
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/addedpage");
+            mv.addObject("policyCode", repaymentPolicy.getPolicyCode());
+            return mv;
+        }
+        else
+        {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/RPAddErrorPage");
+            return mv;
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -70,16 +80,27 @@ public class RepaymentPolicyController {
         if(result.hasErrors())
         {
             ModelAndView mv = new ModelAndView();
+            mv.addObject("newRepaymentPolicy", new RepaymentPolicy());
             mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
             return mv;
         }
-        String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Pending");
-        repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/addedpage");
-        mv.addObject("policyCode", policyCode);
-        return mv;
+
+        boolean successFlag = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+        if(successFlag)
+        {
+            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Pending");
+            repaymentPolicyService.updateCreationParameters(repaymentPolicy.getPolicyCode(),getPrincipal());
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/addedpage");
+            mv.addObject("policyCode", repaymentPolicy.getPolicyCode());
+            return mv;
+        }
+        else
+        {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/RPAddErrorPage");
+            return mv;
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_MAKER')")

@@ -20,27 +20,28 @@
 	<hr style="width: 98%">
 
 	<div class="container pt-4 ">
-		<div class="jumbotron text-center" style="background-color:rgba(141, 181, 150, 0.3);">
+		<div class="jumbotron text-center" style="background-color:rgba(255,82,82 ,0.4);">
 
               <%-- Insert Main Message Below --%>
-              <h1 class="display-4"> Eligibility Parameter ${status} successfully</h1>
+              <h1 class="display-4">Error</h1>
 
               <%-- Insert Message Desc Here --%>
-              <p class="lead"><strong>Your Eligibility Parameter has been ${status} successfully.</strong></p>
+              <p class="lead">Repayment Policy could <strong>Not </strong> be added.</p>
 
               <hr>
 
               <div class="d-flex justify-content-center">
 
                 <%-- Insert Dynamic Message Here Eg- policy code etc --%>
-                <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(141, 181, 150, 0.8); padding: 5px;background-color:rgba(141, 181, 150, 0.1);width: 50%;">
-                <strong>Eligibility Parameter Code : </strong> ${parameterCode}</p>
+                <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(255,138,128 ,1); padding: 5px;background-color:rgba(255,138,128 ,0.1);width: 50%;">
+                <strong>Policy Code or Name Already exists.</p>
 
               </div>
               <%-- Put your link in the value field below where you want to redirect to. --%>
               <div class="d-flex justify-content-center">
-                    <a href="<%= request.getContextPath()%>/main/eligibilityparameter">
-                    <button class="btn btn-info">Go To Eligibility Parameter List</button>
+                    <c:url var="mainUrl" value="/showRepaymentPolicy/add" />
+                    <a href="${mainUrl}">
+                    <button class="btn btn-danger">Add Repayment Policy.</button>
                     </a>
               </div>
 		</div>

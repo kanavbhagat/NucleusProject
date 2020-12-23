@@ -54,6 +54,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             query.setParameter(1, loanApplicationNumber);
             list = query.getResultList();
             session.getTransaction().commit();
+            session.close();
         }catch (Exception exception){
             exception.printStackTrace();
         }
@@ -78,6 +79,7 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             session.update(loanApplication);
             session.getTransaction().commit();
             updateStatus = true;
+            session.close();
         }catch (Exception exception) {
             updateStatus = false;
             exception.printStackTrace();

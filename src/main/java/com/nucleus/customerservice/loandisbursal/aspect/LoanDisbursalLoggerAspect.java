@@ -18,7 +18,7 @@ import java.util.List;
 @Aspect
 public class LoanDisbursalLoggerAspect {
 
-    Logger LOGGER = LoggerFactory.getLogger(LoanDisbursalLoggerAspect.class);
+    Logger logger = LoggerFactory.getLogger(LoanDisbursalLoggerAspect.class);
 
     @Pointcut("execution(* com.nucleus.customerservice.loandisbursal.service.*.getLoanDetails(..))")
     public void getLoanDetails() {
@@ -29,23 +29,23 @@ public class LoanDisbursalLoggerAspect {
 
     @Before("getLoanDetails()")
     public void beforeLoanDetails(JoinPoint joinPoint) {
-        LOGGER.info("{} Fetching Loan Disbursal Details... ",joinPoint);
+        logger.info("{} Fetching Loan Disbursal Details... ",joinPoint);
     }
-    @AfterReturning(pointcut = "getLoanDetails()", returning = "LoanApp")
-    public void afterLoanDetails(JoinPoint joinPoint, LoanApplications LoanApp) {
-        LOGGER.info("Loan Details Fetched!");
+    @AfterReturning(pointcut = "getLoanDetails()", returning = "loanApp")
+    public void afterLoanDetails(JoinPoint joinPoint, LoanApplications loanApp) {
+        logger.info("Loan Details Fetched!");
     }
 
     @Before("getCustomerLoanDetails()")
     public void beforeAllLoans(JoinPoint joinPoint) {
-        LOGGER.info("{} Fetching Loan Disbursal Details... ",joinPoint);
+        logger.info("{} Fetching Loan Disbursal Details... ",joinPoint);
     }
-    @AfterReturning(pointcut = "getCustomerLoanDetails()", returning = "LoanApps")
-    public void afterAllLoans(JoinPoint joinPoint, List<LoanApplications> LoanApps) {
+    @AfterReturning(pointcut = "getCustomerLoanDetails()", returning = "loanApps")
+    public void afterAllLoans(JoinPoint joinPoint, List<LoanApplications> loanApps) {
         int size = 0;
-        if(LoanApps!=null) {
-            size = LoanApps.size();
+        if(loanApps!=null) {
+            size = loanApps.size();
         }
-        LOGGER.info(size+" Loan Details Fetched by Customer");
+        logger.info(size+" Loan Details Fetched by Customer");
     }
 }

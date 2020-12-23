@@ -2,7 +2,6 @@
    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file = "/navbar.jsp"%>
    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
@@ -24,6 +23,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/navbar.jsp" />
     <div class="container-fluid">
         <div class="row pt-3 pl-3 flex-column">
         	<h2 class="display-3" style="font-size: 30px">
@@ -60,12 +60,12 @@
         		        <tr>
         		            <td>
         		            <security:authorize access="hasRole('CHECKER')">
-        		            <c:if test = "${eligibilityPolicy.status ne 'Saved'}">
+        		            <c:if test = "${eligibilityPolicy.status == 'Pending'}">
         		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
         		                    ${eligibilityPolicy.policyCode}
         		                </a>
         		            </c:if>
-        		            <c:if test = "${eligibilityPolicy.status == 'Saved'}">
+        		            <c:if test = "${eligibilityPolicy.status ne 'Pending'}">
         		                ${eligibilityPolicy.policyCode}
         		            </c:if>
         		            </security:authorize>
@@ -83,7 +83,12 @@
                             <td>${eligibilityPolicy.authorizedBy}</td>
        		                <td>
        		                <security:authorize access="hasRole('MAKER')">
+       		                <c:if test="${eligibilityPolicy.status == 'Approved' or eligibilityPolicy.status == 'Rejected'}">
+       		                Edit  |  Delete
+       		                </c:if>
+       		                <c:if test="${eligibilityPolicy.status == 'Saved' or eligibilityPolicy.status == 'Pending'}">
        		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a>
+       		                </c:if>
        		                </security:authorize>
        		                <security:authorize access="hasRole('CHECKER')">
        		                Edit  |  Delete

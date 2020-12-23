@@ -1,8 +1,6 @@
 package com.nucleus.receipt.model;
 
-
 import com.nucleus.loanapplications.model.LoanApplications;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

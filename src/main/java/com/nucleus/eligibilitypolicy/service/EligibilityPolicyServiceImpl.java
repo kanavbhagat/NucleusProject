@@ -73,8 +73,9 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
             newStatus = "Approved";
         } else if (action.equalsIgnoreCase("reject")) {
             newStatus = "Rejected";
-        } else
+        } else {
             newStatus = "Pending";
+        }
         eligibilityPolicy.setStatus(newStatus);
         eligibilityPolicy.setAuthorizedBy(authorizedBy);
         eligibilityPolicy.setAuthorizedDate(LocalDate.now());
