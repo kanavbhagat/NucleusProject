@@ -40,20 +40,12 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
-    public void updateStatus(String chargeCode, String status) {
-        chargeDao.updateStatus(chargeCode, status);
+    public boolean updateStatus(String chargeCode, String status) {
+        return chargeDao.updateStatus(chargeCode, status);
     }
 
     @Override
     public boolean updateCharge(NewCharge charge) {
-        NewCharge oldCharge = chargeDao.getOneCharge(charge.getChargeCode());
-        oldCharge.setChargeDescription(charge.getChargeDescription());
-        oldCharge.setChargePaymentType(charge.getChargePaymentType());
-        oldCharge.setChargeType(charge.getChargeType());
-        oldCharge.setChargeAmount(charge.getChargeAmount());
-        oldCharge.setStatus(charge.getStatus());
-        oldCharge.setAuthorizedDate(LocalDate.now());
-        oldCharge.setAuthorizedBy(new LoginDetailsImpl().getUserName());
         return chargeDao.updateCharge(charge);
     }
 }
