@@ -33,4 +33,15 @@ public class ProductServiceTest {
     public void getProductByIdTest(){
         assertNull(productService.getProductById("random"));
     }
+
+    @Test
+    public void updateProductTest(){
+        assertNull(productService.updateProduct(new Product()));
+    }
+
+    @Test
+    public void deleteProductTest(){
+        assertFalse(productService.deleteProduct("random"));
+    }
+
 }
