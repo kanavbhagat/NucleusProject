@@ -10,7 +10,8 @@ import java.util.Set;
 @Table( name= "customer")
 public class Customer {
 
-    public static  int id = 103;
+    //103
+    public static  int id = 110;
     public static String code;
     public Customer(){
         super();
