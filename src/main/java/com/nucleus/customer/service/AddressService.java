@@ -12,6 +12,17 @@ public class AddressService {
     AddressDao addressDao;
 
     public boolean insertAddress(Address address){
-       return addressDao.insertAddress(address);
+        return addressDao.insertAddress(address);
+    }
+
+    public boolean updateAddress(Address address){
+        return addressDao.updateAddress(address);
+    }
+    public boolean removeAddress(Address address){
+        return addressDao.removeAddress(address);
+    }
+
+    public boolean removeAddress(int id){
+        return addressDao.removeAddress(id);
     }
 }
