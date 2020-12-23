@@ -10,9 +10,7 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
-@Component
 @Entity
 @Table(name = "repayment_policy")
 public class RepaymentPolicy implements Serializable {
@@ -20,7 +18,7 @@ public class RepaymentPolicy implements Serializable {
     @Id
     @Column(name = "POLICY_CODE",nullable=false,length=10, unique = true)
     @NotNull
-    @Size(min=3, max=30, message="this required")
+    @Size(min=3, max=30, message="policy code is required")
     private String policyCode;
 
     @NotEmpty
@@ -97,9 +95,6 @@ public class RepaymentPolicy implements Serializable {
                 ", authorizedBy='" + authorizedBy + '\'' +
                 ", status='" + status + '\'' +
                 '}';
-    }
-
-    public RepaymentPolicy() {
     }
 
     public String getPolicyCode() {

@@ -1,4 +1,3 @@
-
 package com.nucleus.receipt.service;
 
 import com.nucleus.receipt.model.Receipt;
