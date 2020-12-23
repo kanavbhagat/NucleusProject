@@ -30,10 +30,8 @@ public class EligibilityParameterController {
      */
     @RequestMapping("/eligibilityparameter")
     public String getParameters(Model model) {
-        System.out.println("kirtika");
         List<EligibilityParameter>list= eligibilityParameterService.getAll();
         model.addAttribute("parameters",list);
-        System.out.println(list);
         return "views/eligibilityparameters/viewEligibilityParameters";
     }
 
@@ -46,7 +44,6 @@ public class EligibilityParameterController {
     @GetMapping("/createparameter")
     public String createParameter(Model model){
         EligibilityParameter eligibilityParameter = new EligibilityParameter();
-
         model.addAttribute("eligibilityParameter", eligibilityParameter);
         return "views/eligibilityparameters/createParameter";
     }
@@ -57,8 +54,9 @@ public class EligibilityParameterController {
      * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
-    @RequestMapping(value = "/insertparameter", params = "action1",method = RequestMethod.POST)
-    public String saveParameter(@Valid @ModelAttribute("eligibilityParameter") EligibilityParameter eligibilityParameter, BindingResult br,Model model){
+    @PostMapping(value = "/insertparameter", params = "action1")
+    public String saveParameter(@Valid @ModelAttribute("eligibilityParameter") EligibilityParameter eligibilityParameter,
+                                BindingResult br, Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/createParameter";
@@ -81,8 +79,9 @@ public class EligibilityParameterController {
      * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
-    @RequestMapping(value = "/insertparameter", params = "action2",method = RequestMethod.POST)
-    public String saveAndRequestApproval(@Valid @ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
+    @PostMapping(value = "/insertparameter", params = "action2")
+    public String saveAndRequestApproval(@Valid @ModelAttribute("eligibilityParameter")EligibilityParameter eligibilityParameter,
+                                         BindingResult br, Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/createParameter";
@@ -105,8 +104,9 @@ public class EligibilityParameterController {
      * @param br
      * @return success page if no error, same page (Eligibility Parameter edit page) if error
      */
-    @RequestMapping(value = "/edit/editparameter", params = "action1",method = RequestMethod.POST)
-    public String editParameter1(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
+    @PostMapping(value = "/edit/editparameter", params = "action1")
+    public String editParameter1(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,
+                                 BindingResult br, Model model){
 
         if(br.hasErrors())
         {
@@ -119,15 +119,12 @@ public class EligibilityParameterController {
             eligibilityParameter.setStatus("Saved");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            if(valid==true)
+            if(valid)
             {
-                System.out.println("true");
                 return "views/eligibilityparameters/eligibilityparametersuccess";
             }
-
             else
             {
-                System.out.println("false");
                 return "views/eligibilityparameters/eligibilityparameterfailure";
             }
         }
@@ -140,8 +137,9 @@ public class EligibilityParameterController {
      * @param br
      * @return success page if no error, same page (Eligibility Parameter edit page) if error
      */
-    @RequestMapping(value = "/edit/editparameter", params = "action2",method = RequestMethod.POST)
-    public String editParameter2(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,BindingResult br,Model model){
+    @PostMapping(value = "/edit/editparameter", params = "action2")
+    public String editParameter2(@Valid @ModelAttribute("eligibilityParameter1")EligibilityParameter eligibilityParameter,
+                                 BindingResult br, Model model){
         if(br.hasErrors())
         {
             return "views/eligibilityparameters/editParameter";
@@ -153,19 +151,15 @@ public class EligibilityParameterController {
             eligibilityParameter.setStatus("Pending");
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            if(valid==true)
+            if(valid)
             {
-                System.out.println("true");
                 return "views/eligibilityparameters/eligibilityparametersuccess";
             }
-
             else
             {
-                System.out.println("false");
                 return "views/eligibilityparameters/eligibilityparameterfailure";
             }
         }
-
     }
 
     /**
@@ -178,7 +172,6 @@ public class EligibilityParameterController {
     public String deleteParameter(@PathVariable("parameterCode") String parameterCode) {
         String pcode = eligibilityParameterService.deleteEligibilityParameter(parameterCode);
         return "redirect:/main/eligibilityparameter/";
-
     }
 
     /**
@@ -196,8 +189,6 @@ public class EligibilityParameterController {
         modelAndView.addObject("eligibilityParameter1", eligibilityParameter);
         modelAndView.setViewName("views/eligibilityparameters/editParameter");
         return modelAndView;
-
-
     }
 
     /**
@@ -228,10 +219,10 @@ public class EligibilityParameterController {
             newStatus = "Approved";
         } else if (action.equalsIgnoreCase("reject")) {
             newStatus = "Rejected";
-        } else
+        } else {
             newStatus = "Pending";
-
-            String authorizedBy = getPrincipal();
+        }
+        String authorizedBy = getPrincipal();
         boolean updateStatus = eligibilityParameterService.updateStatus(parameterCode, newStatus,authorizedBy);
         return "redirect:/main/eligibilityparameter/";
     }
@@ -246,5 +237,4 @@ public class EligibilityParameterController {
         }
         return userName;
     }
-
 }

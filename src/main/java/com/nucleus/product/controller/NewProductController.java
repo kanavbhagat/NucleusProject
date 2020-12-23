@@ -1,6 +1,6 @@
 package com.nucleus.product.controller;
 
-
+import com.nucleus.chargepolicy.model.ChargePolicy;
 import com.nucleus.chargepolicy.service.ChargePolicyService;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
@@ -11,7 +11,7 @@ import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class NewProductController {
 
     @Autowired
@@ -71,9 +71,10 @@ public class NewProductController {
         product.setStatus(action);
 
         if(product.getChargeCodePolicyString()!=null){
-            // TODO: 20/12/20 ask Jigme team to fix single charge policy retrieval
-            product.setChargeCodePolicy(null);
+            ChargePolicy cpolicy = chargePolicyService.getChargePolicy(product.getChargeCodePolicyString());
+            product.setChargeCodePolicy(cpolicy);
         }
+
         if(id!=null){
             return this.updateProduct(product);
         }
@@ -84,8 +85,8 @@ public class NewProductController {
     @GetMapping(value = "/product/{productId}/edit")
     public ModelAndView editProduct(@PathVariable(value = "productId") String productId){
         ModelAndView modelAndView = this.addAttributes(new ModelAndView("views/product/editProduct"));
-        modelAndView.addObject("product", new Product());
-        modelAndView.addObject("product1", productService.getProductById(productId));
+//        modelAndView.addObject("product", new Product());
+        modelAndView.addObject("product", productService.getProductById(productId));
         return modelAndView;
     }
 
