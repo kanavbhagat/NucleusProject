@@ -44,6 +44,7 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             insertStatus = 1;
         } catch (Exception exception) {
             System.out.println("*************************************");
+            exception.printStackTrace();
             System.out.println(exception.getMessage());
             if(exception.getMessage().contains("ConstraintViolation"))insertStatus = 2;
             System.out.println("*************************************");
@@ -86,13 +87,14 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         return chargePolicy;
 
     }
-    public void updateStatus(String chargePolicyCode,String status){
+    public void updateStatus(String chargePolicyCode,String status,String approvedBy){
         ChargePolicy chargePolicy;
         try {
             Session session = getSession();
             session.beginTransaction();
-            Query q=session.createQuery("update ChargePolicy set status=:status where policy_code=:policyCode");
+            Query q=session.createQuery("update ChargePolicy set status=:status,authorized_by=:user where policy_code=:policyCode");
             q.setParameter("status",status);
+            q.setParameter("user",approvedBy);
             q.setParameter("policyCode",chargePolicyCode);
 
             int s=q.executeUpdate();

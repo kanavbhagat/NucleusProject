@@ -4,6 +4,7 @@ import com.nucleus.product.model.Product;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,12 +20,14 @@ public class ReceiptSearchController {
     @Autowired
     ReceiptService receiptService;
 
+    @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/receiptSearch" })
     public ModelAndView receiptSearch() {
         return new ModelAndView("views/receipt/receiptSearch");
     }
 
 
+    @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
     @PostMapping(value = {"/receiptSearchResults"})
     public ModelAndView getReceipt(@RequestParam(name="receiptType", required = true) String receiptType,
                                    @RequestParam(name="receiptBasis", required = false) String receiptBasis,

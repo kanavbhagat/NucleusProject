@@ -14,9 +14,58 @@
 </head>
 
 <body>
+<script>
+$(document).ready(function(){
+    var token = $('input[name="csrfToken"]').attr('value');
+    var charge  = {};
+        charge["chargeCode"] =$('#chargeCode').find(":selected").text();
+        charge["chargeCodeName"] =  "default";
+    $.ajax({
+            				type : "POST",
+            				contentType : "application/json",
+            				url : "newChargePolicy/getCharge",
+            				data : JSON.stringify(charge),
+            				dataType : 'json',
+            				 headers: {
+                                                'X-CSRF-Token': token
+                                           },
+            				success : function(data) {
+
+            					$('#chargeCodeName').val(data.chargeCodeName);
+                                $('#chargeCodeName').attr('readonly', true);
+
+            				}
+
+            			});
+  $("#chargeCode").focusout(function(){
+    var token = $('input[name="csrfToken"]').attr('value');
+    var charge  = {};
+    charge["chargeCode"] =$('#chargeCode').find(":selected").text();
+    charge["chargeCodeName"] =  "default";
+
+    $.ajax({
+        				type : "POST",
+        				contentType : "application/json",
+        				url : "newChargePolicy/getCharge",
+        				data : JSON.stringify(charge),
+        				dataType : 'json',
+        				 headers: {
+                                            'X-CSRF-Token': token
+                                       },
+        				success : function(data) {
+
+        					$('#chargeCodeName').val(data.chargeCodeName);
+                            $('#chargeCodeName').attr('readonly', true);
+
+        				}
+
+        			});
+  });
+});
+</script>
 <jsp:include page="/navbar.jsp" />
     <form:form method = "Post" action = "../updateEntry/${chargePolicyForEdit.chargePolicyCode}" modelAttribute= "chargePolicyForEdit">
-
+    <input name="csrfToken" value="${_csrf.token}" type="hidden">
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>
   <div class="row">
@@ -27,7 +76,7 @@
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
-      <form:input path="chargePolicyName" class="form-control" style="width : 400px"/>
+      <form:input path="chargePolicyName" class="form-control" style="width : 400px" required="required"/>
 
     </div>
 
@@ -35,7 +84,7 @@
   <div class="row">
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
-      <form:textarea path="chargePolicyDesc" class="form-control" style="width : 400px" rows="3"  />
+      <form:textarea path="chargePolicyDesc" class="form-control" style="width : 400px" rows="3"  required="required"/>
     </div>
   </div>
 
@@ -54,7 +103,10 @@
       </thead>
   <tbody>
         <tr>
-          <td scope="row"><form:input path="chargeCode" class="form-control" style="width : 400px" id = "chargeCode" /></td>
+          <td scope="row"><form:select path="chargeCode" class = "custom-select" id = "chargeCode">
+                                <form:options items="${chargeCodeList}" selected = "true" value = "${chargePolicySelected}"/>
+                          </form:select>
+          </td>
           <td><form:input path="chargeCodeName" class="form-control" style="width : 400px" id = "chargeCodeName" /></td>
 
         </tr>

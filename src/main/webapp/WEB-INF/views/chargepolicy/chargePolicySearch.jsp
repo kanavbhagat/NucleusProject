@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en" dir="ltr">
 
 <head>
@@ -30,13 +31,12 @@
         	<h2 class="display-3" style="font-size: 30px">
         		<b>Charge Policies</b>
         	</h2>
-
+            <sec:authorize access="hasRole('MAKER')">
         	<div class=" px-4 mt-0 align-self-end ">
        			<a class="btn btn-primary" href="<%= request.getContextPath()%>/chargePolicy/newChargePolicy">New Charge Policy</a>
        		</div>
-       		<div class=" px-4 mt-0 align-self-end ">
-                   			<b><%= request.getParameter("message") %></b>
-            </div>
+       		</sec:authorize>
+
         </div>
 
         <hr width="" color="#b3b3b3">
@@ -57,7 +57,7 @@
 		                <th>Charge Policy Code</th>
 		                <th>Charge Policy Name</th>
 		                <th>Charge Policy Description</th>
-		                <th>Created Date</th>
+
 		                <th>Status</th>
 		                <th>Created By</th>
 		                <th>Reviewed By</th>
@@ -67,14 +67,39 @@
 		        <tbody>
 		           <c:forEach items="${chargePolicyList}" var="chargePolicy" varStatus="tagStatus">
                      <tr>
-                       <td><a href="get/${chargePolicy.chargePolicyCode}">${chargePolicy.chargePolicyCode}</td>
+                       <td>
+                        <sec:authorize access="hasRole('CHECKER')">
+
+                            <a href="<%= request.getContextPath()%>/chargePolicy/get/${chargePolicy.chargePolicyCode}">
+                                ${chargePolicy.chargePolicyCode}
+                            </a>
+
+
+                          </sec:authorize>
+                                		            <sec:authorize access="hasRole('MAKER')">
+                                		                ${chargePolicy.chargePolicyCode}
+                                		            </sec:authorize>
+
+
+                        </td>
                        <td>${chargePolicy.chargePolicyName}</td>
                        <td>${chargePolicy.chargePolicyDesc}</td>
-                       <td>${chargePolicy.createdDate}</td>
+
                        <td>${chargePolicy.status}</td>
-                       <td>Admin</td>
-                       <td>Admin</td>
-                       <td><a href = "edit/${chargePolicy.chargePolicyCode}">Edit  | <a href = "delete/${chargePolicy.chargePolicyCode}">Delete</td>
+                       <td>${chargePolicy.createdBy}</td>
+                       <td>${chargePolicy.authorizedBy}</td>
+                        <td>
+                            <sec:authorize access="hasRole('MAKER')">
+                                <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('CHECKER')">
+                                Edit  |  Delete
+                            </sec:authorize>
+                            <sec:authorize access="isAnonymous()">
+                                Edit  |  Delete
+                            </sec:authorize>
+                        </td>
+
                      </tr>
                    </c:forEach>
 

@@ -1,18 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+
     <title>Document</title>
+      <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>succesfully registered customer</h1>
-    <h2>customer name is : ${customer.firstName}</h2>
-     <h2>customer name is : ${customer.lastName}</h2>
-     <h2>pincode is : ${address.pinCode}</h2>
-     <h2>country is : ${address.country}</h2>
-     <h2>address addition is : ${b}</h2>
-     <h2>customer addition is : ${a}</h2>
-     <h2>loan addition is : ${c}</h2>
-     <h2>Loan information is : ${loanApplications.rate} , ${loanApplications.tenure}</h2>
+ <jsp:include page="/navbar.jsp" />
+    <h1>Successfully registered customer</h1>
+
+     <ul>
+     <li><h2>address addition is : ${b}</h2></li>
+     <li><h2>customer addition is : ${a}</h2></li>
+     <li><h2>loan addition is : ${c}</h2></li>
+     </ul>
+
 </body>
 </html>

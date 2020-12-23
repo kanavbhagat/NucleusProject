@@ -1,5 +1,7 @@
 package com.nucleus.chargepolicy.service;
 
+import com.nucleus.charge.dao.ChargeDao;
+import com.nucleus.charge.model.NewCharge;
 import com.nucleus.chargepolicy.dao.ChargePolicyDao;
 import com.nucleus.chargepolicy.model.ChargePolicy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,10 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
 
     @Autowired
     private ChargePolicyDao chargePolicyDao;
+
+    @Autowired
+    private ChargeDao chargeDao;
+
     public ChargePolicyDao getChargePolicyDao() {
         return chargePolicyDao;
     }
@@ -33,14 +39,7 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     public int insert(ChargePolicy chargePolicy) {
         return this.chargePolicyDao.insert(chargePolicy);
     }
-    public List<String> getChargeCodes(){
-        List<String> chargeCodes = new ArrayList<String>();
-        chargeCodes.add("101");
-        chargeCodes.add("102");
-        chargeCodes.add("103");
-        chargeCodes.add("104");
-        return  chargeCodes;
-    }
+
 
     public List<ChargePolicy> getPolicyList(){
         System.out.println("In Service");
@@ -55,8 +54,8 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         ChargePolicy chargePolicy = this.chargePolicyDao.getChargePolicy(chargePolicyCode);
         return chargePolicy;
     }
-    public void updateStatus(String chargePolicyCode,String status){
-        this.chargePolicyDao.updateStatus(chargePolicyCode,status);
+    public void updateStatus(String chargePolicyCode,String status,String approvedBy){
+        this.chargePolicyDao.updateStatus(chargePolicyCode,status,approvedBy);
     }
     public void updateEntry(ChargePolicy chargePolicy, String chargePolicyCode){
         this.chargePolicyDao.updateEntry(chargePolicy);
@@ -64,7 +63,25 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     public void deleteChargePolicy(String chargePolicyCode){
         this.chargePolicyDao.deleteChargePolicy(chargePolicyCode);
     }
+<<<<<<< HEAD
+    public List<String> getChargeCodesList(){
+        List<NewCharge> listofNewCharges = this.chargeDao.getChargeList();
+        List<String> chargeCodeList = new ArrayList<String>();
+        for(NewCharge newCharge : listofNewCharges){
+            chargeCodeList.add(newCharge.getChargeCode());
+        }
+        return  chargeCodeList;
+    }
+    public String getChargeCodeName(String chargeCode){
+        List<NewCharge> listofNewCharges = this.chargeDao.getChargeList();
+        String chargeCodeName = "";
+        for(NewCharge newCharge : listofNewCharges){
+            if(newCharge.getChargeCode().equals(chargeCode))chargeCodeName = newCharge.getChargeCodeName();
+        }
+        return  chargeCodeName;
+    }
 
-
+=======
+>>>>>>> c09c16e7485ee87864d6c0a4cccb9f578ef6431f
 
 }

@@ -12,7 +12,7 @@ public interface ChargePolicyDao {
     public List<ChargePolicy> getPolicyList();
     public ChargePolicy getChargePolicy(String chargePolicyCode);
     void updateEntry(ChargePolicy chargePolicy);
-    void updateStatus(String chargePolicyCode,String status);
+    void updateStatus(String chargePolicyCode,String status,String approvedBy);
 
     int deleteChargePolicy(String chargePolicyCode);
 }

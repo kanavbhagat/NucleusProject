@@ -18,20 +18,20 @@ public class Advice {
     @Column(name = "amount_due",nullable = false)
     private double amountDue;
 
-    @Column(name = "type", nullable=false,length = 20)
+    @Column(name = "type1", nullable=false,length = 20)
     private String type;
 
     @Column(name="status",nullable = false,length = 20)
-    private String Status;
+    private String status;
 
     @Column(name="advice_type",nullable = false,length = 20)
     private String adviceType;
 
-    @Column(name="date",nullable = false)
+    @Column(name="adviceDate",nullable = false)
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name="loan_application_number",referencedColumnName ="loan_application_number" ,nullable = false)
+    @JoinColumn(name="loan_application_number", referencedColumnName ="loan_application_number", nullable = false)
     private LoanApplications loanApplicationNumber;
 
     @Column(name="installment_no",nullable = false,length=10)
@@ -65,11 +65,11 @@ public class Advice {
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
     public String getAdviceType() {
