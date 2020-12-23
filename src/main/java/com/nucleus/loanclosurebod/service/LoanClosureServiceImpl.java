@@ -50,9 +50,7 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         boolean closureStatus = false;
         String currentStatus = loanApplication.getStatus();
         //Loan cannot be closed if it is pending/inactive or already closed
-        if (currentStatus.equalsIgnoreCase("Closed") ||
-                currentStatus.equalsIgnoreCase("Pending") ||
-                currentStatus.equalsIgnoreCase("Inactive")) {
+        if (!currentStatus.equalsIgnoreCase("Active")) {
             flag = false;
         } else {
             /*Iterating through the repayment schedule and checking if all the Bill Flags are Y
