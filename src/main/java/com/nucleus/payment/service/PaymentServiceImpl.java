@@ -33,8 +33,8 @@ public class PaymentServiceImpl implements PaymentService{
         return this.paymentDAO.getPaymentById(loanID);
     }
 
-    public void updatePayment(Payment payment){
-        this.paymentDAO.updatePayment(payment);
+    public boolean updatePayment(Payment payment){
+        return this.paymentDAO.updatePayment(payment);
     }
 
     public void setReviewedBy(int loanID, String user){
