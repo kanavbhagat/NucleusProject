@@ -72,5 +72,22 @@ public class LoanApplicationDAO implements LoanApplicationDaoInterface {
             }
         }
     }
+    @Override
+    public boolean deleteLoanApplication(Integer id) {
+        boolean successful = false;
+        try
+        {
+            LoanApplications loanApplications =  getLoanApplicationId(id);
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.delete(loanApplications);
+            session.getTransaction().commit();
+            session.close();
+            successful=true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return successful;
+    }
 
 }
