@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
+@Transactional
 public class RepaymentPolicyServiceImpl implements RepaymentPolicyService {
 
     @Autowired
@@ -42,17 +43,10 @@ public class RepaymentPolicyServiceImpl implements RepaymentPolicyService {
     }
 
     @Override
-    public String addRepaymentPolicy(RepaymentPolicy repaymentPolicy) {
+    public boolean addRepaymentPolicy(RepaymentPolicy repaymentPolicy){
 
-        String id = transactionTemplate.execute(new TransactionCallback<String>() {
-            @Override
-            public String doInTransaction(TransactionStatus status) {
-                String policyCode = repaymentPolicyDaoImpl.addRepaymentPolicy(repaymentPolicy);
-                return policyCode;
-            }
-        });
-
-        return id;
+        boolean policyCode = repaymentPolicyDaoImpl.addRepaymentPolicy(repaymentPolicy);
+        return policyCode;
     }
 
 

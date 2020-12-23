@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@Transactional
 public class RepaymentPolicyDaoImpl implements RepaymentPolicyDao{
 
     @Autowired
@@ -42,12 +43,24 @@ public class RepaymentPolicyDaoImpl implements RepaymentPolicyDao{
         return repaymentPolicy;
     }
 
-    public String addRepaymentPolicy(RepaymentPolicy repaymentPolicy) {
-        Session session = sessionFactory.getCurrentSession();
-        String id = (String) session.save(repaymentPolicy);
-        return id;
-    }
+    public boolean addRepaymentPolicy(RepaymentPolicy repaymentPolicy){
 
+        try(Session session = sessionFactory.openSession())
+        {
+            session.beginTransaction();
+            try {
+                session.save(repaymentPolicy);
+                session.getTransaction().commit();
+                session.close();
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                session.close();
+                return false;
+            }
+        }
+    }
 
     public boolean deleteRepaymentPolicy(String id) {
         boolean successful = false;
