@@ -7,6 +7,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name="charges")
@@ -62,6 +63,8 @@ public class NewCharge {
 
     @Column(name = "status", length = 50)
     private String status;
+
+    //Getters - Setters
 
     public String getChargeCode() {
         return chargeCode;
@@ -173,5 +176,51 @@ public class NewCharge {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "NewCharge{" +
+                "chargeCode='" + chargeCode + '\'' +
+                ", chargeCodeName='" + chargeCodeName + '\'' +
+                ", chargeDescription='" + chargeDescription + '\'' +
+                ", transactionEvent='" + transactionEvent + '\'' +
+                ", chargePaymentType='" + chargePaymentType + '\'' +
+                ", chargeType='" + chargeType + '\'' +
+                ", chargeAmount=" + chargeAmount +
+                ", createDate=" + createDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedDate=" + modifiedDate +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                ", authorizedDate=" + authorizedDate +
+                ", authorizedBy='" + authorizedBy + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NewCharge)) return false;
+        NewCharge newCharge = (NewCharge) o;
+        return Double.compare(newCharge.chargeAmount, chargeAmount) == 0 &&
+                chargeCode.equals(newCharge.chargeCode) &&
+                chargeCodeName.equals(newCharge.chargeCodeName) &&
+                Objects.equals(chargeDescription, newCharge.chargeDescription) &&
+                transactionEvent.equals(newCharge.transactionEvent) &&
+                chargePaymentType.equals(newCharge.chargePaymentType) &&
+                chargeType.equals(newCharge.chargeType) &&
+                Objects.equals(createDate, newCharge.createDate) &&
+                Objects.equals(createdBy, newCharge.createdBy) &&
+                Objects.equals(modifiedDate, newCharge.modifiedDate) &&
+                Objects.equals(modifiedBy, newCharge.modifiedBy) &&
+                Objects.equals(authorizedDate, newCharge.authorizedDate) &&
+                Objects.equals(authorizedBy, newCharge.authorizedBy) &&
+                Objects.equals(status, newCharge.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chargeCode, chargeCodeName, chargeDescription, transactionEvent, chargePaymentType, chargeType, chargeAmount, createDate, createdBy, modifiedDate, modifiedBy, authorizedDate, authorizedBy, status);
     }
 }
