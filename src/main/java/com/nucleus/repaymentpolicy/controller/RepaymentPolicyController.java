@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 public class RepaymentPolicyController {
 
     @Autowired
@@ -47,15 +47,16 @@ public class RepaymentPolicyController {
 
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="save",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
-    public ModelAndView add(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
+    public ModelAndView add(@Valid RepaymentPolicy newRepaymentPolicy, BindingResult result, ModelMap map) {
         if(result.hasErrors())
         {
             ModelAndView mv = new ModelAndView();
+            mv.addObject("newRepaymentPolicy", new RepaymentPolicy());
             mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
             return mv;
         }
-        String policyCode = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Incomplete");
+        String policyCode = repaymentPolicyService.addRepaymentPolicy(newRepaymentPolicy);
+        repaymentPolicyService.changeStatus(newRepaymentPolicy.getPolicyCode(),"Saved");
         repaymentPolicyService.updateCreationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/addedpage");
@@ -110,7 +111,7 @@ public class RepaymentPolicyController {
 
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,"Incomplete");
+        repaymentPolicyService.changeStatus(policyCode,"Saved");
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
@@ -153,7 +154,7 @@ public class RepaymentPolicyController {
         repaymentPolicyService.changeStatus(policyCode,"Approved");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
+        mv.setViewName("views/repaymentpolicy/approvedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }
@@ -167,7 +168,7 @@ public class RepaymentPolicyController {
         repaymentPolicyService.changeStatus(policyCode,"Rejected");
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
+        mv.setViewName("views/repaymentpolicy/rejectedpage");
         mv.addObject("policyCode", policyCode);
         return mv;
     }

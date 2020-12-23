@@ -7,6 +7,7 @@ import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import com.nucleus.receipt.service.ReceiptValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +23,7 @@ public class NewReceiptController {
     @Autowired
     LoanApplicationService loanApplicationService;
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = {"/newReceipt" })
     public ModelAndView receiptDetails(){
 
@@ -31,18 +33,16 @@ public class NewReceiptController {
         return modelAndView;
     }
 
-
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = {"/registerReceipt"})
     public ModelAndView addReceipt(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult result){
-        ModelAndView modelAndView=new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         new ReceiptValidator().validate(receipt, result);
 
         if(result.hasErrors()){
             modelAndView.setViewName("views/receipt/newReceiptCreation");
             return modelAndView;
         }
-
-        modelAndView.setViewName("views/receipt/receiptSuccess");
 
         receipt.setReceiptStatus("Pending");
 
@@ -53,11 +53,17 @@ public class NewReceiptController {
         Boolean success = receiptService.registerReceipt(receipt);
 
         if(success){
-            modelAndView.addObject("message", "Receipt Creation was Successful");
+            modelAndView.setViewName("views/receipt/receiptSuccess");
+            modelAndView.addObject("messageHeader", "Receipt Creation was Successful");
+            modelAndView.addObject("messageBody", "You successfully created a new receipt");
+            modelAndView.addObject("receiptNumber", receipt.getReceiptNo().toString());
             return modelAndView;
         }
 
-        modelAndView.addObject("message", "Receipt Creation Failed");
+        modelAndView.setViewName("views/receipt/receiptError");
+        modelAndView.addObject("messageHeader", "Receipt Creation Failed");
+        modelAndView.addObject("messageBody", "There was an error creating this receipt. Please try again.");
+        modelAndView.addObject("receiptNumber", receipt.getReceiptNo().toString());
         return modelAndView;
     }
 

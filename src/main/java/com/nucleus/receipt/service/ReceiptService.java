@@ -1,7 +1,9 @@
 package com.nucleus.receipt.service;
 
 import com.nucleus.receipt.dao.ReceiptDAOInterface;
+import com.nucleus.receipt.model.Advice;
 import com.nucleus.receipt.model.Receipt;
+import com.nucleus.receipt.model.Settlement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,9 @@ public class ReceiptService {
 
     public Receipt getReceipt(Integer receiptId){
         return receiptDAOInterface.getReceipt(receiptId);
+    }
+
+    public Boolean runBOD(Receipt receipt, Advice advice, Settlement settlement){
+        return receiptDAOInterface.runBOD(receipt, advice, settlement);
     }
 }
