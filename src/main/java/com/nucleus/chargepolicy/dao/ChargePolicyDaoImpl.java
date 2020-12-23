@@ -4,10 +4,14 @@ import com.nucleus.chargepolicy.model.ChargePolicy;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.ConstraintViolationException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,9 +31,9 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         }
         return session;
     }
-    public void insert(ChargePolicy chargePolicy) {
+    public int insert(ChargePolicy chargePolicy) {
         System.out.println("In Service insert query");
-        boolean insertStatus;
+        int insertStatus = 0;
         String todayDate = LocalDate.now().toString();
         chargePolicy.setCreatedDate(todayDate);
         try {
@@ -37,14 +41,17 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             session.beginTransaction();
             session.save(chargePolicy);
             session.getTransaction().commit();
-            insertStatus = true;
+            insertStatus = 1;
         } catch (Exception exception) {
-            exception.printStackTrace();
-            insertStatus = false;
+            System.out.println("*************************************");
+            System.out.println(exception.getMessage());
+            if(exception.getMessage().contains("ConstraintViolation"))insertStatus = 2;
+            System.out.println("*************************************");
+
         }
 
         //SessionFactory factory = configuration.buildSessionFactory();
-
+        return insertStatus;
     }
 
     public List<ChargePolicy> getPolicyList(){
@@ -99,7 +106,6 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
     }
 
     public void updateEntry(ChargePolicy chargePolicy){
-        boolean updateStatus;
         try{
             Session session = getSession();
             session.beginTransaction();
@@ -107,22 +113,22 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             session.getTransaction().commit();
 
         } catch (Exception exception) {
-            updateStatus = false;
             exception.printStackTrace();
         }
     }
-    public void deleteChargePolicy(String chargePolicyCode){
+    public int deleteChargePolicy(String chargePolicyCode){
+        int s = 0;
         try {
             Session session = getSession();
             session.beginTransaction();
             Query q=session.createQuery("delete from ChargePolicy where chargePolicyCode= :chargePolicyCode");
             q.setParameter("chargePolicyCode", chargePolicyCode);
-            int s=q.executeUpdate();
-            System.out.println("Status  deleted as "+ s);
+            s=q.executeUpdate();
             session.getTransaction().commit();
             session.close();
         } catch(Exception exception) {
             exception.printStackTrace();
         }
+        return s;
     }
 }

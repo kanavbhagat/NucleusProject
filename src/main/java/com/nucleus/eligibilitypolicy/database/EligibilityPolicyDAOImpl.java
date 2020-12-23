@@ -10,11 +10,17 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * This class acts as a Database layer for all
+ * Eligibility Policy related operations.
+ *
+ */
 @Repository
 public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Get an object of Session class:
     private Session getSession(){
         Session session;
         try {
@@ -25,6 +31,11 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return session;
     }
 
+    /**
+     * This method is used to get a list of all Eligibility Policies.
+     *
+     * @return List This returns a list of all policies in the database.
+     */
     @Override
     public List<EligibilityPolicy> getAllEligibilityPolicies() {
         List<EligibilityPolicy> eligibilityPolicyList;
@@ -43,6 +54,13 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
 
     }
 
+    /**
+     * This method is used to add a new Eligibility Policy to database.
+     *
+     * @param eligibilityPolicy This is the model that has to be added to the database.
+     *
+     * @return boolean This returns a true/false based on whether the object was successfully added or not.
+     */
     @Override
     public boolean insertEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean insertStatus;
@@ -60,6 +78,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return insertStatus;
     }
 
+    /**
+     * This method is used to retrieve one Eligibility Policy by Policy Code.
+     *
+     * @param policyCode This contains the policyCode
+     *                   for which Eligibility Policy is to be fetched.
+     *
+     * @return EligibilityPolicy This returns the EligibilityPolicy that was required.
+     */
     @Override
     public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
         EligibilityPolicy eligibilityPolicy;
@@ -78,7 +104,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return eligibilityPolicy;
     }
 
-
+    /**
+     * This method is used to update an existing Eligibility Policy (all fields).
+     *
+     * @param eligibilityPolicy This is the new Eligibility Policy
+     *                          that has to be inserted in place of the old one.
+     *
+     * @return boolean This returns a true/false based on whether the policy was successfully updated or not.
+     */
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean updateStatus;
@@ -88,6 +121,7 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
             session.update(eligibilityPolicy);
             session.getTransaction().commit();
             updateStatus = true;
+            session.close();
         } catch (Exception exception) {
             updateStatus = false;
             exception.printStackTrace();
@@ -95,6 +129,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
         return updateStatus;
     }
 
+    /**
+     * This method is used to delete an existing Eligibility Policy.
+     *
+     * @param policyCode This contains the policyCode of the
+     *                   Eligibility Policy that is to be deleted.
+     *
+     * @return boolean This returns a true/false based on whether the policy was successfully deleted or not.
+     */
     @Override
     public boolean deleteEligibilityPolicy(String policyCode) {
         boolean deleteStatus;

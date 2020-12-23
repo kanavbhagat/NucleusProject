@@ -1,6 +1,7 @@
 package com.nucleus.loanclosurebod.controller;
 
 
+
 import com.nucleus.customer.service.NewCustomerService;
 import com.nucleus.customerservice.loandisbursal.exceptions.CustomerNotFoundException;
 import com.nucleus.customerservice.loandisbursal.exceptions.LoanApplicationNotFoundException;
@@ -12,11 +13,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * The LoanClosureController class starts the Loan Closure BOD process
+ * by calling the required method of the Loan Closure Service Class with the
+ * help of an object of LoanClosureService Interface. It also defines the getter
+ * and setter methods for the mentioned object.
+ */
+
 
 @Controller
 @RequestMapping("/main")
@@ -25,11 +37,13 @@ public class LoanClosureController {
     @Autowired
     LoanClosureService loanClosureService;
 
+
     @Autowired
     NewLoanApplicationService newLoanApplicationService;
 
     @Autowired
     NewCustomerService newCustomerService;
+
 
     public LoanClosureService getLoanClosureService(){
         return loanClosureService;
@@ -38,15 +52,18 @@ public class LoanClosureController {
         this.loanClosureService = loanClosureService;
     }
 
-//    @RequestMapping("/loanClosureBod")
-//    public void updateStatus(){
-//        loanClosureService.addDummyData();
-//
-//    }
-
+    /**
+     * loanClosureBod is the main method which is triggered. It calls the
+     * loaClosureBod method of Service class with the help of its object
+     * declared above.
+     */
     @RequestMapping("/loanClosureBod")
-    public void loanClosureBod(){
-        loanClosureService.loanClosureBod();
+    public ModelAndView loanClosureBod(){
+        int closedLoans = loanClosureService.loanClosureBod();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("ClosedLoans", closedLoans);
+        modelAndView.setViewName("views/loanclosurebod/viewClosedLoanCount");
+        return modelAndView;
     }
 
     @GetMapping(value = {"/loanClosureForm" })

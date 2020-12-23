@@ -2,6 +2,7 @@ package com.nucleus.repaymentpolicy.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,13 +10,17 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
+@Component
 @Entity
 @Table(name = "repayment_policy")
 public class RepaymentPolicy implements Serializable {
 
     @Id
     @Column(name = "POLICY_CODE",nullable=false,length=10, unique = true)
+    @NotNull
+    @Size(min=3, max=30, message="this required")
     private String policyCode;
 
     @NotEmpty
@@ -92,6 +97,9 @@ public class RepaymentPolicy implements Serializable {
                 ", authorizedBy='" + authorizedBy + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public RepaymentPolicy() {
     }
 
     public String getPolicyCode() {

@@ -38,8 +38,7 @@
                         Parameters
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getmaker">Eligibility Parameter Maker</a>
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/getchecker">Eligibility Parameter Checker</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/main/eligibilityparameter">Eligibility Parameter</a>
                         <sec:authorize access = "hasRole('MAKER')">
                             <a class="dropdown-item" href="<%= request.getContextPath()%>/charges/makerList">Charge Maker</a>
                         </sec:authorize>
@@ -55,10 +54,19 @@
 
 
 
-                <li class="nav-item mx-2">
+                  <li class="nav-item dropdown dmenu mx-2">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarReportDropdown" data-toggle="dropdown">
+                         Receipt
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                          <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptChecker">Receipt Overview</a>
+                          <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptSearch">Receipt Search</a>
+                      </div>
+                  </li>
+
+                <%--<li class="nav-item mx-2">
                     <a class="nav-link" href="<%= request.getContextPath()%>/receiptSearch">Receipt <span class="sr-only">(current)</span></a>
-                    <%--<a class="nav-link" href="#">Receipt</a>--%>
-                </li>
+                </li>--%>
 
                 <li class="nav-item dropdown dmenu mx-2">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarAccountingDropDown" data-toggle="dropdown">
@@ -90,7 +98,7 @@
                         BOD
                     </a>
                     <div class="dropdown-menu sm-menu">
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD">Receipt BOD</a>
+                        <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD/run">Receipt BOD</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport"">Temp Add Loan</a>
                     </div>

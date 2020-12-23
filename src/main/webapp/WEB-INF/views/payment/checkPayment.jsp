@@ -78,16 +78,16 @@
                         <td>${singlePayment.loanApplicationNumber}</td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <td><a href="#">${singlePayment.loanApplicationNumber}</a></td>
+                            <td><a href="<%=request.getContextPath()%>/payment/showPayment/${singlePayment.loanApplicationNumber}">${singlePayment.loanApplicationNumber}</a></td>
                         </sec:authorize>
                         <td>${singlePayment.customerCode}</td>
                         <td>${singlePayment.paymentAmount}</td>
                         <td>${singlePayment.paymentStatus}</td>
                         <td>${singlePayment.madeBy}</td>
-                        <td>Reviewed By</td>
+                        <td>${singlePayment.reviewedBy}</td>
                         <sec:authorize access="hasRole('MAKER')">
                             <td>
-                                <a href="#">Edit</a>
+                                <a href="<%=request.getContextPath()%>/payment/editPayment/${singlePayment.loanApplicationNumber}">Edit</a>
                                 |
                                 <a href="<%=request.getContextPath()%>/payment/deletePayment/${singlePayment.loanApplicationNumber}">Delete</a>
                             </td>

@@ -2,6 +2,7 @@ package com.nucleus.loanapplications.dao;
 
 import com.nucleus.customer.model.Address;
 import com.nucleus.loanapplications.model.LoanApplications;
+import com.nucleus.product.model.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -102,6 +103,22 @@ public class LoanApplicationDAO implements LoanApplicationDaoInterface {
                 return false;
             }
 
+        }
+    }
+
+    public LoanApplications getLoanApplicationId(Integer id){
+        try(Session session = getSession()){
+            LoanApplications loanApplications;
+            session.beginTransaction();
+            try {
+                loanApplications = session.get(LoanApplications.class, id);
+                session.getTransaction().commit();
+                return loanApplications;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return null;
+            }
         }
     }
 

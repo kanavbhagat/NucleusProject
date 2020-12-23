@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
-
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
    <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -52,9 +52,18 @@
             </h2>
         </div>
         <div class="col-sm-2 col-12">
-            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
-            <%--<button type="button" class="btn btn-primary" id="newReceipt">Create Receipt</button>--%>
+             <sec:authorize access="hasRole('MAKER')">
+                 <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+             </sec:authorize>
+             <sec:authorize access="hasRole('CHECKER')">
+                 <button type="button" disabled="disabled" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+             </sec:authorize>
         </div>
+
+        <%--<div class="col-sm-2 col-12">
+            <button type="button" onclick='location.href="<%= request.getContextPath()%>/newReceipt"' class="btn btn-primary" id="newReceipt">Create Receipt</button>
+
+        </div>--%>
     </div>
 
     <hr>
@@ -70,8 +79,8 @@
                     <label class="font-weight-bold required-field">Receipt Type</label>
                     <select id="receiptType" class="form-control" name="receiptType" required>
                         <option value="-" disabled label="Select One Option">
-                        <option value="payment" label="Payment">
-                        <option value="receipt" label="Receipt">
+                        <option value="Payment" label="Payment">
+                        <option value="Receipt" label="Receipt">
                     </select>
                     <span id="receiptTypeError" style="color:red;"> Receipt Type is Required </span>
                 </div>
@@ -102,10 +111,10 @@
         <div class="row" style="margin-bottom:20px">
             <div class="col-sm-3 offset-sm-10">
                 <button type="submit" onclick="return checkEmpty()" id="save" class="btn btn-primary">Search</button>
-                <button type="button" id="clear" class="btn btn-primary">Clear</button>
+                <button type="reset" id="clear" class="btn btn-primary">Clear</button>
             </div>
         </div>
-
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <form>
 </div>
 </body>

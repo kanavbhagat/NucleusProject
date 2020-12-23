@@ -1,6 +1,7 @@
 package com.nucleus.loanclosurebod.service;
 
 
+
 import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 
@@ -13,5 +14,14 @@ public interface LoanClosureService {
 
     public LoanApplications getLoanDetails(int loanApplicationNumber);
     public List<LoanApplications> getCustomerLoanDetails(String customerCode);
+
+/**
+ * This is a Service Interface that declares the functionality
+ * of the LoanClosureServiceImpl Class.
+ */
+public interface LoanClosureService {
+
+    int loanClosureBod();
+
 
 }

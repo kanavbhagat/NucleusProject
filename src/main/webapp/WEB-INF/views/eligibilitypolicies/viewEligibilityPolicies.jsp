@@ -3,6 +3,7 @@
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
    <%@ include file = "/navbar.jsp"%>
+   <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,10 +29,11 @@
         	<h2 class="display-3" style="font-size: 30px">
         		<b>Eligibility Policies</b>
         	</h2>
-
+            <security:authorize access="hasRole('MAKER')">
         	<div class=" px-4 mt-0 align-self-end ">
        			<a class="btn btn-primary" href="<%= request.getContextPath()%>/eligibilityPolicy/new">New Eligibility Policy</a>
        		</div>
+       		</security:authorize>
         </div>
 
         <hr width="" color="#b3b3b3">
@@ -57,16 +59,39 @@
         		         <c:forEach items="${eligibilityPolicyList}" var="eligibilityPolicy" varStatus="tagStatus">
         		        <tr>
         		            <td>
-        		            <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		            <security:authorize access="hasRole('CHECKER')">
+        		            <c:if test = "${eligibilityPolicy.status ne 'Saved'}">
+        		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
+        		                    ${eligibilityPolicy.policyCode}
+        		                </a>
+        		            </c:if>
+        		            <c:if test = "${eligibilityPolicy.status == 'Saved'}">
         		                ${eligibilityPolicy.policyCode}
-        		            </a>
+        		            </c:if>
+        		            </security:authorize>
+        		            <security:authorize access="hasRole('MAKER')">
+        		                ${eligibilityPolicy.policyCode}
+        		            </security:authorize>
+        		            <security:authorize access="isAnonymous()">
+          		                ${eligibilityPolicy.policyCode}
+                            </security:authorize>
         		            </td>
         		            <td>${eligibilityPolicy.policyName}</td>
         		            <td>${eligibilityPolicy.policyDescription}</td>
         		            <td>${eligibilityPolicy.createdBy}</td>
         		            <td>${eligibilityPolicy.status}</td>
                             <td>${eligibilityPolicy.authorizedBy}</td>
-       		                <td><a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a></td>
+       		                <td>
+       		                <security:authorize access="hasRole('MAKER')">
+       		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a>
+       		                </security:authorize>
+       		                <security:authorize access="hasRole('CHECKER')">
+       		                Edit  |  Delete
+       		                </security:authorize>
+       		                <security:authorize access="isAnonymous()">
+       		                Edit  |  Delete
+       		                </security:authorize>
+       		                </td>
        		            </tr>
        		            </c:forEach>
        		        </tbody>
@@ -74,38 +99,4 @@
         </div>
     </div>
 </body>
-<script>
-$(document).ready(function() {
-    var url = new URL(window.location.href);
-
-    var insertStatus = url.searchParams.get("insertStatus");
-    var deleteStatus = url.searchParams.get("deleteStatus");
-    var updateStatus = url.searchParams.get("updateStatus");
-    var editStatus = url.searchParams.get("editStatus");
-
-    if(insertStatus === "true") {
-        alert("Eligibility Policy Added Successfully!");
-    } else if(insertStatus === "false") {
-        alert("Action Unsuccessful!");
-    }
-
-    if(deleteStatus === "true") {
-        alert("Eligibility Policy Deleted Successfully!");
-    } else if(deleteStatus === "false") {
-        alert("Action Unsuccessful!");
-    }
-
-    if(updateStatus === "true") {
-        alert("Status Change Successful!");
-    } else if(updateStatus === "false") {
-        alert("Action Unsuccessful!");
-    }
-
-    if(editStatus === "true") {
-        alert("Eligibility Policy Edited Successfully!");
-    } else if(editStatus === "false") {
-        alert("Action Unsuccessful!");
-    }
-});
-</script>
 </html>

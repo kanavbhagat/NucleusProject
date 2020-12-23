@@ -1,24 +1,13 @@
 package com.nucleus.receipt.model;
 
-
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
-
 import com.nucleus.loanapplications.model.LoanApplications;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Entity
@@ -93,14 +82,9 @@ public class Receipt {
     @Min(value = 0, message = "Loan Application Number must be positive")
     private String loanApplicationValue;
 
-    public String getLoanApplicationValue(){
-        return loanApplicationValue;
-    }
 
-    public void setLoanApplicationValue(String loanApplicationValue) {
-        this.loanApplicationValue = loanApplicationValue;
-    }
-
+    @Column(name="receipt_status")
+    private String receiptStatus;
 
 
     public Receipt() {
@@ -234,5 +218,20 @@ public class Receipt {
         this.authorizedBy = authorizedBy;
     }
 
+    public String getReceiptStatus() {
+        return receiptStatus;
+    }
+
+    public void setReceiptStatus(String receiptStatus) {
+        this.receiptStatus = receiptStatus;
+    }
+
+    public String getLoanApplicationValue(){
+        return loanApplicationValue;
+    }
+
+    public void setLoanApplicationValue(String loanApplicationValue) {
+        this.loanApplicationValue = loanApplicationValue;
+    }
 
 }
