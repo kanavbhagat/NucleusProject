@@ -9,7 +9,7 @@ public interface ChargeService {
     List<NewCharge> getPendingChargeList();
     boolean deleteCharge(String chargeCode);
     NewCharge getOneCharge(String chargeCode);
-    void updateStatus(String chargeCode,String status);
+    boolean updateStatus(String chargeCode,String status);
     boolean updateCharge(NewCharge charge);
 
 }
