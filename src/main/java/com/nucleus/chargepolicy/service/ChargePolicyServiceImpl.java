@@ -63,7 +63,6 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     public void deleteChargePolicy(String chargePolicyCode){
         this.chargePolicyDao.deleteChargePolicy(chargePolicyCode);
     }
-<<<<<<< HEAD
     public List<String> getChargeCodesList(){
         List<NewCharge> listofNewCharges = this.chargeDao.getChargeList();
         List<String> chargeCodeList = new ArrayList<String>();
@@ -81,7 +80,5 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
         return  chargeCodeName;
     }
 
-=======
->>>>>>> c09c16e7485ee87864d6c0a4cccb9f578ef6431f
 
 }

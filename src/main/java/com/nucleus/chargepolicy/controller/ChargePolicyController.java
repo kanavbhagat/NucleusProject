@@ -81,33 +81,14 @@ public class ChargePolicyController {
                 return "views/chargepolicy/chargePolicy";
             }
             else if(status == 1){
-                model.put("message", "Saved Successfully");
-                return "views/chargepolicy/Success";
+                model.put("chargePolicyCode", chargePolicy.getChargePolicyCode());
+                return "views/chargepolicy/chargePolicysuccess";
             }
 
         }
         return "views/chargepolicy/chargePolicy";
     }
-    @PostMapping(value = {"/newChargePolicySuccess"})
-    public String getFormDataPostSuccess(@Valid @ModelAttribute ChargePolicy chargePolicy,BindingResult bindingResult,@RequestParam("action")String action,ModelMap model){
-        System.out.println("in getForm Data");
-        if(bindingResult.hasErrors()){
-            System.out.println("Error...........................................................");
-            List<String> chargeCodeList = this.chargePolicyService.getChargeCodesList();
-            model.put("chargeCodeList",chargeCodeList);
-            return "views/chargepolicy/newChargePolicySuccess";
-        }
-        else{
-            if(action.equalsIgnoreCase("save")) {
-                chargePolicy.setStatus("Inactive");
-            } else  {
-                chargePolicy.setStatus("Pending");
-            }
-            this.chargePolicyService.insert(chargePolicy);
-            return "redirect:/chargePolicy/newChargePolicySuccess";
-        }
 
-    }
 
 
 
