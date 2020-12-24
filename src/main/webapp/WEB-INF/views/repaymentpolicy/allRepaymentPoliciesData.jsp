@@ -5,6 +5,14 @@
   prefix="security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
+
+<%@ page import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("status");
+  request.setAttribute("saved",resource.getString("status.saved"));
+  request.setAttribute("pending",resource.getString("status.pending"));
+  request.setAttribute("approved",resource.getString("status.approved"));
+  request.setAttribute("rejected",resource.getString("status.rejected"));%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,10 +89,10 @@
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <c:if test = "${newRepaymentPolicy.status ne 'Saved'}">
+                            <c:if test = "${newRepaymentPolicy.status ne saved}">
                                 <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
                             </c:if>
-                            <c:if test = "${newRepaymentPolicy.status == 'Saved'}">
+                            <c:if test = "${newRepaymentPolicy.status == saved}">
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                             </c:if>
                         </sec:authorize>

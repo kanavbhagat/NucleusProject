@@ -3,6 +3,8 @@ package com.nucleus.repaymentpolicy.controller;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +19,24 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@PropertySource("classpath:status.properties")
 public class RepaymentPolicyController {
 
     @Autowired
     RepaymentPolicyService repaymentPolicyService;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * Handles and retrieves all RepaymentPolicy and show it in a JSP page allRepaymentPoliciesData
@@ -59,7 +75,7 @@ public class RepaymentPolicyController {
         boolean successFlag = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         if(successFlag)
         {
-            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Saved");
+            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),saved);
             repaymentPolicyService.updateCreationParameters(repaymentPolicy.getPolicyCode(),getPrincipal());
             ModelAndView mv = new ModelAndView();
             mv.setViewName("views/repaymentpolicy/addedpage");
@@ -88,7 +104,7 @@ public class RepaymentPolicyController {
         boolean successFlag = repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
         if(successFlag)
         {
-            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),"Pending");
+            repaymentPolicyService.changeStatus(repaymentPolicy.getPolicyCode(),pending);
             repaymentPolicyService.updateCreationParameters(repaymentPolicy.getPolicyCode(),getPrincipal());
             ModelAndView mv = new ModelAndView();
             mv.setViewName("views/repaymentpolicy/addedpage");
@@ -132,7 +148,7 @@ public class RepaymentPolicyController {
 
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,"Saved");
+        repaymentPolicyService.changeStatus(policyCode,saved);
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
@@ -148,7 +164,7 @@ public class RepaymentPolicyController {
 
         repaymentPolicy.setPolicyCode(policyCode);
         repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,"Pending");
+        repaymentPolicyService.changeStatus(policyCode,pending);
         repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editedpage");
@@ -172,7 +188,7 @@ public class RepaymentPolicyController {
                           @RequestParam(value="policyCode", required=true) String policyCode,
                           Model model) {
 
-        repaymentPolicyService.changeStatus(policyCode,"Approved");
+        repaymentPolicyService.changeStatus(policyCode,approved);
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/approvedpage");
@@ -186,7 +202,7 @@ public class RepaymentPolicyController {
                          @RequestParam(value="policyCode", required=true) String policyCode,
                          Model model) {
 
-        repaymentPolicyService.changeStatus(policyCode,"Rejected");
+        repaymentPolicyService.changeStatus(policyCode,rejected);
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/rejectedpage");
