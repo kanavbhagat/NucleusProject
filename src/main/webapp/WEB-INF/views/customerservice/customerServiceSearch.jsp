@@ -69,7 +69,7 @@
 
                 <div class="form-group">
                     <label for="loanApplicationNumber" class="font-weight-bold ">Loan Account #</label>
-                    <input type="number" id="loanApplicationNumber" class="form-control" name="loanApplicationNumber"/>
+                    <input type="number" id="loanApplicationNumber" class="form-control" name="loanApplicationNumber" min="1"/>
                 </div>
 
             </div>

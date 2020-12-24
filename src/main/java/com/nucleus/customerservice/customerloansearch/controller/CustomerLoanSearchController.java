@@ -70,22 +70,17 @@ public class CustomerLoanSearchController {
         List<Customer> customers = new ArrayList<>();
         List<LoanApplications> loanApplications = new ArrayList<>();
 
-        if((customerId==null || customerId.isEmpty()) && loanApplicationNumber==null){
-            // avoid sending nothing to model and view. This case *should* never happen.
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
-        }
 
-        else if(customerId==null || customerId.isEmpty()){
+        if(customerId==null || customerId.isEmpty()){
             // get loan application details and corresponding customer details.
             LoanApplications loanApplication = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
             if(loanApplication!=null){
                 customers.add(loanApplication.getCustomerCode());
                 loanApplications.add(loanApplication);
             }
-            System.out.println(customers.size());
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
+            else{
+                mv.addObject("messageBody", "No such Loan Application Number "+loanApplicationNumber+" exists. Please search again for another Loan Application Number.");
+            }
         }
 
         else if(loanApplicationNumber==null){
@@ -94,10 +89,12 @@ public class CustomerLoanSearchController {
             if(customer!=null){
                 customers.add(customer);
             }
+            else{
+                mv.addObject("messageBody", "No such Customer Number "+customerId+" exists. Please search again for another Customer Number.");
+            }
             loanApplications = loanApplicationService.getAllLoanApplicationsList();
             loanApplications.removeIf(la -> !customerId.equals(la.getCustomerCode().getCustomerCode()));
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
+
         }
         else{
             // if both customer code and loan application number are present.
@@ -105,18 +102,26 @@ public class CustomerLoanSearchController {
             Customer customer = customerService.getCustomer(customerId);
             if(customer!=null){
                 customers.add(customer);
+
+                if(la!=null && customerId.equals(la.getCustomerCode().getCustomerCode())){
+                    loanApplications.add(la);
+                }
+                else{
+                    mv.addObject("messageBody", "No such Customer with Id "+customerId+" has any Loan Application Number with Id "+loanApplicationNumber+". Please try again");
+                }
             }
-            if(la!=null && customerId.equals(la.getCustomerCode().getCustomerCode())){
-                loanApplications.add(la);
+            else{
+                mv.addObject("messageBody", "No such Customer Number "+customerId+" exists. Please try for another Customer Number.");
             }
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
+
         }
+
+        mv.addObject("customer", customers);
+        mv.addObject("loanApplications", loanApplications);
 
         if(customers.isEmpty() || loanApplications.isEmpty()){
             mv.setViewName("views/customerservice/searchError");
             mv.addObject("messageHeader", "No results found");
-            mv.addObject("messageBody", "No results were found matching your criteria. Please try again");
         }
 
         return mv;
