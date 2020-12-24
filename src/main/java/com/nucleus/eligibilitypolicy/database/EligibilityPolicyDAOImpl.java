@@ -39,14 +39,12 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public List<EligibilityPolicy> getAllEligibilityPolicies() {
         List<EligibilityPolicy> eligibilityPolicyList;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e", EligibilityPolicy.class);
             eligibilityPolicyList = query.getResultList();
             session.getTransaction().commit();
-            session.close();
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             eligibilityPolicyList = null;
             System.out.println(exception.getMessage());
         }
@@ -64,13 +62,11 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public boolean insertEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean insertStatus;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()){
             session.beginTransaction();
             session.save(eligibilityPolicy);
             session.getTransaction().commit();
             insertStatus = true;
-            session.close();
         } catch (Exception exception) {
             insertStatus = false;
             System.out.println(exception.getMessage());
@@ -89,14 +85,12 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
         EligibilityPolicy eligibilityPolicy;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e where e.policyCode=?1", EligibilityPolicy.class);
             query.setParameter(1, policyCode);
             eligibilityPolicy = query.getSingleResult();
             session.getTransaction().commit();
-            session.close();
         } catch(Exception exception) {
             eligibilityPolicy = null;
             System.out.println(exception.getMessage());
@@ -115,13 +109,11 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean updateStatus;
-        try{
-            Session session = getSession();
+        try(Session session = getSession()) {
             session.beginTransaction();
             session.update(eligibilityPolicy);
             session.getTransaction().commit();
             updateStatus = true;
-            session.close();
         } catch (Exception exception) {
             updateStatus = false;
             System.out.println(exception.getMessage());
@@ -141,13 +133,11 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     public boolean deleteEligibilityPolicy(String policyCode) {
         boolean deleteStatus;
         EligibilityPolicy eligibilityPolicy = getOneEligibilityPolicy(policyCode);
-        try{
-            Session session = getSession();
+        try(Session session = getSession()){
             session.beginTransaction();
             session.delete(eligibilityPolicy);
             session.getTransaction().commit();
             deleteStatus = true;
-            session.close();
         } catch (Exception exception) {
             deleteStatus = false;
             System.out.println(exception.getMessage());

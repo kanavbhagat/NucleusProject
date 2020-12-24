@@ -106,7 +106,7 @@ public class EligibilityPolicyController {
 
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
-        if(parameterCountString != null) {
+        if(parameterCountString != null && eligibilityPolicy.getEligibilityParameterCodes()!=null) {
             int parameterCount = Integer.parseInt(parameterCountString);
             for (int i = 0; i < parameterCount; i++) {
                 EligibilityParameter eligibilityParameter = eligibilityParameterService.getOneEligibilityParameter(eligibilityPolicy.getEligibilityParameterCodes()[i]);
