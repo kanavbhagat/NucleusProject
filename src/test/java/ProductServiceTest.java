@@ -19,6 +19,7 @@ public class ProductServiceTest {
     @Autowired
     ProductService productService;
 
+
     @Test
     public void createNewProductTest(){
         assertFalse(productService.createNewProduct(new Product()));
@@ -40,3 +41,4 @@ public class ProductServiceTest {
     }
 
 }
+

@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="form-group col-sm-3">
                     <label class="font-weight-bold required-field">Loan Application Number</label>
-                    <form:input cssClass="form-control" path="loanApplicationNumber"/>
+                    <form:input cssClass="form-control" path="loanApplicationNumber" readonly="true"/>
                     <form:errors path="loanApplicationNumber" cssClass="error"/>
                 </div>
                 <div class="form-group col-sm-3 offset-4">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group col-sm-3 offset-4">
                     <label class="font-weight-bold required-field">Customer Code</label>
-                    <form:input path="customerCode" cssClass="form-control"/>
+                    <form:input path="customerCode" cssClass="form-control" readonly="true"/>
                     <form:errors path="customerCode" cssClass="error"></form:errors>
                 </div>
             </div>

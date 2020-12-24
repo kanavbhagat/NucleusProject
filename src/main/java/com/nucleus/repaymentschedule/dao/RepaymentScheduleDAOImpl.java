@@ -13,27 +13,18 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-
-public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO{
+@Transactional
+public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
+{
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    private Session getSession(){
-        Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException E){
-            session = sessionFactory.openSession();
-        }
-        return session;
-    }
 
     @Override
     public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) {
 
         try {
-            Session session = getSession();
+            Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(repaymentSchedule);
             session.getTransaction().commit();
