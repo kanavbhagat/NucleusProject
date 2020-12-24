@@ -13,7 +13,7 @@ public interface LoanClosureDao {
 
     List<LoanApplications> getLoanApplications();
 
-    List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber);
+    List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplicationNumber);
 
     boolean updateStatus(LoanApplications loanApplication, String newStatus);
 
