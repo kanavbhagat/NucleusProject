@@ -4,6 +4,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%@ page import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("status");
+  request.setAttribute("saved",resource.getString("status.saved"));
+  request.setAttribute("pending",resource.getString("status.pending"));
+  request.setAttribute("approved",resource.getString("status.approved"));
+  request.setAttribute("rejected",resource.getString("status.rejected"));%>
+
 <html>
 <head>
 <title>Eligibility Parameter Maker</title>
@@ -67,12 +74,12 @@
     		            <tr>
     		            <td>
                          <sec:authorize access="hasRole('CHECKER')">
-                         <c:if test = "${parameter.status == 'Pending'}">
+                         <c:if test = "${parameter.status == pending}">
                          <a href="<%= request.getContextPath()%>/main/get/${parameter.parameterCode}">
                             ${parameter.parameterCode}
                          </a>
                          </c:if>
-                         <c:if test = "${parameter.status ne 'Pending'}">
+                         <c:if test = "${parameter.status ne pending}">
                          ${parameter.parameterCode}
                          </c:if>
                          </sec:authorize>
@@ -89,10 +96,10 @@
     		                <td><c:out value="${parameter.status}" /></td>
     		                <td><c:out value="${parameter.authorizedBy}" /></td>
     		                <sec:authorize access="hasRole('MAKER')">
-    		                <c:if test = "${parameter.status == 'Approved' or parameter.status == 'Rejected'}">
+    		                <c:if test = "${parameter.status == approved or parameter.status == rejected}">
     		                <td><a>Edit</a>  |  <a>Delete</a></td>
     		                </c:if>
-    		                <c:if test = "${parameter.status == 'Saved' or parameter.status == 'Pending'}">
+    		                <c:if test = "${parameter.status == saved or parameter.status == pending}">
     		                <td><a href="<%= request.getContextPath()%>/main/edit/${parameter.parameterCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/main/delete/${parameter.parameterCode}">Delete</a></td>
     		                </c:if>
     		                </sec:authorize>

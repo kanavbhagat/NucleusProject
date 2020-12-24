@@ -87,7 +87,8 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" value="Update">
+                <input class="btn-primary" type="submit" name="op" value="Update">
+                <input class="btn-primary" type="submit" name="op" value="Update and Request">
             </div>
         </form:form>
     </article>

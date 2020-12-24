@@ -2,6 +2,7 @@ package com.nucleus.customerservice.loandisbursal.database;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO{
      */
     @Override
     public LoanApplications getLoanDetails(int loanApplicationNumber){
-        Session session = sessionFactory.openSession();
-        LoanApplications loanApplication = session.get(LoanApplications.class, loanApplicationNumber);
-        session.close();
+        LoanApplications loanApplication=null;
+        try(Session session = getSession()) {
+            session.beginTransaction();
+            loanApplication = session.get(LoanApplications.class, loanApplicationNumber);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return loanApplication;
     }
 
@@ -35,13 +41,27 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO{
      */
     @Override
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){
-        Session session = sessionFactory.openSession();
         List<LoanApplications> loanApplications=null;
-        Customer customer = session.get(Customer.class, customerCode);
-        if(customer != null) {
-            loanApplications=customer.getLoanApplications();
+        try(Session session = getSession()) {
+            session.beginTransaction();
+            Customer customer = session.get(Customer.class, customerCode);
+            if(customer != null) {
+                loanApplications=customer.getLoanApplications();
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        session.close();
+
         return loanApplications;
+    }
+
+    private Session getSession(){
+        Session session;
+        try {
+            session = sessionFactory.openSession();
+        } catch (HibernateException E){
+            session = sessionFactory.getCurrentSession();
+        }
+        return session;
     }
 }

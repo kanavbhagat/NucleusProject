@@ -5,6 +5,8 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +27,7 @@ import java.util.List;
  *
  */
 @Controller
+@PropertySource("classpath:status.properties")
 @RequestMapping("eligibilityPolicy")
 public class EligibilityPolicyController {
 
@@ -33,6 +36,19 @@ public class EligibilityPolicyController {
 
     @Autowired
     EligibilityParameterDAO eligibilityParameterService;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * This method is used to display a list of existing Eligibility Policies.
@@ -94,9 +110,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("Saved");
+            eligibilityPolicy.setStatus(saved);
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("Pending");
+            eligibilityPolicy.setStatus(pending);
         }
         //Setting "createdDate" field:
         eligibilityPolicy.setCreateDate(LocalDate.now());
@@ -226,9 +242,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("Saved");
+            eligibilityPolicy.setStatus(saved);
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("Pending");
+            eligibilityPolicy.setStatus(pending);
         }
         //Setting "modifiedDate" field:
         eligibilityPolicy.setModifiedDate(LocalDate.now());

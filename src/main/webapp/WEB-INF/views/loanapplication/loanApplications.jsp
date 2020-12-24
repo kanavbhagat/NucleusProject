@@ -86,30 +86,24 @@
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
-                                         <td></td>
+                                         <td>${loan.productCode}</td>
                                          <td>${loan.createDate}</td>
                                          <td>${loan.createdBy}</td>
                                          <td>${loan.status}</td>
-                                         <td></td>
+                                         <td>${loan.authorizedBy}</td>
                                         <sec:authorize access="hasRole('MAKER')">
-                                            <c:if test = "${loan.status == 'Approved'}">
+                                            <c:if test = "${loan.status == 'APPROVED'}">
                                                  <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                                             </c:if>
-                                            <c:if test = "${loan.status != 'Approved'}">
+                                            <c:if test = "${loan.status != 'APPROVED'}">
                                                 <td><a href="${editUrl}">Edit</a> | <a href="${deleteUrl}">Delete</a></td>
                                             </c:if>
                                         </sec:authorize>
-                                                <sec:authorize access="hasRole('CHECKER')">
-                                             <c:if test = "${loan.status == 'Approved'}">
-                                                 <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
-                                             </c:if>
-                                             <c:if test = "${loan.status != 'Approved'}">
-                                                 <td>
-                                                    <a href="${editUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a> |
-                                                    <a href="${deleteUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Delete </a>
-                                                 </td>
-                                             </c:if>
-                                         </sec:authorize>
+                                        <sec:authorize access="hasRole('CHECKER')">
+
+                                           <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
+
+                                        </sec:authorize>
                                         </tr>
                                        </c:forEach>
                                    </c:if>
