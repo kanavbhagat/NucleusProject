@@ -154,6 +154,9 @@ $(document).ready(function() {
     $('#tableRow0').css('display', 'block');
     $('#tableRow0').addClass("d-flex").removeClass("d-none");
     var eligibilityParametersCount = 1;
+    if(${allEligibilityParameterList.size()}<=1) {
+        $('#addButton').css('display', 'none');
+    }
     $('#eligibilityParametersCountInput').val(eligibilityParametersCount);
 
     $('#addButton').click(function() {
