@@ -1,9 +1,8 @@
 package com.nucleus.loanclosurebod.service;
 
 import com.nucleus.loanapplications.model.LoanApplications;
-import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.loanclosurebod.database.LoanClosureDao;
-import com.nucleus.loanclosurebod.model.RepaymentSchedule;
+import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,16 +17,13 @@ public class LoanClosureServiceImpl implements LoanClosureService {
     @Autowired
     LoanClosureDao loanClosureDao;
 
-    @Autowired
-    LoanApplicationService loanApplicationService;
-
     /**
      * Method for obtaining all the Loan Applications and calling
      * the closeOneLoan method for each Loan Application.
      */
     @Override
     public int loanClosureBod() {
-        List<LoanApplications> loanApplications = loanApplicationService.getAllLoanApplicationsList();
+        List<LoanApplications> loanApplications = loanClosureDao.getLoanApplications();
         boolean loanClosureStatus;
         int countofClosedLoans = 0;
         for (LoanApplications loanApplication : loanApplications) {
