@@ -15,6 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
+
 @RestController
 public class LoanApplicationViewController {
 
@@ -43,8 +45,10 @@ public class LoanApplicationViewController {
     @PreAuthorize("hasRole ('ROLE_MAKER')")
     public ModelAndView editLoanApplication(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
-        ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationChecker");
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationMaker");
         modelAndView.addObject("loanApplicationNumber",loanApplications.getLoanApplicationNumber());
+
+
         modelAndView.addObject("loanApplication",loanApplications);
         return modelAndView;
     }
@@ -53,7 +57,7 @@ public class LoanApplicationViewController {
     @GetMapping(value = "loanApplication/check")
     public ModelAndView getCheckUrl(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
-        ModelAndView modelAndView = new ModelAndView("views/loanApplication/loanApplicationChecker");
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplicationChecker");
         modelAndView.addObject("loanApplication",loanApplications);
         return modelAndView;
     }
