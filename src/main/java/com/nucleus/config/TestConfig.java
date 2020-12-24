@@ -60,9 +60,13 @@ public class TestConfig {
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
 //        ds.setUsername("c##username");
 //        ds.setPassword("pwd");
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-        ds.setUsername("sys as sysdba");
-        ds.setPassword("gyanesh10");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("gyanesh10");
+
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        ds.setUsername("nsbt");
+        ds.setPassword("qwerty");
 
         return ds;
 
