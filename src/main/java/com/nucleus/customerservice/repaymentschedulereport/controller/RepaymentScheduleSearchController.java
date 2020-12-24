@@ -36,7 +36,7 @@ public class RepaymentScheduleSearchController {
     {
         int loanApplicationNumber = Integer.parseInt(appNo);
         List<RepaymentSchedule> rslist=repaymentScheduleService.getRepaymentScheduleReport(loanApplicationNumber);
-        if(rslist==null){
+        if(rslist.size()==0){
             ModelAndView mv = new ModelAndView();
             mv.setViewName("views/customerservice/InvalidLoanAppPage");
             mv.addObject("Message","loanApplicationId NOT found");

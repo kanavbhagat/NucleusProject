@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file = "/navbar.jsp"%>
+
 <html>
 
 <head>
@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="/navbar.jsp" />
 <div class="container-fluid">
 
     <div class="row pt-3 pl-3">

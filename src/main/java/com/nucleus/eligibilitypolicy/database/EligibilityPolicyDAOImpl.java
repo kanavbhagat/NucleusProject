@@ -39,16 +39,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public List<EligibilityPolicy> getAllEligibilityPolicies() {
         List<EligibilityPolicy> eligibilityPolicyList;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e", EligibilityPolicy.class);
             eligibilityPolicyList = query.getResultList();
             session.getTransaction().commit();
-            session.close();
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             eligibilityPolicyList = null;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return eligibilityPolicyList;
 
@@ -64,16 +62,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public boolean insertEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean insertStatus;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()){
             session.beginTransaction();
             session.save(eligibilityPolicy);
             session.getTransaction().commit();
             insertStatus = true;
-            session.close();
         } catch (Exception exception) {
             insertStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return insertStatus;
     }
@@ -89,17 +85,15 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public EligibilityPolicy getOneEligibilityPolicy(String policyCode) {
         EligibilityPolicy eligibilityPolicy;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             Query<EligibilityPolicy> query = session.createQuery("from EligibilityPolicy e where e.policyCode=?1", EligibilityPolicy.class);
             query.setParameter(1, policyCode);
             eligibilityPolicy = query.getSingleResult();
             session.getTransaction().commit();
-            session.close();
         } catch(Exception exception) {
             eligibilityPolicy = null;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return eligibilityPolicy;
     }
@@ -115,16 +109,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         boolean updateStatus;
-        try{
-            Session session = getSession();
+        try(Session session = getSession()) {
             session.beginTransaction();
             session.update(eligibilityPolicy);
             session.getTransaction().commit();
             updateStatus = true;
-            session.close();
         } catch (Exception exception) {
             updateStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return updateStatus;
     }
@@ -141,16 +133,14 @@ public class EligibilityPolicyDAOImpl implements EligibilityPolicyDAO {
     public boolean deleteEligibilityPolicy(String policyCode) {
         boolean deleteStatus;
         EligibilityPolicy eligibilityPolicy = getOneEligibilityPolicy(policyCode);
-        try{
-            Session session = getSession();
+        try(Session session = getSession()){
             session.beginTransaction();
             session.delete(eligibilityPolicy);
             session.getTransaction().commit();
             deleteStatus = true;
-            session.close();
         } catch (Exception exception) {
             deleteStatus = false;
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return deleteStatus;
     }

@@ -42,9 +42,9 @@ public class LoanDisbursalLoggerAspect {
     }
     @AfterReturning(pointcut = "getCustomerLoanDetails()", returning = "loanApps")
     public void afterAllLoans(JoinPoint joinPoint, List<LoanApplications> loanApps) {
-        int size = 0;
-        if(loanApps!=null) {
-            size = loanApps.size();
+        int size=0;
+        if(loanApps != null){
+            size= loanApps.size();
         }
         logger.info(size+" Loan Details Fetched by Customer");
     }

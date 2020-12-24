@@ -3,6 +3,8 @@ package com.nucleus.eligibiltyparameter.controller;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import com.nucleus.eligibiltyparameter.service.EligibilityParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +19,25 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@PropertySource("classpath:status.properties")
 @RequestMapping("/main")
 public class EligibilityParameterController {
 
     @Autowired
     private EligibilityParameterService eligibilityParameterService;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * Getting All eligibility parameters from database in maker and checker screens
@@ -65,10 +81,18 @@ public class EligibilityParameterController {
         {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
-            eligibilityParameter.setStatus("Saved");
-            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            eligibilityParameter.setStatus(saved);
+            String pcode=eligibilityParameter.getParameterCode();
+            boolean success=eligibilityParameterService.insertParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            model.addAttribute("status","Inserted");
+            model.addAttribute("error","inserting");
+            if(success) {
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+            else {
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
         }
 
     }
@@ -90,10 +114,18 @@ public class EligibilityParameterController {
         {
             eligibilityParameter.setCreatedBy(getPrincipal());
             eligibilityParameter.setCreateDate(LocalDate.now());
-            eligibilityParameter.setStatus("Pending");
-            String pcode=eligibilityParameterService.insertParameter(eligibilityParameter);
+            eligibilityParameter.setStatus(pending);
+            String pcode=eligibilityParameter.getParameterCode();
+            boolean success=eligibilityParameterService.insertParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
-            return "views/eligibilityparameters/eligibilityparametersuccess";
+            model.addAttribute("status","Inserted");
+            model.addAttribute("error","inserting");
+            if(success) {
+                return "views/eligibilityparameters/eligibilityparametersuccess";
+            }
+            else {
+                return "views/eligibilityparameters/eligibilityparameterfailure";
+            }
         }
 
     }
@@ -116,9 +148,11 @@ public class EligibilityParameterController {
         {
             String pcode=eligibilityParameter.getParameterCode();
             eligibilityParameter.setModifiedBy(getPrincipal());
-            eligibilityParameter.setStatus("Saved");
+            eligibilityParameter.setStatus(saved);
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
+            model.addAttribute("status","Edited");
+            model.addAttribute("error","editing");
             if(valid)
             {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
@@ -148,9 +182,11 @@ public class EligibilityParameterController {
         {
             String pcode=eligibilityParameter.getParameterCode();
             eligibilityParameter.setModifiedBy(getPrincipal());
-            eligibilityParameter.setStatus("Pending");
+            eligibilityParameter.setStatus(pending);
             boolean valid=eligibilityParameterService.editParameter(eligibilityParameter);
             model.addAttribute("parameterCode",pcode);
+            model.addAttribute("status","Edited");
+            model.addAttribute("error","editing");
             if(valid)
             {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
@@ -169,9 +205,18 @@ public class EligibilityParameterController {
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping("/delete/{parameterCode}")
-    public String deleteParameter(@PathVariable("parameterCode") String parameterCode) {
-        String pcode = eligibilityParameterService.deleteEligibilityParameter(parameterCode);
-        return "redirect:/main/eligibilityparameter/";
+    public String deleteParameter(@PathVariable("parameterCode") String parameterCode,Model model) {
+        String pcode=parameterCode;
+        boolean success = eligibilityParameterService.deleteEligibilityParameter(parameterCode);
+        model.addAttribute("parameterCode",pcode);
+        model.addAttribute("status","Deleted");
+        model.addAttribute("error","deleting");
+        if(success) {
+            return "views/eligibilityparameters/eligibilityparametersuccess";
+        }
+        else {
+            return "views/eligibilityparameters/eligibilityparameterfailure";
+        }
     }
 
     /**
@@ -213,18 +258,26 @@ public class EligibilityParameterController {
      * @return checker screen
      */
     @PostMapping(value = {"/updateStatus/{parameterCode}"})
-    public String updateStatus(@PathVariable("parameterCode") String parameterCode, @RequestParam("action")String action) {
+    public String updateStatus(@PathVariable("parameterCode") String parameterCode, @RequestParam("action")String action,Model model) {
         String newStatus;
         if(action.equalsIgnoreCase("approve")) {
-            newStatus = "Approved";
+            newStatus = approved;
         } else if (action.equalsIgnoreCase("reject")) {
-            newStatus = "Rejected";
+            newStatus = rejected;
         } else {
-            newStatus = "Pending";
+            newStatus = pending;
         }
         String authorizedBy = getPrincipal();
-        boolean updateStatus = eligibilityParameterService.updateStatus(parameterCode, newStatus,authorizedBy);
-        return "redirect:/main/eligibilityparameter/";
+        boolean success = eligibilityParameterService.updateStatus(parameterCode, newStatus,authorizedBy);
+        model.addAttribute("parameterCode",parameterCode);
+        model.addAttribute("status","Updated");
+        model.addAttribute("error","updating");
+        if(success) {
+            return "views/eligibilityparameters/eligibilityparametersuccess";
+        }
+        else {
+            return "views/eligibilityparameters/eligibilityparameterfailure";
+        }
     }
 
     private String getPrincipal(){

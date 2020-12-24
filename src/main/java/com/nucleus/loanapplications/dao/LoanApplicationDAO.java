@@ -1,5 +1,6 @@
 package com.nucleus.loanapplications.dao;
 
+import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.product.model.Product;
 import org.hibernate.HibernateException;
@@ -88,6 +89,22 @@ public class LoanApplicationDAO implements LoanApplicationDaoInterface {
             e.printStackTrace();
         }
         return successful;
+    }
+    @Override
+    public boolean updateLoanApplication(LoanApplications loanApplications) {
+        try(Session session=getSession()){
+            session.beginTransaction();
+            try {
+                session.update(loanApplications);
+                session.getTransaction().commit();
+                return true;
+            } catch (HibernateException e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
+
+        }
     }
 
 }

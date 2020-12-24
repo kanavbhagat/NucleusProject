@@ -5,6 +5,8 @@ import com.nucleus.eligibilitypolicy.service.EligibilityPolicyService;
 import com.nucleus.eligibiltyparameter.database.EligibilityParameterDAO;
 import com.nucleus.eligibiltyparameter.model.EligibilityParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +27,7 @@ import java.util.List;
  *
  */
 @Controller
+@PropertySource("classpath:status.properties")
 @RequestMapping("eligibilityPolicy")
 public class EligibilityPolicyController {
 
@@ -33,6 +36,19 @@ public class EligibilityPolicyController {
 
     @Autowired
     EligibilityParameterDAO eligibilityParameterService;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * This method is used to display a list of existing Eligibility Policies.
@@ -58,7 +74,7 @@ public class EligibilityPolicyController {
     public ModelAndView newEligibilityPolicy() {
         ModelAndView modelAndView = new ModelAndView();
         EligibilityPolicy eligibilityPolicy = new EligibilityPolicy();
-        List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+        List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
         modelAndView.addObject("eligibilityPolicy", eligibilityPolicy);
         modelAndView.addObject("allEligibilityParameterList", eligibilityParameterList);
         modelAndView.setViewName("views/eligibilitypolicies/newEligibilityPolicy");
@@ -86,7 +102,7 @@ public class EligibilityPolicyController {
                                        Model model) {
         //Annotation based data validation:
         if (result.hasErrors()) {
-            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
             eligibilityPolicy.setEligibilityParameterCodes(new String[]{});
             return "views/eligibilitypolicies/newEligibilityPolicy";
@@ -94,9 +110,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("Saved");
+            eligibilityPolicy.setStatus(saved);
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("Pending");
+            eligibilityPolicy.setStatus(pending);
         }
         //Setting "createdDate" field:
         eligibilityPolicy.setCreateDate(LocalDate.now());
@@ -106,7 +122,7 @@ public class EligibilityPolicyController {
 
         //Populating Eligibility Parameters List based on the codes that user selected:
         List<EligibilityParameter> eligibilityParameters = new ArrayList<>();
-        if(parameterCountString != null) {
+        if(parameterCountString != null && eligibilityPolicy.getEligibilityParameterCodes()!=null) {
             int parameterCount = Integer.parseInt(parameterCountString);
             for (int i = 0; i < parameterCount; i++) {
                 EligibilityParameter eligibilityParameter = eligibilityParameterService.getOneEligibilityParameter(eligibilityPolicy.getEligibilityParameterCodes()[i]);
@@ -186,7 +202,7 @@ public class EligibilityPolicyController {
     public String getEditPolicyPage(@PathVariable("policyCode") String policyCode, Model model) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyService.getOneEligibilityPolicy(policyCode);
         List<EligibilityParameter> existingParameterList = eligibilityPolicy.getEligibilityParameterList();
-        List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getAll();
+        List<EligibilityParameter> allEligibilityParameterList = eligibilityParameterService.getApprovedParameters();
         model.addAttribute("eligibilityPolicy", eligibilityPolicy);
         model.addAttribute("existingParameterList", existingParameterList);
         model.addAttribute("allEligibilityParameterList", allEligibilityParameterList);
@@ -215,7 +231,7 @@ public class EligibilityPolicyController {
 
         //Annotation based data validation:
         if (result.hasErrors()) {
-            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getAll();
+            List<EligibilityParameter> eligibilityParameterList = eligibilityParameterService.getApprovedParameters();
             EligibilityPolicy eligibilityPolicyOld = eligibilityPolicyService.getOneEligibilityPolicy(eligibilityPolicy.getPolicyCode());
             List<EligibilityParameter> existingParameterList = eligibilityPolicyOld.getEligibilityParameterList();
             model.addAttribute("allEligibilityParameterList", eligibilityParameterList);
@@ -226,9 +242,9 @@ public class EligibilityPolicyController {
 
         //Setting "status" for the new Eligibility Policy based on button clicked:
         if(action.equalsIgnoreCase("save")) {
-            eligibilityPolicy.setStatus("Saved");
+            eligibilityPolicy.setStatus(saved);
         } else if (action.equalsIgnoreCase("save & request approval")) {
-            eligibilityPolicy.setStatus("Pending");
+            eligibilityPolicy.setStatus(pending);
         }
         //Setting "modifiedDate" field:
         eligibilityPolicy.setModifiedDate(LocalDate.now());

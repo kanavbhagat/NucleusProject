@@ -2,9 +2,17 @@
    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file = "/navbar.jsp"%>
    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@ page import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("status");
+  request.setAttribute("saved",resource.getString("status.saved"));
+  request.setAttribute("pending",resource.getString("status.pending"));
+  request.setAttribute("approved",resource.getString("status.approved"));
+  request.setAttribute("rejected",resource.getString("status.rejected"));%>
+
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -24,6 +32,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/navbar.jsp" />
     <div class="container-fluid">
         <div class="row pt-3 pl-3 flex-column">
         	<h2 class="display-3" style="font-size: 30px">
@@ -60,12 +69,12 @@
         		        <tr>
         		            <td>
         		            <security:authorize access="hasRole('CHECKER')">
-        		            <c:if test = "${eligibilityPolicy.status ne 'Saved'}">
+        		            <c:if test = "${eligibilityPolicy.status == pending}">
         		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/get/${eligibilityPolicy.policyCode}">
         		                    ${eligibilityPolicy.policyCode}
         		                </a>
         		            </c:if>
-        		            <c:if test = "${eligibilityPolicy.status == 'Saved'}">
+        		            <c:if test = "${eligibilityPolicy.status ne pending}">
         		                ${eligibilityPolicy.policyCode}
         		            </c:if>
         		            </security:authorize>
@@ -83,7 +92,12 @@
                             <td>${eligibilityPolicy.authorizedBy}</td>
        		                <td>
        		                <security:authorize access="hasRole('MAKER')">
+       		                <c:if test="${eligibilityPolicy.status == approved or eligibilityPolicy.status == rejected}">
+       		                Edit  |  Delete
+       		                </c:if>
+       		                <c:if test="${eligibilityPolicy.status == saved or eligibilityPolicy.status == pending}">
        		                <a href="<%= request.getContextPath()%>/eligibilityPolicy/edit/${eligibilityPolicy.policyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/eligibilityPolicy/delete/${eligibilityPolicy.policyCode}">Delete</a>
+       		                </c:if>
        		                </security:authorize>
        		                <security:authorize access="hasRole('CHECKER')">
        		                Edit  |  Delete
