@@ -75,7 +75,7 @@
                 <c:forEach items="${paymentList}" var="singlePayment">
                     <tr>
                         <sec:authorize access="hasRole('MAKER')">
-                        <td>${singlePayment.loanApplicationNumber}</td>
+                            <td><a href="<%=request.getContextPath()%>/payment/viewPayment/${singlePayment.loanApplicationNumber}">${singlePayment.loanApplicationNumber}</a></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
                             <td><a href="<%=request.getContextPath()%>/payment/showPayment/${singlePayment.loanApplicationNumber}">${singlePayment.loanApplicationNumber}</a></td>
