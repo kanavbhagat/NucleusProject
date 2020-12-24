@@ -58,18 +58,18 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
     /**
      * This method retrieves the list of all entries of Repayment Schedule
      * for a particular Loan Application from the database.
-     * @param loanApplicationNumber
+     * @param loanApplication
      * @return list of all entries of Repayment Schedule
      */
     @Override
-    public List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber){
+    public List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplication){
         List<RepaymentSchedule> list = new ArrayList<>();
         /* Retrieving all the entries of Repayment Schedule for given Loan Application
            in the list. */
         try(Session session = getSession()) {
             session.beginTransaction();
             Query<RepaymentSchedule> query = session.createQuery("from RepaymentSchedule r where r.loanApplicationNumber=?1", RepaymentSchedule.class);
-            query.setParameter(1, loanApplicationNumber);
+            query.setParameter(1, loanApplication);
             list = query.getResultList();
             session.getTransaction().commit();
         }catch (Exception exception){

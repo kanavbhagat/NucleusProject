@@ -59,7 +59,7 @@ public class LoanClosureServiceImpl implements LoanClosureService {
             /*Iterating through the repayment schedule and checking if all the Bill Flags are Y
             or not. Break through the loop if any Bill Flag is N.
              */
-            List<RepaymentSchedule> repaymentSchedules = loanClosureDao.getRepaymentSchedule(loanApplication.getLoanApplicationNumber());
+            List<RepaymentSchedule> repaymentSchedules = loanClosureDao.getRepaymentSchedule(loanApplication);
             for (RepaymentSchedule repaymentScheduleEntry : repaymentSchedules) {
                 if (repaymentScheduleEntry.getBillFlag().equalsIgnoreCase("N")) {
                     flag = false;
