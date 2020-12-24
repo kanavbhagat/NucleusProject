@@ -36,8 +36,8 @@ public class PaymentDAOImpl implements PaymentDAO{
             session.close();
         }
         catch (HibernateException e){
-            e.printStackTrace();
             insertStatus = false;
+            e.printStackTrace();
         }
         return insertStatus;
     }
