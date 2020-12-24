@@ -68,6 +68,53 @@ public class AppConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 
+//        ds.setUsername("c##username");
+//        ds.setPassword("pwd");
+
+         /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+         ds.setPassword("pwd");*/
+
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//       ds.setPassword("gyanesh10");
+
+        /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
+         ds.setUsername("c##username");
+<<<<<<< HEAD
+         ds.setPassword("pwd");
+
+>>>>>>> f9dc56f13ba721484ff770d703086753ee6550a0
+
+=======
+         ds.setPassword("pwd");*/
+
+
+
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521/xepdb1");
+//        ds.setUsername("MYUSERNAME");
+//        ds.setPassword("MYPASSWORD");
+
+//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//         ds.setUsername("megha");
+//         ds.setPassword("megha");
+
+          /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+=======
+>>>>>>> b62af43ac6b34c9b9dbf921806e793f75f73301b
+
+        /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+             ds.setUsername("system");
+             ds.setPassword("hemant12345");*/
+
+       /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("sys as sysdba");
+        ds.setPassword("gkul0289");*/
+
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("c##asaf");
+        ds.setPassword("asaf");
+
         return ds;
 
     }

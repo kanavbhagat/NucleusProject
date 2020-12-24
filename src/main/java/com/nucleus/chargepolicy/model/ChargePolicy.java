@@ -50,11 +50,8 @@ public class ChargePolicy {
 
 
     @OneToOne
-    @JoinColumn(name = "charge_code",referencedColumnName="ChargeCode",unique = true)
-    NewCharge chargeCodeEntity;
-
-    @Transient
-    String chargeCode;
+    @JoinColumn(name = "charge_code",referencedColumnName="charge_code")
+    NewCharge charge;
 
     @Transient
     String chargeCodeName;
@@ -149,19 +146,12 @@ public class ChargePolicy {
         this.chargeCodeName = chargeCodeName;
     }
 
-    public NewCharge getChargeCodeEntity() {
-        return chargeCodeEntity;
+    public NewCharge getCharge() {
+        return charge;
     }
 
-    public void setChargeCodeEntity(NewCharge chargeCodeEntity) {
-        this.chargeCodeEntity = chargeCodeEntity;
+    public void setCharge(NewCharge charge) {
+        this.charge = charge;
     }
 
-    public String getChargeCode() {
-        return chargeCode;
-    }
-
-    public void setChargeCode(String chargeCode) {
-        this.chargeCode = chargeCode;
-    }
 }

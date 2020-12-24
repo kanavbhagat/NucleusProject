@@ -11,8 +11,8 @@ public interface ChargePolicyDao {
     public int insert(ChargePolicy chargePolicy);
     public List<ChargePolicy> getPolicyList();
     public ChargePolicy getChargePolicy(String chargePolicyCode);
-    void updateEntry(ChargePolicy chargePolicy);
-    void updateStatus(String chargePolicyCode,String status,String approvedBy);
+    boolean updateEntry(ChargePolicy chargePolicy);
+    boolean updateStatus(String chargePolicyCode,String status,String approvedBy);
 
     int deleteChargePolicy(String chargePolicyCode);
 }

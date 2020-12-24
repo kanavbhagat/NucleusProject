@@ -46,19 +46,16 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
 
         return  this.chargePolicyDao.getPolicyList();
     }
-    public void getCharge(String code){
-        System.out.println("In service getCharge with code " + code);
-        this.chargePolicyDao.getChargePolicy(code);
-    }
     public ChargePolicy getChargePolicy(String chargePolicyCode){
         ChargePolicy chargePolicy = this.chargePolicyDao.getChargePolicy(chargePolicyCode);
+
         return chargePolicy;
     }
-    public void updateStatus(String chargePolicyCode,String status,String approvedBy){
-        this.chargePolicyDao.updateStatus(chargePolicyCode,status,approvedBy);
+    public boolean updateStatus(String chargePolicyCode,String status,String approvedBy){
+        return this.chargePolicyDao.updateStatus(chargePolicyCode,status,approvedBy);
     }
-    public void updateEntry(ChargePolicy chargePolicy, String chargePolicyCode){
-        this.chargePolicyDao.updateEntry(chargePolicy);
+    public boolean updateEntry(ChargePolicy chargePolicy, String chargePolicyCode){
+        return this.chargePolicyDao.updateEntry(chargePolicy);
     }
     public void deleteChargePolicy(String chargePolicyCode){
         this.chargePolicyDao.deleteChargePolicy(chargePolicyCode);
@@ -73,9 +70,15 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     }
     public String getChargeCodeName(String chargeCode){
         List<NewCharge> listofNewCharges = this.chargeDao.getChargeList();
+        if(listofNewCharges==null)return  null;
         String chargeCodeName = "";
         for(NewCharge newCharge : listofNewCharges){
-            if(newCharge.getChargeCode().equals(chargeCode))chargeCodeName = newCharge.getChargeCodeName();
+            System.out.println(" Charge Code traversing " + newCharge.getChargeCode());
+            if(newCharge.getChargeCode().equals(chargeCode)){
+                chargeCodeName = newCharge.getChargeCodeName();
+                System.out.println(" Charge Code Name " + chargeCodeName);
+                break;
+            }
         }
         return  chargeCodeName;
     }
