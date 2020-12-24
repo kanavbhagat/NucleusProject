@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "repayment_schedule")
-@Check(constraints = "billFlag IN ('Y' ,'N')")
 public class RepaymentSchedule implements Serializable {
 
     @Id
