@@ -5,6 +5,8 @@ import com.nucleus.payment.service.PaymentServiceImpl;
 import com.nucleus.payment.service.DateEditor;
 import com.nucleus.payment.validator.PaymentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,24 @@ public class PaymentController {
 
     @Autowired
     PaymentServiceImpl paymentService;
+
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value("${status.approved}")
+    private String approved;
+
+    @Value("${status.created}")
+    private String created;
+
+    @Value("${status.deleted}")
+    private String deleted;
+
+    @Value("${status.edit}")
+    private String edited;
 
 //    @Autowired
 //    PaymentValidator paymentValidator;
@@ -50,6 +70,7 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/newPayment")
     public ModelAndView newPayment(){
         ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
@@ -57,6 +78,7 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/add")
     public ModelAndView addPayment(@Valid @ModelAttribute("payment") Payment payment, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -64,20 +86,40 @@ public class PaymentController {
             ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
             return modelAndView;
         }
-        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
-        payment.setPaymentStatus("PENDING");
+        ModelAndView modelAndView = new ModelAndView();
+        payment.setPaymentStatus(pending);
         payment.setMadeBy(getModifiedBy());
+        modelAndView.addObject("loanID", payment.getLoanApplicationNumber());
         boolean insertStatus = paymentService.insertPayment(payment);
+        if(insertStatus){
+            modelAndView.addObject("status", created);
+            modelAndView.setViewName("views/payment/paymentSuccess");
+        }
+        else{
+            modelAndView.addObject("status", created);
+            modelAndView.setViewName("views/payment/paymentFailure");
+        }
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/deletePayment/{loanID}")
     public ModelAndView deletePayment(@PathVariable(value = "loanID") int loanID){
-        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("loanID", loanID);
         boolean deleteStatus = paymentService.deletePayment(loanID);
+        if(deleteStatus){
+            modelAndView.addObject("status", deleted);
+            modelAndView.setViewName("views/payment/paymentSuccess");
+        }
+        else{
+            modelAndView.addObject("status", deleted);
+            modelAndView.setViewName("views/payment/paymentFailure");
+        }
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/showPayment/{loanID}")
     public ModelAndView showPaymentForSuggestion(@PathVariable(value = "loanID") int loanID){
         ModelAndView modelAndView = new ModelAndView("views/payment/approveRejectPayment");
@@ -85,22 +127,40 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
     @GetMapping(value = "/approveRejectPayment/{loanID}")
     public ModelAndView submitApproveRejectPaymentRequest(@PathVariable(value = "loanID") int loanID,
                                                           @RequestParam("suggestion") String suggestion){
         System.out.println("submitApproveRejectPaymentRequest"+loanID+getModifiedBy()+suggestion);
-        paymentService.approveRejectPayment(loanID, suggestion, getModifiedBy());
-        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        ModelAndView modelAndView = new ModelAndView("views/payment/paymentSuccess");
+        modelAndView.addObject("loanID", loanID);
+        if (suggestion.equals("approve")){
+            modelAndView.addObject("status", approved);
+            paymentService.approveRejectPayment(loanID, approved, getModifiedBy());
+        }
+        else{
+            modelAndView.addObject("status", rejected);
+            paymentService.approveRejectPayment(loanID, rejected, getModifiedBy());
+        }
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/editPayment/{loanID}")
     public ModelAndView editPayment(@PathVariable(value = "loanID") int loanID){
         ModelAndView modelAndView = new ModelAndView("views/payment/editPayment");
         modelAndView.addObject("editThisPayment", paymentService.getPaymentByLoanID(loanID));
         return modelAndView;
     }
+    @PreAuthorize("hasRole('ROLE_MAKER')")
+    @GetMapping(value = "viewPayment/{loanID}")
+    public ModelAndView viewPayment(@PathVariable(value = "loanID") int loanID){
+        ModelAndView modelAndView = new ModelAndView("views/payment/viewPayment");
+        modelAndView.addObject("viewThisPayment", paymentService.getPaymentByLoanID(loanID));
+        return modelAndView;
+    }
 
+    @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/editPayment/edit")
     public ModelAndView submitEditedPayment(@Valid @ModelAttribute("editThisPayment")Payment payment, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -111,10 +171,19 @@ public class PaymentController {
         System.out.println(payment.getLoanApplicationNumber());
         System.out.println("Edited Payment");
         System.out.println(payment.getCustomerCode());
-        payment.setPaymentStatus("PENDING");
+        payment.setPaymentStatus(pending);
         payment.setMadeBy(getModifiedBy());
         boolean updateState = paymentService.updatePayment(payment);
-        ModelAndView modelAndView = new ModelAndView("redirect:/payment/");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("loanID", payment.getLoanApplicationNumber());
+        if(updateState){
+            modelAndView.addObject("status", edited);
+            modelAndView.setViewName("views/payment/paymentSuccess");
+        }
+        else{
+            modelAndView.addObject("status", edited);
+            modelAndView.setViewName("views/payment/paymentFailure");
+        }
         return modelAndView;
     }
 
