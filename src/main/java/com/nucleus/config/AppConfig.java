@@ -71,15 +71,8 @@ public class AppConfig {
         // Jigme's Oracle db credentials
 
         ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-
-        //ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-
-
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-
-        /*ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
         ds.setUsername("nsbt");
-        ds.setPassword("qwerty");*/
+        ds.setPassword("qwerty");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("c##asaf");
@@ -106,9 +99,9 @@ public class AppConfig {
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
-         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-         ds.setUsername("megha");
-         ds.setPassword("megha");
+//         ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//         ds.setUsername("megha");
+//         ds.setPassword("megha");
 
           /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 
