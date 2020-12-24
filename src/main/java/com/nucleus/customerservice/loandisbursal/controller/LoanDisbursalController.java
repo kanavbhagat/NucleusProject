@@ -25,15 +25,23 @@ public class LoanDisbursalController {
         return modelAndView;
     }
 
+    /**
+     * controller for LoanDisbursalDetails View
+     * @return ModelAndView of loan Details
+     */
     @GetMapping(path = "/loandisbursalDetails")
     public ModelAndView getLoanDisbursals(@RequestParam("loanApplicationNumber") int loanApplicationId){
         LoanApplications loanApplication= loanDisbursalService.getLoanDetails(loanApplicationId);
         if(loanApplication==null){
-            return new ModelAndView("views/loan disbursal/ErrorPage", "Message", "loanApplicationId NOT found: "+ loanApplicationId);
+            return new ModelAndView("views/loan disbursal/ErrorPage", "Message", "Loan Application Number NOT found: "+ loanApplicationId);
         }
         return new ModelAndView("views/loan disbursal/LoanDisbursalDetails", "loanApp", loanApplication);
     }
 
+    /**
+     * controller for LoanDisbursalDetails View
+     * @return ModelAndView of All loan Details of a customer
+     */
     @GetMapping(path = "/customerloandisbursal")
     public ModelAndView getLoanDisbursalsByCustomerId(@RequestParam("customerCode") String customerId){
         List<LoanApplications> loanApplications=null;
