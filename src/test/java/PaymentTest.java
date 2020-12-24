@@ -42,22 +42,12 @@ public class PaymentTest {
         assertTrue(paymentService.insertPayment(new Payment()));
     }
 
-    @Test
-    public void insertPaymentTest(){
-        assertTrue(paymentService.insertPayment(initPayment()));
-    }
 
     @Test(expected = NullPointerException.class)
     public void approveEmptyRejectPaymentTest(){
         assertFalse(paymentService.approveRejectPayment(0, "approve", "checker_1"));
     }
 
-    @Test
-    public void updatePaymentTest(){
-        Payment payment = initPayment();
-        payment.setRemarks("Changed by Junit");
-        assertTrue(paymentService.updatePayment(payment));
-    }
 
     @Test(expected = ConstraintViolationException.class)
     public void updateEmptyPaymentTest(){
@@ -67,6 +57,18 @@ public class PaymentTest {
     @Test(expected = IllegalArgumentException.class)
     public void deleteEmptyPaymentTest(){
         assertFalse(paymentService.deletePayment(0));
+    }
+
+    @Test
+    public void insertPaymentTest(){
+        assertTrue(paymentService.insertPayment(initPayment()));
+    }
+
+    @Test
+    public void updatePaymentTest(){
+        Payment payment = initPayment();
+        payment.setRemarks("Changed by Junit");
+        assertTrue(paymentService.updatePayment(payment));
     }
 
     @Test
