@@ -6,13 +6,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NoResultException;
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@PropertySource("classpath:status.properties")
 public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
     @Autowired
     private SessionFactory sessionFactory;
@@ -26,6 +28,19 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         }
         return session;
     }
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * Getting list of all eligibility parameters
@@ -193,7 +208,7 @@ public class EligibilityParameterDAOImpl implements EligibilityParameterDAO {
         try (Session session = getSession()){
             session.beginTransaction();
             Query<EligibilityParameter> query = session.createQuery("from EligibilityParameter e where e.status= ?1", EligibilityParameter.class);
-            query.setParameter(1, "Approved");
+            query.setParameter(1, approved);
             eligibilityParameterList = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception exception) {
