@@ -36,7 +36,7 @@
 
     <!-- Placeholders  -->
     	<div class="container-fluid">
-    		<form:form method = "post" action="addEdited" modelAttribute = "charge">
+    		<form:form method = "post" action = "addEdited" modelAttribute = "newCharge">
     			<!-- Section 1 -->
     		    <div class="form-group row pt-2 pl-3">
     			      <div class="col-md-3">

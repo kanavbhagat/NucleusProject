@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ page language="java" import="java.util.*" %>
+<%@ page import = "java.util.ResourceBundle" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en" dir="ltr">
 <head>
@@ -25,6 +27,10 @@
 
 <body>
 <jsp:include page="/navbar.jsp" />
+
+<% ResourceBundle resource = ResourceBundle.getBundle("status");
+  String approve = resource.getString("status.approved");
+  String reject = resource.getString("status.rejected"); %>
 <div class="container-fluid">
     <br>
     <div class="row">
@@ -79,10 +85,21 @@
                   <td>${charge.authorizedBy}</td>
                   <security:authorize access = "hasRole('MAKER')">
                     <td>
-                        <a href="<%= request.getContextPath()%>/charges/edit/${charge.chargeCode}">Edit</a>
-                        |
-                        <a href="<%= request.getContextPath()%>/charges/delete/${charge.chargeCode}">Delete</a>
-                        </td>
+                        <c:set var = "chargeStatus" value ="${charge.status}"/>
+                        <c:set var = "approved" value = "<%=approve%>"/>
+                        <c:set var = "rejected" value = "<%=reject%>" />
+                        <c:choose>
+
+                            <c:when test = "${(chargeStatus ==  approved) || (chargeStatus == rejected)}">
+                                <a href = "<%= request.getContextPath()%>/charges/displayApplication/${charge.chargeCode}">Display</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<%= request.getContextPath()%>/charges/edit/${charge.chargeCode}">Edit</a>
+                                |
+                                <a href="<%= request.getContextPath()%>/charges/delete/${charge.chargeCode}">Delete</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                   </security:authorize>
                   <security:authorize access = "hasRole('CHECKER')">
                     <td>
