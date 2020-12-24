@@ -43,6 +43,7 @@ public class LoanApplicationViewController {
     public ModelAndView deleteLoanApplication(@RequestParam(value="loanApplicationNumber", required=true) String loanApplicationNumber,
                                               Model model){
         loanApplicationService.deleteLoanApplicationId(Integer.parseInt(loanApplicationNumber));
+
         ModelAndView modelAndView =new ModelAndView("views/loanapplication/loanApplicationDeleted");
         modelAndView.addObject("loanApplicationNumber",loanApplicationNumber);
         return modelAndView;
@@ -52,10 +53,48 @@ public class LoanApplicationViewController {
     public ModelAndView editLoanApplication(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationMaker");
-        modelAndView.addObject("loanApplicationNumber",loanApplications.getLoanApplicationNumber());
-
-
         modelAndView.addObject("loanApplication",loanApplications);
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ROLE_MAKER')")
+    @PostMapping(params = {"op=Update"},value = "loanApplication/edit")
+    public ModelAndView update(@ModelAttribute("loanApplication") LoanApplications loanApplications,@RequestParam("op") String update,
+                               Model model){
+        LoanApplications tempLoanApplications = loanApplicationService.getLoanApplicationId(loanApplications.getLoanApplicationNumber());
+        loanApplications.setStatus(tempLoanApplications.getStatus());
+        loanApplications.setAuthorizedDate(tempLoanApplications.getAuthorizedDate());
+        loanApplications.setCustomerCode(tempLoanApplications.getCustomerCode());
+        loanApplications.setCreateDate(tempLoanApplications.getCreateDate());
+        loanApplications.setModifiedBy(loginDetails.getUserName());
+        loanApplications.setModifiedDate(LocalDate.now());
+        loanApplications.setCreatedBy(tempLoanApplications.getCreatedBy());
+        loanApplications.setAuthorizedBy(tempLoanApplications.getAuthorizedBy());
+        loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
+
+        loanApplicationService.updateLoanApplication(loanApplications);
+        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+
+        return modelAndView;
+    }
+    @PreAuthorize("hasRole('ROLE_MAKER')")
+    @PostMapping(params = {"op=Update and Request"},value = "loanApplication/edit")
+    public ModelAndView updateAndRequest(@ModelAttribute("loanApplication") LoanApplications loanApplications,@RequestParam("op") String upAndreq,
+                               Model model){
+        LoanApplications tempLoanApplications = loanApplicationService.getLoanApplicationId(loanApplications.getLoanApplicationNumber());
+        loanApplications.setStatus(tempLoanApplications.getStatus());
+        loanApplications.setAuthorizedDate(tempLoanApplications.getAuthorizedDate());
+        loanApplications.setCustomerCode(tempLoanApplications.getCustomerCode());
+        loanApplications.setCreateDate(tempLoanApplications.getCreateDate());
+        loanApplications.setModifiedBy(loginDetails.getUserName());
+        loanApplications.setModifiedDate(LocalDate.now());
+        loanApplications.setCreatedBy(tempLoanApplications.getCreatedBy());
+        loanApplications.setAuthorizedBy(tempLoanApplications.getAuthorizedBy());
+        loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
+        loanApplications.setStatus("PENDING");
+        loanApplicationService.updateLoanApplication(loanApplications);
+        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+
         return modelAndView;
     }
 
@@ -63,6 +102,7 @@ public class LoanApplicationViewController {
     @GetMapping(value = "loanApplication/check")
     public ModelAndView getCheckUrl(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
+        System.out.println("----------------------+"+loanApplications.getCustomerCode().getCustomerCode()+"----------------------");
 
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplicationChecker");
         modelAndView.addObject("loanApplicationNumber",loanApplicationNumber);
@@ -73,12 +113,14 @@ public class LoanApplicationViewController {
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(params = {"op=approve"},value = "loanApplication/check")
     public ModelAndView approve(@ModelAttribute("loanApplication") LoanApplications loanApplications,
-                                @RequestParam(value = "loanApplicationNumber", required = true) String loanApplicationNumber,@RequestParam("op") String approve,
+                               @RequestParam("op") String approve,
                                 Model model){
 
+        loanApplications = loanApplicationService.getLoanApplicationId(loanApplications.getLoanApplicationNumber());
         loanApplications.setStatus("APPROVED");
+        System.out.println("----------------------+"+loanApplications.getCustomerCode().getCustomerCode()+"----------------------");
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
-        loanApplications.setAgreementDate(LocalDate.now());
+        loanApplications.setAuthorizedDate(LocalDate.now());
         loanApplicationService.updateLoanApplication(loanApplications);
         ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
 
@@ -88,8 +130,8 @@ public class LoanApplicationViewController {
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(params = {"op=reject"},value = "loanApplication/check")
     public ModelAndView reject(@ModelAttribute("loanApplication") LoanApplications loanApplications,@RequestParam("op") String reject,
-                                @RequestParam(value = "loanApplicationNumber", required = true) String loanApplicationNumber,
                                 Model model){
+        loanApplications = loanApplicationService.getLoanApplicationId(loanApplications.getLoanApplicationNumber());
         loanApplications.setStatus("REJECTED");
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
         loanApplications.setAgreementDate(LocalDate.now());
@@ -99,5 +141,6 @@ public class LoanApplicationViewController {
         return modelAndView;
 
     }
+
 
 }
