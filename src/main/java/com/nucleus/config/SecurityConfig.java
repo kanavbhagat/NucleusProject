@@ -48,6 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureUrl("/login?error=true")
                     .permitAll()
                 .and()
+//                    .rememberMe()
+//                    .key("rem-me-key")
+//                    .rememberMeParameter("remember") // it is name of checkbox at login page
+//                    .rememberMeCookieName("rememberlogin") // it is name of the cookie
+//                    .tokenValiditySeconds(3600) // remember for number of seconds
+//                .and()
                 .exceptionHandling()
                     .accessDeniedPage("/access_denied");
     }
