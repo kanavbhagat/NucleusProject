@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file="/navbar.jsp" %>
 
 <html lang="en" dir="ltr">
 <head>
@@ -18,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<jsp:include page="/navbar.jsp" />
 <div class="container-fluid">
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">

@@ -9,7 +9,7 @@
 
 <head>
 
-    <title>Loan Information</title>
+    <title>Loan Information Cheker</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -37,20 +37,17 @@
                   <div class="row ">
                       <div class="form-group col-sm-3">
                            <label>Loan Application Number<a class="text-danger">*</a></label>
-                           <form:input type="number" class="form-control" path="loanApplicationNumber" />
+                           <form:input type="number" class="form-control" path="loanApplicationNumber" readonly = "true"/>
                       </div>
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
-                                 <form:select path="productType" cssClass="form-control">
-                                       <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
-                                       <form:options items="${productType}" />
-                                 </form:select>
+                                <form:input type="text" class="form-control" path="ProductType" readonly = "true"/>
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="loanAmountRequested" />
+                            <form:input type="number" class="form-control" path="loanAmountRequested" readonly = "true"/>
                         </div>
 
                     </div>
@@ -59,12 +56,12 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Tenure<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="tenure" />
+                            <form:input type="number" class="form-control" path="tenure" readonly = "true" />
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Rate<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="rate" />
+                            <form:input type="number" class="form-control" path="rate" readonly = "true"/>
                         </div>
                     </div>
 
@@ -72,12 +69,12 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="agreementDate" />
+                            <form:input type="date" class="form-control" path="agreementDate" readonly = "true" />
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="installmentDueDate" />
+                            <form:input type="date" class="form-control" path="installmentDueDate" readonly = "true"/>
 
                         </div>
 
@@ -87,7 +84,8 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" value="Move to Next Stage">
+                <input class="btn-primary" type="submit" value="Approve">
+                <input class="btn-primary" type="submit" value="Rejected">
             </div>
         </form:form>
     </article>
