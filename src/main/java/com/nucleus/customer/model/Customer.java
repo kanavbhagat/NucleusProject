@@ -1,7 +1,12 @@
 package com.nucleus.customer.model;
 
 import com.nucleus.loanapplications.model.LoanApplications;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -26,30 +31,39 @@ public class Customer {
     private String customerCode;
 
     @Column(name="first_name",length = 30,nullable = false)
+    @Size(min=3, max = 30, message = "First name must have 3 to 30 characters!")
+    @Pattern(regexp = "^([A-Za-z]+)$", message = "Name cannot contain spaces or special characters!")
     private String firstName;
 
     @Column(name="last_name",length = 30,nullable = false)
+    @Size(min=3, max = 30, message = "Last name must have 3 to 30 characters!")
+    @Pattern(regexp = "^([A-Za-z]+)$", message = "Name cannot contain spaces or special characters!")
     private String lastName;
 
     @Column(name="date_of_birth" , nullable = false)
+    @NotNull(message = "Please enter a Date")
     private LocalDate dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
+    @NotNull(message = "Please select a valid Nationality")
     private String nationality;
 
     @Column(name="occupation_type",length = 30, nullable = false)
+    @NotNull(message = "Please select a valid Occupation type")
     private String occupationType;
 
     @Column(name="total_work_experience",length = 2)
+    @NotEmpty(message = "Total Work experience cannot be empty")
     private Integer totalWorkExperience;
 
     @Column(name="organization_name",length = 30)
+    @NotEmpty(message = "Organization name cannot be empty")
     private String organizationName;
 
-    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
-    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
     private List<Address> addresses;
 
     @Transient

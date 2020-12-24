@@ -77,6 +77,8 @@ window.onload = function() {
                         <div class="form-group col-sm-3">
                             <label for="fName">First Name<a class="text-danger">*</a></label>
                             <spring:input type="text" class="form-control" id="fName"  path="firstName"/>
+                            <spring:errors path = "firstName" cssClass = "error" style = "color:red"></spring:errors>
+
                         </div>
                     </div>
 
@@ -84,6 +86,7 @@ window.onload = function() {
                         <div class="form-group col-sm-3">
                             <label for="lName">Last Name<a class="text-danger">*</a></label>
                             <spring:input type="text" class="form-control" id="lName" path="lastName" />
+                            <spring:errors path = "lastName" cssClass = "error" style = "color:red"></spring:errors>
                         </div>
 
                        <div class="form-group col-sm-3 offset-4">
@@ -100,11 +103,13 @@ window.onload = function() {
                                 <spring:option value="china">China</spring:option>
 
                             </spring:select>
+                            <spring:errors path = "nationality" cssClass = "error" style = "color:red"></spring:errors>
                         </div>
 
                        <div class="form-group col-sm-3 offset-4">
                             <label for="dob">Date of Birth<a class="text-danger">*</a></label>
                             <spring:input class="form-control" type="date" name="dob" placeholder="dd-mm-yyyy" path="dateOfBirth" />
+                            <spring:errors path = "dateOfBirth" cssClass = "error" style = "color:red"></spring:errors>
                         </div>
                     </div>
                 </div>
@@ -123,11 +128,13 @@ window.onload = function() {
                             <spring:option value="service">Serivce</spring:option>
 
                         </spring:select>
+                        <spring:errors path = "occupationType" cssClass = "error" style = "color:red"></spring:errors>
                     </div>
 
                    <div class="form-group col-sm-3 offset-4">
                         <label for="experience">Total Work Experience</label>
                         <spring:input type="number" class="form-control" id="experience"  path="totalWorkExperience"/>
+                        <spring:errors path = "totalWorkExperience" cssClass = "error" style = "color:red"></spring:errors>
                     </div>
                 </div>
 
@@ -135,6 +142,7 @@ window.onload = function() {
                      <div class="form-group col-sm-3">
                         <label for="occupationName">Organisation Name</label>
                         <spring:input type="text" class="form-control" id="occupationName" path="organizationName"/>
+                        <spring:errors path = "organizationName" cssClass = "error" style = "color:red"></spring:errors>
                     </div>
                 </div>
 
@@ -146,7 +154,7 @@ window.onload = function() {
                                     <div class="form-group col-sm-3">
                                         <label for="houseNo">House No</label>
                                         <spring:input type="number" class="form-control" id="houseNo" path="add.houseNo"/>
-
+                                        <spring:errors path = "add.houseNo" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
 
                                     <div class="form-group col-sm-3 offset-4">
@@ -154,7 +162,7 @@ window.onload = function() {
                                         <spring:select class="form-control" id="country1" path="add.country">
                                              <spring:option value="india">India</spring:option>
                                              <spring:option value="china">China</spring:option>
-
+                                             <spring:errors path = "add.country" cssClass = "error" style = "color:red"></spring:errors>
 
                                         </spring:select>
                                     </div>
@@ -168,15 +176,15 @@ window.onload = function() {
                                            <spring:option value="jammu">jammu</spring:option>
 
                                         </spring:select>
+                                        <spring:errors path = "add.state" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
                                      <div class="form-group col-sm-3 offset-4">
                                         <label for="city">City</label>
                                         <spring:select class="form-control" id="city1" path="add.city">
                                            <spring:option value="noida">noida</spring:option>
                                            <spring:option value="meerut">bareli</spring:option>
-
-
                                         </spring:select>
+                                        <spring:errors path = "add.city" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
                                 </div>
 
@@ -184,6 +192,7 @@ window.onload = function() {
                                    <div class="form-group col-sm-3">
                                         <label for="pinCode">Pin Code</label>
                                         <spring:input type="number" class="form-control" id="pinCode" path="add.pinCode"/>
+                                        <spring:errors path = "add.pinCode" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
                                 </div>
 

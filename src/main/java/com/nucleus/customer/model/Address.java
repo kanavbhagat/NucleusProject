@@ -1,6 +1,8 @@
 package com.nucleus.customer.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -13,18 +15,24 @@ public class Address {
     private Integer addressId;
 
     @Column(name = "house_no",nullable = false, length = 20)
+    @NotNull(message = "House number cannot be empty")
+    @Pattern(regexp = "^[1-9][0-9]*$", message = "Please enter a valid House number")
     private String houseNo;
 
     @Column(name = "city",nullable = false, length = 20)
+    @NotNull(message = "Please select a valid City")
     private String city;
 
     @Column(name = "state",nullable = false,  length = 20)
+    @NotNull(message = "Please select a valid State")
     private String state;
 
     @Column(name = "country",nullable = false, length = 20)
+    @NotNull(message = "Please select a valid Country")
     private String country;
 
     @Column(name = "pinCode", nullable = false)
+    @Pattern(regexp = "^[1-9][0-9]{5}$", message = "Please enter a valid 6 digit Pin code")
     private Integer pinCode;
 
 

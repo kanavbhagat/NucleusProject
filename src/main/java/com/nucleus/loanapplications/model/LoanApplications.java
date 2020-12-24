@@ -2,8 +2,10 @@ package com.nucleus.loanapplications.model;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.product.model.Product;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -34,18 +36,24 @@ public class LoanApplications {
     private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
+    @NotEmpty(message = "Loan amount requested cannot be empty")
     private Integer loanAmountRequested;
 
     @Column(name = "tenure",nullable = false)
+    @NotEmpty(message = "Tenure cannot be empty")
+    //Enter pattern
     private Integer tenure;
 
     @Column(name = "rate",nullable = false)
-    private double rate;
+    @NotEmpty(message = "Rate cannot be empty")
+    private Double rate;
 
     @Column(name = "agreement_date",nullable = false)
+    @NotNull(message = "Agreement Date cannot be empty")
     private LocalDate agreementDate;
 
     @Column(name = "installment_due_date",nullable = false)
+    @NotNull(message = "Installment Due Date cannot be empty")
     private LocalDate installmentDueDate;
 
     @Column(name = "create_date")
