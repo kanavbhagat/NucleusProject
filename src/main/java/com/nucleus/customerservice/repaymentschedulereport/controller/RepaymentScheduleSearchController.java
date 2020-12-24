@@ -4,11 +4,10 @@ import com.nucleus.customerservice.repaymentschedulereport.service.RepaymentSche
 import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -27,19 +26,23 @@ public class RepaymentScheduleSearchController {
     }
 
     @GetMapping("/getRepaymentScheduleReportSearchPage")
-    public String showRepaymentScheduleForm(ModelMap map)
+    public String showRepaymentScheduleForm()
     {
-        RepaymentSchedule repaymentSchedule =new RepaymentSchedule();
-        map.put("repaymentSchedule", repaymentSchedule);
         return "views/customerservice/RepaymentScheduleReportSearch";
     }
 
-    @PostMapping("/getRepaymentScheduleReportSearchPage")
-    public ModelAndView showRepaymentScheduleSubmit(@Valid @ModelAttribute RepaymentSchedule repaymentSchedule,
-                                                    BindingResult result)
+    @RequestMapping(value = "/getRepaymentScheduleReport", method = RequestMethod.GET)
+    public ModelAndView showRepaymentScheduleSubmit(@RequestParam("appNo") String appNo, Model model)
     {
-        int loanApplicationNumber= repaymentSchedule.getLoanApplicationNumber().getLoanApplicationNumber();
+        int loanApplicationNumber = Integer.parseInt(appNo);
         List<RepaymentSchedule> rslist=repaymentScheduleService.getRepaymentScheduleReport(loanApplicationNumber);
+        if(rslist==null){
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/customerservice/InvalidLoanAppPage");
+            mv.addObject("Message","loanApplicationId NOT found");
+            mv.addObject("loanApplicationNumber",loanApplicationNumber);
+            return mv;
+        }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/customerservice/RepaymentScheduleReport");
         mv.addObject("rslist",rslist);

@@ -73,7 +73,7 @@ public class AppConfig {
         ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
         ds.setUsername("nsbt");
         ds.setPassword("qwerty");
-
+      
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("c##asaf");
 //        ds.setPassword("asaf");
@@ -84,8 +84,8 @@ public class AppConfig {
          ds.setPassword("pwd");*/
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-//        ds.setUsername("sys as sysdba");
-//       ds.setPassword("gyanesh10");
+ //       ds.setUsername("sys as sysdba");
+  //      ds.setPassword("gyanesh10");
 
         /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
          ds.setUsername("c##username");

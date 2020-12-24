@@ -1,6 +1,7 @@
 package com.nucleus.repaymentschedule.model;
 
 import com.nucleus.loanapplications.model.LoanApplications;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.io.Serializable;

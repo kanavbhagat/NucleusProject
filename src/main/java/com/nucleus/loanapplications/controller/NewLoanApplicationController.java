@@ -10,9 +10,11 @@ import com.nucleus.login.logindetails.LoginDetailsImpl;
 import com.nucleus.payment.service.DateEditor;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
+
 import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,11 +31,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class NewLoanApplicationController {
 
     @Autowired
-    RepaymentScheduleService rs;
+    private RepaymentScheduleService repaymentScheduleService;
+
 
     @Autowired
     NewLoanApplicationService newLoanApplicationService;
@@ -91,7 +94,8 @@ public class NewLoanApplicationController {
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
 
-        rs.addRepaymentSchedule(loanApplications);
+        repaymentScheduleService.addRepaymentSchedule(loanApplications);
+
 
 
 

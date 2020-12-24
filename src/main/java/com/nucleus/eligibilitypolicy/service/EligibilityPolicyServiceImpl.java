@@ -3,6 +3,8 @@ package com.nucleus.eligibilitypolicy.service;
 import com.nucleus.eligibilitypolicy.database.EligibilityPolicyDAO;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,10 +16,24 @@ import java.util.List;
  *
  */
 @Service
+@PropertySource("classpath:status.properties")
 public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
 
     @Autowired
     EligibilityPolicyDAO eligibilityPolicyDAO;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * This method is used to get a list of all Eligibility Policies.
@@ -71,11 +87,11 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
         if(eligibilityPolicy!=null) {
             String newStatus;
             if (action.equalsIgnoreCase("approve")) {
-                newStatus = "Approved";
+                newStatus = approved;
             } else if (action.equalsIgnoreCase("reject")) {
-                newStatus = "Rejected";
+                newStatus = rejected;
             } else {
-                newStatus = "Pending";
+                newStatus = pending;
             }
             eligibilityPolicy.setStatus(newStatus);
             eligibilityPolicy.setAuthorizedBy(authorizedBy);

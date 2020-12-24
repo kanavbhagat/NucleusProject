@@ -1,10 +1,11 @@
 package com.nucleus.loanclosurebod.service;
 
 import com.nucleus.loanapplications.model.LoanApplications;
-import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.loanclosurebod.database.LoanClosureDao;
-import com.nucleus.loanclosurebod.model.RepaymentSchedule;
+import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -13,13 +14,19 @@ import java.util.List;
  * Interface.
  */
 @Service
+@PropertySource("classpath:status.properties")
 public class LoanClosureServiceImpl implements LoanClosureService {
 
     @Autowired
     LoanClosureDao loanClosureDao;
 
-    @Autowired
-    LoanApplicationService loanApplicationService;
+    //Getting status field values from status.properties file:
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.closed}"))
+    private String closed;
+
 
     /**
      * Method for obtaining all the Loan Applications and calling
@@ -27,7 +34,7 @@ public class LoanClosureServiceImpl implements LoanClosureService {
      */
     @Override
     public int loanClosureBod() {
-        List<LoanApplications> loanApplications = loanApplicationService.getAllLoanApplicationsList();
+        List<LoanApplications> loanApplications = loanClosureDao.getLoanApplications();
         boolean loanClosureStatus;
         int countofClosedLoans = 0;
         for (LoanApplications loanApplication : loanApplications) {
@@ -46,7 +53,7 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         boolean closureStatus = false;
         String currentStatus = loanApplication.getStatus();
         //Loan cannot be closed if it is pending/inactive or already closed
-        if (!currentStatus.equalsIgnoreCase("Active")) {
+        if (!currentStatus.equalsIgnoreCase(approved)) {
             flag = false;
         } else {
             /*Iterating through the repayment schedule and checking if all the Bill Flags are Y
@@ -62,7 +69,7 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         }
         //Update the loan status as CLOSED if all the Bill Flags are Y.
         if (flag) {
-            closureStatus = loanClosureDao.updateStatus(loanApplication, "Closed");
+            closureStatus = loanClosureDao.updateStatus(loanApplication, closed);
         }
         return closureStatus;
     }

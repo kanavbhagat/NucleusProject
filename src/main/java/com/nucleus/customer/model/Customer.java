@@ -46,10 +46,10 @@ public class Customer {
     @Column(name="organization_name",length = 30)
     private String organizationName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<Address> addresses;
 
     @Transient
