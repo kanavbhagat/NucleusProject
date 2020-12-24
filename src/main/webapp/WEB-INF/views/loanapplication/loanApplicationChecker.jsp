@@ -84,8 +84,8 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" value="Approve">
-                <input class="btn-primary" type="submit" value="Rejected">
+                <input class="btn-primary" type="submit" name="op" value="reject">
+                <input class="btn-primary" type="submit" name="op" value="approve">
             </div>
         </form:form>
     </article>

@@ -23,4 +23,7 @@ public class LoanApplicationService {
     public boolean deleteLoanApplicationId(Integer id){
     	return loanApplicationDAO.deleteLoanApplication(id);
     }
+    public boolean updateLoanApplication(LoanApplications loanApplications){
+        return loanApplicationDAO.updateLoanApplication(loanApplications);
+    }
 }
