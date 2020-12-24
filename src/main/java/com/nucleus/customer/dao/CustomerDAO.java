@@ -3,6 +3,7 @@ package com.nucleus.customer.dao;
 import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
+import jdk.javadoc.internal.doclets.toolkit.util.ClassUseMapper;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -115,16 +117,37 @@ public class CustomerDAO implements CustomerDaoInterface{
 
     @Override
     public Customer getCustomerById(String id) {
+       Customer customer = null;
 
-        Session session = sessionFactory.openSession();
-        Customer customer = session.get(Customer.class, id);
-        session.close();
+        try
+        {
+
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            customer = session.get(Customer.class , id);
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+
         return customer;
-
     }
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){
-        Session session = sessionFactory.openSession();
-        Customer customer = session.get(Customer.class, customerCode);
-        return customer.getLoanApplications();
+        Customer customer = null;
+        List<LoanApplications> loanApplications = new ArrayList<>();
+        try
+        {
+
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            customer = session.get(Customer.class , customerCode);
+            loanApplications = customer.getLoanApplications();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+      return loanApplications;
     }
 }
