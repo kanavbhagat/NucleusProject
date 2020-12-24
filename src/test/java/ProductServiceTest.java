@@ -19,18 +19,24 @@ public class ProductServiceTest {
     @Autowired
     ProductService productService;
 
-//    @Test
-//    public void getProductListTest(){
-//        assertFalse(productService.getProductList().isEmpty());
-//    }
 
-//    @Test
-//    public void createNewProductTest(){
-//        assertFalse(productService.createNewProduct(new Product()));
-//    }
-//
-//    @Test
-//    public void getProductByIdTest(){
-//        assertNull(productService.getProductById("random"));
-//    }
+    @Test
+    public void createNewProductTest(){
+        assertFalse(productService.createNewProduct(new Product()));
+    }
+
+    @Test
+    public void getProductByIdTest(){
+        assertNull(productService.getProductById("random"));
+    }
+
+    @Test
+    public void updateProductTest(){
+        assertNull(productService.updateProduct(new Product()));
+    }
+
+    @Test
+    public void deleteProductTest(){
+        assertFalse(productService.deleteProduct("random"));
+    }
 }
