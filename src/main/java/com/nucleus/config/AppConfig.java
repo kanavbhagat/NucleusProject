@@ -113,8 +113,6 @@ public class AppConfig {
 //         ds.setPassword("megha");
 
           /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
-=======
->>>>>>> b62af43ac6b34c9b9dbf921806e793f75f73301b
 
         /*   ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
              ds.setUsername("system");
