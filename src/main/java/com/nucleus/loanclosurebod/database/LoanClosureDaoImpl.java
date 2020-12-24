@@ -1,7 +1,7 @@
 package com.nucleus.loanclosurebod.database;
 
 import com.nucleus.loanapplications.model.LoanApplications;
-import com.nucleus.loanclosurebod.model.RepaymentSchedule;
+import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +34,25 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             session = sessionFactory.openSession();
         }
         return session;
+    }
+
+    /**
+     * This method retrieves the list of all Loan Applications.
+     * @return list of all applied loans.
+     */
+    @Override
+    public List<LoanApplications> getLoanApplications(){
+        List<LoanApplications> loanApplications = new ArrayList<>();
+        try(Session session = getSession()){
+            session.beginTransaction();
+            Query<LoanApplications> query = session.createQuery("from LoanApplications");
+            loanApplications = query.getResultList();
+            session.getTransaction().commit();
+        }
+        catch (Exception exception){
+            exception.printStackTrace();
+        }
+        return loanApplications;
     }
 
     /**

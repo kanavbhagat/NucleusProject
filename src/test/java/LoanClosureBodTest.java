@@ -22,6 +22,6 @@ public class LoanClosureBodTest {
 
     @Test
     public void loanClosureBodTest(){
-        assertTrue(Integer.class.isInstance(loanClosureService.loanClosureBod()));
+        assertTrue(loanClosureService.loanClosureBod()>=0);
     }
 }
