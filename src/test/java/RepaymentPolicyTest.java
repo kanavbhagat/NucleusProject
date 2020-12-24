@@ -1,3 +1,4 @@
+
 import com.nucleus.config.TestConfig;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyServiceImpl;
@@ -52,33 +53,6 @@ public class RepaymentPolicyTest {
         assertFalse(repaymentPolicyService.getRepaymentPolicyList().isEmpty());
 
         repaymentPolicyService.deleteRepaymentPolicy("103");
-
-
-        /*
-        int sizeBeforeNewAdditions=repaymentPolicyService.getRepaymentPolicyList().size();
-
-        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
-        repaymentPolicy.setPolicyCode("103");
-        repaymentPolicy.setPolicyName("Name3");
-        repaymentPolicy.setDate(LocalDate.now());
-        repaymentPolicy.setRepaymentFrequency("Monthly");
-
-        RepaymentPolicy repaymentPolicy2=new RepaymentPolicy();
-        repaymentPolicy.setPolicyCode("104");
-        repaymentPolicy.setPolicyName("Name4");
-        repaymentPolicy.setDate(LocalDate.now());
-        repaymentPolicy.setRepaymentFrequency("Monthly");
-
-        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy2);
-
-        int sizeAfterNewAdditions=repaymentPolicyService.getRepaymentPolicyList().size();
-
-
-        assertEquals(2, sizeAfterNewAdditions - sizeBeforeNewAdditions);
-
-        repaymentPolicyService.deleteRepaymentPolicy("103");
-        repaymentPolicyService.deleteRepaymentPolicy("104");*/
     }
 
     @Test
@@ -114,32 +88,6 @@ public class RepaymentPolicyTest {
 //        Now already deleted
         assertNull(repaymentPolicyService.getRepaymentPolicyById("101"));
     }
-
-
-
-    /*@Test
-    public void updateRepaymentPolicyTest(){
-        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
-        repaymentPolicy.setPolicyCode("101");
-        repaymentPolicy.setPolicyName("Name1");
-        repaymentPolicy.setDate(LocalDate.now());
-        repaymentPolicy.setRepaymentFrequency("Monthly");
-
-        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
-        RepaymentPolicy repaymentPolicy2=new RepaymentPolicy();
-        repaymentPolicy2.setPolicyCode("101");
-        repaymentPolicy2.setPolicyName("Name2");
-        repaymentPolicy2.setDate(LocalDate.now());
-        repaymentPolicy2.setRepaymentFrequency("Yearly");
-
-        repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy2);
-
-        assertEquals(repaymentPolicy2.toString(), repaymentPolicy.toString());
-
-        repaymentPolicyService.deleteRepaymentPolicy("101");
-
-    }*/
 
 
     @Test
