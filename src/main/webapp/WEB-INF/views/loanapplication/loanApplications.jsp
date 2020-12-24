@@ -60,7 +60,7 @@
                             <th>Customer ID</th>
                             <th>Customer Name</th>
                             <th>Product Type</th>
-                            <th>Phone No</th>
+                            <th>Create Date</th>
                             <th>Created By</th>
                             <th>Disbursal Status</th>
                             <th>Reviewed By</th>
@@ -70,22 +70,25 @@
                     <tbody>
                         <c:if test="${!empty loanApplications}">
                                    <c:forEach var="loan" items="${loanApplications}">
+                                        <c:url var="checkUrl" value="/loanApplication/check?loanApplicationNumber=${loan.loanApplicationNumber}" />
                                         <c:url var="editUrl" value="/loanApplication/edit?loanApplicationNumber=${loan.loanApplicationNumber}" />
                                         <c:url var="deleteUrl" value="/loanApplication/delete?loanApplicationNumber=${loan.loanApplicationNumber}" />
-                                        <c:url var="checkUrl" value="/loanApplication/check?loanApplicationNumber=${loan.loanApplicationNumber}" />
-                    
+
                                         <tr>
                                           <sec:authorize access="hasRole('MAKER')">
                                             <td>${loan.loanApplicationNumber}</td>
                                          </sec:authorize>
                                          <sec:authorize access="hasRole('CHECKER')">
-                                            <td><a href = "{checkUrl}">${loan.loanApplicationNumber}</a></td>
+
+                                            <td><a href="${checkUrl}">${loan.loanApplicationNumber}</a></td>
+
+                                           
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
                                          <td></td>
-                                         <td></td>
-                                         <td></td>
+                                         <td>${loan.createDate}</td>
+                                         <td>${loan.createdBy}</td>
                                          <td>${loan.status}</td>
                                          <td></td>
                                         <sec:authorize access="hasRole('MAKER')">
@@ -102,9 +105,8 @@
                                              </c:if>
                                              <c:if test = "${loan.status != 'Approved'}">
                                                  <td>
-                                                    <a href="{editUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a> |
-                                                    <a href="{deleteUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Delete
-                                                    </a>
+                                                    <a href="${editUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a> |
+                                                    <a href="${deleteUrl}" style="pointer-events:none; cursor:default;color:lightgrey;">Delete </a>
                                                  </td>
                                              </c:if>
                                          </sec:authorize>
