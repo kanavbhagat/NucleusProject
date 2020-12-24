@@ -2,12 +2,12 @@ package com.nucleus.loanapplications.controller;
 
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanapplications.service.LoanApplicationService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.nucleus.login.logindetails.LoginDetailsImpl;
+import com.nucleus.payment.service.DateEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -20,6 +20,12 @@ import java.time.LocalDate;
 @RestController
 public class LoanApplicationViewController {
 
+    @Autowired
+    LoginDetailsImpl loginDetails;
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.registerCustomEditor(LocalDate.class , new DateEditor());
+    }
     @Autowired
     LoanApplicationService loanApplicationService;
 
@@ -59,9 +65,39 @@ public class LoanApplicationViewController {
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
 
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplicationChecker");
-
+        modelAndView.addObject("loanApplicationNumber",loanApplicationNumber);
         modelAndView.addObject("loanApplication",loanApplications);
         return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
+    @PostMapping(params = {"op=approve"},value = "loanApplication/check")
+    public ModelAndView approve(@ModelAttribute("loanApplication") LoanApplications loanApplications,
+                                @RequestParam(value = "loanApplicationNumber", required = true) String loanApplicationNumber,@RequestParam("op") String approve,
+                                Model model){
+
+        loanApplications.setStatus("APPROVED");
+        loanApplications.setAuthorizedBy(loginDetails.getUserName());
+        loanApplications.setAgreementDate(LocalDate.now());
+        loanApplicationService.updateLoanApplication(loanApplications);
+        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+
+        return modelAndView;
+
+    }
+    @PreAuthorize("hasRole('ROLE_CHECKER')")
+    @PostMapping(params = {"op=reject"},value = "loanApplication/check")
+    public ModelAndView reject(@ModelAttribute("loanApplication") LoanApplications loanApplications,@RequestParam("op") String reject,
+                                @RequestParam(value = "loanApplicationNumber", required = true) String loanApplicationNumber,
+                                Model model){
+        loanApplications.setStatus("REJECTED");
+        loanApplications.setAuthorizedBy(loginDetails.getUserName());
+        loanApplications.setAgreementDate(LocalDate.now());
+        loanApplicationService.updateLoanApplication(loanApplications);
+        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+
+        return modelAndView;
+
     }
 
 }
