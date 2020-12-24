@@ -26,7 +26,7 @@
 
 
     <article>
-        <form:form class="font-weight-bold mb-5" modelAttribute="loanApplications" method="post">
+        <form:form class="font-weight-bold mb-5" modelAttribute="loanApplication" method="post">
 
             <hr>
 
@@ -37,7 +37,7 @@
                   <div class="row ">
                       <div class="form-group col-sm-3">
                            <label>Loan Application Number<a class="text-danger">*</a></label>
-                           <form:input type="number" class="form-control" path="loanApplicationNumber" />
+                           <form:input type="number" class="form-control" path="loanApplicationNumber" readonly="true" />
                       </div>
                        </div>
                     <div class="row ">
@@ -72,12 +72,12 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="agreementDate" />
+                            <form:input type="date" class="form-control" value="${loanApplication.agreementDate}" path="agreementDate" />
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="installmentDueDate" />
+                            <form:input type="date" class="form-control" value="${loanApplication.installmentDueDate}" path="installmentDueDate" />
 
                         </div>
 
@@ -87,7 +87,7 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" value="Move to Next Stage">
+                <input class="btn-primary" type="submit" value="Update">
             </div>
         </form:form>
     </article>
