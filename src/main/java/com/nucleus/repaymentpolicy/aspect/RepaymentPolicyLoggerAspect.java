@@ -106,23 +106,7 @@ public class RepaymentPolicyLoggerAspect {
     public void afterUpdatingPolicyStatus(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
         String status = (String) joinPoint.getArgs()[1];
-        switch (status) {
-            case "Saved":
-                LOGGER.info("Successfully Updated Repayment Policy Status to " + status);
-                break;
-            case "Pending":
-                LOGGER.info("Successfully Updated Repayment Policy Status to " + status);
-                break;
-            case "Approved":
-                LOGGER.info("Successfully Updated Repayment Policy Status to " + status);
-                break;
-            case "Rejected":
-                LOGGER.info("Successfully Updated Repayment Policy Status to " + status);
-                break;
-            default:
-                LOGGER.info("Failed to update status of Repayment policy!");
-                break;
-        }
+        LOGGER.info("Successfully Updated Repayment Policy Status to " + status);
         LOGGER.info("********************************************************************");
     }
 
