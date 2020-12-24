@@ -18,6 +18,7 @@ public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDA
     @Autowired
     private SessionFactory sessionFactory;
 
+
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public List<RepaymentSchedule> getRepaymentScheduleReport(int loanApplicationNumber) {
