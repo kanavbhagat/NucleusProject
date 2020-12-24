@@ -58,16 +58,22 @@ public class NewReceiptController {
         // extra validation so that hibernate validations continue to work.
         new ReceiptValidator().validate(receipt, result);
 
-        if(result.hasErrors()){
+        if(receipt.getLoanApplicationValue()!=null && !receipt.getLoanApplicationValue().isEmpty()){
+            Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
+            LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
+            receipt.setLoanApplicationNumber(loanApplications);
+        }
+
+        if(result.hasErrors() || receipt.getLoanApplicationNumber()==null){
             modelAndView.setViewName("views/receipt/newReceiptCreation");
+            if(receipt.getLoanApplicationNumber()==null){
+                modelAndView.addObject("loanAppNull", "This loan application number does not exist!");
+            }
+
             return modelAndView;
         }
 
         receipt.setReceiptStatus("Pending");
-
-        Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
-        LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
-        receipt.setLoanApplicationNumber(loanApplications);
 
         Boolean success = receiptService.registerReceipt(receipt);
 

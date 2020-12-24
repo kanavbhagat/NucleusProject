@@ -90,7 +90,7 @@ public class CustomerLoanSearchController {
                 customers.add(customer);
             }
             else{
-                mv.addObject("messageBody", "No such Customer Number "+customerId+" exists. Please search again for another Customer Number.");
+                mv.addObject("messageBody", "No such Customer ID "+customerId+" exists. Please search again for another Customer ID.");
             }
             loanApplications = loanApplicationService.getAllLoanApplicationsList();
             loanApplications.removeIf(la -> !customerId.equals(la.getCustomerCode().getCustomerCode()));
@@ -107,11 +107,11 @@ public class CustomerLoanSearchController {
                     loanApplications.add(la);
                 }
                 else{
-                    mv.addObject("messageBody", "No such Customer with Id "+customerId+" has any Loan Application Number with Id "+loanApplicationNumber+". Please try again");
+                    mv.addObject("messageBody", "No such Customer with ID "+customerId+" has any Loan Application Number "+loanApplicationNumber+". Please try again");
                 }
             }
             else{
-                mv.addObject("messageBody", "No such Customer Number "+customerId+" exists. Please try for another Customer Number.");
+                mv.addObject("messageBody", "No such Customer ID "+customerId+" exists. Please try for another Customer ID.");
             }
 
         }
