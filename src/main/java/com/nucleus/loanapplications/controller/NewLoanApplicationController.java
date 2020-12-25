@@ -35,10 +35,6 @@ import java.util.List;
 public class NewLoanApplicationController {
 
     @Autowired
-    private RepaymentScheduleService repaymentScheduleService;
-
-
-    @Autowired
     NewLoanApplicationService newLoanApplicationService;
 
     @Autowired
@@ -94,7 +90,7 @@ public class NewLoanApplicationController {
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
 
-        repaymentScheduleService.addRepaymentSchedule(loanApplications);
+
 
 
 
