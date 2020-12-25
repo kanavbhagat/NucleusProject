@@ -1,7 +1,8 @@
 package com.nucleus.loanclosurebod.database;
 
 import com.nucleus.loanapplications.model.LoanApplications;
-import com.nucleus.loanclosurebod.model.RepaymentSchedule;
+import com.nucleus.repaymentschedule.model.RepaymentSchedule;
+
 import java.util.List;
 
 /**
@@ -10,7 +11,9 @@ import java.util.List;
  */
 public interface LoanClosureDao {
 
-    List<RepaymentSchedule> getRepaymentSchedule(int loanApplicationNumber);
+    List<LoanApplications> getLoanApplications();
+
+    List<RepaymentSchedule> getRepaymentSchedule(LoanApplications loanApplicationNumber);
 
     boolean updateStatus(LoanApplications loanApplication, String newStatus);
 

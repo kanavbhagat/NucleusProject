@@ -10,12 +10,12 @@ import java.util.Set;
 @Table( name= "customer")
 public class Customer {
 
-    static int id = 101;
-    static String code;
+    //103
+    public static  int id = 115;
+    public static String code;
     public Customer(){
         super();
         code = "L"+id;
-        id++;
         this.setCustomerCode(code);
         add = new Address();
     }
@@ -32,7 +32,7 @@ public class Customer {
     private String lastName;
 
     @Column(name="date_of_birth" , nullable = false)
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name="nationality",length = 30, nullable = false)
     private String nationality;
@@ -46,10 +46,10 @@ public class Customer {
     @Column(name="organization_name",length = 30)
     private String organizationName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<Address> addresses;
 
     @Transient
@@ -105,11 +105,11 @@ public class Customer {
     }
 
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

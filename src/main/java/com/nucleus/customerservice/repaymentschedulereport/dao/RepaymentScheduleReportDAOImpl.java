@@ -3,6 +3,7 @@ package com.nucleus.customerservice.repaymentschedulereport.dao;
 import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,14 +18,19 @@ public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDA
     @Autowired
     private SessionFactory sessionFactory;
 
+
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public List<RepaymentSchedule> getRepaymentScheduleReport(int loanApplicationNumber) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from RepaymentSchedule where loanApplicationNumber = :code ");
-        query.setParameter("code", loanApplicationNumber);
-        List<RepaymentSchedule> rslist = query.getResultList();
+//        Query query = session.createQuery("from RepaymentSchedule where loanApplicationNumber = :code ");
+//        query.setParameter("code", loanApplicationNumber);
+//        List<RepaymentSchedule> rslist = query.getResultList();
+        List<RepaymentSchedule> rslist = session.createCriteria(RepaymentSchedule.class)
+                                                .createAlias("loanApplicationNumber","lpn")
+                                                .add(Restrictions.eq("lpn.loanApplicationNumber", loanApplicationNumber ))
+                                                .list();
         session.getTransaction().commit();
         session.close();
         return rslist;

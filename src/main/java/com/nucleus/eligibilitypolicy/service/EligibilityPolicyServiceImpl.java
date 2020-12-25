@@ -3,6 +3,8 @@ package com.nucleus.eligibilitypolicy.service;
 import com.nucleus.eligibilitypolicy.database.EligibilityPolicyDAO;
 import com.nucleus.eligibilitypolicy.model.EligibilityPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,10 +16,24 @@ import java.util.List;
  *
  */
 @Service
+@PropertySource("classpath:status.properties")
 public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
 
     @Autowired
     EligibilityPolicyDAO eligibilityPolicyDAO;
+
+    //Getting status field values from status.properties file:
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
 
     /**
      * This method is used to get a list of all Eligibility Policies.
@@ -68,18 +84,21 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     @Override
     public boolean updateStatus(String policyCode, String action, String authorizedBy) {
         EligibilityPolicy eligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(policyCode);
-        String newStatus;
-        if(action.equalsIgnoreCase("approve")) {
-            newStatus = "Approved";
-        } else if (action.equalsIgnoreCase("reject")) {
-            newStatus = "Rejected";
-        } else {
-            newStatus = "Pending";
+        if(eligibilityPolicy!=null) {
+            String newStatus;
+            if (action.equalsIgnoreCase("approve")) {
+                newStatus = approved;
+            } else if (action.equalsIgnoreCase("reject")) {
+                newStatus = rejected;
+            } else {
+                newStatus = pending;
+            }
+            eligibilityPolicy.setStatus(newStatus);
+            eligibilityPolicy.setAuthorizedBy(authorizedBy);
+            eligibilityPolicy.setAuthorizedDate(LocalDate.now());
+            return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
         }
-        eligibilityPolicy.setStatus(newStatus);
-        eligibilityPolicy.setAuthorizedBy(authorizedBy);
-        eligibilityPolicy.setAuthorizedDate(LocalDate.now());
-        return eligibilityPolicyDAO.updateEligibilityPolicy(eligibilityPolicy);
+        return false;
     }
 
     /**
@@ -93,15 +112,18 @@ public class EligibilityPolicyServiceImpl implements EligibilityPolicyService{
     @Override
     public boolean updateEligibilityPolicy(EligibilityPolicy eligibilityPolicy) {
         EligibilityPolicy oldEligibilityPolicy = eligibilityPolicyDAO.getOneEligibilityPolicy(eligibilityPolicy.getPolicyCode());
-        oldEligibilityPolicy.setPolicyName(eligibilityPolicy.getPolicyName());
-        oldEligibilityPolicy.setPolicyDescription(eligibilityPolicy.getPolicyDescription());
-        oldEligibilityPolicy.setEligibilityParameterList(eligibilityPolicy.getEligibilityParameterList());
-        oldEligibilityPolicy.setStatus(eligibilityPolicy.getStatus());
-        oldEligibilityPolicy.setModifiedBy(eligibilityPolicy.getModifiedBy());
-        oldEligibilityPolicy.setModifiedDate(eligibilityPolicy.getModifiedDate());
-        oldEligibilityPolicy.setAuthorizedBy(null);
-        oldEligibilityPolicy.setAuthorizedDate(null);
-        return eligibilityPolicyDAO.updateEligibilityPolicy(oldEligibilityPolicy);
+        if(oldEligibilityPolicy!=null) {
+            oldEligibilityPolicy.setPolicyName(eligibilityPolicy.getPolicyName());
+            oldEligibilityPolicy.setPolicyDescription(eligibilityPolicy.getPolicyDescription());
+            oldEligibilityPolicy.setEligibilityParameterList(eligibilityPolicy.getEligibilityParameterList());
+            oldEligibilityPolicy.setStatus(eligibilityPolicy.getStatus());
+            oldEligibilityPolicy.setModifiedBy(eligibilityPolicy.getModifiedBy());
+            oldEligibilityPolicy.setModifiedDate(eligibilityPolicy.getModifiedDate());
+            oldEligibilityPolicy.setAuthorizedBy(null);
+            oldEligibilityPolicy.setAuthorizedDate(null);
+            return eligibilityPolicyDAO.updateEligibilityPolicy(oldEligibilityPolicy);
+        }
+        return false;
     }
 
     /**
