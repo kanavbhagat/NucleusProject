@@ -19,7 +19,7 @@ public class ReceiptService {
 
     /**
      * <p> creates a new receipt in the database. returns true if successful, else false. </p>
-     * @param Receipt receipt the receipt object to be saved
+     * @param receipt the receipt object to be saved
      * @return true if operation was successful, or false.
      */
     public boolean registerReceipt(Receipt receipt){
@@ -29,10 +29,10 @@ public class ReceiptService {
 
     /**
      * <p> Searches for a receipt in the database based on four parameters </p>
-     * @param String receiptType of the receipt object to be found
-     * @param String receiptBasis of the receipt object to be found
-     * @param Integer accountNumber of the receipt object to be found
-     * @param Integer receiptNo of the receipt object to be found
+     * @param receiptType of the receipt object to be found
+     * @param receiptBasis of the receipt object to be found
+     * @param accountNumber of the receipt object to be found
+     * @param receiptNo of the receipt object to be found
      * @return List with matching receipt objects, else an empty list.
      */
     public List<Receipt> receiptSearch(String receiptType, String receiptBasis, Integer accountNumber, Integer receiptNo){
@@ -51,7 +51,7 @@ public class ReceiptService {
 
     /**
      * <p> updates a receipt in the database. returns true if successful, else false. </p>
-     * @param Receipt receipt the receipt object to be updated
+     * @param receipt the receipt object to be updated
      * @return true if operation was successful, or false.
      */
     public Boolean updateReceipt(Receipt receipt){
@@ -61,7 +61,7 @@ public class ReceiptService {
 
     /**
      * <p> retrieves a receipt by id from the database. returns the receipt if succssful, else null. </p>
-     * @param String receiptId receipt Id of the receipt to be retrieved
+     * @param receiptId receipt Id of the receipt to be retrieved
      * @return retrieved receipt object if successful, else null.
      */
     public Receipt getReceipt(Integer receiptId){
@@ -71,9 +71,9 @@ public class ReceiptService {
 
     /**
      * <p> Runs the BOD process by updating the receipt object, and adding the advice and settlement objects. </p>
-     * @param Receipt receipt receipt object to be udpated
-     * @param Advice advice advice object to be created.
-     * @param Settlement settlement settlement object to be created.
+     * @param receipt receipt object to be udpated
+     * @param advice advice object to be created.
+     * @param settlement settlement object to be created.
      * @return retrieved true if all operations were successful, else false.
      */
     public Boolean runBOD(Receipt receipt, Advice advice, Settlement settlement){
