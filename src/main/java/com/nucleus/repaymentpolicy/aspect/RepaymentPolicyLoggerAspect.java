@@ -48,7 +48,9 @@ public class RepaymentPolicyLoggerAspect {
 
     @Before("getRepaymentPolicyList()")
     public void beforeGettingAllPolicies(JoinPoint joinPoint) {
+        LOGGER.info("********************************************************************");
         LOGGER.info("Fetching All Repayment Policies... ");
+        LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "getRepaymentPolicyList()", returning = "allPolicies")
     public void afterGettingAllPolicies(JoinPoint joinPoint, List<RepaymentPolicy> allPolicies) {
@@ -77,7 +79,7 @@ public class RepaymentPolicyLoggerAspect {
         if(status) {
             LOGGER.info("Successfully Created Repayment Policy!");
         } else {
-            LOGGER.info("Failed to create new Repayment policy!");
+            LOGGER.info("Failed to create new Repayment policy as policyCode or name already exists.");
         }
         LOGGER.info("********************************************************************");
     }
@@ -86,7 +88,8 @@ public class RepaymentPolicyLoggerAspect {
     @Before("getRepaymentPolicyById()")
     public void beforeGettingPolicy(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Getting Searched Repayment policy... ");
+        String policyCode = (String) joinPoint.getArgs()[0];
+        LOGGER.info("Opening Searched Repayment policy with id: "+policyCode+"\n");
         LOGGER.info("********************************************************************");
     }
 
@@ -100,7 +103,9 @@ public class RepaymentPolicyLoggerAspect {
 
     @Before("changeStatus()")
     public void beforeUpdatingPolicyStatus(JoinPoint joinPoint) {
+        LOGGER.info("********************************************************************");
         LOGGER.info("Updating Status for Repayment Policy");
+        LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "changeStatus()")
     public void afterUpdatingPolicyStatus(JoinPoint joinPoint) {
@@ -110,17 +115,20 @@ public class RepaymentPolicyLoggerAspect {
         LOGGER.info("********************************************************************");
     }
 
-
     @Before("updateRepaymentPolicy()")
     public void beforeUpdatingRepaymentPolicy(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
         LOGGER.info("Saving Edits to Repayment Policy");
         LOGGER.info("********************************************************************");
     }
-    @AfterReturning(pointcut = "updateRepaymentPolicy()")
-    public void afterUpdatingRepaymentPolicy(JoinPoint joinPoint) {
+    @AfterReturning(pointcut = "updateRepaymentPolicy()", returning = "status")
+    public void afterUpdatingRepaymentPolicy(JoinPoint joinPoint, boolean status) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Successfully saved edits to Repayment Policy!");
+        if(status) {
+            LOGGER.info("Successfully saved edits to Repayment Policy!");
+        } else {
+            LOGGER.info("Edits can't be made as Policy Name already exists.");
+        }
         LOGGER.info("********************************************************************");
     }
 
@@ -128,7 +136,8 @@ public class RepaymentPolicyLoggerAspect {
     @Before("deleteRepaymentPolicy()")
     public void beforeDeletingRepaymentPolicy(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Deleting Repayment Policy");
+        String policyCode = (String)joinPoint.getArgs()[0];
+        LOGGER.info("Deleting Repayment Policy with policyCode: "+policyCode+"\n");
         LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "deleteRepaymentPolicy()")
@@ -141,39 +150,45 @@ public class RepaymentPolicyLoggerAspect {
     @Before("updateCreationParameters()")
     public void beforeUpdatingCreationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Adding Creator Name");
+        String policyCode = (String)joinPoint.getArgs()[0];
+        LOGGER.info("Adding Creator Name for policyCode: "+policyCode+"\n");
         LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "updateCreationParameters()")
     public void afterUpdatingCreationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Successfully Added Creator Name!");
+        String name = (String)joinPoint.getArgs()[1];
+        LOGGER.info("Successfully Added Creator Name as "+name+"\n");
         LOGGER.info("********************************************************************");
     }
 
     @Before("updateModificationParameters()")
     public void beforeUpdatingModificationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Updating Modifier Name");
+        String policyCode = (String)joinPoint.getArgs()[0];
+        LOGGER.info("Updating Modifier Name for policyCode: "+policyCode+"\n");
         LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "updateModificationParameters()")
     public void afterUpdatingModificationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Successfully updated Modifier Name!");
+        String name = (String)joinPoint.getArgs()[1];
+        LOGGER.info("Successfully updated Modifier Name as "+name+"\n");
         LOGGER.info("********************************************************************");
     }
 
     @Before("updateAuthorizationParameters()")
     public void beforeUpdatingAuthorizationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Updating Authorizer Name");
+        String policyCode = (String)joinPoint.getArgs()[0];
+        LOGGER.info("Updating Authorizer Name for policyCode: "+policyCode+"\n");
         LOGGER.info("********************************************************************");
     }
     @AfterReturning(pointcut = "updateAuthorizationParameters()")
     public void afterUpdatingAuthorizationParameters(JoinPoint joinPoint) {
         LOGGER.info("********************************************************************");
-        LOGGER.info("Successfully updated Authorizer Name!");
+        String name = (String)joinPoint.getArgs()[1];
+        LOGGER.info("Successfully updated Authorizer Name as "+name+"\n");
         LOGGER.info("********************************************************************");
     }
 

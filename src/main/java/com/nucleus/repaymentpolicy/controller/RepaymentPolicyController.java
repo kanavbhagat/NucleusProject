@@ -9,8 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,12 +37,12 @@ public class RepaymentPolicyController {
     private String saved;
 
     /**
-     * Handles and retrieves all RepaymentPolicy and show it in a JSP page allRepaymentPoliciesData
+     * Handles and retrieves all RepaymentPolicies and show them in a JSP page allRepaymentPoliciesData.
      *
-     * @return the view containing allRepaymentPoliciesData.jsp
+     * @return ModelAndView returns the view containing allRepaymentPoliciesData.jsp
      */
     @RequestMapping(value = "/showRepaymentPolicy", method = RequestMethod.GET)
-    public ModelAndView getNewRepaymentPolicies(Model model) {
+    public ModelAndView getNewRepaymentPolicies() {
         List<RepaymentPolicy> newRepaymentPolicies = repaymentPolicyService.getRepaymentPolicyList();
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/allRepaymentPoliciesData");
@@ -52,18 +50,41 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    /**
+     * Receives the request of Adding New Repayment Policy and retrieves corresponding JSP page.
+     * This method is accessible only by the Maker.
+     *
+     * @return the view containing newRepaymentPolicyScreenMaker.jsp
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/add", method = RequestMethod.GET)
-    public ModelAndView getAdd(Model model) {
+    public ModelAndView getAdd() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenMaker");
         mv.addObject("newRepaymentPolicy", new RepaymentPolicy());
         return mv;
     }
 
+
+    /**
+     * Saves a new Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is saved, the status is updated to SAVED.
+     * This method is accessible only by the Maker.
+     *
+     * @param repaymentPolicy is the new RepaymentPolicy to be added to the database if Valid.
+     * @param result is the Binding result from the page for validation.
+     *
+     * @return the view containing one of the below JSP pages
+     *
+     * Reloads same newRepaymentPolicyScreenMaker JSP page if the BindingResult has errors.
+     * Displays a confirmation on addedpage JSP page if successful.
+     * Displays a failure on RPAddErrorPage JSP page if failure due to constraint violations.
+     */
+
+
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="save",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
-    public ModelAndView add(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
+    public ModelAndView add(@Valid RepaymentPolicy repaymentPolicy, BindingResult result) {
         if(result.hasErrors())
         {
             ModelAndView mv = new ModelAndView();
@@ -90,9 +111,23 @@ public class RepaymentPolicyController {
         }
     }
 
+    /**
+     * Saves and Request Approval for a new Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is saved and approval requested, the status is updated to PENDING.
+     * This method is accessible only by the Maker.
+     *
+     * @param repaymentPolicy is the new RepaymentPolicy to be added to the database if Valid.
+     * @param result is the Binding result from the page for validation.
+     *
+     * @return the view containing one of the below JSP pages
+     *
+     * Reloads same newRepaymentPolicyScreenMaker JSP page if the BindingResult has errors.
+     * Displays a confirmation on addedpage JSP page if successful.
+     * Displays a failure on RPAddErrorPage JSP page if failure due to constraint violations.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="saveApprove",value = "/showRepaymentPolicy/add", method = RequestMethod.POST)
-    public ModelAndView addAndSendForApproval(@Valid RepaymentPolicy repaymentPolicy, BindingResult result, ModelMap map) {
+    public ModelAndView addAndSendForApproval(@Valid RepaymentPolicy repaymentPolicy, BindingResult result) {
         if(result.hasErrors())
         {
             ModelAndView mv = new ModelAndView();
@@ -119,10 +154,18 @@ public class RepaymentPolicyController {
         }
     }
 
+    /**
+     * Deletes an existing Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * This method is accessible only by the Maker.
+     *
+     * @param policyCode is the policyCode of RepaymentPolicy to be deleted from the database.
+     *
+     * @return the view containing the below deletedpage.jsp page
+     */
+
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/delete", method = RequestMethod.GET)
-    public ModelAndView delete(@RequestParam(value="policyCode", required=true) String policyCode,
-                         Model model) {
+    public ModelAndView delete(@RequestParam(value="policyCode", required=true) String policyCode) {
         repaymentPolicyService.deleteRepaymentPolicy(policyCode);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/deletedpage");
@@ -130,63 +173,117 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    /**
+     * Receives the request of Editing an existing Repayment Policy and retrieves corresponding JSP page.
+     * This method is accessible only by the Maker.
+     *
+     * @return the view containing editpage.jsp with attributes from existing newRepaymentPolicyAttribute.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(value = "/showRepaymentPolicy/edit", method = RequestMethod.GET)
-    public ModelAndView getEdit(@RequestParam(value="policyCode", required=true) String policyCode,
-                          Model model) {
+    public ModelAndView getEdit(@RequestParam(value="policyCode", required=true) String policyCode) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/editpage");
         mv.addObject("newRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
         return mv;
     }
 
+    /**
+     * Updates an existing Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is just updated, the status is updated to SAVED.
+     * This method is accessible only by the Maker.
+     *
+     * @param repaymentPolicy is the new Repayment Policy with updated parameters.
+     * @param policyCode is the policyCode of older Repayment Policy to be updated.
+     *
+     * @return the view containing editedpage.jsp
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="update",value = "/showRepaymentPolicy/edit", method = RequestMethod.POST)
     public ModelAndView saveEdit(@ModelAttribute("newRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
-                           @RequestParam(value="policyCode", required=true) String policyCode,
-                           Model model) {
+                           @RequestParam(value="policyCode", required=true) String policyCode) {
 
         repaymentPolicy.setPolicyCode(policyCode);
-        repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,saved);
-        repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
-        mv.addObject("policyCode", policyCode);
-        return mv;
+        boolean successFlag = repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
+        if(successFlag)
+        {
+            repaymentPolicyService.changeStatus(policyCode,saved);
+            repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/editedpage");
+            mv.addObject("policyCode", policyCode);
+            return mv;
+        }
+        else
+        {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/RPEditErrorPage");
+            return mv;
+        }
     }
 
+    /**
+     * Updates an existing Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is updated and Approval requested, the status is updated to PENDING.
+     * This method is accessible only by the Maker.
+     *
+     * @param repaymentPolicy is the new Repayment Policy with updated parameters.
+     * @param policyCode is the policyCode of older Repayment Policy to be updated.
+     *
+     * @return the view containing editedpage.jsp
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @RequestMapping(params ="updateApprove",value = "/showRepaymentPolicy/edit", method = RequestMethod.POST)
     public ModelAndView saveApproveEdit(@ModelAttribute("newRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
-                                  @RequestParam(value="policyCode", required=true) String policyCode,
-                                  Model model) {
+                                  @RequestParam(value="policyCode", required=true) String policyCode) {
 
         repaymentPolicy.setPolicyCode(policyCode);
-        repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
-        repaymentPolicyService.changeStatus(policyCode,pending);
-        repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("views/repaymentpolicy/editedpage");
-        mv.addObject("policyCode", policyCode);
-        return mv;
+        boolean successFlag = repaymentPolicyService.updateRepaymentPolicy(repaymentPolicy);
+        if(successFlag)
+        {
+            repaymentPolicyService.changeStatus(policyCode,pending);
+            repaymentPolicyService.updateModificationParameters(policyCode,getPrincipal());
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/editedpage");
+            mv.addObject("policyCode", policyCode);
+            return mv;
+        }
+        else
+        {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("views/repaymentpolicy/RPEditErrorPage");
+            return mv;
+        }
     }
 
+    /**
+     * Receives the request of Checking an existing Repayment Policy and retrieves corresponding JSP page.
+     * This method is accessible only by the Checker.
+     *
+     * @return the view containing newRepaymentPolicyScreenChecker.jsp with attributes from existing newRepaymentPolicyAttribute.
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(value = "/showRepaymentPolicy/check", method = RequestMethod.GET)
-    public ModelAndView getCheck(@RequestParam(value="policyCode", required=true) String policyCode,
-                           Model model) {
+    public ModelAndView getCheck(@RequestParam(value="policyCode", required=true) String policyCode) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("views/repaymentpolicy/newRepaymentPolicyScreenChecker");
         mv.addObject("checkRepaymentPolicyAttribute", repaymentPolicyService.getRepaymentPolicyById(policyCode));
         return mv;
     }
 
+    /**
+     * Approves an existing Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is Approved, the status is updated to APPROVED.
+     * This method is accessible only by the Checker.
+     *
+     * @param policyCode is the policyCode of the Repayment Policy to be approved.
+     *
+     * @return the view containing approvedpage.jsp
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(params ="approve" ,value = "/showRepaymentPolicy/check", method = RequestMethod.POST)
     public ModelAndView approve(@ModelAttribute("checkRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
-                          @RequestParam(value="policyCode", required=true) String policyCode,
-                          Model model) {
+                          @RequestParam(value="policyCode", required=true) String policyCode) {
 
         repaymentPolicyService.changeStatus(policyCode,approved);
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
@@ -196,11 +293,19 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    /**
+     * Rejects an existing Repayment Policy by delegating the processing to RepaymentPolicyService.
+     * Since the policy is Rejected, the status is updated to REJECTED.
+     * This method is accessible only by the Checker.
+     *
+     * @param policyCode is the policyCode of the Repayment Policy to be rejected.
+     *
+     * @return the view containing rejectedpage.jsp
+     */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @RequestMapping(params ="reject" ,value = "/showRepaymentPolicy/check", method = RequestMethod.POST)
     public ModelAndView reject(@ModelAttribute("checkRepaymentPolicyAttribute") RepaymentPolicy repaymentPolicy,
-                         @RequestParam(value="policyCode", required=true) String policyCode,
-                         Model model) {
+                         @RequestParam(value="policyCode", required=true) String policyCode) {
 
         repaymentPolicyService.changeStatus(policyCode,rejected);
         repaymentPolicyService.updateAuthorizationParameters(policyCode,getPrincipal());
@@ -210,6 +315,10 @@ public class RepaymentPolicyController {
         return mv;
     }
 
+    /**
+     *
+     * @return username String of the User performing actions.
+     */
     private String getPrincipal(){
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
