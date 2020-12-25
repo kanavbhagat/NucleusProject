@@ -2,6 +2,7 @@ package com.nucleus.customerservice.customerdetails.controller;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.customerservice.customerdetails.service.customerdetailsservice;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,14 @@ public class customerdetailscontroller {
         @GetMapping(path = "/customerdetails")
         public ModelAndView getLoanDisbursals(@RequestParam("customerCode") String customerCode){
             Customer customer=customerdetailsservice.getCustomerDetails(customerCode);
+
             if(customer==null){
-                return new ModelAndView("views/customerservice/customerdetails/ErrorPage", "Message", "Customer NOT found: "+ customerCode);
+                return new ModelAndView("views/customerservice/customerdetails/ErrorPage",
+                        "Message", "Customer NOT found: "+ customerCode);
         }
-            return new ModelAndView("views/customerservice/customerdetails/customerdetailsview", "customerObj", customer);
+            Hibernate.initialize(customer.getAddresses());
+            return new ModelAndView("views/customerservice/customerdetails/customerdetailsview",
+                    "customerObj", customer);
     }
 }
 

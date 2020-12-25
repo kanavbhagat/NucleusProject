@@ -4,6 +4,7 @@ import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.login.logindetails.LoginDetailsImpl;
 import com.nucleus.payment.service.DateEditor;
+import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,6 +20,10 @@ import java.time.LocalDate;
 
 @RestController
 public class LoanApplicationViewController {
+
+    @Autowired
+    private RepaymentScheduleService repaymentScheduleService;
+
 
     @Autowired
     LoginDetailsImpl loginDetails;
@@ -122,6 +127,7 @@ public class LoanApplicationViewController {
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
         loanApplications.setAuthorizedDate(LocalDate.now());
         loanApplicationService.updateLoanApplication(loanApplications);
+        repaymentScheduleService.addRepaymentSchedule(loanApplications);
         ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
 
         return modelAndView;
