@@ -9,6 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * LoginLoggerAspect class acts as a logger for security based events in the application.
+ *
+ * @author  Manish Kumar Shukla
+ * @version 1.0
+ * @since   2020-12-25
+ */
 @Component
 @Aspect
 public class LoginLoggerAspect {
