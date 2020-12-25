@@ -37,24 +37,24 @@ public class PaymentTest {
         return payment;
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void insertEmptyPaymentTest(){
-        assertTrue(paymentService.insertPayment(new Payment()));
+        assertFalse(paymentService.insertPayment(new Payment()));
     }
 
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void approveEmptyRejectPaymentTest(){
         assertFalse(paymentService.approveRejectPayment(0, "approve", "checker_1"));
     }
 
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void updateEmptyPaymentTest(){
         assertFalse(paymentService.updatePayment(new Payment()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void deleteEmptyPaymentTest(){
         assertFalse(paymentService.deletePayment(0));
     }
