@@ -35,7 +35,7 @@ public class PaymentDAOImpl implements PaymentDAO{
             insertStatus = true;
             session.close();
         }
-        catch (HibernateException e){
+        catch (Exception e){
             insertStatus = false;
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class PaymentDAOImpl implements PaymentDAO{
             updateStatusValue = true;
             session.close();
         }
-        catch (HibernateException e){
+        catch (Exception e){
             e.printStackTrace();
         }
         return updateStatusValue;
@@ -73,7 +73,7 @@ public class PaymentDAOImpl implements PaymentDAO{
             session.close();
             updateStatus = true;
         }
-        catch (HibernateException e){
+        catch (Exception e){
             e.printStackTrace();
         }
         return updateStatus;
@@ -89,7 +89,7 @@ public class PaymentDAOImpl implements PaymentDAO{
             session.getTransaction().commit();
             session.close();
         }
-        catch (HibernateException e){
+        catch (Exception e){
             paymentList = null;
             e.printStackTrace();
         }
@@ -114,7 +114,7 @@ public class PaymentDAOImpl implements PaymentDAO{
            session.close();
            deleteStatus = true;
         }
-        catch (HibernateException e){
+        catch (Exception e){
             e.printStackTrace();
         }
         return deleteStatus;
