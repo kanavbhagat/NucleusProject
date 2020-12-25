@@ -67,7 +67,9 @@ public class AppConfig {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-
+        /*ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+        ds.setUsername("c##asaf");
+        ds.setPassword("asaf");*/
 
         return ds;
 

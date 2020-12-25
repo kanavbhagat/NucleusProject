@@ -35,9 +35,8 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
         System.out.println("In Service insert query");
         int insertStatus = 0;
         String todayDate = LocalDate.now().toString();
-
+        Session session = getSession()  ;
         try {
-            Session session = getSession();
             session.beginTransaction();
             chargePolicy.setCreatedDate(todayDate);
             session.save(chargePolicy);
@@ -45,14 +44,10 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             insertStatus = 1;
             session.close();
         } catch (Exception exception) {
-            System.out.println("*************************************");
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-            if(exception.getMessage().contains("ConstraintViolation"))insertStatus = 2;
+            if(exception.equals(ConstraintViolationException.class))insertStatus = 2;
             else insertStatus = 3;
-            System.out.println("*************************************");
-
-
+            System.out.println("Status " + insertStatus);
+            session.close();
         }
 
         //SessionFactory factory = configuration.buildSessionFactory();
@@ -61,8 +56,9 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
 
     public List<ChargePolicy> getPolicyList(){
         List<ChargePolicy> chargePolicyList;
+        Session session = getSession()  ;
         try {
-            Session session = getSession();
+            //Session session = getSession();
             session.beginTransaction();
             Query query = session.createQuery("from ChargePolicy");
             chargePolicyList = query.getResultList();
@@ -71,19 +67,20 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
             session.close();
         } catch(Exception exception) {
             chargePolicyList = null;
+            session.close();
         }
         return chargePolicyList;
     }
     public ChargePolicy getChargePolicy(String chargePolicyCode){
         ChargePolicy chargePolicy;
-        try {
-            Session session = getSession();
+        try(Session session = getSession()) {
+            //Session session = getSession();
             session.beginTransaction();
             Query query = session.createQuery("from ChargePolicy cp where cp.chargePolicyCode = '"+chargePolicyCode+"'");;
             chargePolicy= (ChargePolicy)query.getSingleResult();
             System.out.println("charge Policy in dao " + chargePolicy.getChargePolicyCode());
             session.getTransaction().commit();
-            session.close();
+            //session.close();
         } catch(Exception exception) {
             chargePolicy = null;
         }
@@ -93,19 +90,19 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
     public boolean updateStatus(String chargePolicyCode,String status,String approvedBy){
         ChargePolicy chargePolicy;
         boolean returnstatus = false;
-        try {
-            Session session = getSession();
+        try(Session session = getSession()) {
+            //Session session = getSession();
             session.beginTransaction();
             Query q=session.createQuery("update ChargePolicy set status=:status,authorized_by=:user where policy_code=:policyCode");
             q.setParameter("status",status);
             q.setParameter("user",approvedBy);
             q.setParameter("policyCode",chargePolicyCode);
-
+            System.out.println("Status #############" + status  + "****************" + "Approved By *****" + approvedBy);
             int s=q.executeUpdate();
             if(s==1)returnstatus = true;
             System.out.println("Status  updated as "+ s);
             session.getTransaction().commit();
-            session.close();
+            //session.close();
         } catch(Exception exception) {
             chargePolicy = null;
             exception.printStackTrace();
@@ -115,28 +112,28 @@ public class ChargePolicyDaoImpl implements ChargePolicyDao{
 
     public boolean updateEntry(ChargePolicy chargePolicy){
         boolean status = false;
-        try{
-            Session session = getSession();
+        try(Session session = getSession()){
+            //Session session = getSession();
             session.beginTransaction();
             session.update(chargePolicy);
             status = true;
             session.getTransaction().commit();
 
         } catch (Exception exception) {
-            exception.printStackTrace();
+           return false;
         }
         return false;
     }
     public int deleteChargePolicy(String chargePolicyCode){
         int s = 0;
-        try {
-            Session session = getSession();
+        try(Session session = getSession()) {
+            //Session session = getSession();
             session.beginTransaction();
             Query q=session.createQuery("delete from ChargePolicy where chargePolicyCode= :chargePolicyCode");
             q.setParameter("chargePolicyCode", chargePolicyCode);
             s=q.executeUpdate();
             session.getTransaction().commit();
-            session.close();
+            //session.close();
         } catch(Exception exception) {
             exception.printStackTrace();
         }

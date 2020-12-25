@@ -74,9 +74,10 @@
       </tbody>
     </table>
   </div>
-  <div class="float-right">
-    <button type="submit" class="btn btn-primary" name ="action" value="save">Save</button>
-  </div>
+   <div class="float-right">
+      <button type="submit" class="btn btn-primary" name ="action" value="save">Save</button>
+      <button type="submit" class="btn btn-primary" name ="action" value="saveAndRequest">Save and Request Approval</button>
+    </div>
 
   </div>
 </form:form>

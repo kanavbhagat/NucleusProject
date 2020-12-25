@@ -70,8 +70,11 @@ public class ChargePolicyServiceImpl implements ChargePolicyService {
     }
     public String getChargeCodeName(String chargeCode){
         List<NewCharge> listofNewCharges = this.chargeDao.getChargeList();
-        if(listofNewCharges==null)return  null;
-        String chargeCodeName = "";
+        if(listofNewCharges==null||listofNewCharges.size()==0){
+            System.out.println("No List Returned ");
+            return  null;
+        }
+        String chargeCodeName = null;
         for(NewCharge newCharge : listofNewCharges){
             System.out.println(" Charge Code traversing " + newCharge.getChargeCode());
             if(newCharge.getChargeCode().equals(chargeCode)){

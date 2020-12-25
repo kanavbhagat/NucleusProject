@@ -69,18 +69,19 @@
                      <tr>
                        <td>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <c:if test = "${chargePolicy.status == 'Pending'}">
+                            <c:if test = "${chargePolicy.status == 'PENDING'}">
                             <a href="<%= request.getContextPath()%>/chargePolicy/get/${chargePolicy.chargePolicyCode}">
                                 ${chargePolicy.chargePolicyCode}
                             </a>
                             </c:if>
-                            <c:if test = "${chargePolicy.status == 'Saved'}">
+
+                              <c:if test = "${chargePolicy.status == 'SAVED'}">
+                                                                     ${chargePolicy.chargePolicyCode}
+                                                          </c:if>
+                            <c:if test = "${chargePolicy.status == 'REJECTED'}">
                                         ${chargePolicy.chargePolicyCode}
                              </c:if>
-                            <c:if test = "${chargePolicy.status == 'Rejected'}">
-                                        ${chargePolicy.chargePolicyCode}
-                             </c:if>
-                            <c:if test = "${chargePolicy.status == 'Approved'}">
+                            <c:if test = "${chargePolicy.status == 'APPROVED'}">
                                         ${chargePolicy.chargePolicyCode}
                              </c:if>
                           </sec:authorize>
@@ -98,11 +99,11 @@
                        <td>${chargePolicy.authorizedBy}</td>
                         <td>
                             <sec:authorize access="hasRole('MAKER')">
-                                <c:if test = "${chargePolicy.status == 'Pending'}">
+                                <c:if test = "${chargePolicy.status == 'PENDING'}">
                                     <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
                                 </c:if>
-                                <c:if test = "${chargePolicy.status == 'Saved'}">
-                                    <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
+                                <c:if test = "${chargePolicy.status == 'SAVED'}">
+                                     <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
                                 </c:if>
                             </sec:authorize>
                             <sec:authorize access="hasRole('CHECKER')">
