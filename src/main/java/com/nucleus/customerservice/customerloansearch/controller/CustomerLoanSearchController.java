@@ -57,8 +57,8 @@ public class CustomerLoanSearchController {
 
     /**
      * <p> Post mapping for the loan summary search. </p>
-     * @param String customerId customer id to search via
-     * @param Integer loanApplicationNumber loan application number to search for.
+     * @param customerId customer id to search via
+     * @param loanApplicationNumber loan application number to search for.
      * @return returns a modelAndView of the search results, or an error page if no results found.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")

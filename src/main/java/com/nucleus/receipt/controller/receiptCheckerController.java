@@ -3,6 +3,8 @@ package com.nucleus.receipt.controller;
 import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +16,19 @@ import org.springframework.web.servlet.ModelAndView;
  * <p> Serves the receipt overview page </p>
  */
 @Controller
+@PropertySource("classpath:status.properties")
 public class receiptCheckerController {
 
 
     @Autowired
     ReceiptService receiptService;
+
+    // initialise status properties
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.rejected}"))
+    private String rejected;
 
 
     /**
@@ -38,7 +48,7 @@ public class receiptCheckerController {
     /**
      * <p> Get mapping for receipt approval link. Redirects to a success/error page depending on whether the object
      * update was successful. </p>
-     * @param String receiptIdString Path variable with the receipt Id to be updated.
+     * @param receiptIdString Path variable with the receipt Id to be updated.
      * @return returns modelAndView of success page if operation was successful, else the error page.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
@@ -46,7 +56,7 @@ public class receiptCheckerController {
     public ModelAndView receiptCheckerApprove(@PathVariable("receiptId") String receiptIdString){
         Integer receiptId = Integer.parseInt(receiptIdString);
         Receipt receipt = receiptService.getReceipt(receiptId);
-        receipt.setReceiptStatus("Approved");
+        receipt.setReceiptStatus(approved);
         Boolean success = receiptService.updateReceipt(receipt);
 
         if(success){
@@ -67,7 +77,7 @@ public class receiptCheckerController {
     /**
      * <p> Get mapping for receipt rejection link. Redirects to a success/error page depending on whether the object
      * update was successful. </p>
-     * @param String receiptIdString Path variable with the receipt Id to be updated.
+     * @param receiptIdString Path variable with the receipt Id to be updated.
      * @return returns modelAndView of success page if operation was successful, else the error page.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
@@ -75,7 +85,7 @@ public class receiptCheckerController {
     public ModelAndView receiptCheckerReject(@PathVariable("receiptId") String receiptIdString){
         Integer receiptId = Integer.parseInt(receiptIdString);
         Receipt receipt = receiptService.getReceipt(receiptId);
-        receipt.setReceiptStatus("Rejected");
+        receipt.setReceiptStatus(rejected);
         Boolean success = receiptService.updateReceipt(receipt);
         if(success){
             ModelAndView mv = new ModelAndView("views/receipt/receiptSuccess");
