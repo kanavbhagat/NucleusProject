@@ -10,10 +10,20 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * RepaymentPolicyLoggerAspect class acts as a Logger for Repayment Policy related function.
+ * Logging has been done on the basis of Spring AOP concepts.
+ * Logger used - Logback and slf4j as interface.
+ *
+ * @author  Gyanesh Anand , Rahul Tehlan
+ * @version 1.0
+ * @since   2020-12-25
+ */
 @Component
 @Aspect
 public class RepaymentPolicyLoggerAspect {
 
+    //Retuens an object of Logger for all the below logging functions.
     Logger LOGGER = LoggerFactory.getLogger(RepaymentPolicyLoggerAspect.class);
 
     @Pointcut("execution(* com.nucleus.repaymentpolicy.service.*.getRepaymentPolicyList(..))")
@@ -43,8 +53,6 @@ public class RepaymentPolicyLoggerAspect {
     @Pointcut("execution(* com.nucleus.repaymentpolicy.service.*.updateAuthorizationParameters(..))")
     public void updateAuthorizationParameters() {
     }
-
-
 
     @Before("getRepaymentPolicyList()")
     public void beforeGettingAllPolicies(JoinPoint joinPoint) {

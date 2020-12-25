@@ -12,8 +12,11 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
- * This class acts as a Service layer for all RepaymentPolicy related operations.
+ * RepaymentPolicyServiceImpl class acts as a Service layer for all RepaymentPolicy related operations.
  *
+ * @author  Gyanesh Anand , Rahul Tehlan
+ * @version 1.0
+ * @since   2020-12-25
  */
 @Service
 @Transactional

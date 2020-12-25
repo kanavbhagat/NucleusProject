@@ -16,6 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * RepaymentPolicyController class acts as a Controller layer for all RepaymentPolicy related operations.
+ *
+ * @author  Gyanesh Anand , Rahul Tehlan
+ * @version 1.0
+ * @since   2020-12-25
+ */
 @Controller
 @PropertySource("classpath:status.properties")
 public class RepaymentPolicyController {
@@ -119,8 +126,7 @@ public class RepaymentPolicyController {
      * @param repaymentPolicy is the new RepaymentPolicy to be added to the database if Valid.
      * @param result is the Binding result from the page for validation.
      *
-     * @return the view containing one of the below JSP pages
-     *
+     * @return the view containing one of the below JSP page.
      * Reloads same newRepaymentPolicyScreenMaker JSP page if the BindingResult has errors.
      * Displays a confirmation on addedpage JSP page if successful.
      * Displays a failure on RPAddErrorPage JSP page if failure due to constraint violations.
@@ -177,6 +183,7 @@ public class RepaymentPolicyController {
      * Receives the request of Editing an existing Repayment Policy and retrieves corresponding JSP page.
      * This method is accessible only by the Maker.
      *
+     * @param policyCode Policy code to be searched.
      * @return the view containing editpage.jsp with attributes from existing newRepaymentPolicyAttribute.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -260,6 +267,7 @@ public class RepaymentPolicyController {
      * Receives the request of Checking an existing Repayment Policy and retrieves corresponding JSP page.
      * This method is accessible only by the Checker.
      *
+     * @param policyCode POlicy Code to be searched
      * @return the view containing newRepaymentPolicyScreenChecker.jsp with attributes from existing newRepaymentPolicyAttribute.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
@@ -276,6 +284,7 @@ public class RepaymentPolicyController {
      * Since the policy is Approved, the status is updated to APPROVED.
      * This method is accessible only by the Checker.
      *
+     * @param repaymentPolicy
      * @param policyCode is the policyCode of the Repayment Policy to be approved.
      *
      * @return the view containing approvedpage.jsp
@@ -298,6 +307,7 @@ public class RepaymentPolicyController {
      * Since the policy is Rejected, the status is updated to REJECTED.
      * This method is accessible only by the Checker.
      *
+     * @param repaymentPolicy
      * @param policyCode is the policyCode of the Repayment Policy to be rejected.
      *
      * @return the view containing rejectedpage.jsp
@@ -316,7 +326,7 @@ public class RepaymentPolicyController {
     }
 
     /**
-     *
+     * Used to retrive the Username of the user currently logged in.
      * @return username String of the User performing actions.
      */
     private String getPrincipal(){
