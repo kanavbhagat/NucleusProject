@@ -6,37 +6,26 @@ import com.nucleus.customer.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * customerdetailsservice class acts as a Controller layer for all RepaymentPolicy related operations.
+ *
+ * @author  Siddhant
+ * @version 1.0
+ * @since   2020-12-25
+ */
 @Service
 public class customerdetailsservice {
+
     @Autowired
     private CustomerDaoInterface customerdao;
 
+    /**
+     * Fetches details of customer
+     * @param customerCode Customer code to be searched
+     * @return a customer Object containing all details.
+     */
     public Customer getCustomerDetails(String customerCode){
-
-        //////////////////////////////
-        // TEST CODE ////////////////
-        /////////////////////////////
-//        Customer customer = new Customer();
-//        customer.setFirstName("vsac");
-//        customer.setLastName("wdwe");
-//        customer.setCustomerCode("101");
-//        customer.setDateOfBirth("02020202");
-//        customer.setNationality("indian");
-//        Address addr = new Address();
-//        addr.setAddressId(1);
-//        addr.setCity("fcd");
-//        List<Address> adds = new ArrayList<Address>();
-//        adds.add(addr);
-//        customer.setAddresses(adds);
-//        return customer;
-        ////////////////////////////////
-
         return customerdao.getCustomerById(customerCode);
-
     }
 
 }
