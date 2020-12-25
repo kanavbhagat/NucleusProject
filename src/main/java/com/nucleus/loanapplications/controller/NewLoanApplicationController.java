@@ -15,6 +15,7 @@ import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,12 +72,15 @@ public class NewLoanApplicationController {
 
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newLoanApplication")
-    public ModelAndView addCustomer(@Valid @ModelAttribute LoanApplications loanApplications , HttpServletRequest request){
+    public ModelAndView addCustomer(@Valid @ModelAttribute LoanApplications loanApplications , BindingResult bindingResult, HttpServletRequest request){
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
         Address address = (Address) session.getAttribute("address");
 
+        if(bindingResult.hasErrors()){
 
+            return new ModelAndView("views/loanapplication/loanInformation").addObject("productType" , getProductType());
+        }
 
         loanApplications.setCustomerCode(customer);
         List<LoanApplications> loanApplications1 = new ArrayList<>();

@@ -46,8 +46,18 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         return countofClosedLoans;
     }
 
-     /* Method for obtaining the repayment schedule for the given Loan Application
-     and updating the status of the loan based on Bill Flags. */
+    @Override
+    public LoanApplications getLoanDetails(int loanApplicationNumber) {
+        return loanClosureDao.getLoanDetails(loanApplicationNumber);
+    }
+
+    @Override
+    public List<LoanApplications> getCustomerLoanDetails(String customerCode) {
+        return loanClosureDao.getCustomerLoanDetails(customerCode);
+    }
+
+    /* Method for obtaining the repayment schedule for the given Loan Application
+    and updating the status of the loan based on Bill Flags. */
     private boolean closeOneLoan(LoanApplications loanApplication){
         boolean flag = true;
         boolean closureStatus = false;
@@ -73,4 +83,6 @@ public class LoanClosureServiceImpl implements LoanClosureService {
         }
         return closureStatus;
     }
+
+
 }
