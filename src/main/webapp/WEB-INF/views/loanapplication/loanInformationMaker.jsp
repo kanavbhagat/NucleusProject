@@ -57,7 +57,6 @@
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
                                  <form:select path="productType" cssClass="form-control">
-                                       <form:option  disabled="${'true'}" selected="true" label="Select One Option"/>
                                        <form:options items="${productType}" />
                                  </form:select>
                                  <form:errors path = "productType" cssClass = "error" style = "color:red"></form:errors>
