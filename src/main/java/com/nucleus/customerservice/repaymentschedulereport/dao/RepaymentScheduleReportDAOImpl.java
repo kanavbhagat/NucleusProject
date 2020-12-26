@@ -12,13 +12,21 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * This class acts as a Database layer for RepaymentSchedule related operations.
+ *
+ */
 @Repository
 public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-
+    /**
+     * Retrieves a Repayment Schedule by using loanApplicationNumber from the database.
+     * @param loanApplicationNumber is the loanApplicationNumber of the Repayment Schedule to be retrieved.
+     * @return List of Repayment Schedule if exists, else null.
+     */
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public List<RepaymentSchedule> getRepaymentScheduleReport(int loanApplicationNumber) {

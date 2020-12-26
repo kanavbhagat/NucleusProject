@@ -36,10 +36,6 @@ import java.util.List;
 public class NewLoanApplicationController {
 
     @Autowired
-    private RepaymentScheduleService repaymentScheduleService;
-
-
-    @Autowired
     NewLoanApplicationService newLoanApplicationService;
 
     @Autowired
@@ -90,6 +86,12 @@ public class NewLoanApplicationController {
         loanApplications.setCreateDate(LocalDate.now());
         loanApplications.setCreatedBy(loginDetails.getUserName());
 
+        String productType = loanApplications.getProductType();
+        Product product = getProduct(productType);
+
+
+        loanApplications.setProductCode(product);
+
 
         boolean a =  newCustomerService.createNewCustomer(customer);
        if(a)
@@ -98,19 +100,32 @@ public class NewLoanApplicationController {
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
 
-        repaymentScheduleService.addRepaymentSchedule(loanApplications);
+
 
 
 
 
         ModelAndView modelAndView = new ModelAndView();
+        if(c) {
+            modelAndView.addObject("customerCode", customer.getCustomerCode());
+            modelAndView.addObject("loanApplicationId", loanApplications.getLoanApplicationNumber());
 
-        modelAndView.addObject("a" ,a);
-        modelAndView.addObject("b",b);
-        modelAndView.addObject("c",c);
-        modelAndView.setViewName("redirect:/loanApplication");
-
+            modelAndView.setViewName("views/loanapplication/addedpage");
+        }
+        else{
+            modelAndView.setViewName("views/loanapplication/RPAddErrorPage");
+        }
         return modelAndView;
+    }
+
+    public Product getProduct(String productType){
+        List<Product> products = productService.getProductList();
+        Product res = null;
+        for(Product product:products){
+            if(product.getProductName().equals(productType))
+                res = product;
+        }
+        return res;
     }
     public List<String> getProductType(){
         List<String> productType = new ArrayList<>();

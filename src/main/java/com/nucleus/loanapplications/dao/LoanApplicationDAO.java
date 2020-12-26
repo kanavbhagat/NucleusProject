@@ -31,20 +31,21 @@ public class LoanApplicationDAO implements LoanApplicationDaoInterface {
     @Override
     public boolean addApplication(LoanApplications loanApplications) {
 
-        boolean successful = false;
-        try
+        try(Session session = sessionFactory.openSession())
         {
-
-            Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(loanApplications);
-            session.getTransaction().commit();
-            session.close();
-            successful=true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
+            try {
+                session.save(loanApplications);
+                session.getTransaction().commit();
+                session.close();
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                session.close();
+                return false;
+            }
         }
-        return successful;
     }
 
     public List<LoanApplications> getLoanApplicationList(){

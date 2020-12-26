@@ -237,11 +237,7 @@ window.onload = function() {
     <article>
         <spring:form class="font-weight-bold mb-5" modelAttribute="customer" method="post">
             <section>
-                <div class="row">
-                    <a class="col-lg-2 col-md-2 col-6">Customer Information</a>
-                    <a href="loanInformation.jsp" class="col-lg-2 col-md-2 col-6">Loan Information</a>
 
-                </div>
             </section>
 
             <hr>
@@ -269,7 +265,7 @@ window.onload = function() {
 
                                             <div class="row ">
                                                  <div class="form-group col-sm-3">
-                                                    <label for="country">Nationality</label>
+                                                    <label for="country">Nationality<a class="text-danger">*</a></label>
                                                     <spring:select class="form-control" id="country" name="nationality" path="nationality">
                                                         <spring:option value="India">India</spring:option>
                                                         <spring:option value="America">America</spring:option>
@@ -304,7 +300,7 @@ window.onload = function() {
                                             </div>
 
                                            <div class="form-group col-sm-3 offset-4">
-                                                <label for="experience">Total Work Experience</label>
+                                                <label for="experience">Total Work Experience<a class="text-danger">*</a></label>
                                                 <spring:input type="number" class="form-control" id="experience"  path="totalWorkExperience"/>
                                                 <spring:errors path = "totalWorkExperience" cssClass = "error" style = "color:red"></spring:errors>
                                             </div>
@@ -312,7 +308,7 @@ window.onload = function() {
 
                                         <div class="row ">
                                              <div class="form-group col-sm-3">
-                                                <label for="occupationName">Organisation Name</label>
+                                                <label for="occupationName">Organisation Name<a class="text-danger">*</a></label>
                                                 <spring:input type="text" class="form-control" id="organizationName" path="organizationName"/>
                                                 <spring:errors path = "organizationName" cssClass = "error" style = "color:red"></spring:errors>
                                             </div>
@@ -325,13 +321,13 @@ window.onload = function() {
              <h2 class="mb-lg-3">Address Details</h2>
                                 <div class="row ">
                                     <div class="form-group col-sm-3">
-                                        <label for="houseNo">House No</label>
+                                        <label for="houseNo">House No<a class="text-danger">*</a></label>
                                         <spring:input type="number" class="form-control" id="houseNo" path="add.houseNo"/>
                                            <spring:errors path = "add.houseNo" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
 
                                     <div class="form-group col-sm-3 offset-4">
-                                        <label for="country">Country</label>
+                                        <label for="country">Country<a class="text-danger">*</a></label>
                                         <spring:select class="form-control option" id="country1" path="add.country">
                                         <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
                                         </spring:select>
@@ -340,14 +336,14 @@ window.onload = function() {
 
                                 <div class="row ">
                                     <div class="form-group col-sm-3">
-                                        <label for="state">State</label>
+                                        <label for="state">State<a class="text-danger">*</a></label>
                                         <spring:select class="form-control" id="state1" path="add.state">
                                         <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
 
                                         </spring:select>
                                     </div>
                                      <div class="form-group col-sm-3 offset-4">
-                                        <label for="city">City</label>
+                                        <label for="city">City<a class="text-danger">*</a></label>
                                         <spring:select class="form-control" id="city1" path="add.city">
                                         <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
                                         </spring:select>
@@ -356,7 +352,7 @@ window.onload = function() {
 
                                 <div class="row ">
                                    <div class="form-group col-sm-3">
-                                        <label for="pinCode">Pin Code</label>
+                                        <label for="pinCode">Pin Code<a class="text-danger">*</a></label>
                                         <spring:input type="number" class="form-control" id="pinCode" path="add.pinCode"/>
                                         <spring:errors path = "add.pinCode" cssClass = "error" style = "color:red"></spring:errors>
                                     </div>
