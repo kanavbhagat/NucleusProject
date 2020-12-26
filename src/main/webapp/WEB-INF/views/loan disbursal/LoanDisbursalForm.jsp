@@ -15,10 +15,21 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"> </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#customerCode").autocomplete({
+                source: "customerAutoComplete",
+                minLength:2
+             });
+         });
+    </script>
 </head>
 <body>
-<jsp:include page="/navbar.jsp" />
-<div class="container-fluid">
+
+    <jsp:include page="/navbar.jsp" />
+    <div class="container-fluid">
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
             <b> Loan Disbursal Service</b>
