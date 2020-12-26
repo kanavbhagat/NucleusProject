@@ -22,6 +22,7 @@ public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDA
     @Autowired
     private SessionFactory sessionFactory;
 
+
     /**
      * Retrieves a Repayment Schedule by using loanApplicationNumber from the database.
      * @param loanApplicationNumber is the loanApplicationNumber of the Repayment Schedule to be retrieved.

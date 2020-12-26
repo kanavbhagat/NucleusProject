@@ -35,11 +35,12 @@ public class RepaymentScheduleSearchController {
         return "views/customerservice/RepaymentScheduleReportSearch";
     }
 
+
     /**
      * Handles and retrieves Repayment Schedule and show them in a JSP page RepaymentScheduleReport.
-     *
-     *  Displays a failure on InvalidLoanAppPage JSP page if failure occurs due to non-existing loanApplicationNumber.
-     *
+     * Displays a failure on InvalidLoanAppPage JSP page if failure occurs due to non-existing loanApplicationNumber.
+     * @param appNo It is the loan application number whose Repaymentschedule is to be displayed
+     * @param model to view the page
      * @return ModelAndView returns the view containing RepaymentScheduleReport.jsp
      */
     @RequestMapping(value = "/getRepaymentScheduleReport", method = RequestMethod.GET)

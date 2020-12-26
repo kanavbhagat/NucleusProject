@@ -25,9 +25,11 @@ public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
     private SessionFactory sessionFactory;
 
 
+
     /**
      * Adds a Repayment Schedule to the database.
      * @param repaymentSchedule is the RepaymentSchedule to be saved.
+     * @return int value 0
      */
     @Override
     public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) {
