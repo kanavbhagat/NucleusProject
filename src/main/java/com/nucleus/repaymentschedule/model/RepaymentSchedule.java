@@ -134,4 +134,15 @@ public class RepaymentSchedule implements Serializable {
 
 }
 
+/* DATA TABLE
+       LoanApplicationNumber	number	10	Y	LAN & InstallmentNo Composite key
+        InstallmentNo	        number	10	Y
+        OpeningBalance	        number		Y
+        InterestComponent	    number		Y
+        PrincipalComponent	    number		Y
+        EMI	number
+        ClosingBalance	        number		Y
+        DueDate	                date		Y
+        BillFlag	        Varchar2	1	Y	Y/N
+ */
 
