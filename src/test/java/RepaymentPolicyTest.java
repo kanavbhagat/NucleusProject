@@ -1,7 +1,7 @@
 
 import com.nucleus.config.TestConfig;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
-import com.nucleus.repaymentpolicy.service.RepaymentPolicyServiceImpl;
+import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,74 +19,58 @@ import static org.junit.Assert.*;
 public class RepaymentPolicyTest {
 
     @Autowired
-    RepaymentPolicyServiceImpl repaymentPolicyService;
+    RepaymentPolicyService repaymentPolicyService;
 
     @Test
     public void getRepaymentPolicyByIdTest(){
-
         RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
         repaymentPolicy.setPolicyCode("101");
         repaymentPolicy.setPolicyName("Name1");
         repaymentPolicy.setDate(LocalDate.now());
         repaymentPolicy.setRepaymentFrequency("Monthly");
-
         repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
         final String id="101";
-
         final RepaymentPolicy expected= repaymentPolicyService.getRepaymentPolicyById(id);
         assertEquals(expected.toString(), repaymentPolicy.toString());
-
         repaymentPolicyService.deleteRepaymentPolicy(id);
     }
 
     @Test
     public void getAllRepaymentPoliciesTest(){
-
         RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
         repaymentPolicy.setPolicyCode("103");
         repaymentPolicy.setPolicyName("Name3");
         repaymentPolicy.setDate(LocalDate.now());
         repaymentPolicy.setRepaymentFrequency("Monthly");
+        int size1=repaymentPolicyService.getRepaymentPolicyList().size();
         repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
-        assertFalse(repaymentPolicyService.getRepaymentPolicyList().isEmpty());
-
+        int size2=repaymentPolicyService.getRepaymentPolicyList().size();
+        assertEquals(1,size2-size1);
         repaymentPolicyService.deleteRepaymentPolicy("103");
     }
 
     @Test
-    public void addValidRepaymentPolicyTest()
-    {
+    public void addValidRepaymentPolicyTest() {
         RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
         repaymentPolicy.setPolicyCode("102");
         repaymentPolicy.setPolicyName("Name2");
         repaymentPolicy.setDate(LocalDate.now());
         repaymentPolicy.setRepaymentFrequency("Monthly");
-
         boolean added=repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-        assertNotNull(repaymentPolicyService.getRepaymentPolicyById("102"));
-
+        assertTrue(added);
         repaymentPolicyService.deleteRepaymentPolicy("102");
     }
 
     @Test
     public void deleteExistingRepaymentPolicyTest(){
-
         RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
         repaymentPolicy.setPolicyCode("101");
         repaymentPolicy.setPolicyName("Name1");
         repaymentPolicy.setDate(LocalDate.now());
         repaymentPolicy.setRepaymentFrequency("Monthly");
-
         repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
-        assertNotNull(repaymentPolicyService.getRepaymentPolicyById("101"));
-
-        repaymentPolicyService.deleteRepaymentPolicy("101");
-
-//        Now already deleted
-        assertNull(repaymentPolicyService.getRepaymentPolicyById("101"));
+        boolean success=repaymentPolicyService.deleteRepaymentPolicy("101");
+        assertTrue(success);
     }
 
 
@@ -102,51 +86,106 @@ public class RepaymentPolicyTest {
     }
 
     @Test
-    public void updateStatusCheck(){
+    public void validUpdateRepaymentPolicyCheck(){
+        RepaymentPolicy originalRepaymentPolicy=new RepaymentPolicy();
+        originalRepaymentPolicy.setPolicyCode("110");
+        originalRepaymentPolicy.setPolicyName("Name10");
+        originalRepaymentPolicy.setDate(LocalDate.now());
+        originalRepaymentPolicy.setRepaymentFrequency("Monthly");
 
-        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
-        repaymentPolicy.setPolicyCode("110");
-        repaymentPolicy.setPolicyName("Name10");
-        repaymentPolicy.setDate(LocalDate.now());
-        repaymentPolicy.setRepaymentFrequency("Monthly");
-
-        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
-        String status="Pending";
-        repaymentPolicyService.changeStatus("110",status);
-
-        assertEquals(status, repaymentPolicyService.getRepaymentPolicyById("110").getStatus());
-
+        RepaymentPolicy newRepaymentPolicy=new RepaymentPolicy();
+        newRepaymentPolicy.setPolicyCode("110");
+        newRepaymentPolicy.setPolicyName("Name10");
+        newRepaymentPolicy.setDate(LocalDate.now());
+        newRepaymentPolicy.setRepaymentFrequency("Yearly");
+        repaymentPolicyService.addRepaymentPolicy(originalRepaymentPolicy);
+        assertTrue(repaymentPolicyService.updateRepaymentPolicy(newRepaymentPolicy));
         repaymentPolicyService.deleteRepaymentPolicy("110");
-
     }
 
     @Test
-    public void updateCreationModificationAuthorizationParametersTest(){
+    public void updateRepaymentPolicyNameWithExistingNameCheck(){
+        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
+        repaymentPolicy.setPolicyCode("111");
+        repaymentPolicy.setPolicyName("Name111");
+        repaymentPolicy.setDate(LocalDate.now());
+        repaymentPolicy.setRepaymentFrequency("Monthly");
+
+        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+
+        RepaymentPolicy originalRepaymentPolicy=new RepaymentPolicy();
+        originalRepaymentPolicy.setPolicyCode("110");
+        originalRepaymentPolicy.setPolicyName("Name10");
+        originalRepaymentPolicy.setDate(LocalDate.now());
+        originalRepaymentPolicy.setRepaymentFrequency("Monthly");
+
+        RepaymentPolicy newRepaymentPolicy=new RepaymentPolicy();
+        newRepaymentPolicy.setPolicyCode("110");
+        newRepaymentPolicy.setPolicyName("Name111");
+        newRepaymentPolicy.setDate(LocalDate.now());
+        newRepaymentPolicy.setRepaymentFrequency("Yearly");
+        repaymentPolicyService.addRepaymentPolicy(originalRepaymentPolicy);
+        assertFalse(repaymentPolicyService.updateRepaymentPolicy(newRepaymentPolicy));
+        repaymentPolicyService.deleteRepaymentPolicy("110");
+        repaymentPolicyService.deleteRepaymentPolicy("111");
+    }
+
+    @Test
+    public void updateStatusCheck(){
+        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
+        repaymentPolicy.setPolicyCode("110");
+        repaymentPolicy.setPolicyName("Name10");
+        repaymentPolicy.setDate(LocalDate.now());
+        repaymentPolicy.setRepaymentFrequency("Monthly");
+        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+        String status="Pending";
+        boolean success=repaymentPolicyService.changeStatus("110",status);
+        assertTrue(success);
+        repaymentPolicyService.deleteRepaymentPolicy("110");
+    }
+
+    @Test
+    public void updateCreationParametersTest(){
+        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
+        repaymentPolicy.setPolicyCode("110");
+        repaymentPolicy.setPolicyName("Name10");
+        repaymentPolicy.setDate(LocalDate.now());
+        repaymentPolicy.setRepaymentFrequency("Monthly");
+        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+        String name="Creator";
+        repaymentPolicyService.updateCreationParameters("110",name);
+        boolean success=repaymentPolicyService.updateCreationParameters("110",name);
+        assertTrue(success);
+        repaymentPolicyService.deleteRepaymentPolicy("110");
+    }
+
+    @Test
+    public void updateModificationParametersTest(){
+        RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
+        repaymentPolicy.setPolicyCode("110");
+        repaymentPolicy.setPolicyName("Name10");
+        repaymentPolicy.setDate(LocalDate.now());
+        repaymentPolicy.setRepaymentFrequency("Monthly");
+        repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
+        String name="Modifier";
+        repaymentPolicyService.updateModificationParameters("110",name);
+        boolean success=repaymentPolicyService.updateModificationParameters("110",name);
+        assertTrue(success);
+        repaymentPolicyService.deleteRepaymentPolicy("110");
+    }
+
+    @Test
+    public void updateAuthorizationParametersTest(){
 
         RepaymentPolicy repaymentPolicy=new RepaymentPolicy();
         repaymentPolicy.setPolicyCode("110");
         repaymentPolicy.setPolicyName("Name10");
         repaymentPolicy.setDate(LocalDate.now());
         repaymentPolicy.setRepaymentFrequency("Monthly");
-
-
         repaymentPolicyService.addRepaymentPolicy(repaymentPolicy);
-
-        String name1="Creator";
-        String name2="Modifier";
-        String name3="Authorizer";
-
-
-        repaymentPolicyService.updateCreationParameters("110",name1);
-        repaymentPolicyService.updateModificationParameters("110",name2);
-        repaymentPolicyService.updateAuthorizationParameters("110",name3);
-
-        assertEquals(name1, repaymentPolicyService.getRepaymentPolicyById("110").getCreatedBy());
-        assertEquals(name2, repaymentPolicyService.getRepaymentPolicyById("110").getModifiedBy());
-        assertEquals(name3, repaymentPolicyService.getRepaymentPolicyById("110").getAuthorizedBy());
-
+        String name="Authorizer";
+        boolean success=repaymentPolicyService.updateAuthorizationParameters("110",name);
+        assertTrue(success);
         repaymentPolicyService.deleteRepaymentPolicy("110");
-
     }
 }
