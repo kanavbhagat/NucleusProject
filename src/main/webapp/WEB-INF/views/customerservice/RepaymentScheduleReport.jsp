@@ -51,7 +51,7 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 		        <thead>
 		            <tr>
-		                <!--<th>Loan Application Number</th>-->
+
                         <th>Installment Number</th>
                         <th>Opening Balance</th>
                         <th>Interest Component</th>
@@ -59,7 +59,7 @@
                         <th>Installment Amount</th>
                         <th>ClosingBalance</th>
                         <th>DueDate</th>
-                        <th>BillFlag</th>
+
 
 		            </tr>
 		        </thead>
@@ -67,7 +67,7 @@
 <c:forEach items="${rslist}" var="RepaymentSchedule">
 <tr>
 
-        	<!--<td><c:out value="${RepaymentSchedule.loanApplicationNumber}" /></td>-->
+
         	<td><c:out value="${RepaymentSchedule.installmentNumber}" /></td>
             <td><c:out value="${RepaymentSchedule.openingBalance}" /></td>
         	<td><c:out value="${RepaymentSchedule.interestComponent}" /></td>
@@ -75,7 +75,7 @@
             <td><c:out value="${RepaymentSchedule.emi}" /></td>
         	<td><c:out value="${RepaymentSchedule.closingBalance}" /></td>
         	<td><c:out value="${RepaymentSchedule.dueDate}" /></td>
-        	<td><c:out value="${RepaymentSchedule.billFlag}" /></td>
+
 
 </tr>
 	</c:forEach>

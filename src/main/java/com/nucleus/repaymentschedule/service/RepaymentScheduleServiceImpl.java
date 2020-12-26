@@ -38,10 +38,6 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
         transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
-    static LocalDate returnDate(String date) {
-        LocalDate dt = LocalDate.parse(date);
-        return dt;
-    }
 
 
     /**
