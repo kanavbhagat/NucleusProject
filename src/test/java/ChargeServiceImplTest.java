@@ -42,12 +42,12 @@ public class ChargeServiceImplTest {
 
     @Test
     public void getChargeList() {
-        assertNull(chargeServiceImpl.getChargeList());
+        assertFalse(chargeServiceImpl.getChargeList().isEmpty());
     }
 
     @Test
     public void getPendingChargeList() {
-        assertNull(chargeServiceImpl.getPendingChargeList());
+        assertFalse(chargeServiceImpl.getPendingChargeList().isEmpty());
     }
 
     @Test
