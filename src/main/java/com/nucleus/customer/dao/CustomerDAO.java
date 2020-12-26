@@ -126,6 +126,8 @@ public class CustomerDAO implements CustomerDaoInterface{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             customer = session.get(Customer.class , id);
+            if(customer==null)
+                return customer;
             Hibernate.initialize(customer.getAddresses());
             session.getTransaction().commit();
             session.close();

@@ -39,12 +39,13 @@ public class customerdetailscontroller {
      */
     @GetMapping(path = "/customerdetails")
     public ModelAndView getCustomerDetailView(@RequestParam("customerCode") String customerCode){
+
         Customer customer=customerdetailsservice.getCustomerDetails(customerCode);
 
         if(customer==null){
             return new ModelAndView("views/customerservice/customerdetails/ErrorPage",
                     "Message", "Customer NOT found: "+ customerCode);
-    }
+        }
         Hibernate.initialize(customer.getAddresses());
         return new ModelAndView("views/customerservice/customerdetails/customerdetailsview",
                 "customerObj", customer);
