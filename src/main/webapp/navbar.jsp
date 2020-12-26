@@ -100,8 +100,6 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD/run">Receipt BOD</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
-
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport">Temp Add Loan</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureForm">Loan Closure Search</a>
 
                     </div>
