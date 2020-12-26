@@ -33,7 +33,7 @@
 			<b> Repayment Schedule Report
 			 </b>
 		</h2>
-		<h3> Loan Application Id : ${rslist.get(0).getLoanApplicationNumber()} </h3>
+		<h3> Loan Application Id : ${rslist.get(0).getLoanApplicationNumber().getLoanApplicationNumber()} </h3>
 	</div>
 
 	<hr width="" color="#6c757d">

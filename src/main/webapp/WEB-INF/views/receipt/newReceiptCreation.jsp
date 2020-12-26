@@ -68,6 +68,7 @@
                     <label path="loanApplicationValue"  class="font-weight-bold required-field">Loan Account #</label>
                     <form:input type="number" class="form-control" path="loanApplicationValue"/>
                     <font color="red"><form:errors path="loanApplicationValue"/></font>
+                    <font color="red"><span>${loanAppNull}</span></font>
                 </div>
 
                 <div class="form-group">

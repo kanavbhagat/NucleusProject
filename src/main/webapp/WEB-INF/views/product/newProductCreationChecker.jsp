@@ -148,13 +148,13 @@
             <hr width="" color="#b3b3b3">
             <div class="row" style="margin-bottom:20px">
                 <div class="col-sm-3 offset-sm-9">
-                    <c:if test = "${product.status != 'Approved'}">
-                        <button type="submit" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
-                        <button type="submit" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                    <c:if test = "${product.status != 'APPROVED'}">
+                        <button type="submit" class="btn btn-primary" name ="action" value="REJECTED">Reject</button>
+                        <button type="submit" class="btn btn-primary" name ="action" value="APPROVED">Approve</button>
                     </c:if>
-                    <c:if test = "${product.status == 'Approved'}">
-                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="Rejected">Reject</button>
-                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="Approved">Approve</button>
+                    <c:if test = "${product.status == 'APPROVED'}">
+                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="REJECTED">Reject</button>
+                        <button type="submit" disabled="disabled" class="btn btn-primary" name ="action" value="APPROVED">Approve</button>
                     </c:if>
                 </div>
             </div>

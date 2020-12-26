@@ -83,10 +83,10 @@
                     <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                   </sec:authorize>
                   <sec:authorize access="hasRole('MAKER')">
-                    <c:if test = "${product.status == 'Approved'}">
+                    <c:if test = "${product.status == 'APPROVED'}">
                         <td style="color:grey"><a>Edit</a> | <a>Delete</a></td>
                     </c:if>
-                    <c:if test = "${product.status != 'Approved'}">
+                    <c:if test = "${product.status != 'APPROVED'}">
                         <td><a href="<%= request.getContextPath()%>/product/${product.productCode}/edit">Edit</a> |
                             <a href="<%= request.getContextPath()%>/product/${product.productCode}/delete">Delete</a>
                         </td>
