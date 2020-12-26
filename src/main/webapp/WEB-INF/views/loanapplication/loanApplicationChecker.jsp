@@ -55,7 +55,7 @@
 
 
                         <div class="form-group col-sm-3 ">
-                            <label>Tenure<a class="text-danger">*</a></label>
+                            <label>Tenure(months)<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="tenure" readonly = "true" />
                         </div>
 

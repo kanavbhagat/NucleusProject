@@ -5,6 +5,7 @@ import com.nucleus.product.model.Product;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -15,7 +16,9 @@ public class LoanApplications {
 
     @Id
     @Column(name = "loan_application_number")
-    @NotNull( message = "Enter a valid Loan Application number")
+    @Min(value = 1000000000)
+    @Max(value = 2000000000)
+    @NotNull
     /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
