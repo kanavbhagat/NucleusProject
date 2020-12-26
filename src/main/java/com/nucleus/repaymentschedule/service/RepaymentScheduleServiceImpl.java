@@ -60,7 +60,7 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
 
         int r = 0;
         for (int i = 0; i < repaymentSchedules.size(); i++) {
-                repaymentScheduleDAO.addRepaymentSchedule(repaymentSchedules.get(i));
+               r= repaymentScheduleDAO.addRepaymentSchedule(repaymentSchedules.get(i));
         }
         return r;
     }
