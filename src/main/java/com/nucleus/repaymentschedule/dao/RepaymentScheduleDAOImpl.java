@@ -12,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * This class acts as a Database layer for RepaymentSchedule related operations.
+ *
+ */
 @Repository
 @Transactional
 public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
@@ -20,6 +24,11 @@ public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
     @Autowired
     private SessionFactory sessionFactory;
 
+
+    /**
+     * Adds a Repayment Schedule to the database.
+     * @param repaymentSchedule is the RepaymentSchedule to be saved.
+     */
     @Override
     public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) {
 
