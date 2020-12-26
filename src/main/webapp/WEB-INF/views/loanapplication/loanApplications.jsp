@@ -14,13 +14,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <%--
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#loanApplicationsTable').DataTable();
         } );
     </script>
-    --%>
+
 
 </head>
 
@@ -82,7 +82,7 @@
 
                                             <td><a href="${checkUrl}">${loan.loanApplicationNumber}</a></td>
 
-                                           
+
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
@@ -115,4 +115,4 @@
         </div>
 </div>
 
-<br>
+<br>z
