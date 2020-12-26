@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class LoanApplicationViewController {
@@ -47,6 +49,7 @@ public class LoanApplicationViewController {
     @GetMapping(value="/loanApplication/delete")
     public ModelAndView deleteLoanApplication(@RequestParam(value="loanApplicationNumber", required=true) String loanApplicationNumber,
                                               Model model){
+
         loanApplicationService.deleteLoanApplicationId(Integer.parseInt(loanApplicationNumber));
 
         ModelAndView modelAndView =new ModelAndView("views/loanapplication/deletedpage");
@@ -149,6 +152,18 @@ public class LoanApplicationViewController {
         return modelAndView;
 
     }
+
+//    @GetMapping(value = "/customerAutoComplete")
+//    @ResponseBody
+//    public List<String> customerAutoComplete(@RequestParam(value = "term",
+//            required = true, defaultValue = "") String term){
+//        List<String> ls=new ArrayList<String>();
+//        ls.add("L110");
+//        ls.add("L111");
+//        ls.add("L011");
+//        return ls;
+//
+//    }
 
 
 }

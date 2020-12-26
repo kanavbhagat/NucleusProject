@@ -22,7 +22,8 @@ public class LoanApplications {
     /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+//    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false)
     private Customer customerCode;
 
