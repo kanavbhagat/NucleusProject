@@ -35,16 +35,9 @@
     <header>
         <jsp:include page="/navbar.jsp" />
     </header>
-
-
-
     <article>
         <form:form class="font-weight-bold mb-5" modelAttribute="loanApplications" method="post">
-
             <hr>
-
-
-
             <section>
                 <div>
                   <div class="row ">
