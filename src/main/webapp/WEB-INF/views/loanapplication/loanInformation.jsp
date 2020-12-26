@@ -43,7 +43,7 @@
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
-                                <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
+                                <form:label path="productType" cssClass="font-weight-bold required-field">Product Type<a class="text-danger">*</a></form:label>
                                  <form:select path="productType" cssClass="form-control">
                                        <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
                                        <form:options items="${productType}" />
@@ -63,7 +63,7 @@
 
 
                         <div class="form-group col-sm-3 ">
-                            <label>Tenure<a class="text-danger">*</a></label>
+                            <label>Tenure(months)<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="tenure" />
                             <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>

@@ -49,8 +49,8 @@ public class LoanApplicationViewController {
                                               Model model){
         loanApplicationService.deleteLoanApplicationId(Integer.parseInt(loanApplicationNumber));
 
-        ModelAndView modelAndView =new ModelAndView("views/loanapplication/loanApplicationDeleted");
-        modelAndView.addObject("loanApplicationNumber",loanApplicationNumber);
+        ModelAndView modelAndView =new ModelAndView("views/loanapplication/deletedpage");
+        modelAndView.addObject("loanApplicationId",loanApplicationNumber);
         return modelAndView;
     }
     @GetMapping(value = "loanApplication/edit")
@@ -78,8 +78,9 @@ public class LoanApplicationViewController {
         loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
 
         loanApplicationService.updateLoanApplication(loanApplications);
-        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
 
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/editedpage");
+        modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
         return modelAndView;
     }
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -98,7 +99,8 @@ public class LoanApplicationViewController {
         loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
         loanApplications.setStatus("PENDING");
         loanApplicationService.updateLoanApplication(loanApplications);
-        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/editedpage");
+        modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
 
         return modelAndView;
     }
@@ -107,7 +109,6 @@ public class LoanApplicationViewController {
     @GetMapping(value = "loanApplication/check")
     public ModelAndView getCheckUrl(@RequestParam(value = "loanApplicationNumber",required = true) String loanApplicationNumber, Model model){
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
-        System.out.println("----------------------+"+loanApplications.getCustomerCode().getCustomerCode()+"----------------------");
 
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanApplicationChecker");
         modelAndView.addObject("loanApplicationNumber",loanApplicationNumber);
@@ -123,12 +124,12 @@ public class LoanApplicationViewController {
 
         loanApplications = loanApplicationService.getLoanApplicationId(loanApplications.getLoanApplicationNumber());
         loanApplications.setStatus("APPROVED");
-        System.out.println("----------------------+"+loanApplications.getCustomerCode().getCustomerCode()+"----------------------");
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
         loanApplications.setAuthorizedDate(LocalDate.now());
         loanApplicationService.updateLoanApplication(loanApplications);
-        repaymentScheduleService.addRepaymentSchedule(loanApplications);
-        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+       // repaymentScheduleService.addRepaymentSchedule(loanApplications);
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/approvedpage");
+        modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
 
         return modelAndView;
 
@@ -142,7 +143,8 @@ public class LoanApplicationViewController {
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
         loanApplications.setAgreementDate(LocalDate.now());
         loanApplicationService.updateLoanApplication(loanApplications);
-        ModelAndView modelAndView = new ModelAndView("redirect:/loanApplication");
+        ModelAndView modelAndView = new ModelAndView("views/loanapplication/rejectedpage");
+        modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
 
         return modelAndView;
 
