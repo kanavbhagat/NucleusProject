@@ -1,6 +1,9 @@
 package com.nucleus.customer.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -13,6 +16,7 @@ public class Address {
     private Integer addressId;
 
     @Column(name = "house_no",nullable = false, length = 20)
+    @Pattern(regexp = "^[1-9][0-9]*$" , message = "Please enter a valid house number")
     private String houseNo;
 
     @Column(name = "city",nullable = false, length = 20)
@@ -25,6 +29,8 @@ public class Address {
     private String country;
 
     @Column(name = "pinCode", nullable = false)
+    @Min(value = 100000,message = "Please Enter a 6 digit pin code")
+    @Max(value = 999999)
     private Integer pinCode;
 
 

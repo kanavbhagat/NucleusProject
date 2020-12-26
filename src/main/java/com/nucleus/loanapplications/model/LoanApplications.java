@@ -2,8 +2,11 @@ package com.nucleus.loanapplications.model;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.product.model.Product;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -12,6 +15,7 @@ public class LoanApplications {
 
     @Id
     @Column(name = "loan_application_number")
+    @NotNull( message = "Enter a valid Loan Application number")
     /* @GeneratedValue(strategy=GenerationType.AUTO)*/
     private Integer loanApplicationNumber;
 
@@ -34,18 +38,24 @@ public class LoanApplications {
     private Product productCode;
 
     @Column(name = "loan_amount_requested",nullable = false)
+    @NotNull(message = "Enter a valid Loan amount")
     private Integer loanAmountRequested;
 
     @Column(name = "tenure",nullable = false)
+    @NotNull(message = "Please enter a positive number")
+    @Min(value = 1)
     private Integer tenure;
 
     @Column(name = "rate",nullable = false)
+    @NotNull(message = "Please enter a positive number")
     private double rate;
 
     @Column(name = "agreement_date",nullable = false)
+    @NotNull(message = "Please Enter A Date")
     private LocalDate agreementDate;
 
     @Column(name = "installment_due_date",nullable = false)
+    @NotNull(message = "Please Enter A Date")
     private LocalDate installmentDueDate;
 
     @Column(name = "create_date")
