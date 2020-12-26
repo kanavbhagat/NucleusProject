@@ -54,16 +54,6 @@ public class LoanDisbursalController {
         return new ModelAndView("views/loan disbursal/CustomerLoanDisbursal", "allLoanApps", loanApplications);
     }
 
-    @GetMapping(value = "/customerAutoComplete")
-    @ResponseBody
-    public List<String> customerAutoComplete(@RequestParam(value = "term",
-            required = true, defaultValue = "") String term){
-        List<String> ls=new ArrayList<String>();
-        ls.add("L110");
-        ls.add("L111");
-        ls.add("L011");
-        return ls;
 
-    }
 
 }
