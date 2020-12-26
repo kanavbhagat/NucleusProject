@@ -147,14 +147,3 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
         return loanApplications;
     }
 }
-
-//    List<NewCharge> chargeList;
-//        try {
-//                Session session = getSession();
-//                session.beginTransaction();
-//                chargeList = session.createQuery("from NewCharge",NewCharge.class).getResultList();
-//        session.getTransaction().commit();
-//        }catch (Exception e) {
-//        chargeList = null;
-//        }
-//        return chargeList;
