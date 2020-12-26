@@ -24,22 +24,30 @@ public class PaymentAspect {
 
     @Before("pointCutBefore()")
     public void logBefore(JoinPoint joinPoint){
+        log.info("-------------------------------------------------------------------------");
         log.info("PaymentLogBefore "+joinPoint.getSignature().getName()+" is being executed");
+        log.info("-------------------------------------------------------------------------");
     }
 
     @AfterReturning(value = "pointCutBefore()", returning = "status")
     public void logAfter(JoinPoint joinPoint, Object status){
         if(status instanceof List){
+            log.info("-------------------------------------------------------------------------");
             log.info("PaymentLogAfter "+joinPoint.getSignature().getName()+
                     " payment "+((List<?>) status).size());
+            log.info("-------------------------------------------------------------------------");
         }
         else if (status instanceof Payment){
+            log.info("-------------------------------------------------------------------------");
             log.info("PaymentLogAfter "+joinPoint.getSignature().getName()+
                     " payment "+((Payment) status).getLoanApplicationNumber());
+            log.info("-------------------------------------------------------------------------");
         }
         else{
             Boolean successOrFaliure = (Boolean) status;
+            log.info("-------------------------------------------------------------------------");
             log.info("PaymentLogAfter "+joinPoint.getSignature().getName()+" success "+successOrFaliure);
+            log.info("-------------------------------------------------------------------------");
         }
     }
 }

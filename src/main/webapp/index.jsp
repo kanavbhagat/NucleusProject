@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	  <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
 
 	<div class="container-fluid mt-2">
 		<div class="row justify-content-center">
-			<img src="logo.png">
+		    <img src="<c:url value="/images/logo.png" />" alt="logo" />
 		</div>
 	</div>
 
@@ -35,36 +36,44 @@
 
 	            	<c:url var="loginUrl" value="/login" />
 	              	<form action="${loginUrl}" method="post">
-	              		<c:if test="${param.error != null}">
-	              					<p>Invalid username and password.</p>
-	              		</c:if>
-          				<c:if test="${param.logout != null}">
-          					<p>You have been logged out successfully.</p>
-          				</c:if>
 
+	              	    <div class="d-flex justify-content-center">
+                            <c:if test="${param.error != null}">
+                                <p class="lead mt-4 " style="border:1px; border-style:solid;border-radius: 10px; border-color:rgba(255,138,128 ,1); padding: 5px;background-color:rgba(255,138,128 ,0.1);width: 80%; font-size: 15px">
+                                  Invalid username and password.  </p>
+                            </c:if>
+                            <c:if test="${param.logout != null}">
+                                <p class="lead mt-4 " style="border:1px; border-style:solid;border-radius: 10px; border-color:rgba(141, 181, 150, 0.8); padding: 5px;background-color:rgba(141, 181, 150, 0.1);width: 80%; font-size: 15px">
+                                  You have been logged out successfully.</p>
+                            </c:if>
+                        </div>
 
 		                <div class="form-label-group">
 		                  <input type="text" id="username" name="user" class="form-control" placeholder="Username" required autofocus>
 		                  <label for="username">User Name</label>
 		                </div>
 
+
 		                <div class="form-label-group">
 		                  <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 		                  <label for="password">Password</label>
 		                </div>
 
+                        <%--
 		                <div class="custom-control custom-checkbox mb-3">
-		                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+		                  <input type="checkbox" class="custom-control-input" name="remember"  id="customCheck1">
 		                  <label class="custom-control-label" for="customCheck1">Remember password</label>
 		                </div>
+		                --%>
 
 		                <input type="hidden" name="${_csrf.parameterName}"
 		                			value="${_csrf.token}" />
 
 		                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
 
+                        <%--
 		                <div class="text-center">
-		                  <a class="small" href="#">Forgot password?</a></div>
+		                  <a class="small" href="#">Forgot password?</a></div>--%>
 	              	</form>
 
 

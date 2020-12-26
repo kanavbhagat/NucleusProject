@@ -4,6 +4,8 @@ import com.nucleus.login.logindetails.LoginDetailsImpl;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,18 @@ import java.time.LocalDate;
  * <p> Controller for the product overview page and associated checker/maker actions. </p>
  */
 @Controller
+@PropertySource("classpath:status.properties")
 public class ProductOverviewController {
 
     @Autowired
     ProductService productService;
+
+    // initialise status properties
+    @Value("${status.rejected}")
+    private String rejected;
+
+    @Value(("${status.approved}"))
+    private String approved;
 
 
     /**
@@ -40,7 +50,7 @@ public class ProductOverviewController {
     /**
      * <p> Get Mapping for the product approval page. Retrieves the product by its Id and attaches it to the returned model.
      * </p>
-     * @param String productId id of the product that needs to be approved
+     * @param productId id of the product that needs to be approved
      * @return the modelAndView with the product approval page.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
@@ -67,12 +77,16 @@ public class ProductOverviewController {
 
         product.setAuthorizedBy(details.getUserName());
         product.setAuthorizedDate(LocalDate.now());
-        product.setStatus(action);
+
+        product.setStatus(rejected);
+        if(approved.equals(action)){
+            product.setStatus(approved);
+        }
 
         product = productService.updateProduct(product);
         if(product!=null){
             ModelAndView modelAndView = new ModelAndView("views/product/productSuccess");
-            modelAndView.addObject("messageHeader", "Product was successfully " + action );
+            modelAndView.addObject("messageHeader", "Product status was successfully changed");
             modelAndView.addObject("messageBody", "You successfully changed the product status." );
             modelAndView.addObject("productCode", productId);
             return modelAndView;

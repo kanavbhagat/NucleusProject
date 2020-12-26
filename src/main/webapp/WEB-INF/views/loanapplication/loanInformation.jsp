@@ -38,6 +38,7 @@
                       <div class="form-group col-sm-3">
                            <label>Loan Application Number<a class="text-danger">*</a></label>
                            <form:input type="number" class="form-control" path="loanApplicationNumber" />
+                           <form:errors path = "loanApplicationNumber" cssClass = "error" style = "color:red"></form:errors>
                       </div>
                        </div>
                     <div class="row ">
@@ -47,10 +48,14 @@
                                        <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
                                        <form:options items="${productType}" />
                                  </form:select>
+                                 <form:errors path = "productType" cssClass = "error" style = "color:red"></form:errors>
+
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="loanAmountRequested" />
+                            <form:errors path = "loanAmountRequested" cssClass = "error" style = "color:red"></form:errors>
+
                         </div>
 
                     </div>
@@ -60,11 +65,13 @@
                         <div class="form-group col-sm-3 ">
                             <label>Tenure<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="tenure" />
+                            <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Rate<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="rate" />
+                            <form:errors path = "rate" cssClass = "error" style = "color:red"></form:errors>
                         </div>
                     </div>
 
@@ -73,11 +80,13 @@
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
                             <form:input type="date" class="form-control" path="agreementDate" />
+                            <form:errors path = "agreementDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
                             <form:input type="date" class="form-control" path="installmentDueDate" />
+                            <form:errors path = "installmentDueDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
 
                         </div>
 

@@ -12,28 +12,28 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * This class acts as a Database layer for RepaymentSchedule related operations.
+ *
+ */
 @Repository
-
-public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO{
+@Transactional
+public class RepaymentScheduleDAOImpl implements RepaymentScheduleDAO
+{
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    private Session getSession(){
-        Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException E){
-            session = sessionFactory.openSession();
-        }
-        return session;
-    }
 
+    /**
+     * Adds a Repayment Schedule to the database.
+     * @param repaymentSchedule is the RepaymentSchedule to be saved.
+     */
     @Override
     public int addRepaymentSchedule(RepaymentSchedule repaymentSchedule) {
 
         try {
-            Session session = getSession();
+            Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(repaymentSchedule);
             session.getTransaction().commit();

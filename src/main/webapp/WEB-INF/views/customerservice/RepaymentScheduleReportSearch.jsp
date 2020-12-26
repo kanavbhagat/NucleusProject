@@ -40,31 +40,30 @@
 
     <hr width="" color="#6c757d">
 
+    <div class="container-fluid">
 
+        <form method="GET" action="<%= request.getContextPath()%>/getRepaymentScheduleReport">
 
-
-
-<div class="container-fluid">
-    <form:form modelAttribute="repaymentSchedule" method="POST">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <form:label path="loanApplicationNumber" class="font-weight-bold required-field">Loan Application Number:</form:label><br>
-                    <form:input path="loanApplicationNumber" type="text" class="form-control" id="appNo"/><br>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold required-field">Loan Application Number:</label><br>
+                        <input name="appNo" type="text" class="form-control" id="appNo"/><br>
+                    </div>
                 </div>
             </div>
-        </div>
 
-<hr width="" color="#6c757d">
-    <div class="row" style="margin-bottom:20px">
-        <div class="col-sm-3 offset-sm-9">
-            <input type="submit" class="btn btn-primary" name="showreport" value="Show Report" />
-            <input type="reset" class="btn btn-primary" name="clear" value="Clear" />
-        </div>
+            <hr width="" color="#6c757d">
+
+            <div class="row" style="margin-bottom:20px">
+
+                <div class="col-sm-3 offset-sm-9">
+                    <input type="submit" class="btn btn-primary" name="showreport" value="Show Report" />
+                    <input type="reset" class="btn btn-primary" name="clear" value="Clear" />
+                </div>
+
+            </div>
+        </form>
     </div>
-</form:form>
-
-
-</div>
 </body>
 </html>

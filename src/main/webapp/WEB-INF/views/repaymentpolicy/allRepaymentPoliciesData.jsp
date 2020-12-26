@@ -5,6 +5,14 @@
   prefix="security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
+
+<%@ page import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("status");
+  request.setAttribute("saved",resource.getString("status.saved"));
+  request.setAttribute("pending",resource.getString("status.pending"));
+  request.setAttribute("approved",resource.getString("status.approved"));
+  request.setAttribute("rejected",resource.getString("status.rejected"));%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,10 +89,10 @@
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
-                            <c:if test = "${newRepaymentPolicy.status ne 'Saved'}">
+                            <c:if test = "${newRepaymentPolicy.status == pending or newRepaymentPolicy.status == rejected}">
                                 <td style="text-align: center;"><a href="${checkUrl}"><c:out value="${newRepaymentPolicy.policyCode}" /></a></td>
                             </c:if>
-                            <c:if test = "${newRepaymentPolicy.status == 'Saved'}">
+                            <c:if test = "${newRepaymentPolicy.status == saved or newRepaymentPolicy.status == approved}">
                                 <td style="text-align: center;"><c:out value="${newRepaymentPolicy.policyCode}" /></td>
                             </c:if>
                         </sec:authorize>
@@ -95,7 +103,16 @@
                         <td><c:out value="${newRepaymentPolicy.createdBy}" /></td>
                         <td><c:out value="${newRepaymentPolicy.authorizedBy}" /></td>
                         <sec:authorize access="hasRole('MAKER')">
+                            <c:if test = "${newRepaymentPolicy.status == approved}">
+                                <td>
+                                     <a href="${editUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Edit</a>
+                                     |
+                                     <a href="${deleteUrl}" disabled="disabled" style="pointer-events:none; cursor:default;color:lightgrey;">Delete</a>
+                                </td>
+                            </c:if>
+                            <c:if test = "${newRepaymentPolicy.status ne approved}">
                                 <td><a href="${editUrl}">Edit</a> | <a href="${deleteUrl}">Delete</a></td>
+                            </c:if>
                         </sec:authorize>
                         <sec:authorize access="hasRole('CHECKER')">
                                 <td>

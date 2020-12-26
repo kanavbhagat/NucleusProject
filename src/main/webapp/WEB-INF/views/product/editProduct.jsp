@@ -183,8 +183,8 @@
                 <hr width="" color="#b3b3b3">
                 <div class="row" style="margin-bottom:20px">
                     <div class="col-sm-3 offset-sm-9">
-                        <button type="submit" class="btn btn-primary" name="action" value="Saved">Update</button>
-                        <button type="submit" class="btn btn-primary" name="action" value="Pending">Update and Request Approval</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="SAVED">Update</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="PENDING">Update and Request Approval</button>
                     </div>
                 </div>
             </form:form>

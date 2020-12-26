@@ -6,6 +6,8 @@ import com.nucleus.receipt.model.Receipt;
 import com.nucleus.receipt.service.ReceiptService;
 import com.nucleus.receipt.service.ReceiptValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
  * <p> controller for new receipt creation </p>
  */
 @Controller
+@PropertySource("classpath:status.properties")
 public class NewReceiptController {
 
     @Autowired
@@ -26,6 +29,10 @@ public class NewReceiptController {
 
     @Autowired
     LoanApplicationService loanApplicationService;
+
+    // initialise status properties
+    @Value("${status.pending}")
+    private String pending;
 
 
     /**
@@ -46,8 +53,8 @@ public class NewReceiptController {
     /**
      * <p> Post mapping for creating a new receipt. Retrieves the model receipt object from the receipt creation
      * form and saves it into the database. </p>
-     * @param Receipt receipt the model object created from the form.
-     * @param BindingResult result the binding result for errors.
+     * @param receipt the model object created from the form.
+     * @param result the binding result for errors.
      * @return either the success or error modelAndView depending on whether receipt creation was successful.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -58,16 +65,22 @@ public class NewReceiptController {
         // extra validation so that hibernate validations continue to work.
         new ReceiptValidator().validate(receipt, result);
 
-        if(result.hasErrors()){
+        if(receipt.getLoanApplicationValue()!=null && !receipt.getLoanApplicationValue().isEmpty()){
+            Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
+            LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
+            receipt.setLoanApplicationNumber(loanApplications);
+        }
+
+        if(result.hasErrors() || receipt.getLoanApplicationNumber()==null){
             modelAndView.setViewName("views/receipt/newReceiptCreation");
+            if(receipt.getLoanApplicationNumber()==null){
+                modelAndView.addObject("loanAppNull", "This loan application number does not exist!");
+            }
+
             return modelAndView;
         }
 
-        receipt.setReceiptStatus("Pending");
-
-        Integer id = Integer.parseInt(receipt.getLoanApplicationValue());
-        LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(id);
-        receipt.setLoanApplicationNumber(loanApplications);
+        receipt.setReceiptStatus(pending);
 
         Boolean success = receiptService.registerReceipt(receipt);
 

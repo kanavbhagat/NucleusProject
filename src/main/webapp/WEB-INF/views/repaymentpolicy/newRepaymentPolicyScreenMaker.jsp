@@ -26,6 +26,16 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
+
+
+
+
+        window.onload = function() {
+            document.getElementById("minTenure").onchange();
+            document.getElementById("maxTenure").onchange();
+            };
+
+
             function validate_form ()
                {
                    valid = true;
