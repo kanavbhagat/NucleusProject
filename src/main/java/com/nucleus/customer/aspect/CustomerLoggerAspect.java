@@ -20,7 +20,7 @@ import java.util.List;
 public class CustomerLoggerAspect {
 
     private Logger logger = LoggerFactory.getLogger(Customer.class);
-    String separator = "------------------------------------------------------------------------------------";
+    String separator = "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*";
 
     @Pointcut("execution(* com.nucleus.customer.dao.CustomerDaoInterface.addCustomer(..))")
     public void addCustomer(){}
@@ -85,6 +85,7 @@ public class CustomerLoggerAspect {
         } else {
             logger.info("Failed to save edits of Customer application!");
         }
+        logger.info(separator);
     }
 
 
@@ -98,8 +99,10 @@ public class CustomerLoggerAspect {
         int length = 0;
         if(allCustomers!=null) {
             length = allCustomers.size();
+            logger.info(length + " Customer applications Fetched!");
         }
-        logger.info(length + " Customer applications Fetched!");
+
+        logger.info(separator);
     }
 
 
@@ -117,6 +120,7 @@ public class CustomerLoggerAspect {
         } else {
             logger.info("Failed to delete Customer!");
         }
+        logger.info(separator);
     }
 
 
@@ -127,7 +131,8 @@ public class CustomerLoggerAspect {
     }
     @AfterReturning(pointcut = "getCustomerById()", returning = "customer")
     public void afterRequestingApprovalDAO(JoinPoint joinPoint, Customer customer) {
-        logger.info("Loan application fetched : "+customer);
+        logger.info("Customer fetched : "+customer);
+        logger.info(separator);
     }
 
 
@@ -139,6 +144,7 @@ public class CustomerLoggerAspect {
     @AfterReturning(pointcut = "getCustomerLoanDetails()", returning = "loanApplications")
     public void afterRequestingApprovalDAO(JoinPoint joinPoint, LoanApplications loanApplications) {
         logger.info("Loan application fetched : "+loanApplications);
+        logger.info(separator);
     }
 
 
