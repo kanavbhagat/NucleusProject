@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
   prefix="security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 
@@ -104,14 +105,20 @@
 
                     </div>
                 </li>
-                <li class="nav-item mx-2">
+                <li class="nav-item mx-4">
                     <security:authorize access="isAuthenticated()">
                         <b>Welcome!  <security:authentication property="principal.username" /></b>
                         |
                         <sec:authentication property="principal.authorities"/>
                         |
-                        <a href="<%= request.getContextPath()%>/logout">Logout</a>
                       </security:authorize>
+                </li>
+                <li class="nav-item mx-4">
+                    <security:authorize access="isAuthenticated()">
+                        <a href="<%= request.getContextPath()%>/logout">
+                            <img src="<c:url value="/images/logout.png" />" alt="logout">
+                        </a>
+                    </security:authorize>
                 </li>
             </ul>
         </div>
