@@ -38,14 +38,14 @@
                       <div class="form-group col-sm-3">
                            <label>Loan Application Number<a class="text-danger">*</a></label>
                            <form:input type="number" class="form-control" path="loanApplicationNumber" />
-                           <form:errors path = "loanApplicationNumber" cssClass = "error" style = "color:red"></form:errors>
+                           <form:errors path = "loanApplicationNumber" cssClass = "error"><p style = "color:red">Please put a valid 10 digit number having first digit as 1</p></form:errors>
                       </div>
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
                                  <form:select path="productType" cssClass="form-control">
-                                       <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+
                                        <form:options items="${productType}" />
                                  </form:select>
                                  <form:errors path = "productType" cssClass = "error" style = "color:red"></form:errors>

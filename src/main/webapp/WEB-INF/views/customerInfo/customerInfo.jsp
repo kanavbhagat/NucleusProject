@@ -272,7 +272,8 @@ window.onload = function() {
                                                     <label for="country">Nationality</label>
                                                     <spring:select class="form-control" id="country" name="nationality" path="nationality">
                                                         <spring:option value="India">India</spring:option>
-                                                        <spring:option value="china">China</spring:option>
+                                                        <spring:option value="America">America</spring:option>
+                                                        <spring:option value="Canada">Canada</spring:option>
                                                     </spring:select>
                                                     <spring:errors path = "nationality" cssClass = "error" style = "color:red"></spring:errors>
                                                 </div>
