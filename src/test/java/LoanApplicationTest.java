@@ -27,7 +27,7 @@ public class LoanApplicationTest {
 
     @Test
     public void getAllLoanApplicationsListTest() {
-        assertNull(loanApplicationService.getAllLoanApplicationsList());
+        assertNotNull(loanApplicationService.getAllLoanApplicationsList());
     }
 
     @Test
@@ -37,12 +37,12 @@ public class LoanApplicationTest {
 
     @Test
     public void deleteLoanApplicationIdTest() {
-        assertTrue(loanApplicationService.deleteLoanApplicationId(123456));
+        assertFalse(loanApplicationService.deleteLoanApplicationId(123456));
     }
 
     @Test
     public void updateLoanApplicationTest(){
-        assertNull(loanApplicationService.updateLoanApplication(new LoanApplications()));
+        assertFalse(loanApplicationService.updateLoanApplication(new LoanApplications()));
     }
 
 
