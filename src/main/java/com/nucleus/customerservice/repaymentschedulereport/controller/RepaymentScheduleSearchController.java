@@ -20,10 +20,7 @@ public class RepaymentScheduleSearchController {
     @Autowired
     private RepaymentScheduleReportService repaymentScheduleService;
 
-    static LocalDate returnDate(String date) {
-        LocalDate dt = LocalDate.parse(date);
-        return dt;
-    }
+
 
     /**
      * retrieves RepaymentScheduleReportSearch JSP page to get loanApplicationNumber.
@@ -44,7 +41,7 @@ public class RepaymentScheduleSearchController {
      * @return ModelAndView returns the view containing RepaymentScheduleReport.jsp
      */
     @RequestMapping(value = "/getRepaymentScheduleReport", method = RequestMethod.GET)
-    public ModelAndView showRepaymentScheduleSubmit(@RequestParam("appNo") String appNo, Model model)
+    public ModelAndView showRepaymentScheduleSubmit(@RequestParam("appNo") String appNo)
     {
         int loanApplicationNumber = Integer.parseInt(appNo);
         List<RepaymentSchedule> rslist=repaymentScheduleService.getRepaymentScheduleReport(loanApplicationNumber);
