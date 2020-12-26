@@ -33,10 +33,6 @@ public class RepaymentScheduleReportServiceImpl implements RepaymentScheduleRepo
         transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
-    static LocalDate returnDate(String date) {
-        LocalDate dt = LocalDate.parse(date);
-        return dt;
-    }
 
     /**
      * Retrieves a Repayment Schedule Report by loan application number from the database.
