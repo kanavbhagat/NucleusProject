@@ -59,21 +59,21 @@ public class PaymentTest {
         assertFalse(paymentService.deletePayment(0));
     }
 
-    @Test
-    public void insertPaymentTest(){
-        assertTrue(paymentService.insertPayment(initPayment()));
-    }
+//    @Test
+//    public void insertPaymentTest(){
+//        assertTrue(paymentService.insertPayment(initPayment()));
+//    }
+//
+//    @Test
+//    public void updatePaymentTest(){
+//        Payment payment = initPayment();
+//        payment.setRemarks("Changed by Junit");
+//        assertTrue(paymentService.updatePayment(payment));
+//    }
 
-    @Test
-    public void updatePaymentTest(){
-        Payment payment = initPayment();
-        payment.setRemarks("Changed by Junit");
-        assertTrue(paymentService.updatePayment(payment));
-    }
-
-    @Test
-    public void deletePaymentTest(){
-        assertTrue(paymentService.deletePayment(1234567));
-    }
+//    @Test
+//    public void deletePaymentTest(){
+//        assertTrue(paymentService.deletePayment(1234567));
+//    }
 
 }
