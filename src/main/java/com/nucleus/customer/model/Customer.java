@@ -61,10 +61,10 @@ public class Customer {
     @NotEmpty(message = "Organization name cannot be empty")
     private String organizationName;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<LoanApplications> loanApplications;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy="customerCode")
+    @OneToMany(fetch = FetchType.LAZY , mappedBy="customerCode")
     private List<Address> addresses;
 
     @Transient
