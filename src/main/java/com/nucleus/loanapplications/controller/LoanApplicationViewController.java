@@ -84,8 +84,7 @@ public class LoanApplicationViewController {
     /**
      * This method is used to display editable details of existing Loan Application.
      *
-     * @param loanApplicationNumber This holds loan Application Number
-     *                   which is going to be edited.
+     * @param loanApplicationNumber loan Application number which is going to be searched
      * @param model This model object is passed to the next pages.
      *
      * @return ModelAndView This returns path to a view for loan Information Maker.
@@ -102,13 +101,13 @@ public class LoanApplicationViewController {
     /**
      * This method is used to update editable details of existing Loan application.
      *
-     * @param loanApplications This holds loan Application object
-     *                   which is going to be edited.
+     * @param loanApplications loan Application number which is going to be searched
+     *
      * @param model This model object is passed to the next pages.
      *
      * @param update This holds the update status
      *
-     * @return ModelAndView This returns path to a view for edited details page.
+     * @return ModelAndView The view containing edited page.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(params = {"op=Update"},value = "loanApplication/edit")
@@ -135,13 +134,13 @@ public class LoanApplicationViewController {
     /**
      * This method is used to update editable details of existing Loan application and request.
      *
-     * @param loanApplications This holds loan Application object
-     *                   which is going to be edited.
+     * @param loanApplications loan Application number which is going to be searched
+     *
      * @param model This model object is passed to the next pages.
      *
      * @param upAndreq This holds the update and request status
      *
-     * @return ModelAndView This returns path to a view for edited details page.
+     * @return ModelAndView This returns the view containing edited page and make request pending for approval.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(params = {"op=Update and Request"},value = "loanApplication/edit")
@@ -167,18 +166,16 @@ public class LoanApplicationViewController {
 
 
 
-    ////////////////////////////////////////////////////To be edited
-
 
 
     /**
      * This method is used to update editable details of existing Loan application and request.
      *
-     * @param loanApplicationNumber This holds loan Application object
-     *                   which is going to be edited.
+     * @param loanApplicationNumber loan Application number which is going to be searched
+     *
      * @param model This model object is passed to the next pages
      *
-     * @return ModelAndView This returns path to a view for edited details page.
+     * @return ModelAndView This returns the view of loanApplication Checker with required attributes.
      */
     @PreAuthorize("hasRole ('ROLE_CHECKER')")
     @GetMapping(value = "loanApplication/check")
@@ -193,19 +190,18 @@ public class LoanApplicationViewController {
 
 
 
-    ////////////////////////////////////////////////////To be edited
 
 
     /**
      * This method is used to update editable details of existing Loan application and request.
      *
-     * @param loanApplications This holds loan Application object
-     *                   which is going to be edited.
+     * @param loanApplications loan Application number which is going to be searched
+     *
      * @param model This model object is passed to the next pages
      *
      * @param approve
      *
-     * @return ModelAndView This returns path to a view for edited details page.
+     * @return ModelAndView This returns the view containing approved page.
      */
 
     @PreAuthorize("hasRole('ROLE_CHECKER')")
@@ -229,22 +225,19 @@ public class LoanApplicationViewController {
 
 
 
-    ////////////////////////////////////////////////////To be edited
-
 
 
 
     /**
      * This method is used to update editable details of existing Loan application and request.
      *
-     * @param loanApplications This holds loan Application object
-     *                   which is going to be edited.
+     * @param loanApplications loan Application number which is going to be searched
      *
      * @param reject
      *
      * @param model This model object is passed to the next pages
      *
-     * @return ModelAndView This returns path to a view for edited details page.
+     * @return ModelAndView This returns the view containing rejected page.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER')")
     @PostMapping(params = {"op=reject"},value = "loanApplication/check")
@@ -261,18 +254,6 @@ public class LoanApplicationViewController {
         return modelAndView;
 
     }
-
-//    @GetMapping(value = "/customerAutoComplete")
-//    @ResponseBody
-//    public List<String> customerAutoComplete(@RequestParam(value = "term",
-//            required = true, defaultValue = "") String term){
-//        List<String> ls=new ArrayList<String>();
-//        ls.add("L110");
-//        ls.add("L111");
-//        ls.add("L011");
-//        return ls;
-//
-//    }
 
 
 }
