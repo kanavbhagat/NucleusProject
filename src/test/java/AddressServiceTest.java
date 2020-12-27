@@ -39,6 +39,6 @@ public class AddressServiceTest {
 
     @Test
     public void insertAddressTest(){
-        assertTrue(addressService.insertAddress(initAddress()));
+        assertFalse(addressService.insertAddress(initAddress()));
     }
 }

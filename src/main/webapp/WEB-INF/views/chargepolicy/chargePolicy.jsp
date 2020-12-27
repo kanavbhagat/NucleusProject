@@ -8,53 +8,47 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+      <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .table {
+            width:80%;
+    }
+    .required:after {
+        content:" *";
+        color: red;
+    }
+    .error-messages {
+        color:red;
+    }
+</style>
+  <title>Charge Policy Creation Screen</title>
 </head>
 
 <body>
-<script>
-$(document).ready(function(){
-
-  $("#chargeCode").focusout(function(){
-
-    var charge  = {};
-    charge["chargeCode"] =$('#chargeCode').find(":selected").text();
-    charge["chargeCodeName"] =  "default";
-    $.ajax({
-        				type : "POST",
-        				contentType : "application/json",
-        				url : "newChargePolicy/getCharge",
-        				data : JSON.stringify(charge),
-        				dataType : 'json',
-        				success : function(data) {
-
-        					$('#chargeCodeName').val(data.chargeCodeName);
-                            $('#chargeCodeName').attr('readonly', true);
-
-        				}
-
-        			});
-  });
-});
-</script>
-
+ <div class="container-fluid">
 <jsp:include page="/navbar.jsp" />
-    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy">
 
+    <form:form action = "newChargePolicy" modelAttribute= "chargePolicy" >
+    <input name="csrfToken" value="${_csrf.token}" type="hidden">
   <h3 style="padding-bottom : 50px;">Create Charge Policies</h3>
   <hr>
   <div class="row">
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
-      <p class="font-weight-bold" style="font-size : 1rem">Charge Policy Code</p>
-      <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px"/>
+      <label class="required" ><b>Charge Policy Code</b></label>
+      <form:input path="chargePolicyCode"  id = "chargePolicyCode"  class="form-control" style="width : 400px" required="required"/>
       <form:errors path = "chargePolicyCode" cssClass = "error" style = "color:red"></form:errors>
        <p style = "color : red">${exception}</p>
     </div>
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
-      <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
-      <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px"/>
+      <label class="required" ><b>Charge Policy Name</b></label>
+      <form:input path="chargePolicyName" id = "chargePolicyName" class="form-control" style="width : 400px" required="required"/>
       <form:errors path = "chargePolicyName" cssClass = "error" style = "color:red"></form:errors>
 
     </div>
@@ -62,7 +56,7 @@ $(document).ready(function(){
   </div>
   <div class="row">
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
-      <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
+       <label><b>Charge Policy Description</b></label>
       <form:textarea path="chargePolicyDesc"  id = "chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
       <form:errors path = "chargePolicyDesc" cssClass = "error" style = "color:red"></form:errors>
     </div>
@@ -83,10 +77,10 @@ $(document).ready(function(){
       </thead>
   <tbody>
         <tr>
-          <th scope="row"><form:select path="chargeCode" class = "custom-select" id = "chargeCode">
+          <th scope="row"><form:select path="charge.chargeCode" class = "custom-select" id = "chargeCode">
                             			<form:options items="${chargeCodeList}" />
                             		</form:select></th>
-          <td><form:input path="chargeCodeName" class="form-control" style="width : 400px" id = "chargeCodeName"/></td>
+          <td><input class="form-control" style="width : 400px" type = "text" value = "${chargeCodeName}" id = "chargeCodeName" disabled/></td>
 
         </tr>
       </tbody>
@@ -99,7 +93,37 @@ $(document).ready(function(){
 
   </div>
 </form:form>
+ <div class="container-fluid">
 </body>
+<script>
+  $(document).ready(function(){
+
+    $("#chargeCode").change(function(){
+      var token = $('input[name="csrfToken"]').attr('value');
+      var charge  = {};
+      charge["chargeCode"] =$('#chargeCode').find(":selected").text();
+      charge["chargeCodeName"] =  "default";
+
+      $.ajax({
+          				type : "POST",
+          				contentType : "application/json",
+          				url : "newChargePolicy/getCharge",
+          				data : JSON.stringify(charge),
+          				dataType : 'json',
+          				 headers: {
+                                              'X-CSRF-Token': token
+                                         },
+          				success : function(data) {
+
+          					$('#chargeCodeName').val(data.chargeCodeName);
+                              $('#chargeCodeName').attr('readonly', true);
+
+          				}
+
+          			});
+    });
+  });
+  </script>
 
 </html>
 

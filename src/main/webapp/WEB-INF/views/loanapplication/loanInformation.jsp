@@ -16,22 +16,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+            function validateDate(){
+            var str1=document.getElementById('agDate').value;
+            var str2=document.getElementById('inDate').value;
+
+            if(str1>str2)
+            {
+                alert("Installment Due date must be greater tha agreement date");
+                return false;
+            }
+            }
+        </script>
+
 </head>
 
 <body class="container-fluid">
     <header>
         <jsp:include page="/navbar.jsp" />
     </header>
-
-
-
     <article>
         <form:form class="font-weight-bold mb-5" modelAttribute="loanApplications" method="post">
-
             <hr>
-
-
-
             <section>
                 <div>
                   <div class="row ">
@@ -79,13 +85,13 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="agreementDate" />
+                            <form:input type="date" id="agDate" class="form-control" path="agreementDate" />
                             <form:errors path = "agreementDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" path="installmentDueDate" />
+                            <form:input type="date" id="inDate" class="form-control" path="installmentDueDate" />
                             <form:errors path = "installmentDueDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
 
                         </div>
@@ -96,7 +102,7 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" value="Move to Next Stage">
+                <input class="btn-primary" onclick="return validateDate()" type="submit" value="Move to Next Stage">
             </div>
         </form:form>
     </article>
