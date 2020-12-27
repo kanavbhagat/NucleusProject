@@ -76,7 +76,7 @@
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Rate<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="rate" />
+                            <form:input type="number" step=".01" class="form-control" path="rate" />
                             <form:errors path = "rate" cssClass = "error" style = "color:red"></form:errors>
                         </div>
                     </div>
