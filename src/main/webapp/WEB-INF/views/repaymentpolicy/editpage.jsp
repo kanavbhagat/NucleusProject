@@ -58,7 +58,7 @@
 
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
-            <b> Create Repayment Policies </b>
+            <b> Edit Repayment Policy </b>
         </h2>
     </div>
 
@@ -138,7 +138,7 @@
 
                         <div class="form-group">
                             <form:label path="defaultRate" class="font-weight-bold required-field">Default Rate</form:label>
-                            <form:input path="defaultRate" onkeypress="return event.charCode >= 48"   type="number" class="form-control" id="defaultRate" step=".01"/>
+                            <form:input path="defaultRate" onkeypress="return event.charCode >= 48" min="0" type="number" class="form-control" id="defaultRate" step=".01"/>
                         </div>
                 </div>
     </div>

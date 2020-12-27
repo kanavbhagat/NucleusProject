@@ -215,7 +215,11 @@ public class LoanApplicationViewController {
         loanApplications.setAuthorizedBy(loginDetails.getUserName());
         loanApplications.setAuthorizedDate(LocalDate.now());
         loanApplicationService.updateLoanApplication(loanApplications);
-       // repaymentScheduleService.addRepaymentSchedule(loanApplications);
+        /**
+         * INTEGRATION with Repayment Schedule.
+         * On execution of this function , Repayment Schedule would be generated and stored in the database.
+         */
+        repaymentScheduleService.addRepaymentSchedule(loanApplications);
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/approvedpage");
         modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
 

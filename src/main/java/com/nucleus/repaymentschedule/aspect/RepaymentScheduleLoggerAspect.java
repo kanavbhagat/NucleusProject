@@ -21,6 +21,7 @@ import java.util.List;
  * @version 1.0
  * @since   2020-12-25
  */
+
 @Component
 @Aspect
 public class RepaymentScheduleLoggerAspect {
@@ -74,7 +75,7 @@ public class RepaymentScheduleLoggerAspect {
     @AfterReturning(pointcut = "addRepaymentSchedule()", returning = "status")
     public void afterInsertingPolicy(JoinPoint joinPoint, int status) {
         LOGGER.info("********************************************************************");
-        if(status==0) {
+        if(status==1) {
             LOGGER.info(" Successfully Created Repayment Schedule! ");
         } else {
             LOGGER.info(" Failed to create new Repayment Schedule as Loan Application Number already exists. ");
