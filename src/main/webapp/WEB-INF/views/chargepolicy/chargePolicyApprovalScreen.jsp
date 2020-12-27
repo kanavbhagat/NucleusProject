@@ -8,12 +8,20 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-  <title></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="../../../resources/css/appstyles.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+      <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>Charge Policy Approval Screen</title>
 </head>
 
 <body>
+ <div class="container-fluid">
 <jsp:include page="/navbar.jsp" />
     <form:form method = "Post" action = "../updateStatus/${chargePolicyForApproval.chargePolicyCode}" modelAttribute= "chargePolicyForApproval">
 
@@ -54,8 +62,8 @@
       </thead>
   <tbody>
         <tr>
-          <td scope="row"><form:input path="chargeCode" class="form-control" style="width : 400px" id = "chargeCode" disabled = "true"/></td>
-          <td><form:input path="chargeCodeName" class="form-control" style="width : 400px" id = "chargeCodeName" disabled = "true"/></td>
+          <td scope="row"><form:input path="charge.chargeCode" class="form-control" style="width : 400px" id = "chargeCode" disabled = "true"/></td>
+          <td><input type="text" class="form-control" style="width : 400px" value = "${chargeCodeName}" id = "chargeCodeName" readonly = "readonly"/></td>
 
         </tr>
       </tbody>
@@ -68,6 +76,7 @@
 
   </div>
 </form:form>
+</div>
 </body>
 
 </html>

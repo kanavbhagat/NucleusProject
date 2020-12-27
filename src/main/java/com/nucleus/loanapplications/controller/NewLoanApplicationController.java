@@ -32,6 +32,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The NewLoanApplicationController class creates a new loan application
+ * by calling the required method of the New Loan Application Service Class with the
+ * help of an object of NewLoanApplicationService Class. It also defines the getter
+ * and setter methods for the mentioned object.
+ */
+
 @Controller
 public class NewLoanApplicationController {
 
@@ -56,6 +63,14 @@ public class NewLoanApplicationController {
         binder.registerCustomEditor(LocalDate.class , new DateEditor());
     }
 
+    /**
+     * This is the main method which is authorized and then is triggered. It calls the
+     * newLoanApplication method of Service class with the help of its object
+     * declared above.
+     *
+     * @return modelAndView This returns a view of loanInformation form.
+     */
+
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @GetMapping(value = "/newLoanApplication")
     public ModelAndView addNewLoanApplication(){
@@ -66,6 +81,15 @@ public class NewLoanApplicationController {
         return modelAndView;
     }
 
+    /**
+     * This method is used to add a Loan application (entered by the user) to the database.
+     *
+     * @param bindingResult This contains data validation errors, if any.
+     *
+     * @param loanApplications This is the modelAttribute received from the form.
+     *
+     * @return ModelAndView This returns a view with a Success or Error page.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newLoanApplication")
     public ModelAndView addCustomer(@Valid @ModelAttribute LoanApplications loanApplications , BindingResult bindingResult, HttpServletRequest request){
@@ -100,11 +124,6 @@ public class NewLoanApplicationController {
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
 
-
-
-
-
-
         ModelAndView modelAndView = new ModelAndView();
         if(c) {
             modelAndView.addObject("customerCode", customer.getCustomerCode());
@@ -118,6 +137,7 @@ public class NewLoanApplicationController {
         return modelAndView;
     }
 
+    //Method to get product a perticular Product Type
     public Product getProduct(String productType){
         List<Product> products = productService.getProductList();
         Product res = null;
@@ -127,6 +147,8 @@ public class NewLoanApplicationController {
         }
         return res;
     }
+
+    //Method to get a list of product types
     public List<String> getProductType(){
         List<String> productType = new ArrayList<>();
         productType.add("Home Loan");

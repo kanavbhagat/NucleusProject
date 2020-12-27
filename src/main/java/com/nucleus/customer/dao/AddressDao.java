@@ -8,6 +8,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * This class acts as a Database layer for all
+ * Address related operations.
+ *
+ */
+
 @Repository
 public class AddressDao implements  AddressDaoInterface{
 
@@ -24,6 +30,15 @@ public class AddressDao implements  AddressDaoInterface{
         return session;
     }
 
+
+    /**
+     * This method is used to add Address to database.
+     *
+     * @param address This contains the object of Address class.
+     *
+     * @return boolean This returns a true/false based on whether
+     *                  the Address details were successfully added or not.
+     */
     @Override
     public boolean insertAddress(Address address) {
         boolean successful = false;
