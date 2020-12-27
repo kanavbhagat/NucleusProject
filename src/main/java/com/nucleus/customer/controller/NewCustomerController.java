@@ -26,6 +26,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This class acts as a Controller for all
+ * New Customer related operations.
+ */
+
 @RestController
 public class NewCustomerController {
 
@@ -41,6 +47,11 @@ public class NewCustomerController {
     }
 
 
+    /**
+     * This method is used to display form to get details of new customers.
+     *
+     * @return ModelAndView This returns a view of New customer Form.
+     */
     @PreAuthorize("hasRole('MAKER')")
     @GetMapping(value = "/newCustomer")
     public ModelAndView newCustomer(){
@@ -53,6 +64,15 @@ public class NewCustomerController {
         return modelAndView;
     }
 
+    /**
+     * This method is used to add Customer details to database.
+     *
+     * @param customer This is the model attribute received from the Form.
+     *
+     * @param request This model is used to create https sessions to temporarily store form data.
+     *
+     * @return ModelAndView This redirects to a view of form of New Loan Application.
+     */
     @PreAuthorize("hasRole('ROLE_MAKER')")
     @PostMapping(value = "/newCustomer")
     public ModelAndView addCustomer(@Valid @ModelAttribute Customer customer ,  HttpServletRequest request){

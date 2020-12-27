@@ -16,6 +16,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+                function validateDate(){
+                var str1=document.getElementById('agDate').value;
+                var str2=document.getElementById('inDate').value;
+
+                if(str1>str2)
+                {
+                    alert("Installment Due date must be greater tha agreement date");
+                    return false;
+                }
+                }
+            </script>
 </head>
 
 <body class="container-fluid">
@@ -38,19 +50,21 @@
                       <div class="form-group col-sm-3">
                            <label>Loan Application Number<a class="text-danger">*</a></label>
                            <form:input type="number" class="form-control" path="loanApplicationNumber" readonly="true" />
+                           <form:errors path = "loanApplicationNumber" cssClass = "error"><p style = "color:red">Please put a valid 10 digit number having first digit as 1</p></form:errors>
                       </div>
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
                                  <form:select path="productType" cssClass="form-control">
-                                       <form:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
                                        <form:options items="${productType}" />
                                  </form:select>
+                                 <form:errors path = "productType" cssClass = "error" style = "color:red"></form:errors>
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="loanAmountRequested" />
+                            <form:errors path = "loanAmountRequested" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
                     </div>
@@ -60,11 +74,13 @@
                         <div class="form-group col-sm-3 ">
                             <label>Tenure<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="tenure" />
+                            <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Rate<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control" path="rate" />
+                            <form:errors path = "rate" cssClass = "error" style = "color:red"></form:errors>
                         </div>
                     </div>
 
@@ -72,13 +88,14 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" value="${loanApplication.agreementDate}" path="agreementDate" />
+                            <form:input type="date" id="agDate" class="form-control" value="${loanApplication.agreementDate}" path="agreementDate" />
+                            <form:errors path = "agreementDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
-                            <form:input type="date" class="form-control" value="${loanApplication.installmentDueDate}" path="installmentDueDate" />
-
+                            <form:input type="date" id="inDate" class="form-control" value="${loanApplication.installmentDueDate}" path="installmentDueDate" />
+                            <form:errors path = "installmentDueDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                     </div>
@@ -87,8 +104,8 @@
             </section>
             <hr>
             <div class="text-center">
-                <input class="btn-primary" type="submit" name="op" value="Update">
-                <input class="btn-primary" type="submit" name="op" value="Update and Request">
+                <input class="btn-primary" onclick="return validateDate()" type="submit" name="op" value="Update">
+                <input class="btn-primary" onclick="return validateDate()" type="submit" name="op" value="Update and Request">
             </div>
         </form:form>
     </article>
