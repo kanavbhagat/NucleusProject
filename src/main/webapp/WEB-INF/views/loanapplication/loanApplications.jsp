@@ -83,13 +83,16 @@
                                         <c:url var="deleteUrl" value="/loanApplication/delete?loanApplicationNumber=${loan.loanApplicationNumber}" />
 
                                         <tr>
-                                          <sec:authorize access="hasRole('MAKER')">
+                                        <sec:authorize access="hasRole('MAKER')">
                                             <td>${loan.loanApplicationNumber}</td>
-                                         </sec:authorize>
-                                         <sec:authorize access="hasRole('CHECKER')">
-
-                                            <td><a href="${checkUrl}">${loan.loanApplicationNumber}</a></td>
-
+                                        </sec:authorize>
+                                        <sec:authorize access="hasRole('CHECKER')">
+                                            <c:if test = "${loan.status == 'PENDING'}">
+                                                 <td><a href="${checkUrl}">${loan.loanApplicationNumber}</a></td>
+                                            </c:if>
+                                            <c:if test = "${loan.status != 'PENDING'}">
+                                                 <td>${loan.loanApplicationNumber}</td>
+                                            </c:if>
 
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>

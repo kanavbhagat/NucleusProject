@@ -106,7 +106,7 @@ public class NewLoanApplicationController {
         List<LoanApplications> loanApplications1 = new ArrayList<>();
         loanApplications1.add(loanApplications);
         customer.setLoanApplications(loanApplications1);
-        loanApplications.setStatus("Pending");
+        loanApplications.setStatus("PENDING");
         loanApplications.setCreateDate(LocalDate.now());
         loanApplications.setCreatedBy(loginDetails.getUserName());
 
