@@ -75,6 +75,10 @@ public class TestConfig {
 //        ds.setUsername("MYUSERNAME");
 //        ds.setPassword("MYPASSWORD");
 
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orclcdb");
+//        ds.setUsername("bruno");
+//        ds.setPassword("hazel");
+
         return ds;
 
     }

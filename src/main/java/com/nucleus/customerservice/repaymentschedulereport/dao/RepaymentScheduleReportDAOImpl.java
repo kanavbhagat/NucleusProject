@@ -22,6 +22,7 @@ public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDA
     @Autowired
     private SessionFactory sessionFactory;
 
+
     /**
      * Retrieves a Repayment Schedule by using loanApplicationNumber from the database.
      * @param loanApplicationNumber is the loanApplicationNumber of the Repayment Schedule to be retrieved.
@@ -32,9 +33,6 @@ public class RepaymentScheduleReportDAOImpl implements RepaymentScheduleReportDA
     public List<RepaymentSchedule> getRepaymentScheduleReport(int loanApplicationNumber) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-//        Query query = session.createQuery("from RepaymentSchedule where loanApplicationNumber = :code ");
-//        query.setParameter("code", loanApplicationNumber);
-//        List<RepaymentSchedule> rslist = query.getResultList();
         List<RepaymentSchedule> rslist = session.createCriteria(RepaymentSchedule.class)
                                                 .createAlias("loanApplicationNumber","lpn")
                                                 .add(Restrictions.eq("lpn.loanApplicationNumber", loanApplicationNumber ))
