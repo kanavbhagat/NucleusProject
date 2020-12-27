@@ -11,15 +11,20 @@ import com.nucleus.payment.service.DateEditor;
 import com.nucleus.product.model.Product;
 import com.nucleus.product.service.ProductService;
 
+import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import com.nucleus.repaymentschedule.service.RepaymentScheduleServiceImpl;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -113,8 +118,8 @@ public class NewLoanApplicationController {
 
 
         boolean a =  newCustomerService.createNewCustomer(customer);
-       if(a)
-           Customer.id++;
+        if(a)
+            Customer.id++;
 
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
@@ -155,26 +160,3 @@ public class NewLoanApplicationController {
         return productType;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
