@@ -2,6 +2,7 @@ package com.nucleus.customerservice.loandisbursal.database;
 
 import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,6 +47,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO{
             session.beginTransaction();
             Customer customer = session.get(Customer.class, customerCode);
             if(customer != null) {
+                Hibernate.initialize(customer.getLoanApplications());
                 loanApplications=customer.getLoanApplications();
             }
         } catch (Exception e){
