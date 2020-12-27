@@ -81,7 +81,8 @@ public class ChargeDaoImpl implements ChargeDao{
             session.beginTransaction();
             chargeList = session.createQuery("from NewCharge", NewCharge.class).getResultList();
             session.getTransaction().commit();
-        } catch (Exception e) {
+            session.close();
+        }catch (Exception e) {
             chargeList = null;
         }
         return chargeList;

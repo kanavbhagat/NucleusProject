@@ -1,60 +1,61 @@
 package com.nucleus.chargepolicy.model;
 
+import com.nucleus.charge.model.NewCharge;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "charge_policy")
 public class ChargePolicy {
 
     @Id
-    @Column(name = "policy_code")
+    @Column(name = "policy_code",length = 10)
     @NotEmpty(message = "Charge Policy Code cannot be empty")
     @Pattern(regexp = "^([A-Za-z0-9_]+)$", message = "Charge Policy Code cannot contain spaces or special characters!")
     @Size(max = 10, message = "Charge Policy Code must not have more than 10 characters!")
     String chargePolicyCode;
 
-    @Column(name = "policy_name")
+    @Column(name = "policy_name", length = 20)
+    @Pattern(regexp = "^([A-Za-z0-9_]+)$", message = "Charge Policy name cannot contain spaces or special characters!")
+    @Size( max = 20,  message = "Charge Policy name must have a maximum of 20 characters!")
     @NotEmpty(message = "Charge Policy Name cannot be empty")
     String chargePolicyName;
 
-    @Column(name = "policy_description")
-    @NotEmpty(message = "Charge Policy Description cannot be empty")
-    @Size(max = 180,  message = "Charge Policy Description cannot have more than 180 characters!")
+    @Column(name = "policy_description", length = 200)
+    @Size(max = 200,  message = "Charge Policy Description cannot have more than 200 characters!")
     String chargePolicyDesc;
 
     @Column(name = "created_date")
-    String createdDate;
+    LocalDate createdDate;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", length = 30)
     String createdBy;
 
     @Column(name = "modified_date")
-    String modifiedDate;
+    LocalDate modifiedDate;
 
-    @Column(name = "modified_by")
+    @Column(name = "modified_by", length = 30)
     String modifiedBy;
 
     @Column(name = "authorized_date")
-    String authorizedDate;
+    LocalDate authorizedDate;
 
-    @Column(name = "authorized_by")
+    @Column(name = "authorized_by", length = 30)
     String authorizedBy;
 
     @Column
     String status;
 
-    @Column
-    String chargeCode;
 
-    @Column
-    @NotEmpty(message = "Please select Charge Code")
+    @OneToOne
+    @JoinColumn(name = "charge_code",referencedColumnName="charge_code")
+    NewCharge charge;
+
+    @Transient
     String chargeCodeName;
 
 
@@ -74,12 +75,28 @@ public class ChargePolicy {
         this.chargePolicyCode = chargePolicyCode;
     }
 
-    public String getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public LocalDate getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDate modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public LocalDate getAuthorizedDate() {
+        return authorizedDate;
+    }
+
+    public void setAuthorizedDate(LocalDate authorizedDate) {
+        this.authorizedDate = authorizedDate;
     }
 
     public String getCreatedBy() {
@@ -90,13 +107,6 @@ public class ChargePolicy {
         this.createdBy = createdBy;
     }
 
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
 
     public String getModifiedBy() {
         return modifiedBy;
@@ -106,13 +116,6 @@ public class ChargePolicy {
         this.modifiedBy = modifiedBy;
     }
 
-    public String getAuthorizedDate() {
-        return authorizedDate;
-    }
-
-    public void setAuthorizedDate(String authorizedDate) {
-        this.authorizedDate = authorizedDate;
-    }
 
     public String getAuthorizedBy() {
         return authorizedBy;
@@ -138,13 +141,6 @@ public class ChargePolicy {
         this.chargePolicyDesc = chargePolicyDesc;
     }
 
-    public String getChargeCode() {
-        return chargeCode;
-    }
-
-    public void setChargeCode(String chargeCode) {
-        this.chargeCode = chargeCode;
-    }
 
     public String getChargeCodeName() {
         return chargeCodeName;
@@ -154,5 +150,12 @@ public class ChargePolicy {
         this.chargeCodeName = chargeCodeName;
     }
 
+    public NewCharge getCharge() {
+        return charge;
+    }
+
+    public void setCharge(NewCharge charge) {
+        this.charge = charge;
+    }
 
 }
