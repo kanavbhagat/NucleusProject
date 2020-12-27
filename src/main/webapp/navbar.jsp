@@ -75,8 +75,6 @@
                     </a>
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
 
