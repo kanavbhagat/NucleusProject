@@ -10,7 +10,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -57,8 +57,7 @@
 		                <th>Charge Policy Code</th>
 		                <th>Charge Policy Name</th>
 		                <th>Charge Policy Description</th>
-
-		                <th>Status</th>
+                        <th>Status</th>
 		                <th>Created By</th>
 		                <th>Reviewed By</th>
 		                <th>Actions</th>
@@ -93,8 +92,7 @@
                         </td>
                        <td>${chargePolicy.chargePolicyName}</td>
                        <td>${chargePolicy.chargePolicyDesc}</td>
-
-                       <td>${chargePolicy.status}</td>
+                        <td>${chargePolicy.status}</td>
                        <td>${chargePolicy.createdBy}</td>
                        <td>${chargePolicy.authorizedBy}</td>
                         <td>

@@ -19,7 +19,7 @@ public class chargePolicyTest {
 
     @Test
     public void insertNewChargePolicy() {
-        assertEquals(chargePolicyService.insert(null), 3);
+        assertEquals(2,chargePolicyService.insert(null));
     }
 
     @Test
@@ -39,5 +39,6 @@ public class chargePolicyTest {
     public void updateEntryTest() {
         assertFalse(chargePolicyService.updateEntry(new ChargePolicy(), ""));
     }
+
 
 }

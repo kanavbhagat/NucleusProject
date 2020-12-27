@@ -8,15 +8,14 @@
 
 <head>
   <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="../../../resources/css/appstyles.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-      <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+          <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+          <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <title>Charge Policy Edit Screen</title>
 </head>
 
@@ -37,14 +36,13 @@
     <div class="feature-box col-lg-6 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-bottom:0px">Charge Policy Name</p>
       <form:input path="chargePolicyName" class="form-control" style="width : 400px" required="required"/>
-
     </div>
 
   </div>
   <div class="row">
     <div class="feature-box col-lg-2 col-md-4 col-sm-12">
       <p class="font-weight-bold" style="font-size : 1rem; padding-top : 20px">Charge Policy Description</p>
-      <form:textarea path="chargePolicyDesc" class="form-control" style="width : 400px" rows="3"  required="required"/>
+      <form:textarea path="chargePolicyDesc" class="form-control" style="width : 400px" rows="3" />
     </div>
     <form:hidden path = "createdBy" />
   </div>
@@ -85,7 +83,7 @@
 </body>
 <script>
   $(document).ready(function(){
-    $("#chargeCode").focusout(function(){
+    $("#chargeCode").change(function(){
       var token = $('input[name="csrfToken"]').attr('value');
       var charge  = {};
       charge["chargeCode"] =$('#chargeCode').find(":selected").text();

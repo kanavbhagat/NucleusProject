@@ -80,7 +80,7 @@
           <th scope="row"><form:select path="charge.chargeCode" class = "custom-select" id = "chargeCode">
                             			<form:options items="${chargeCodeList}" />
                             		</form:select></th>
-          <td><form:input path="chargeCodeName" class="form-control" style="width : 400px" id = "chargeCodeName"/></td>
+          <td><input class="form-control" style="width : 400px" type = "text" value = "${chargeCodeName}" id = "chargeCodeName" disabled/></td>
 
         </tr>
       </tbody>
