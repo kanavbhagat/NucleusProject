@@ -1,7 +1,5 @@
 package com.nucleus.loanclosurebod.database;
 
-import com.nucleus.charge.model.NewCharge;
-import com.nucleus.customer.model.Customer;
 import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.repaymentschedule.model.RepaymentSchedule;
 import org.hibernate.HibernateException;
@@ -102,48 +100,5 @@ public class LoanClosureDaoImpl implements LoanClosureDao{
             exception.printStackTrace();
         }
         return updateStatus;
-    }
-
-
-    /**
-     * Get all Details of a Loan by loanApplicationNumber
-     * @param loanApplicationNumber
-     * @return Object of LoanApplications Class
-     */
-    @Override
-    public LoanApplications getLoanDetails(int loanApplicationNumber){
-        LoanApplications loanApplication=null;
-        try(Session session = getSession()) {
-            session.beginTransaction();
-            loanApplication = session.get(LoanApplications.class, loanApplicationNumber);
-
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return loanApplication;
-    }
-
-    /**
-     * Get all Loans associated with a customer by customerCode
-     * @param customerCode
-     * @return List<LoanApplications> list contains all loans taken by this customer
-     */
-    @Override
-    public List<LoanApplications> getCustomerLoanDetails(String customerCode){
-        List<LoanApplications> loanApplications=null;
-        try(Session session = getSession()) {
-            session.beginTransaction();
-           // Query<LoanApplications> query = session.createQuery("from LoanApplications",LoanApplications.class);
-            Query<LoanApplications> query= session.createQuery("from LoanApplications l where l.customerCode=?1",LoanApplications.class);//.getResultList();
-            loanApplications=query.setParameter(1,"L115").getResultList();
-
-//            if(loanApplications == null) {
-//                loanApplications=customer.getLoanApplications();
-//            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        return loanApplications;
     }
 }

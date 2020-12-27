@@ -36,7 +36,7 @@ public class EligibilityPolicy implements Serializable {
     @JoinTable(name = "eligibility_policy_mappings",
             joinColumns = {@JoinColumn(name="policy_code", referencedColumnName="policy_code")},
             inverseJoinColumns = {@JoinColumn(name="parameter_code", referencedColumnName="parameter_code")
-    })
+            })
     private List<EligibilityParameter> eligibilityParameterList;
 
     @Column(name = "create_date")
