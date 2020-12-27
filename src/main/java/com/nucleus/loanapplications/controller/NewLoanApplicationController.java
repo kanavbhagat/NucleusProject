@@ -154,54 +154,6 @@ public class NewLoanApplicationController {
         }
         return productType;
     }
-
-
-
-
-
-    @PreAuthorize("hasRole('ROLE_MAKER')")
-    @GetMapping(value = "/oldCustomerLoanApplication")
-    public ModelAndView addOldLoanApplication(){
-        ModelAndView modelAndView= new ModelAndView("views/loanapplication/loanInformation");
-        modelAndView.addObject("loanApplications",new LoanApplications());
-        modelAndView.addObject("productType" , getProductType());
-        return modelAndView;
-    }
-
-
-    @PreAuthorize("hasRole('ROLE_MAKER')")
-    @PostMapping(value = "/oldCustomerLoanApplication")
-    public ModelAndView addOldCustomer(@Valid @ModelAttribute LoanApplications loanApplications,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        String customerId = (String) session.getAttribute("customerId");
-//        loanApplications.setCustomerCode(newCustomerService.getCustomer(customerId));
-//        List<LoanApplications> loanApplications1 = new ArrayList<>();
-//        loanApplications1.add(loanApplications);
-//        customer.setLoanApplications(loanApplications1);
-//        loanApplications.setStatus("Pending");
-//        loanApplications.setCreateDate(LocalDate.now());
-//        loanApplications.setCreatedBy(loginDetails.getUserName());
-//
-//        String productType = loanApplications.getProductType();
-//        Product product = getProduct(productType);
-//        loanApplications.setProductCode(product);
-//
-//        boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
-
-        ModelAndView modelAndView = new ModelAndView();
-        //if(customerId!=null || !customerId.isEmpty()) {
-            //modelAndView.addObject("customer", customerId);
-        System.out.println("//////////////////////////////////"+customerId);
-//            modelAndView.addObject("loanApplicationId", loanApplications.getLoanApplicationNumber());
-
-            modelAndView.setViewName("views/loanapplication/addedpage");
-       // }
-//        else{
-//            modelAndView.setViewName("views/loanapplication/RPAddErrorPage");
-//        }
-        return modelAndView;
-    }
-
 }
 
 
