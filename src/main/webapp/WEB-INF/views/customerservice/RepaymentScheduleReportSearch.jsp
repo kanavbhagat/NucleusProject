@@ -48,7 +48,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label class="font-weight-bold required-field">Loan Application Number:</label><br>
-                        <input name="appNo" type="text" class="form-control" id="appNo"/><br>
+                        <input name="appNo" type="number" class="form-control" id="appNo"/><br>
                     </div>
                 </div>
             </div>
