@@ -3,13 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -30,13 +31,12 @@
         	<h2 class="display-3" style="font-size: 30px">
         		<b>Charge Policies</b>
         	</h2>
-
+            <sec:authorize access="hasRole('MAKER')">
         	<div class=" px-4 mt-0 align-self-end ">
        			<a class="btn btn-primary" href="<%= request.getContextPath()%>/chargePolicy/newChargePolicy">New Charge Policy</a>
        		</div>
-       		<div class=" px-4 mt-0 align-self-end ">
-                   			<b><%= request.getParameter("message") %></b>
-            </div>
+       		</sec:authorize>
+
         </div>
 
         <hr width="" color="#b3b3b3">
@@ -57,8 +57,7 @@
 		                <th>Charge Policy Code</th>
 		                <th>Charge Policy Name</th>
 		                <th>Charge Policy Description</th>
-		                <th>Created Date</th>
-		                <th>Status</th>
+                        <th>Status</th>
 		                <th>Created By</th>
 		                <th>Reviewed By</th>
 		                <th>Actions</th>
@@ -67,14 +66,52 @@
 		        <tbody>
 		           <c:forEach items="${chargePolicyList}" var="chargePolicy" varStatus="tagStatus">
                      <tr>
-                       <td><a href="get/${chargePolicy.chargePolicyCode}">${chargePolicy.chargePolicyCode}</td>
+                       <td>
+                        <sec:authorize access="hasRole('CHECKER')">
+                            <c:if test = "${chargePolicy.status == 'PENDING'}">
+                            <a href="<%= request.getContextPath()%>/chargePolicy/get/${chargePolicy.chargePolicyCode}">
+                                ${chargePolicy.chargePolicyCode}
+                            </a>
+                            </c:if>
+
+                              <c:if test = "${chargePolicy.status == 'SAVED'}">
+                                                                     ${chargePolicy.chargePolicyCode}
+                                                          </c:if>
+                            <c:if test = "${chargePolicy.status == 'REJECTED'}">
+                                        ${chargePolicy.chargePolicyCode}
+                             </c:if>
+                            <c:if test = "${chargePolicy.status == 'APPROVED'}">
+                                        ${chargePolicy.chargePolicyCode}
+                             </c:if>
+                          </sec:authorize>
+                                		            <sec:authorize access="hasRole('MAKER')">
+                                		                 ${chargePolicy.chargePolicyCode}
+                                		            </sec:authorize>
+
+
+                        </td>
                        <td>${chargePolicy.chargePolicyName}</td>
                        <td>${chargePolicy.chargePolicyDesc}</td>
-                       <td>${chargePolicy.createdDate}</td>
-                       <td>${chargePolicy.status}</td>
-                       <td>Admin</td>
-                       <td>Admin</td>
-                       <td><a href = "edit/${chargePolicy.chargePolicyCode}">Edit  | <a href = "delete/${chargePolicy.chargePolicyCode}">Delete</td>
+                        <td>${chargePolicy.status}</td>
+                       <td>${chargePolicy.createdBy}</td>
+                       <td>${chargePolicy.authorizedBy}</td>
+                        <td>
+                            <sec:authorize access="hasRole('MAKER')">
+                                <c:if test = "${chargePolicy.status == 'PENDING'}">
+                                    <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
+                                </c:if>
+                                <c:if test = "${chargePolicy.status == 'SAVED'}">
+                                     <a href="<%= request.getContextPath()%>/chargePolicy/edit/${chargePolicy.chargePolicyCode}">Edit</a>  |  <a href="<%= request.getContextPath()%>/chargePolicy/delete/${chargePolicy.chargePolicyCode}">Delete</a>
+                                </c:if>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('CHECKER')">
+                                Edit  |  Delete
+                            </sec:authorize>
+                            <sec:authorize access="isAnonymous()">
+                                Edit  |  Delete
+                            </sec:authorize>
+                        </td>
+
                      </tr>
                    </c:forEach>
 

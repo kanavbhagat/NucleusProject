@@ -35,10 +35,10 @@ public class LoanApplicationTest {
         assertNull(loanApplicationService.getLoanApplicationId(1));
     }
 
-    @Test
-    public void deleteLoanApplicationIdTest() {
-        assertFalse(loanApplicationService.deleteLoanApplicationId(123456));
-    }
+//    @Test
+//    public void deleteLoanApplicationIdTest() {
+//        assertFalse(loanApplicationService.deleteLoanApplicationId(123456));
+//    }
 
     @Test
     public void updateLoanApplicationTest(){

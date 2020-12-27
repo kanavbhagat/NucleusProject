@@ -70,12 +70,15 @@ public class AppConfig implements WebMvcConfigurer {
     public BasicDataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("c##asaf");
+//        ds.setPassword("asaf");
 
         // Jigme's Oracle db credentials
 
-//        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
-//        ds.setUsername("nsbt");
-//        ds.setPassword("qwerty");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521/pdborcl");
+        ds.setUsername("nsbt");
+        ds.setPassword("qwerty");
 
 //        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 //        ds.setUsername("c##asaf");
@@ -87,9 +90,13 @@ public class AppConfig implements WebMvcConfigurer {
 //         ds.setUsername("c##username");
 //         ds.setPassword("pwd");
 
-        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orclcdb");
-        ds.setUsername("bruno");
-        ds.setPassword("hazel");
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
+//        ds.setUsername("sys as sysdba");
+//        ds.setPassword("gyanesh10");
+
+//        ds.setUrl("jdbc:oracle:thin:@localhost:1521:orclcdb");
+//        ds.setUsername("bruno");
+//        ds.setPassword("hazel");
 
         /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
          ds.setUsername("c##username");
@@ -116,6 +123,7 @@ public class AppConfig implements WebMvcConfigurer {
        /* ds.setUrl("jdbc:oracle:thin:@localhost:1521:orcl");
         ds.setUsername("sys as sysdba");
         ds.setPassword("gkul0289");*/
+
         return ds;
 
     }

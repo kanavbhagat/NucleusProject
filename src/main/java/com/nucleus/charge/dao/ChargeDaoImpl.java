@@ -77,11 +77,11 @@ public class ChargeDaoImpl implements ChargeDao{
     @Override
     public List<NewCharge> getChargeList() {
         List<NewCharge> chargeList;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
-            chargeList = session.createQuery("from NewCharge",NewCharge.class).getResultList();
+            chargeList = session.createQuery("from NewCharge", NewCharge.class).getResultList();
             session.getTransaction().commit();
+            session.close();
         }catch (Exception e) {
             chargeList = null;
         }
@@ -96,14 +96,13 @@ public class ChargeDaoImpl implements ChargeDao{
     @Override
     public List<NewCharge> getPendingChargeList() {
         List<NewCharge> chargeList;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
-            Query<NewCharge> query = session.createQuery("from NewCharge c where c.status=?1",NewCharge.class);
-            query.setParameter(1,pending);
+            Query<NewCharge> query = session.createQuery("from NewCharge c where c.status=?1", NewCharge.class);
+            query.setParameter(1, pending);
             chargeList = query.getResultList();
             session.getTransaction().commit();
-        }catch (Exception e) {
+        } catch (Exception e) {
             chargeList = null;
         }
         return chargeList;
@@ -120,15 +119,13 @@ public class ChargeDaoImpl implements ChargeDao{
     @Override
     public NewCharge getOneCharge(String chargeCode) {
         NewCharge charge;
-        try {
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             Query<NewCharge> query = session.createQuery("from NewCharge c where c.chargeCode=?1", NewCharge.class);
             query.setParameter(1, chargeCode);
             charge = query.getSingleResult();
             session.getTransaction().commit();
-            session.close();
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             charge = null;
             exception.printStackTrace();
         }
@@ -147,13 +144,11 @@ public class ChargeDaoImpl implements ChargeDao{
     public boolean deleteCharge(String chargeCode) {
         boolean deleteStatus;
         NewCharge charge = getOneCharge(chargeCode);
-        try{
-            Session session = getSession();
+        try (Session session = getSession()) {
             session.beginTransaction();
             session.delete(charge);
             session.getTransaction().commit();
             deleteStatus = true;
-            session.close();
         } catch (Exception exception) {
             deleteStatus = false;
             exception.printStackTrace();
