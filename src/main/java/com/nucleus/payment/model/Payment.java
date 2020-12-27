@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -18,12 +19,16 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "payment")
 public class Payment {
     @Id
+    @Min(value = 0, message = "Loan Application number cannot be negative")
+    @JoinColumn(name = "loan_application_number", referencedColumnName = "loan_application_number", nullable = false)
     @Column(name = "loan_application_number", length = 10)
     private int loanApplicationNumber;
 
+    @Min(value = 0, message = "Payment Code cannot be negative")
     @Column(name = "payment_code", length = 10)
     private int paymentCode;
 
+    @Min(value = 0 , message = "Payment Amount cannot be negative")
     @Column(name = "payment_amount", length = 8)
     private int paymentAmount;
 
@@ -36,10 +41,9 @@ public class Payment {
     @Column(name = "payout_bank_account", length = 12)
     private String payoutBankAccount;
 
-//    @ManyToMany
 //    @ManyToOne
 //    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code")
-
+    @JoinColumn(name = "customer_code", referencedColumnName = "customer_code", nullable = false)
     @NotBlank(message = "Customer code cannot be empty")
     @Column(name = "customer_code")
     private String customerCode;
