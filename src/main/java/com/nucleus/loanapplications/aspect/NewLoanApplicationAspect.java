@@ -100,7 +100,7 @@ public class NewLoanApplicationAspect {
 
     @Before("deleteLoanApplication()")
     public void beforeDeletingEligibilityPolicy(JoinPoint joinPoint) {
-        String loanid = (String)joinPoint.getArgs()[0];
+        Integer loanid = (Integer) joinPoint.getArgs()[0];
         logger.info("Deleting Loan application (ID): "+loanid+" ...");
     }
     @AfterReturning(pointcut = "deleteLoanApplication()", returning = "status")
