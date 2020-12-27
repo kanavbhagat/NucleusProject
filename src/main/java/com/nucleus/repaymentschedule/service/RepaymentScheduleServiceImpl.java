@@ -40,6 +40,7 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
 
 
 
+
     /**
      * Adds a Repayment Schedule to the database.
      * @param loanApplication whose RepaymentSchedule is to be saved.
@@ -59,14 +60,18 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
 
         int r = 0;
         for (int i = 0; i < repaymentSchedules.size(); i++) {
-                repaymentScheduleDAO.addRepaymentSchedule(repaymentSchedules.get(i));
+               r= repaymentScheduleDAO.addRepaymentSchedule(repaymentSchedules.get(i));
         }
         return r;
     }
 
+
     /**
      * calculate EMI for a particular loan
-     * @param rate,loanAmount,tenure,numberOfInstallment
+     * @param rate Interest rate of the loan application
+     * @param loanAmount Requested loan amount of the loan application
+     * @param tenure tenure of the loan application
+     * @param numberOfInstallment number of installments in a year(repayment frequency)
      * @return EMI amount
      */
     public double calculateEMI(double rate, double loanAmount, int tenure, int numberOfInstallment) {
@@ -78,10 +83,15 @@ public class RepaymentScheduleServiceImpl implements RepaymentScheduleService {
         return installmentAmt;
     }
 
+
     /**
      * generate Repayment Schedule for a particular loan
-     * @param loanApplicationNumber,rate,loanAmount,tenure,installmentDueDate
-     * @return List of Repayment Schedule
+     * @param loanApplicationNumber of the loan application whose Repayment schedule is to be generated
+     * @param rate Interest rate of the loan application
+     * @param loanAmount Requested loan amount of the loan application
+     * @param tenure tenure of the loan application
+     * @param installmentDueDate first installment Due Date of the loan application
+     * @return  List of Repayment Schedule
      */
     public List<RepaymentSchedule> generateRepaymentSchedule(LoanApplications loanApplicationNumber, double rate, double loanAmount,
                                                              int tenure, LocalDate installmentDueDate) {
