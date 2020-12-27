@@ -35,10 +35,10 @@ public class ReceiptSearchController {
     /**
      * <p> Post mapping for the receipt search page. Conducts a search based on 4 params and returns a model and view
      * of either the search result page, or the error page if there were no results. </p>
-     * @param String receiptType required
-     * @param String receiptBasis optional
-     * @param Integer loanAccountNo optional
-     * @param Integer receiptNo optional
+     * @param receiptType required
+     * @param receiptBasis optional
+     * @param loanAccountNo optional
+     * @param receiptNo optional
      * @return returns modelAndView with results if operation was successful, else the error page.
      */
     @PreAuthorize("hasRole('ROLE_CHECKER') or hasRole('ROLE_MAKER')")
@@ -51,7 +51,6 @@ public class ReceiptSearchController {
         ModelAndView modelAndView = new ModelAndView("views/receipt/receiptSearchResult");
 
         List<Receipt> receiptList = receiptService.receiptSearch(receiptType, receiptBasis, loanAccountNo, receiptNo);
-        System.out.println(receiptList.size());
         modelAndView.addObject("receiptList", receiptList);
 
         if(receiptList.isEmpty()){

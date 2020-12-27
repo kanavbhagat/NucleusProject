@@ -10,6 +10,8 @@ import com.nucleus.product.service.ProductService;
 import com.nucleus.repaymentpolicy.model.RepaymentPolicy;
 import com.nucleus.repaymentpolicy.service.RepaymentPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,7 @@ import java.util.List;
  * <p>Controller for the new product creation and product edit pages.</p>
  */
 @Controller
+@PropertySource("classpath:status.properties")
 public class NewProductController {
 
     @Autowired
@@ -40,7 +43,17 @@ public class NewProductController {
     @Autowired
     ChargePolicyService chargePolicyService;
 
-    private List<String> productTypes;
+    // initialise status properties
+
+    @Value("${status.pending}")
+    private String pending;
+
+    @Value(("${status.approved}"))
+    private String approved;
+
+    @Value(("${status.saved}"))
+    private String saved;
+
 
     /**
      * <p>Get Mapping for the product creation page. Sends a new product model for the new product form.
@@ -60,10 +73,10 @@ public class NewProductController {
      * <p> Post mapping for editing or adding a new product. Calls the appropriate createNewProduct or updateProduct
      * function depending on the action performed.
      * </p>
-     * @param Product product the product to be saved/updated.
-     * @param BindingResult result Binding result from the page for validation
-     * @param String id productId of the product to be updated. Is optional, only present during product update.
-     * @param String action the action performed, can be either Saved or Pending.
+     * @param product the product to be saved/updated.
+     * @param result Binding result from the page for validation
+     * @param id productId of the product to be updated. Is optional, only present during product update.
+     * @param action the action performed, can be either Saved or Pending.
      * @return the modelAndView of either the update success or creation success page.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -88,7 +101,11 @@ public class NewProductController {
 
         product.setEligibilityPolicyCode(epolicy);
         product.setRepaymentPolicyCode(rpolicy);
-        product.setStatus(action);
+
+        product.setStatus(saved);
+        if(pending.equals(action)){
+            product.setStatus(pending);
+        }
 
         if(product.getChargeCodePolicyString()!=null){
             ChargePolicy cpolicy = chargePolicyService.getChargePolicy(product.getChargeCodePolicyString());
@@ -106,7 +123,7 @@ public class NewProductController {
      * <p> Get Mapping for the edit product screen. Retrieves the product via productId using the DAO, and then attaches
      * that object to the returned modelAndView.
      * </p>
-     * @param String productId the productId who's details are to be shown.
+     * @param productId the productId who's details are to be shown.
      * @return the modelAndView of the edit page.
      */
     @PreAuthorize("hasRole('ROLE_MAKER')")
@@ -121,7 +138,7 @@ public class NewProductController {
     /**
      * <p> Internal function called from the new product/product update controller in case the product is to be created.
      * </p>
-     * @param Product product which has to be saved
+     * @param product which has to be saved
      * @return the modelAndView of either the success or error page depending on whether the dao was able to insert it.
      */
     private ModelAndView saveNewProduct(Product product){
@@ -150,7 +167,7 @@ public class NewProductController {
     /**
      * <p> Internal function called from the new product/product update controller in case the product is to be updated.
      * </p>
-     * @param String productId the productId who's details are to be shown.
+     * @param product product which has to be updated
      * @return the modelAndView of either the success or error page depending on whether the dao was able to udpate it.
      */
     private ModelAndView updateProduct(Product product){
@@ -190,16 +207,16 @@ public class NewProductController {
     /**
      * <p> Internal function to add all necessary attributes for the product creation or edit product screen dropdowns.
      * </p>
-     * @param ModelAndView modelAndView which needs the params to be attached
+     * @param modelAndView which needs the params to be attached
      * @return modelAndView with the attributes attached.
      */
     private ModelAndView addAttributes(ModelAndView modelAndView){
         List<EligibilityPolicy> epolicies = eligibilityPolicyService.getAllEligibilityPolicies();
         List<RepaymentPolicy> rpolicies = repaymentPolicyService.getRepaymentPolicyList();
         List<ChargePolicy> cpolicies = chargePolicyService.getPolicyList();
-        epolicies.removeIf(ep -> !"Approved".equals(ep.getStatus()));
-        rpolicies.removeIf(rp -> !"Approved".equals(rp.getStatus()));
-        cpolicies.removeIf(cp -> !"Approved".equals(cp.getStatus()));
+        epolicies.removeIf(ep -> !approved.equals(ep.getStatus()));
+        rpolicies.removeIf(rp -> !approved.equals(rp.getStatus()));
+        cpolicies.removeIf(cp -> !approved.equals(cp.getStatus()));
 
         modelAndView.addObject("eligibilityPolicies", epolicies);
         modelAndView.addObject("repaymentPolicies", rpolicies);

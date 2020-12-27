@@ -4,7 +4,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Customer Service Search</title>
+    <title>Loan Closure Search</title>
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -16,6 +16,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
      <script type="text/javascript">
+                function customerf() {
+                        document.getElementById("loanApplicationNumber").disabled= true;
+                        document.getElementById("search").disabled= false;
+                    }
+                    function loanApplicationf() {
+                        document.getElementById("customerCode").disabled= true;
+                        document.getElementById("search").disabled= false;
+                    }
                 function checkEmpty(){
                     var value1 = document.getElementById("customerCode").value;
                     var value2 = document.getElementById("loanApplicationNumber").value;
@@ -44,7 +52,7 @@
 
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
-            <b> Customer Service</b>
+            <b> Loan Closure Service</b>
         </h2>
     </div>
 
@@ -54,13 +62,13 @@
 
 <!-- Form Container -->
 <div class="container-fluid">
-    <form  action="customerLoanSearch" method="post">
+    <form  action="customerLoanClosure" method="post">
         <div class="row">
             <div class="col-sm-3">
 
                 <div class="form-group">
                     <label for="customerCode" class="font-weight-bold ">Customer #</label>
-                    <input type="text" id="customerCode" class="form-control" name="customerCode" title="Customer Id should be alphanumeric with no spaces around"  pattern="^[a-zA-Z0-9]*$"/>
+                    <input type="text" id="customerCode" class="form-control" oninput="customerf()" name="customerCode" title="Customer Id should be alphanumeric with no spaces around"  pattern="^[a-zA-Z0-9]*$"/>
                 </div>
 
 
@@ -69,7 +77,7 @@
 
                 <div class="form-group">
                     <label for="loanApplicationNumber" class="font-weight-bold ">Loan Account #</label>
-                    <input type="number" id="loanApplicationNumber" class="form-control" name="loanApplicationNumber" min="1"/>
+                    <input type="number" id="loanApplicationNumber" oninput="loanApplicationf()" class="form-control" name="loanApplicationNumber"/>
                 </div>
 
             </div>
