@@ -89,13 +89,13 @@
                         <div class="form-group col-sm-3 ">
                             <label>Agreement Date<a class="text-danger">*</a></label>
                             <form:input type="date" id="agDate" class="form-control" value="${loanApplication.agreementDate}" path="agreementDate" />
-                            form:errors path = "agreementDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
+                            <form:errors path = "agreementDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                         <div class="form-group col-sm-3 offset-4">
                             <label>Installment Due Date<a class="text-danger">*</a></label>
                             <form:input type="date" id="inDate" class="form-control" value="${loanApplication.installmentDueDate}" path="installmentDueDate" />
-                            form:errors path = "installmentDueDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
+                            <form:errors path = "installmentDueDate" cssClass = "error" style = "color:red"><p style="color:red">Invalid Date</p></form:errors>
                         </div>
 
                     </div>
