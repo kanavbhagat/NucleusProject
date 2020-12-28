@@ -4,7 +4,7 @@ import com.nucleus.charge.model.NewCharge;
 import java.util.List;
 
 public interface ChargeDao {
-    boolean insert(NewCharge charge, String status);
+    int insert(NewCharge charge, String status);
     List<NewCharge> getChargeList();
     List<NewCharge> getPendingChargeList();
     boolean deleteCharge(String chargeCode);

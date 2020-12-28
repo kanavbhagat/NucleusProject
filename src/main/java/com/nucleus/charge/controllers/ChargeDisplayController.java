@@ -136,12 +136,17 @@ public class ChargeDisplayController {
             else if(action.equalsIgnoreCase("save & request approval")) {
                 status = pending;
             }
-            boolean b = chargeService.insertCharge(charge, status);
-            if(b) {
+            int insertStatus = chargeService.insertCharge(charge, status);
+            if(insertStatus == 1) {
                 model.addAttribute("head","Charge Created Successfully");
                 model.addAttribute("msg","Your Charge has been created successfully.");
                 model.addAttribute("chargeCode",charge.getChargeCode());
                 return SUCCESS;
+            }
+            else if(insertStatus == 2) {
+                model.addAttribute("description", "Failed to create charge.");
+                model.addAttribute("chargeCode", "Duplicate Charge Code or Charge Code Name.");
+                return "views/charge/createErrorPage";
             }
             else {
                 model.addAttribute("description","Failed to create charge.");

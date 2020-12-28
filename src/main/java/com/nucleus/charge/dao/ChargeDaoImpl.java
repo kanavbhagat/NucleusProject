@@ -47,10 +47,15 @@ public class ChargeDaoImpl implements ChargeDao{
      * @param charge This is the model that has to be added to the database.
      * @param status This is the status of charge(i.e., SAVED/PENDING) object added to database.
      *
-     * @return boolean This returns a true/false based on whether the object was successfully added or not.
+     * @return int This returns a status based on whether the object was successfully added or not.
+     * status - 0 : Any error apart from duplicate ID  or Name error.
+     * status - 1 : Successfully inserted to the database
+     * status - 2 : Duplicate ID(Primary Key) which is chargeCode or Name(Unique Constraint) which is chargeCodeName in this case.
+     *
      */
     @Override
-    public boolean insert(NewCharge charge, String status) {
+    public int insert(NewCharge charge, String status) {
+        int insertStatus = 0;
         try(Session session = getSession()){
             session.beginTransaction();
             try {
@@ -60,13 +65,17 @@ public class ChargeDaoImpl implements ChargeDao{
                 charge.setCreatedBy(loginDetails.getUserName());
                 session.save(charge);
                 session.getTransaction().commit();
-                return true;
+                insertStatus = 1;
             } catch (Exception e){
                 e.printStackTrace();
+                if(e.getMessage().contains("ConstraintViolationException"))
+                    insertStatus = 2;
+                else
+                    insertStatus = 0;
                 session.getTransaction().rollback();
-                return false;
             }
         }
+        return insertStatus;
     }
 
     /**
