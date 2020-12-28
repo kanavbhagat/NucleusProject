@@ -26,7 +26,7 @@ public class ChargeServiceImpl implements ChargeService {
      * @return boolean This returns a true/false based on whether the object was successfully added or not.
      */
     @Override
-    public boolean insertCharge(NewCharge charge, String status) {
+    public int insertCharge(NewCharge charge, String status) {
         return chargeDao.insert(charge, status);
     }
 
