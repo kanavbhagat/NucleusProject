@@ -61,7 +61,7 @@
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type<a class="text-danger">*</a></form:label>
                                  <form:select path="productType" cssClass="form-control">
-                                  <form:option value="${loanApplication.productCode.productName}"  disabled="${'true'}"
+                                  <form:option value="${loanApplication.productCode.productName}"
                                   selected="true" label="${loanApplication.productCode.productName}"/>
 
                                        <form:options items="${productType}" />
@@ -80,10 +80,9 @@
 
 
                         <div class="form-group col-sm-3 ">
-                            <label>Tenure(months)<a class="text-danger">*</a></label>
+                            <label>Tenure(in Years)<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control"
-                            min="${loanApplication.productCode.repaymentPolicyCode.minTenure}"
-                             max="${loanApplication.productCode.repaymentPolicyCode.maxTenure}" path="tenure" />
+                             path="tenure" />
                             <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
