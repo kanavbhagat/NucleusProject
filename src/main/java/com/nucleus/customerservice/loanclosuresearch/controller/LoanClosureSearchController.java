@@ -55,20 +55,30 @@ public class LoanClosureSearchController {
 
         if((customerId==null || customerId.isEmpty()) && loanApplicationNumber==null){
             // avoid sending nothing to model and view. This case *should* never happen.
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
+
+            mv.setViewName("views/customerservice/loanClosureSearch/searchError");
+            mv.addObject("messageHeader", "No results found");
+            mv.addObject("messageBody", "No results were found matching your criteria. Please try again");
         }
 
         else if(customerId==null || customerId.isEmpty()){
             // get loan application details and corresponding customer details.
             LoanApplications loanApplication = loanApplicationService.getLoanApplicationId(loanApplicationNumber);
-            if(loanApplication!=null){
+
+            if(loanApplication!=null && loanApplication.getStatus().equalsIgnoreCase("closed")){
                 customers.add(loanApplication.getCustomerCode());
                 loanApplications.add(loanApplication);
+                mv.addObject("customer", customers);
+                mv.addObject("loanApplications", loanApplications);
+            }
+            else{
+                // if both customer code and loan application number are present.
+                mv.setViewName("views/customerservice/loanClosureSearch/searchError");
+                mv.addObject("messageHeader", "No results found");
+                mv.addObject("messageBody", "No results were found matching your criteria. Please try again");
             }
             System.out.println(customers.size());
-            mv.addObject("customer", customers);
-            mv.addObject("loanApplications", loanApplications);
+
         }
 
         else if(loanApplicationNumber==null){
@@ -84,7 +94,14 @@ public class LoanClosureSearchController {
             * Uncomment the below line to get closed loans
             * */
 
-            //loanApplications.removeIf(la -> !la.getStatus().equalsIgnoreCase("closed"));
+            loanApplications.removeIf(la -> !la.getStatus().equalsIgnoreCase("closed"));
+            if(loanApplications==null || loanApplications.isEmpty())
+            {
+                mv.setViewName("views/customerservice/loanClosureSearch/searchError");
+                mv.addObject("messageHeader", "No results found");
+                mv.addObject("messageBody", "No closed loans were found matching your criteria. Please try again");
+
+            }
 
             mv.addObject("customer", customers);
             mv.addObject("loanApplications", loanApplications);
