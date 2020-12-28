@@ -97,7 +97,7 @@ public class PaymentController {
             return modelAndView;
         }
         else{
-            if (loanApplicationService.getLoanApplicationId(payment.getLoanApplicationNumber()).getCustomerCode().getCustomerCode() != payment.getCustomerCode()){
+            if (!loanApplicationService.getLoanApplicationId(payment.getLoanApplicationNumber()).getCustomerCode().getCustomerCode().equals(payment.getCustomerCode())){
                 ModelAndView modelAndView = new ModelAndView("views/payment/newPayment").
                         addObject("nullCustCode", "There does not exist Customer with this ID");
                 return modelAndView;
