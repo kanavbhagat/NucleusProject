@@ -15,12 +15,10 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </head>
 <body>
-
-    <jsp:include page="/navbar.jsp" />
-    <div class="container-fluid">
+<jsp:include page="/navbar.jsp" />
+<div class="container-fluid">
     <div class="row pt-3 pl-3 flex-column">
         <h2 class="  display-3" style="font-size: 30px">
             <b> Loan Disbursal Service</b>

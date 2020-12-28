@@ -118,8 +118,8 @@ public class NewLoanApplicationController {
 
 
         boolean a =  newCustomerService.createNewCustomer(customer);
-       if(a)
-           Customer.id++;
+        if(a)
+            Customer.id++;
 
         boolean b =addressService.insertAddress(address);
         boolean c = newLoanApplicationService.addLoanApplication(loanApplications);

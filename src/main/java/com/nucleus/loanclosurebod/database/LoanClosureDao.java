@@ -17,19 +17,4 @@ public interface LoanClosureDao {
 
     boolean updateStatus(LoanApplications loanApplication, String newStatus);
 
-
-    /**
-     * Get all Details of a closed Loan by loanApplicationNumber
-     * @param loanApplicationNumber
-     * @return Object of LoanApplications Class
-     */
-    public LoanApplications getLoanDetails(int loanApplicationNumber);
-
-    /**
-     * Get all closed Loans associated with a customer by customerCode
-     * @param customerCode
-     * @return list of LoanApplications contains all loans taken by this customer
-     */
-    public List<LoanApplications> getCustomerLoanDetails(String customerCode);
-
 }
