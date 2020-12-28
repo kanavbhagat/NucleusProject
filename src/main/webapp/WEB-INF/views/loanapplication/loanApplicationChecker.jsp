@@ -39,11 +39,16 @@
                            <label>Loan Application Number<a class="text-danger">*</a></label>
                            <form:input type="number" class="form-control" path="loanApplicationNumber" readonly = "true"/>
                       </div>
+                       <div class="form-group col-sm-3 offset-4">
+                                                  <label>Customer Code<a class="text-danger">*</a></label>
+                                                  <form:input type="text" class="form-control" path="customerCode.customerCode" readonly="true" />
+                                                  </div>
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
                                 <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
-                                <form:input type="text" class="form-control" path="ProductType" readonly = "true"/>
+                                <form:input type="text" class="form-control" value="${loanApplication.productCode.productName}"
+                                path="ProductType" readonly = "true"/>
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>

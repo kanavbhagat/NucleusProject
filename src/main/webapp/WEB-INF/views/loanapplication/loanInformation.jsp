@@ -59,7 +59,8 @@
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="loanAmountRequested" />
+                            <form:input type="number" class="form-control"
+                              max="${loanApplication.productCode.maxExposureAmount}" path="loanAmountRequested" />
                             <form:errors path = "loanAmountRequested" cssClass = "error" style = "color:red"></form:errors>
 
                         </div>
@@ -70,7 +71,9 @@
 
                         <div class="form-group col-sm-3 ">
                             <label>Tenure(months)<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="tenure" />
+                            <form:input type="number" class="form-control"
+                              min="${loanApplication.productCode.repaymentPolicyCode.minTenure}"
+                              max="${loanApplication.productCode.repaymentPolicyCode.maxTenure}" path="tenure" />
                             <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 

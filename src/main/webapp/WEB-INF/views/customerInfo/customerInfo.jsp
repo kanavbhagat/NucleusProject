@@ -246,7 +246,16 @@ window.onload = function() {
                                         <div>
                                             <h2 class="mb-lg-3">Personal Information</h2>
 
-                                            <div class="row ">
+                                                <div class="row ">
+                                                   <div class="form-group col-sm-3">
+                                                        <label for="customerCode">Enter Customer Code<a class="text-danger">*</a></label>
+                                                        <spring:input type="text" class="form-control" id="customerCode" required="required"
+                                                        placeholder="eg. L101"
+                                                        pattern="[A-Za-z].{3,10}" title="Only Alphanumeric characters allowed. Length should be from 3 to 10."
+                                                         path="customerCode"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row ">
 
 
                                                 <div class="form-group col-sm-3">
@@ -329,7 +338,7 @@ window.onload = function() {
                                     <div class="form-group col-sm-3 offset-4">
                                         <label for="country">Country<a class="text-danger">*</a></label>
                                         <spring:select class="form-control option" id="country1" path="add.country">
-                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select one Country"/>
                                         </spring:select>
                                     </div>
                                 </div>
@@ -338,14 +347,14 @@ window.onload = function() {
                                     <div class="form-group col-sm-3">
                                         <label for="state">State<a class="text-danger">*</a></label>
                                         <spring:select class="form-control" id="state1" path="add.state">
-                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select Country First"/>
 
                                         </spring:select>
                                     </div>
                                      <div class="form-group col-sm-3 offset-4">
                                         <label for="city">City<a class="text-danger">*</a></label>
                                         <spring:select class="form-control" id="city1" path="add.city">
-                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select One Option"/>
+                                        <spring:option value="-"  disabled="${'true'}" selected="true" label="Select State First"/>
                                         </spring:select>
                                     </div>
                                 </div>

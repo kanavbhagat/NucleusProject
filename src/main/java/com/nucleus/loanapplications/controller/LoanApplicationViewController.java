@@ -4,6 +4,8 @@ import com.nucleus.loanapplications.model.LoanApplications;
 import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.login.logindetails.LoginDetailsImpl;
 import com.nucleus.payment.service.DateEditor;
+import com.nucleus.product.model.Product;
+import com.nucleus.product.service.ProductService;
 import com.nucleus.repaymentschedule.service.RepaymentScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -33,6 +35,8 @@ public class LoanApplicationViewController {
     @Autowired
     private RepaymentScheduleService repaymentScheduleService;
 
+    @Autowired
+    ProductService productService;
 
     @Autowired
     LoginDetailsImpl loginDetails;
@@ -95,6 +99,7 @@ public class LoanApplicationViewController {
         LoanApplications loanApplications = loanApplicationService.getLoanApplicationId(Integer.parseInt(loanApplicationNumber));
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/loanInformationMaker");
         modelAndView.addObject("loanApplication",loanApplications);
+        modelAndView.addObject("productType" , getProductType());
         return modelAndView;
     }
 
@@ -123,6 +128,10 @@ public class LoanApplicationViewController {
         loanApplications.setCreatedBy(tempLoanApplications.getCreatedBy());
         loanApplications.setAuthorizedBy(tempLoanApplications.getAuthorizedBy());
         loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
+
+        String productType = loanApplications.getProductType();
+        Product product = getProduct(productType);
+        loanApplications.setProductCode(product);
 
         loanApplicationService.updateLoanApplication(loanApplications);
 
@@ -157,6 +166,11 @@ public class LoanApplicationViewController {
         loanApplications.setAuthorizedBy(tempLoanApplications.getAuthorizedBy());
         loanApplications.setLoanApplicationNumber(tempLoanApplications.getLoanApplicationNumber());
         loanApplications.setStatus("PENDING");
+
+        String productType = loanApplications.getProductType();
+        Product product = getProduct(productType);
+        loanApplications.setProductCode(product);
+
         loanApplicationService.updateLoanApplication(loanApplications);
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/editedpage");
         modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
@@ -219,7 +233,7 @@ public class LoanApplicationViewController {
          * INTEGRATION with Repayment Schedule.
          * On execution of this function , Repayment Schedule would be generated and stored in the database.
          */
-        repaymentScheduleService.addRepaymentSchedule(loanApplications);
+        //repaymentScheduleService.addRepaymentSchedule(loanApplications);
         ModelAndView modelAndView = new ModelAndView("views/loanapplication/approvedpage");
         modelAndView.addObject("loanApplicationId" , loanApplications.getLoanApplicationNumber());
 
@@ -258,6 +272,37 @@ public class LoanApplicationViewController {
         return modelAndView;
 
     }
+    /**
+     * Method to get product a  Product object from product name
+     *
+     * @param productType This is string is used to get product object
+     *
+     *
+     *
+     * @return Product This returns a object of type Product
+     */
+    public Product getProduct(String productType){
+        List<Product> products = productService.getProductList();
+        Product res = null;
+        for(Product product:products){
+            if(product.getProductName().equals(productType))
+                res = product;
+        }
+        return res;
+    }
 
+    /**
+     * Method to get product a product name from  Product object
+     *
+     * @return List of String  This returns a list of String containing product Names
+     */
+    public List<String> getProductType(){
+        List<String> productType = new ArrayList<>();
+        List<Product> products = productService.getProductList();
+        for(Product product:products){
+            productType.add(product.getProductName());
+        }
+        return productType;
+    }
 
 }

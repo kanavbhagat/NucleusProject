@@ -106,14 +106,12 @@ public class NewLoanApplicationController {
         List<LoanApplications> loanApplications1 = new ArrayList<>();
         loanApplications1.add(loanApplications);
         customer.setLoanApplications(loanApplications1);
-        loanApplications.setStatus("Pending");
+        loanApplications.setStatus("PENDING");
         loanApplications.setCreateDate(LocalDate.now());
         loanApplications.setCreatedBy(loginDetails.getUserName());
 
         String productType = loanApplications.getProductType();
         Product product = getProduct(productType);
-
-
         loanApplications.setProductCode(product);
 
 
@@ -137,7 +135,16 @@ public class NewLoanApplicationController {
         return modelAndView;
     }
 
-    //Method to get product a perticular Product Type
+
+    /**
+     * Method to get product a  Product object from product name
+     *
+     * @param productType This is string is used to get product object
+     *
+     *
+     *
+     * @return Product This returns a object of type Product
+     */
     public Product getProduct(String productType){
         List<Product> products = productService.getProductList();
         Product res = null;
@@ -148,11 +155,13 @@ public class NewLoanApplicationController {
         return res;
     }
 
-    //Method to get a list of product types
+    /**
+     * Method to get product a product name from  Product object
+     *
+     * @return List of String  This returns a list of String containing product Names
+     */
     public List<String> getProductType(){
         List<String> productType = new ArrayList<>();
-        productType.add("Home Loan");
-        productType.add("Education Loan");
         List<Product> products = productService.getProductList();
         for(Product product:products){
             productType.add(product.getProductName());
