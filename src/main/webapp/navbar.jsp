@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
   prefix="security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 
@@ -74,8 +75,6 @@
                     </a>
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/payment">Payment</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
                     </div>
                 </li>
 
@@ -100,20 +99,24 @@
                     <div class="dropdown-menu sm-menu">
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/receiptBOD/run">Receipt BOD</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureBod">Loan Closure BOD</a>
-
-                        <a class="dropdown-item" href="<%= request.getContextPath()%>/addRepaymentReport">Temp Add Loan</a>
                         <a class="dropdown-item" href="<%= request.getContextPath()%>/main/loanClosureForm">Loan Closure Search</a>
 
                     </div>
                 </li>
-                <li class="nav-item mx-2">
+                <li class="nav-item mx-4">
                     <security:authorize access="isAuthenticated()">
                         <b>Welcome!  <security:authentication property="principal.username" /></b>
                         |
                         <sec:authentication property="principal.authorities"/>
                         |
-                        <a href="<%= request.getContextPath()%>/logout">Logout</a>
                       </security:authorize>
+                </li>
+                <li class="nav-item mx-4">
+                    <security:authorize access="isAuthenticated()">
+                        <a href="<%= request.getContextPath()%>/logout">
+                            <img src="<c:url value="/images/logout.png" />" alt="logout">
+                        </a>
+                    </security:authorize>
                 </li>
             </ul>
         </div>

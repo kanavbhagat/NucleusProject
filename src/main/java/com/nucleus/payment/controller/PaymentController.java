@@ -1,5 +1,6 @@
 package com.nucleus.payment.controller;
 
+import com.nucleus.loanapplications.service.LoanApplicationService;
 import com.nucleus.payment.model.Payment;
 import com.nucleus.payment.service.PaymentServiceImpl;
 import com.nucleus.payment.service.DateEditor;
@@ -26,6 +27,9 @@ public class PaymentController {
 
     @Autowired
     PaymentServiceImpl paymentService;
+
+    @Autowired
+    LoanApplicationService loanApplicationService;
 
     @Value("${status.pending}")
     private String pending;
@@ -86,6 +90,20 @@ public class PaymentController {
             ModelAndView modelAndView = new ModelAndView("views/payment/newPayment");
             return modelAndView;
         }
+
+        if(loanApplicationService.getLoanApplicationId(payment.getLoanApplicationNumber()) ==  null){
+            ModelAndView modelAndView = new ModelAndView("views/payment/newPayment").
+                    addObject("nullLoanID", "There does not exist Loan Application with this ID");
+            return modelAndView;
+        }
+        else{
+            if (loanApplicationService.getLoanApplicationId(payment.getLoanApplicationNumber()).getCustomerCode().getCustomerCode() != payment.getCustomerCode()){
+                ModelAndView modelAndView = new ModelAndView("views/payment/newPayment").
+                        addObject("nullCustCode", "There does not exist Customer with this ID");
+                return modelAndView;
+            }
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         payment.setPaymentStatus(pending);
         payment.setMadeBy(getModifiedBy());

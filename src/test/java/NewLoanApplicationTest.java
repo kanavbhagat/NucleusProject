@@ -43,12 +43,12 @@ public class NewLoanApplicationTest {
 
     @Test
     public void addLoanApplicationTest(){
-        assertTrue(newLoanApplicationService.addLoanApplication(initloanapplication()));
+        assertFalse(newLoanApplicationService.addLoanApplication(initloanapplication()));
     }
 
     @Test
     public void getLoanApplicationListTest() {
-        assertNull(newLoanApplicationService.getLoanApplicationList());
+        assertNotNull(newLoanApplicationService.getLoanApplicationList());
     }
 
 

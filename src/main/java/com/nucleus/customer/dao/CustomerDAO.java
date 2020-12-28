@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class acts as a Database layer for all
+ * Customer related operations.
+ *
+ */
 @Repository
 public class CustomerDAO implements CustomerDaoInterface{
 
@@ -31,6 +36,15 @@ public class CustomerDAO implements CustomerDaoInterface{
         }
         return session;
     }
+
+    /**
+     * This method is used to add Customer to database.
+     *
+     * @param c This contains the object of Customer class
+     *
+     * @return boolean This returns a true/false based on whether the customer
+     *          was successfully added or not.
+     */
     @Override
     public boolean addCustomer(Customer c) {
 
@@ -50,6 +64,16 @@ public class CustomerDAO implements CustomerDaoInterface{
         return successful;
     }
 
+    /**
+     * This method is used to UPDATE Customer details in database.
+     *
+     * @param customer This contains the Customer object with details to be
+     *                 updated with
+     *
+     * @return Boolean This returns a true/false based on whether the customer
+     *                 was successfully UPDATED or not.
+     */
+
     @Override
     public boolean updateCustomer(Customer customer) {
         try(Session session=getSession()){
@@ -66,6 +90,14 @@ public class CustomerDAO implements CustomerDaoInterface{
 
         }
     }
+
+
+    /**
+     * This method is used to get list of Customers and their details from database.
+     *
+     * @return Customer This returns list of objects of Customer class with the details of
+     *         all customers.
+     */
     @Override
     public List<Customer> listCustomer() {
         try(Session session = getSession()) {
@@ -78,7 +110,15 @@ public class CustomerDAO implements CustomerDaoInterface{
     }
 
 
-
+    /**
+     * This method is used to REMOVE Customer from database.
+     *
+     * @param customer This contains the object of Customer
+     *                 to be removed
+     *
+     * @return Boolean This returns a true/false based on whether the Removal
+     *                 was successful or not.
+     */
 
     @Override
     public boolean removeCustomer(Customer customer) {
@@ -98,6 +138,15 @@ public class CustomerDAO implements CustomerDaoInterface{
 
     }
 
+    /**
+     * This method is used to REMOVE Customer from database.
+     *
+     * @param id This contains the ID of Customer
+     *                 to be removed
+     *
+     * @return Boolean This returns a true/false based on whether the Removal
+     *                 was successful or not.
+     */
     @Override
     public boolean removeCustomer(String id) {
         try(Session session=getSession()){
@@ -116,6 +165,15 @@ public class CustomerDAO implements CustomerDaoInterface{
         }
     }
 
+    /**
+     * This method is used to get Customer's details from database.
+     *
+     * @param id This contains the ID of Customer
+     *           to retrieve its details from database
+     *
+     * @return Customer This returns list of objects of Customer class with the details of
+     *         all customers.
+     */
     @Override
     public Customer getCustomerById(String id) {
        Customer customer = null;
@@ -137,6 +195,16 @@ public class CustomerDAO implements CustomerDaoInterface{
 
         return customer;
     }
+
+    /**
+     * This method is used to get a List of Customer's Loan applications from database.
+     *
+     * @param customerCode This contains the ID of Customer
+     *           to retrieve details of its loan applications from database
+     *
+     * @return LoanApplications This returns list of objects of Loan Applications class with the details of
+     *         requested customer's loan applications.
+     */
     public List<LoanApplications> getCustomerLoanDetails(String customerCode){
         Customer customer = null;
         List<LoanApplications> loanApplications = new ArrayList<>();

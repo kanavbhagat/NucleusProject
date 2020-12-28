@@ -50,16 +50,19 @@
                         <label class="font-weight-bold required-field">Loan Application Number</label>
                         <form:input cssClass="form-control" path="loanApplicationNumber"></form:input>
                         <form:errors path="loanApplicationNumber" cssClass="error"></form:errors>
+                        <p class="error">${nullLoanID}</p>
                     </div>
                     <div class="form-group col-sm-3 offset-4">
                         <label class="font-weight-bold required-field">Payment Code</label>
                         <form:input path="paymentCode" cssClass="form-control"></form:input>
+                        <form:errors path="paymentCode" cssClass="error"></form:errors>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-3">
                         <label class="font-weight-bold required-field">Payment Amount</label>
                         <form:input cssClass="form-control" path="paymentAmount"></form:input>
+                        <form:errors path="paymentAmount" cssClass="error"></form:errors>
                     </div>
                     <div class="form-group col-sm-3 offset-4">
                         <label class="font-weight-bold required-field">Payment Date</label>
@@ -77,6 +80,7 @@
                         <label class="font-weight-bold required-field">Customer Code</label>
                         <form:input path="customerCode" cssClass="form-control"></form:input>
                         <form:errors path="customerCode" cssClass="error"></form:errors>
+                        <p class="error">${nullCustCode}</p>
                     </div>
                 </div>
                 <div class="row">

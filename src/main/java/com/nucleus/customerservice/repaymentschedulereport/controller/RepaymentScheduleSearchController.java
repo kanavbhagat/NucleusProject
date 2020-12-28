@@ -20,10 +20,7 @@ public class RepaymentScheduleSearchController {
     @Autowired
     private RepaymentScheduleReportService repaymentScheduleService;
 
-    static LocalDate returnDate(String date) {
-        LocalDate dt = LocalDate.parse(date);
-        return dt;
-    }
+
 
     /**
      * retrieves RepaymentScheduleReportSearch JSP page to get loanApplicationNumber.
@@ -35,15 +32,16 @@ public class RepaymentScheduleSearchController {
         return "views/customerservice/RepaymentScheduleReportSearch";
     }
 
+
     /**
      * Handles and retrieves Repayment Schedule and show them in a JSP page RepaymentScheduleReport.
-     *
-     *  Displays a failure on InvalidLoanAppPage JSP page if failure occurs due to non-existing loanApplicationNumber.
-     *
+     * Displays a failure on InvalidLoanAppPage JSP page if failure occurs due to non-existing loanApplicationNumber.
+     * @param appNo It is the loan application number whose Repaymentschedule is to be displayed
+     * @param model to view the page
      * @return ModelAndView returns the view containing RepaymentScheduleReport.jsp
      */
     @RequestMapping(value = "/getRepaymentScheduleReport", method = RequestMethod.GET)
-    public ModelAndView showRepaymentScheduleSubmit(@RequestParam("appNo") String appNo, Model model)
+    public ModelAndView showRepaymentScheduleSubmit(@RequestParam("appNo") String appNo)
     {
         int loanApplicationNumber = Integer.parseInt(appNo);
         List<RepaymentSchedule> rslist=repaymentScheduleService.getRepaymentScheduleReport(loanApplicationNumber);
