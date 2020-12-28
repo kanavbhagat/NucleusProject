@@ -116,14 +116,16 @@ public class NewLoanApplicationController {
 
 
         boolean a =  newCustomerService.createNewCustomer(customer);
-        if(a)
-            Customer.id++;
-
-        boolean b =addressService.insertAddress(address);
-        boolean c = newLoanApplicationService.addLoanApplication(loanApplications);
-
+        boolean c=false ;
+        if(a) {
+            boolean b = addressService.insertAddress(address);
+            c = newLoanApplicationService.addLoanApplication(loanApplications);
+        }
+        else{
+            return new ModelAndView("views/loanapplication/customererror");
+        }
         ModelAndView modelAndView = new ModelAndView();
-        if(c) {
+       if (c) {
             modelAndView.addObject("customerCode", customer.getCustomerCode());
             modelAndView.addObject("loanApplicationId", loanApplications.getLoanApplicationNumber());
 

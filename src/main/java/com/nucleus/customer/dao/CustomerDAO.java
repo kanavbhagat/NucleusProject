@@ -48,20 +48,21 @@ public class CustomerDAO implements CustomerDaoInterface{
     @Override
     public boolean addCustomer(Customer c) {
 
-        boolean successful = false;
-        try
+        try(Session session = sessionFactory.openSession())
         {
-
-            Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(c);
-            session.getTransaction().commit();
-            session.close();
-            successful=true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
+            try {
+                session.save(c);
+                session.getTransaction().commit();
+                session.close();
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                session.getTransaction().rollback();
+                session.close();
+                return false;
+            }
         }
-        return successful;
     }
 
     /**

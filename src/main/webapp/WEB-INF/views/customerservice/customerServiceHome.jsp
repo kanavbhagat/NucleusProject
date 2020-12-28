@@ -53,9 +53,11 @@
                 <tr>
                     <td><a class="nav-link" href="<%= request.getContextPath()%>/loanDisbursalForm" id="disDetails">Disbursal Details</a></td>
                 </tr>
+                <%--
                 <tr>
                     <td><a class="nav-link" href="<%= request.getContextPath()%>/loanClosureForm" id="disDetails">Loan Closure search</a></td>
                 </tr>
+                --%>
             </table>
         </nav>
     </div>

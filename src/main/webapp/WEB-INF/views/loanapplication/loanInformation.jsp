@@ -70,10 +70,9 @@
 
 
                         <div class="form-group col-sm-3 ">
-                            <label>Tenure(months)<a class="text-danger">*</a></label>
+                            <label>Tenure(in Years)<a class="text-danger">*</a></label>
                             <form:input type="number" class="form-control"
-                              min="${loanApplication.productCode.repaymentPolicyCode.minTenure}"
-                              max="${loanApplication.productCode.repaymentPolicyCode.maxTenure}" path="tenure" />
+                              path="tenure" />
                             <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
