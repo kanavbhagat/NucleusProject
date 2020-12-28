@@ -31,6 +31,8 @@
               <%-- Insert Message Desc Here --%>
               <p class="lead"><strong>Eligibility Policy ${operation}</strong></p>
 
+              <p class="lead">${errorMsg}</p>
+
               <hr>
 
               <div class="d-flex justify-content-center">

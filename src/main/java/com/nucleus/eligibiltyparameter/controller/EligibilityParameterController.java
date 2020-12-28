@@ -67,7 +67,6 @@ public class EligibilityParameterController {
     /**
      * Saving a Parameter in database
      * @param eligibilityParameter object of eligibility parameter
-     * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
     @PostMapping(value = "/insertparameter", params = "action1")
@@ -91,6 +90,7 @@ public class EligibilityParameterController {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
             }
             else {
+                model.addAttribute("message","Eligibility Parameter already exists for this parameter code");
                 return "views/eligibilityparameters/eligibilityparameterfailure";
             }
         }
@@ -100,7 +100,6 @@ public class EligibilityParameterController {
     /**
      * Saving parameter in database and requesting for approval by checker
      * @param eligibilityParameter object of eligibility parameter
-     * @param br
      * @return success page if no error, same page (new Eligibility Parameter creation page) if error
      */
     @PostMapping(value = "/insertparameter", params = "action2")
@@ -124,6 +123,7 @@ public class EligibilityParameterController {
                 return "views/eligibilityparameters/eligibilityparametersuccess";
             }
             else {
+                model.addAttribute("message","Eligibility Parameter already exists for this parameter code");
                 return "views/eligibilityparameters/eligibilityparameterfailure";
             }
         }
@@ -133,7 +133,6 @@ public class EligibilityParameterController {
     /**
      * Editing an Eligibility Parameter and saving it into database
      * @param eligibilityParameter object of eligibility parameter
-     * @param br
      * @return success page if no error, same page (Eligibility Parameter edit page) if error
      */
     @PostMapping(value = "/edit/editparameter", params = "action1")
