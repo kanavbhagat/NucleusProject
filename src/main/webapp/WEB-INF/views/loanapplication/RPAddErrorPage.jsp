@@ -34,7 +34,7 @@
 
                 <%-- Insert Dynamic Message Here Eg- policy code etc --%>
                 <p class="lead mt-4 " style="border:1px; border-style:solid; border-color:rgba(255,138,128 ,1); padding: 5px;background-color:rgba(255,138,128 ,0.1);width: 50%;">
-                <strong>Loan Application Id Already exists.</p>
+                <strong>Loan Application Id or Customer code  Already exists.</p>
 
               </div>
               <%-- Put your link in the value field below where you want to redirect to. --%>

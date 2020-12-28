@@ -52,18 +52,26 @@
                            <form:input type="number" class="form-control" path="loanApplicationNumber" readonly="true" />
                            <form:errors path = "loanApplicationNumber" cssClass = "error"><p style = "color:red">Please put a valid 10 digit number having first digit as 1</p></form:errors>
                       </div>
+                      <div class="form-group col-sm-3 offset-4">
+                            <label>Customer Code<a class="text-danger">*</a></label>
+                            <form:input type="text" class="form-control" path="customerCode.customerCode" readonly="true" />
+                      </div>
                        </div>
                     <div class="row ">
                          <div class="form-group col-sm-3">
-                                <form:label path="productType" cssClass="font-weight-bold required-field">Product Type:</form:label>
+                                <form:label path="productType" cssClass="font-weight-bold required-field">Product Type<a class="text-danger">*</a></form:label>
                                  <form:select path="productType" cssClass="form-control">
+                                  <form:option value="${loanApplication.productCode.productName}"  disabled="${'true'}"
+                                  selected="true" label="${loanApplication.productCode.productName}"/>
+
                                        <form:options items="${productType}" />
                                  </form:select>
                                  <form:errors path = "productType" cssClass = "error" style = "color:red"></form:errors>
                                   </div>
                         <div class="form-group col-sm-3 offset-4">
                             <label>Loan Amount Requested<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="loanAmountRequested" />
+                            <form:input type="number" class="form-control"
+                             max="${loanApplication.productCode.maxExposureAmount}" path="loanAmountRequested" />
                             <form:errors path = "loanAmountRequested" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 
@@ -72,8 +80,10 @@
 
 
                         <div class="form-group col-sm-3 ">
-                            <label>Tenure<a class="text-danger">*</a></label>
-                            <form:input type="number" class="form-control" path="tenure" />
+                            <label>Tenure(months)<a class="text-danger">*</a></label>
+                            <form:input type="number" class="form-control"
+                            min="${loanApplication.productCode.repaymentPolicyCode.minTenure}"
+                             max="${loanApplication.productCode.repaymentPolicyCode.maxTenure}" path="tenure" />
                             <form:errors path = "tenure" cssClass = "error" style = "color:red"></form:errors>
                         </div>
 

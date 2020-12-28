@@ -22,7 +22,7 @@ public class Customer {
     public Customer(){
         super();
         code = "L"+id;
-        this.setCustomerCode(code);
+       // this.setCustomerCode(code);
         add = new Address();
     }
 

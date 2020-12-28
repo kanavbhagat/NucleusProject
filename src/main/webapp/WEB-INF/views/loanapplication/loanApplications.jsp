@@ -97,7 +97,7 @@
                                          </sec:authorize>
                                          <td>${loan.customerCode.customerCode}</td>
                                          <td>${loan.customerCode.firstName}</td>
-                                         <td>${loan.productCode}</td>
+                                         <td>${loan.productCode.productName}</td>
                                          <td>${loan.createDate}</td>
                                          <td>${loan.createdBy}</td>
                                          <td>${loan.status}</td>
