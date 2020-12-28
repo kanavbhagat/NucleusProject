@@ -140,6 +140,7 @@ public class EligibilityPolicyController {
             return "views/eligibilitypolicies/eligibilityPolicySuccess";
         } else {
             model.addAttribute("operation", "Creation Unsuccessful!");
+            model.addAttribute("errorMsg", "Policy already exists with this policy code.");
             return "views/eligibilitypolicies/eligibilityPolicyFailure";
         }
     }
